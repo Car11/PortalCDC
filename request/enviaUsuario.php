@@ -6,10 +6,9 @@ if (isset($_POST['username']) && isset($_POST['password']) ){
     $Usuario = new Usuario();
 
     $Usuario->userName=$_POST['username'];
-    $Usuario->password=$_POST['password'];
-
+    $Usuario->Password=$_POST['password'];
+    
     $Usuario->ValidarUsuario();
 }
-
 
 ?>
