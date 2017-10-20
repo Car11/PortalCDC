@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+/* CSS Document 
+contenido: #f2b705
+encabezado: #f29f05
+equivalentes: #d97904
+piepagina: #733702
+auxiliar: #401801
+
+*********
+header: 
+    fondo #222222
+    letra #F2F2F2
+    borde #343434
+
+html: 
+    fondo #2C2C2C
+    letra #B8B8B8
+
+btn azul: 
+    fondo #016DC4 
+    texto #FFFFFF
+
+btn gris:
+    fondo: #3F3F3F
+    texto: #C9C9C9
+
+input
+    fondo: #555555
+    texto: #EDEDED
+    borde: 0.3px solid #C2C2C2
+    borde sel: #2893EF
+
+form
+    fondo claro: #58585a
+    
+*/
+
+
+/*Elementos de neutralidad*/
+
+header,
+article,
+footer,
+section,
+nav,
+aside {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    /*background: #1e5799;*/
+    background: #252526;
+}
+
+body {
+    margin: 0 auto;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+p,
+h1,
+h2,
+h3 {
+    margin: 0;
+    padding: 0;
+}
+
+
+/*Etiquetas estructurales*/
+
+header {
+    height: 120px;
+    background: #222222;
+    /*border-style: solid;
+    border-bottom-color: #343434;*/
+    border: 2px solid;
+    border-bottom-color: #0595B9;
+    margin-bottom: 5px;
+}
+
+#messagetop, #messagetop-secondary {
+    color: aliceblue;
+    text-align: center;
+    font-size: 25px;
+    background-color: firebrick;
+    height: 40;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+#messagetop_display, #messagetop_display-secondary {    
+    text-align: center;
+    font-size: 25px;
+    height: 40;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+#general{
+    width: 100%;
+    height: 84%;
+    margin-top: 0px;
+}
+
+#superiornavegacion{
+    margin-top: 0px;
+    width: 100%;
+    height: 50px;
+    float: left;
+}
+
+#nuevo{
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+#atras{
+    width: 50%;
+    height: 100%;
+    float: right;
+    text-align: right;
+}
