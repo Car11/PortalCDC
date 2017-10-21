@@ -1,5 +1,97 @@
-var formReady = false;
 var id = "NULL";
+
+$(document).ready( function () {
+    //vuelve al menu
+    this.Cerrar = function(){
+        $(".modal").css({ display: "none" });
+    }; 
+
+
+});
+
+// Muestra información en ventana
+function showInfo(){     
+    /*$(".modal").css({ display: "none" });  
+    $("#textomensaje").text("Información almacenada correctamente!!");
+    $("#mensajetop").css("background-color", "#016DC4");
+    $("#mensajetop").css("color", "#FFFFFF");    
+    $("#mensajetop").css("visibility", "visible");
+    $("#mensajetop").slideDown("slow");
+    $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");*/
+};
+
+// Muestra errores en ventana
+function showError(){        
+    /*$(".modal").css({ display: "none" });  
+    $("#textomensaje").text("Error al procesar la información");
+    $("#mensajetop").css("background-color", "firebrick");
+    $("#mensajetop").css("color", "white");    
+    $("#mensajetop").css("visibility", "visible");
+    $("#mensajetop").slideDown("slow");
+    $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");*/
+};
+
+// guarda el registro.
+function Save(){   
+    // Ajax: insert / Update.
+    if(!FormValidate())
+        return false;
+    var miAccion= id=='NULL' ? 'Insert' : 'Update';
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: miAccion,              
+            title:  $("#title").val(),
+            description: $("#description").val()
+        }
+    })
+    .done(function(data) {
+        alert(data);
+        $("#title").val('');
+        $("#description").val('');
+      })
+    .fail(showError)
+    //.always(ReCargar);
+};    
+
+
+function FormValidate(){
+    if($("#title").val()=="")
+    {
+        $("#title").css("border", "0.3px solid firebrick");
+        document.getElementById('title').placeholder = "REQUERIDO";
+        $("#title").focus();
+        return false;
+    }        
+    else if($("#title").val().length<5)
+    {
+        $("#title").css("border", "0.3px solid firebrick");
+        // mensaje
+        showError("Título: Mínimo 5 digitos sin guiones ni espacios");
+        return false;
+    }
+    //
+    if($("#description").val()=="")
+    {
+        $("#description").css("border", "0.3px solid firebrick");
+        document.getElementById('description').placeholder = "REQUERIDO";
+        $("#description").focus();
+        return false;
+    }
+    else if($("#description").val().length<5)
+    {
+        $("#description").css("border", "0.3px solid firebrick");
+        // mensaje
+        showError("La descripción debe tener mínimo 5 caracteres");
+        return false;
+    }
+    //        
+    return true;
+};
+
+/*var formReady = false;
+
 
 $(document).ready( function () {
     //Da la apariencia del css datatable
@@ -22,38 +114,14 @@ $(document).ready( function () {
             $(".modal").css({ display: "none" });
         }    
     };
-
-    //vuelve al menu
-    this.Cerrar = function(){
-        $(".modal").css({ display: "none" });
-    }; 
+ 
 
     //valida cedula unica al perder el foco en el input cedula.
     $('#cedula').focusout(ValidaCedulaUnica);
 
 });
 
-// Muestra información en ventana
-function muestraInfo(){     
-    $(".modal").css({ display: "none" });  
-    $("#textomensaje").text("Información almacenada correctamente!!");
-    $("#mensajetop").css("background-color", "#016DC4");
-    $("#mensajetop").css("color", "#FFFFFF");    
-    $("#mensajetop").css("visibility", "visible");
-    $("#mensajetop").slideDown("slow");
-    $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");
-};
 
-// Muestra errores en ventana
-function muestraError(){        
-    $(".modal").css({ display: "none" });  
-    $("#textomensaje").text("Error al procesar la información");
-    $("#mensajetop").css("background-color", "firebrick");
-    $("#mensajetop").css("color", "white");    
-    $("#mensajetop").css("visibility", "visible");
-    $("#mensajetop").slideDown("slow");
-    $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");
-};
 
 // Muestra errores en ventana
 function muestraError_Visita(msg){        
@@ -195,78 +263,6 @@ function wait(ms){
    
 }
 
-function validarForm(){
-    ValidaCedulaUnica();
-    //$("#loadinggif").css("display", "block");  
-    //wait(3000); 
-    //$("#loadinggif").css("display", "none");
-    //   
-    if($("#cedula").val()=="")
-    {
-        $("#cedula").css("border", "0.3px solid firebrick");
-        document.getElementById('cedula').placeholder = "REQUERIDO";
-        $("#cedula").focus();
-        return false;
-    }        
-    else if($("#cedula").val().length<8)
-    {
-        $("#cedula").css("border", "0.3px solid firebrick");
-        // mensaje
-        muestraError_Visita("Formato de cedula: Mínimo 8 digitos sin guiones ni espacios");
-        return false;
-    }
-    //
-    if($("#empresa").val()=="")
-    {
-        $("#empresa").css("border", "0.3px solid firebrick");
-        document.getElementById('empresa').placeholder = "REQUERIDO";
-        $("#empresa").focus();
-        return false;
-    }
-    //
-    if($("#nombre").val()=="")
-    {
-        $("#nombre").css("border", "0.3px solid firebrick");
-        document.getElementById('nombre').placeholder = "REQUERIDO";
-        $("#nombre").focus();
-        return false;
-    }
-    else if($("#nombre").val().length<10)
-    {
-        $("#nombre").css("border", "0.3px solid firebrick");
-        // mensaje
-        muestraError_Visita("El nombre del visitante debe tener mínimo 10 caracteres");
-        return false;
-    }
-    if(!formReady){
-        return false;
-    } 
-    //        
-    return true;
-};
-
-// guarda el registro.
-function Guardar(){   
-    // Ajax: insert / Update.
-    if(!validarForm())
-        return false;
-    var miAccion= id=='NULL' ? 'Insertar' : 'Modificar';
-    $.ajax({
-        type: "POST",
-        url: "class/Visitante.php",
-        data: { 
-            action: miAccion,  
-            idvisitante: id,              
-            cedula:  $("#cedula").val(),
-            nombre: $("#nombre").val(),
-            empresa: $("#empresa").val(),
-            permiso: $("#permiso")[0].checked
-        }
-    })
-    .done(muestraInfo)
-    .fail(muestraError)
-    .always(ReCargar);
-};    
 
 function Eliminar(){            
     $.ajax({
@@ -281,7 +277,7 @@ function Eliminar(){
                 alert('200 ec');         
             }
         }*/
-    })
+  /*  })            codigo bueno ***************************
     .done(function(e){
         if(e=="Registro en uso")
         {
@@ -301,39 +297,7 @@ function Eliminar(){
     .fail(muestraError);
 };
 
-//valida cedula unica.
-function ValidaCedulaUnica(){    
-    $.ajax ({
-        type: "POST",
-        url: "class/Visitante.php",
-        data: { 
-            action: "ValidaCedulaUnica",
-            cedula:  $("#cedula").val(),
-            nombre: $("#nombre").val(),
-        }
-    })
-    .done(function( e ) {    
-        if(e=="invalida"){
-             $("#cedula").css({
-                "border-color": "firebrick",
-                "border-width": "0.3px"
-            });
-            $("#cedula").focus();
-            muestraError_Visita('Número de cédula duplicado');         
-            formReady=false;   
-        }
-        else {
-            $("#cedula").css({
-                "border-color": "green",
-                "border-width": "0.3px"
-            });
-            formReady=true;
-        }
-     })
-    .fail(function( e ) {    
-        // ...
-        formReady=false;
-     });
-};
 
 
+
+*/
