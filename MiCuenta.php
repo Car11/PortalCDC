@@ -3,7 +3,7 @@ if (!isset($_SESSION))
   session_start();
 include_once('class/Globals.php');
 // Sesion de usuario
-include_once("class/Sesion.php");
+require_once("class/Sesion.php");
 $sesion = new Sesion();
 if (!$sesion->estado){
     $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
@@ -19,21 +19,98 @@ if (!$sesion->estado){
     <link href="css/Style-Base.css?v= <?php echo Globals::cssversion; ?>" rel="stylesheet" />
     <!--<link href="css/dropdownmenu.css" rel="stylesheet"/> -->
     <script src="js/jquery.js" type="text/jscript"></script>    
+
+    <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="css/Style-Task.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="css/Modal.css?v=<?php echo Globals::cssversion; ?>" />
+
+    <script src="js/task.js" languaje="javascript" type="text/javascript"></script> 
 </head>
-<body>
+<body> 
     <header>
-        <h1>MI CUENTA</h1>        
-        <div id="logo"><img src="img/Logoice.png" height="75" > </div>        
+        <h1>LISTA DE VISITANTES</h1>        
+        <div id="logo"><img src="img/Logoice.png" height="75" > </div>
+        <div id="signin">
+            <span>Usuario: 
+                <?php
+                if ($sesion->estado) {
+                    print $_SESSION['username'];
+                } 
+                ?>
+            </span>
+        </div>
     </header>
-    <div class="log">        
-        <nav class="dropdownmenu">
-          <ul>
-            <li><a href="NewTask.php">Nueva Solicitud de servicio</a></li>
-            <li><a href="xxx.php">Mis Solicitudes</a></li>
-            <li><a href="xxx.php">Mis Proyectos</a></li>
-          </ul>                
-        </nav>
-    </div>
+    <div id="messagetop_display">
+        <div id="messagetop">
+            <span id="messagetext"></span>
+        </div>
+    </div>  
+    <aside> 
+    </aside>
+    <section>
+        <div id="navigation-opt-btn">
+            <div id="new-btn">
+                <input type="button" id="btnnew" class="nbtn_blue-sp-c" value="Nuevo" onclick="New()";>      
+            </div>                
+            <div id="back-btn">
+                <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'";>   
+            </div>
+        </div>
+        <div id="item-list">
+        </div>
+    </section>
+    <aside> 
+    </aside>
+
+    <!-- MODAL formulario -->
+    <div class="modal" id="modal-index" >
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Solicitud de Servicio
+                    <!--div id="loadinggif"><img src="img/loading.gif" height="40" > </div>         -->
+                </h2>                       
+            </div>
+            <div id="messagetop-modal">
+                <div id="messagetop_display-modal">
+                    <span id="messagetext-modal"></span>
+                </div>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div id="form">
+                    <form name="task" id='task' method="POST" >
+                        <label for="title"><span class="input-field-lbl">Título<span class="required">*</span></span>
+                            <input autofocus type="text"  id="title"  style="text-transform:uppercase"
+                                class="input-field" name="title" title="Título de la tarea"  required >                                
+                        </label>
+                        <label for="description"><span class="input-field-lbl">Descripción<span class="required">*</span></span>
+                            <input type="text"                                  
+                                class="input-field" name="description" value="" id="description" required >
+                        </label>
+                        <nav class="btnfrm">
+                            <ul>
+                                <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>
+                                <li><button type="button" class="nbtn_gray" onclick="Exit()" >Cerrar</button></li>
+                            </ul>
+                        </nav>                       
+                    </form>
+                    
+                </div>
+            </div>    
+
+            <div class="modal-footer">
+                <br>
+            </div>
+
+        </div>
+    </div>      
+    <!-- FIN MODAL -->
+
+     
     
-</body>
+    </body>
 </html>
+
+

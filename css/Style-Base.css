@@ -83,7 +83,7 @@ header {
     margin-bottom: 5px;
 }
 
-#messagetop, #messagetop-secondary {
+#messagetop, #messagetop-modal {
     color: aliceblue;
     text-align: center;
     font-size: 25px;
@@ -94,7 +94,7 @@ header {
     display: none;
 }
 
-#messagetop_display, #messagetop_display-secondary {    
+#messagetop_display, #messagetop_display-modal {    
     text-align: center;
     font-size: 25px;
     height: 40;
@@ -110,28 +110,32 @@ header {
     width: 100%;
     height: 84%;
     margin-top: 0px;
+    background: red;
 }
 
-#superiornavegacion{
+#navigation-opt-btn{
     margin-top: 0px;
     width: 100%;
     height: 50px;
     float: left;
+    background: yellow;
 }
 
 
 section {
     /*background: green;*/
-    height: 700;
-    width: 60%;
+    height: 750;
+    width: 70%;
     float: left;
+    background: green;
 }
 
 aside {
     /*background: yellow;*/
-    height: 700;
-    width: 20%;
+    height: 750;
+    width: 15%;
     float: left;
+    background: blue;
 }
 
 footer {
@@ -139,20 +143,18 @@ footer {
     background: #73A5FF;
 }
 
-
-/*
-#nuevo{
+#new-btn{
     width: 50%;
     height: 100%;
     float: left;
 }
 
-#atras{
+#back-btn{
     width: 50%;
     height: 100%;
     float: right;
     text-align: right;
-}*/
+}
 
 /******************* COMMON CONTROLS *********************************/
 

@@ -2,7 +2,7 @@ var id = "NULL";
 
 $(document).ready( function () {
     //vuelve al menu
-    this.Cerrar = function(){
+    this.Exit = function(){
         $(".modal").css({ display: "none" });
     }; 
 
@@ -90,6 +90,28 @@ function FormValidate(){
     return true;
 };
 
+// Abre nuevo modal.
+function New() {        
+    // limpia valores.        
+    id="NULL";
+    /*$("#cedula").val("");
+    $("#empresa").val("");
+    $("#nombre").val("");
+    $("#permiso")[0].checked = false;
+    $("#cedula").css({
+        "border": "1px solid #C2C2C2"
+    });
+     $("#nombre").css({
+        "border": "1px solid #C2C2C2"
+    });
+     $("#empresa").css({
+        "border": "1px solid #C2C2C2"
+    });*/
+    // Muestra modal.
+    $(".modal").css({ display: "block" });         
+};
+
+
 /*var formReady = false;
 
 
@@ -175,26 +197,7 @@ function ReCargar(){
     .fail(muestraError);
 };
 
-// Abre nuevo modal.
-this.Nuevo = function() {        
-    // limpia valores.        
-    id="NULL";
-    $("#cedula").val("");
-    $("#empresa").val("");
-    $("#nombre").val("");
-    $("#permiso")[0].checked = false;
-    $("#cedula").css({
-        "border": "1px solid #C2C2C2"
-    });
-     $("#nombre").css({
-        "border": "1px solid #C2C2C2"
-    });
-     $("#empresa").css({
-        "border": "1px solid #C2C2C2"
-    });
-    // Muestra modal.
-    $(".modal").css({ display: "block" });         
-};
+
 
 // evento click del boton eliminar
 function EventoClickEliminar(){

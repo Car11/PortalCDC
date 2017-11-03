@@ -4,10 +4,11 @@ class Sesion{
 	public $username;
 	public $userid;
 	public $rol;
+	public $name;
 	
 	function __construct(){
         if (!isset($_SESSION))
-			//session_start();
+			session_start();
 		$this->Verifica();
 		/*if($this->login){
             return true;
@@ -18,9 +19,11 @@ class Sesion{
 	
 	private function Verifica(){
 		if(isset($_SESSION["username"])){
-			$this->username = $_SESSION["username"];            
-			$this->rol = $_SESSION["rol"];            
-			$this->estado = true;            
+			$this->username = $_SESSION["username"];
+			$this->rol = $_SESSION["rol"];
+			$this->userid = $_SESSION["userid"];
+			$this->name = $_SESSION["name"];
+			$this->estado = true;	        
 		} else {
 			unset($this->username);
 			unset($this->rol);

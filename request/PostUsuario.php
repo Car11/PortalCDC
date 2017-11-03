@@ -11,7 +11,7 @@
         $usuario->contrasena=$_POST['password'];
         if($usuario->LDAPCheck())
         {
-            $sesion->Inicio($usuario->usuario, $usuario->rol, $usuario->id, $usuario->name);
+            $sesion->Inicio($usuario->usuario, $usuario->rol, $usuario->id, $usuario->nombre);
             //print('<br>role: '. $usuario->rol );
             //print('<br>id: '. $usuario->id );exit;
             if(isset($_SESSION['url'])){
