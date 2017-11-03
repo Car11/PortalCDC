@@ -595,6 +595,7 @@ input[type=checkbox] {
 
 #invalid{
     visibility: hidden;
+    color: firebrick;
 }
 
 .fila:hover{
