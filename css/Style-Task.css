@@ -6,13 +6,13 @@
 /***********************combo box ******************************/
  /*fondo #016DC4
     texto #FFFFFF*/
-.sala {
+.cmbfield {
     margin: 0 auto;
     margin-top: 20;
     width: 350;
 }
 
-.sala .field {
+.cmbfield .field {
     width:100%; 
     background: #016DC4; 
     color:#FFFFFF;     
@@ -25,14 +25,14 @@
 	transition: all .4s ease-in-out;
 }
 
-.sala .field:hover {
+.cmbfield .field:hover {
     border: solid 1px #C2C2C2;
     -moz-box-shadow: 0 0 5px #999;
     -webkit-box-shadow: 0 0 5px #999;
     box-shadow: 0 0 5px #999
 }
 
-.sala>ul.list {
+.cmbfield>ul.list {
     display: none;
     position: absolute;
     /*left: 30px;
@@ -52,17 +52,17 @@
     box-shadow: 0 0 5px #999;
 }
 
-.sala>ul.list li {
+.cmbfield>ul.list li {
     padding: 10px;
     border-bottom: solid 1px #ccc;
 }
 
-.sala>ul.list li:hover {
+.cmbfield>ul.list li:hover {
     background: #1478b1;
     color: #fff;
 }
 
-.sala>ul.list li:last-child {
+.cmbfield>ul.list li:last-child {
     border: none
 }
 
@@ -75,6 +75,10 @@
     /* Firefox 19+ */
     color: #FFFFFF;
     text-align: center;
+}
+
+.fieldID{
+    display: none;
 }
 
 

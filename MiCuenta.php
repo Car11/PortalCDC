@@ -10,6 +10,10 @@ if (!$sesion->estado){
     header('Location: Login.php');
     exit;
 }
+// Carga Proyectos de la cuenta
+/*include("class/Project.php");    
+$project= new Project();
+$project=$project->GetByUserID();*/
 ?>
 
 <html>
@@ -89,6 +93,16 @@ if (!$sesion->estado){
                             <input type="text"                                  
                                 class="input-field" name="description" value="" id="description" required >
                         </label>
+                        <div class="cmbfield">
+                            <input type="text" id="project" name="project" placeholder="SELECCIONE EL PROYECTO" class="field" readonly="readonly"> <div> </div> </input>
+                            <ul class="list">
+                                <?php
+                                    /*for($i=0; $i<count($project); $i++){
+                                        print('<li>'.$project[$i][1].'</li>');                            
+                                    }*/
+                                ?>
+                            </ul>
+                        </div>
                         <nav class="btnfrm">
                             <ul>
                                 <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>
@@ -96,7 +110,7 @@ if (!$sesion->estado){
                             </ul>
                         </nav>                       
                     </form>
-                    
+
                 </div>
             </div>    
 
