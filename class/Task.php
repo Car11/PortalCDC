@@ -15,6 +15,7 @@ if(isset($_POST["action"])){
         case "Insert":
             $task->title= $_POST["title"];
             $task->description= $_POST["description"];
+            $task->project_id= $_POST["project_id"];
             $task->Insert();
             break;
         case "Update":
@@ -37,8 +38,9 @@ class Task{
     public $send_id=123;
     public $title;
     public $description;
-    public $project_id = 11;
-    public $column_id = 42;   
+    public $project_id;
+    //public $project_name;
+    public $column_id = 42;    // definir como se van a manejar las columnas del proyecto.
 
     //
     // Funciones de Mantenimiento.
@@ -47,16 +49,16 @@ class Task{
         try {
             $curl = curl_init();
             
-            $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $this->send_id . ", \"params\": { \"owner_id\": 1, \"creator_id\": 0, 
+            $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $this->send_id . ", \"params\": { \"owner_id\": 0, \"creator_id\": ". $_SESSION["userid"] . ", 
                 \"date_due\": \"\", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title .  "\", \"project_id\": " . $this->project_id . 
                 ", \"color_id\": \"green\", \"column_id\": " . $this->column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
             
-            $data2 = array('jsonrpc' => '2.0',
+            /*$data2 = array('jsonrpc' => '2.0',
                 'method'=> 'createTask',
                 'id'=>$this->send_id,
                 'params'=> $params=array(
-                    'owner_id'=>'1',
-                    'creator_id'=>0,
+                    'owner_id'=>$_SESSION["userid"],
+                    'creator_id'=>$_SESSION["userid"],
                     'date_due'=>'',
                     'description'=>$this->description,
                     'category_id'=>0,
@@ -71,7 +73,7 @@ class Task{
                     'recurrence_timeframe'=>0,
                     'recurrence_basedate'=>0
                 )
-            );
+            );*/
             //echo $cadenaRapida;
             
             curl_setopt_array($curl, array(
@@ -105,7 +107,7 @@ class Task{
             }
         }     
         catch(Exception $e) {
-            log::AddD('FATAL', 'Ha ocurrido un error al realizar la Entrada del Visitante', $e->getMessage());
+            log::AddD('FATAL', 'Ha ocurrido un error al realizar el insert', $e->getMessage());
             header('Location: ../Error.php?w=conectar&id='.$e->getMessage());
             exit;
         }

@@ -4,10 +4,37 @@ $(document).ready( function () {
     //vuelve al menu
     this.Exit = function(){
         $(".modal").css({ display: "none" });
-    }; 
-
-
+    };     
+    LoadProjects();
 });
+
+function loadProjectsByUser(e){
+    // DATA
+    var data= JSON.parse(e);
+    $.each(data, function(i, item) {
+        var row="<li id="+item.id+">" + item.name + 
+            // "<div id="+item.id+"></div>" +         
+        "</li>";
+        $('.list').append(row);
+    });  
+    //formato combobox
+    $('.cmbfield').styleddropdown();
+
+};
+
+function LoadProjects(){
+    $.ajax({
+        type: "POST",
+        url: "class/Project.php",
+        data: { 
+            action: "GetByUserID"
+        }
+    })
+    .done(function( e ) {            
+         loadProjectsByUser(e);
+    })    
+    .fail(showError);
+};
 
 // Muestra información en ventana
 function showInfo(){     
@@ -43,7 +70,8 @@ function Save(){
         data: { 
             action: miAccion,              
             title:  $("#title").val(),
-            description: $("#description").val()
+            description: $("#description").val(),
+            project_id: $(".field").attr('id')
         }
     })
     .done(function(data) {
@@ -86,6 +114,13 @@ function FormValidate(){
         showError("La descripción debe tener mínimo 5 caracteres");
         return false;
     }
+    if($("#project").val()=="")
+    {
+        $("#project").css("border", "0.3px solid firebrick");
+        document.getElementById('project').placeholder = "REQUERIDO";
+        $("#project").focus();
+        return false;
+    }
     //        
     return true;
 };
@@ -111,6 +146,40 @@ function New() {
     $(".modal").css({ display: "block" });         
 };
 
+
+(function ($) {
+    $.fn.styleddropdown = function () {
+        return this.each(function () {
+            var obj = $(this)
+            obj.find('.field').click(function () { //onclick event, 'list' fadein
+                obj.find('.list').fadeIn(400);
+
+                $(document).keyup(function (event) { //keypress event, fadeout on 'escape'
+                    if (event.keyCode == 27) {
+                        obj.find('.list').fadeOut(400);
+                    }
+                });
+
+                obj.find('.list').hover(function () {},
+                    function () {
+                        $(this).fadeOut(400);
+                    });
+            });
+
+            obj.find('.list li').click(function () { //onclick event, change field value with selected 'list' item and fadeout 'list'
+                obj.find('.field')
+                    .val($(this).html())
+                    //.children('div',  $(this).attr('id')  ) 
+                    .attr('id',  $(this).attr('id'))
+                    .css({
+                        'background': '#fff',
+                        'color': '#333'
+                    });
+                obj.find('.list').fadeOut(400);
+            });
+        });
+    };
+})(jQuery);
 
 /*var formReady = false;
 
