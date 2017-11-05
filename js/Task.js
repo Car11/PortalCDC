@@ -82,7 +82,7 @@ function Load(){
     .done(function( e ) {            
         ShowData(e); 
     })    
-    .fail(muestraError);
+    .fail(showError);
 };
 
 function UpdateEventHandler(){
@@ -294,7 +294,7 @@ $(document).ready( function () {
 
 
 // Muestra errores en ventana
-function muestraError_Visita(msg){        
+function showError_Visita(msg){        
     $("#textomensaje-secundario").text(msg);
     $("#mensajetop-secundario").css("background-color", "firebrick");
     $("#mensajetop-secundario").css("color", "white");    
@@ -342,7 +342,7 @@ function ReCargar(){
             "order": [[ 2, "asc" ]]
         } ); 
     })    
-    .fail(muestraError);
+    .fail(showError);
 };
 
 
@@ -411,7 +411,7 @@ function Eliminar(){
         );
         ReCargar();
     })        
-    .fail(muestraError);
+    .fail(showError);
 };
 
 
