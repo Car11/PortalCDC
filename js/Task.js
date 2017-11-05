@@ -5,7 +5,9 @@ $(document).ready( function () {
     this.Exit = function(){
         $(".modal").css({ display: "none" });
     };     
+    Load();
     LoadProjects();
+
 });
 
 function loadProjectsByUser(e){
@@ -34,6 +36,83 @@ function LoadProjects(){
          loadProjectsByUser(e);
     })    
     .fail(showError);
+};
+
+function ShowData(e){
+    // Limpia el div que contiene la tabla.
+    $('#item-list').html(""); 
+    $('#item-list').append("<br><br><br> <table id='tbl-items' class='display' > </table>");
+    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>TITULO</th> <th>DESCRIPCIÓN</th>  <th>ASIGNADO</th> <th>ESTADO</th> <th>FECHA SOLICITUD</th> <th>MODIFICACIÓN</th> </tr></thead>"+
+        "<tbody id='tableBody'>  </tbody>";
+    $('#tbl-items').append(col); 
+    // carga lista con datos.
+    var data= JSON.parse(e);
+    // Recorre arreglo.
+    $.each(data, function(i, item) {
+        var row="<tr class=datarow>"+
+            "<td style='display:none;' >" + item.id +"</td>" +
+            "<td>"+ item.title + "</td>"+
+            "<td>"+ item.description + "</td>"+
+            "<td>"+ item.owner_id + "</td>"+
+            "<td>"+ item.position +"</td>"+
+            "<td>"+ item.date_creation +"</td>"+
+            "<td>"+ item.date_modification +"</td>"+
+            "<td><img id=imgdelete src=img/file_mod.png class=modificar></td>"+
+            //"<td><img id=imgdelete src=img/file_delete.png class=eliminar></td>"+
+        "</tr>";
+        $('#tableBody').append(row);
+    })
+    // evento click del boton modificar-eliminar
+    $('.modificar').click(UpdateEventHandler);
+    //$('.eliminar').click(EventoClickEliminar);
+    // formato tabla
+    $('#tbl-items').DataTable( {
+        "order": [[ 0, "asc" ]]
+    } );
+};
+
+function Load(){
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: "LoadTasksByUser"
+        }
+    })
+    .done(function( e ) {            
+        ShowData(e); 
+    })    
+    .fail(muestraError);
+};
+
+function UpdateEventHandler(){
+    id = $(this).parents("tr").find("td").eq(0).text();                   
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'Load',                
+            id:  id
+        }            
+    })
+    .done(function( e ) {
+        // mensaje de visitante salida correcta.
+        /*var data= JSON.parse(e);
+        $("#cedula").val(data[0].cedula);
+        $("#empresa").val(data[0].empresa);
+        $("#nombre").val(data[0].nombre);
+        $("#permiso")[0].checked= data[0].permisoanual==1?true:false;
+        $(".modal").css({ display: "block" }); */
+    })    
+    .fail(function(e){
+        /*$(".modal").css({ display: "none" });  
+        $("#textomensaje").text(e);
+        $("#mensajetop").css("background-color", "firebrick");
+        $("#mensajetop").css("color", "white");    
+        $("#mensajetop").css("visibility", "visible");
+        $("#mensajetop").slideDown("slow");
+        $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");*/
+    });
 };
 
 // Muestra información en ventana
@@ -289,41 +368,7 @@ function EventoClickEliminar(){
     })
 };
 
-function EventoClickModificar(){
-    $("#cedula").css({
-        "border-color": "green",
-        "border-width": "0.3px"
-    });
-    //                
-    id = $(this).parents("tr").find("td").eq(0).text();           
-    // Ajax: Consulta visitante.        
-    $.ajax({
-        type: "POST",
-        url: "class/Visitante.php",
-        data: { 
-            action: 'CargarID',                
-            idvisitante:  id
-        }            
-    })
-    .done(function( e ) {
-        // mensaje de visitante salida correcta.
-        var data= JSON.parse(e);
-        $("#cedula").val(data[0].cedula);
-        $("#empresa").val(data[0].empresa);
-        $("#nombre").val(data[0].nombre);
-        $("#permiso")[0].checked= data[0].permisoanual==1?true:false;
-        $(".modal").css({ display: "block" }); 
-    })    
-    .fail(function(e){
-        $(".modal").css({ display: "none" });  
-        $("#textomensaje").text(e);
-        $("#mensajetop").css("background-color", "firebrick");
-        $("#mensajetop").css("color", "white");    
-        $("#mensajetop").css("visibility", "visible");
-        $("#mensajetop").slideDown("slow");
-        $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");
-    });
-};
+
 
 function wait(ms){
           
