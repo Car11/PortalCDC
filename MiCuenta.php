@@ -54,10 +54,14 @@ $project=$project->GetByUserID();*/
     <section>
         <div id="navigation-opt-btn">
             <div id="new-btn">
-                <input type="button" id="btnnew" class="nbtn_blue-sp-c" value="Nuevo" onclick="New()";>      
+                <input type="button" id="btnnew" class="nbtn_blue-sp-c" value="Nuevo" onclick="New()">      
             </div>                
+            <div id="back-btn">                
+                <input type="button" id="btnRefresh" class="nbtn_gray-sp-c" onclick="Load()" value="Recargar" >
+                <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'">   
+            </div>
             <div id="back-btn">
-                <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'";>   
+                
             </div>
         </div>
         <div id="item-list">
@@ -105,7 +109,7 @@ $project=$project->GetByUserID();*/
                         </div>
                         <nav class="btnfrm">
                             <ul>
-                                <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>
+                                <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>                                
                                 <li><button type="button" class="nbtn_gray" onclick="Exit()" >Cerrar</button></li>
                             </ul>
                         </nav>                       

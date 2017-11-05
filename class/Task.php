@@ -9,8 +9,12 @@ if(isset($_POST["action"])){
         case "LoadAll":
             //echo json_encode($visitante->CargarTodos());
             break;
-        case "Load": // carga visitante por cedula
-            //echo json_encode($visitante->Cargar($_POST["cedula"]));
+        case "Load":
+            $task->id=$_POST["id"];
+            echo json_encode($task->Load());
+            break;
+        case "LoadTasksByUser": 
+            echo json_encode($task->LoadTasksByUser());
             break;        
         case "Insert":
             $task->title= $_POST["title"];
@@ -35,12 +39,21 @@ if(isset($_POST["action"])){
     
 class Task{
     public $id='';
-    public $send_id=123;
+    public $send_id=123;   // definir que es este dato.
     public $title;
     public $description;
     public $project_id;
-    //public $project_name;
+    public $date_completed;
+    public $owner_id;
+    public $date_creation;
+    public $date_modification;
+    public $position;
     public $column_id = 42;    // definir como se van a manejar las columnas del proyecto.
+
+    function __construct(){
+        require_once("Conexion.php");
+        require_once("Log.php");
+    }
 
     //
     // Funciones de Mantenimiento.
@@ -106,9 +119,40 @@ class Task{
                 echo json_encode($this);
             }
         }     
-        catch(Exception $e) {
-            log::AddD('FATAL', 'Ha ocurrido un error al realizar el insert', $e->getMessage());
-            header('Location: ../Error.php?w=conectar&id='.$e->getMessage());
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar el insert', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
+            exit;
+        }
+    }
+
+    function Load(){
+        try {
+            
+        }     
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
+            exit;
+        }
+    }
+
+    function LoadTasksByUser(){
+        try {
+            $sql='SELECT id, title, description, owner_id, position, date_creation, date_modification 
+                FROM tasks
+                where creator_id=:userid                
+                ORDER BY id desc';
+            $param= array(':userid'=>$_SESSION["userid"]);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
             exit;
         }
     }

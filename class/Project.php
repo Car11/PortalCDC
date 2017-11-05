@@ -54,8 +54,9 @@ class Project{
             return $data;
         }     
         catch(Exception $e) {
-            log::AddD('FATAL', 'Ha ocurrido un error al realizar el GetByUserID', $e->getMessage());
-            header('Location: ../Error.php?w=conectar&id='.$e->getMessage());
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar el GetByUserID', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');       
             exit;
         }
     }
