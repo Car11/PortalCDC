@@ -41,8 +41,8 @@ function LoadProjects(){
 function ShowData(e){
     // Limpia el div que contiene la tabla.
     $('#item-list').html(""); 
-    $('#item-list').append("<br><br><br> <table id='tbl-items' class='display' > </table>");
-    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>TITULO</th> <th>DESCRIPCIÓN</th>  <th>ASIGNADO</th> <th>ESTADO</th> <th>FECHA SOLICITUD</th> <th>MODIFICACIÓN</th> </tr></thead>"+
+    $('#item-list').append("<br><br><br> <table id='tbl-items' class='display' cellspacing='0' width='100%' > </table>");
+    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>TITULO</th> <th>DESCRIPCIÓN</th>  <th>ASIGNADO</th> <th>ESTADO</th> <th>FECHA SOLICITUD</th> <th>MODIFICACIÓN</th> <th>VER TAREA</th> </tr></thead>"+
         "<tbody id='tableBody'>  </tbody>";
     $('#tbl-items').append(col); 
     // carga lista con datos.
@@ -67,7 +67,7 @@ function ShowData(e){
     //$('.eliminar').click(EventoClickEliminar);
     // formato tabla
     $('#tbl-items').DataTable( {
-        "order": [[ 0, "asc" ]]
+        "order": [[ 5, "asc" ]]
     } );
 };
 
