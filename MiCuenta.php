@@ -10,10 +10,7 @@ if (!$sesion->estado){
     header('Location: Login.php');
     exit;
 }
-// Carga Proyectos de la cuenta
-/*include("class/Project.php");    
-$project= new Project();
-$project=$project->GetByUserID();*/
+
 ?>
 
 <html>
@@ -21,15 +18,18 @@ $project=$project->GetByUserID();*/
     <meta charset="UTF-8">
     <title>Mi Cuenta</title>
     <link href="css/Style-Base.css?v= <?php echo Globals::cssversion; ?>" rel="stylesheet" />
-    <!--<link href="css/dropdownmenu.css" rel="stylesheet"/> -->
+
     <script src="js/jquery.js" type="text/jscript"></script>    
 
     <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="css/Style-Task.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="css/Modal.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="css/datatables.css" type="text/css"/>     
 
     <script src="js/task.js" languaje="javascript" type="text/javascript"></script> 
+    <script src="js/datatables.js" type="text/javascript" charset="utf8"></script>
 </head>
+
 <body> 
     <header>
         <h1>LISTA DE VISITANTES</h1>        
@@ -54,11 +54,11 @@ $project=$project->GetByUserID();*/
     <section>
         <div id="navigation-opt-btn">
             <div id="new-btn">
-                <input type="button" id="btnnew" class="nbtn_blue-sp-c" value="Nuevo" onclick="New()">      
+                <input type="button" id="btnnew" class="nbtn_blue-sp-c" value="Nuevo" onclick="New()">
             </div>                
             <div id="back-btn">                
                 <input type="button" id="btnRefresh" class="nbtn_gray-sp-c" onclick="Load()" value="Recargar" >
-                <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'">   
+                <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'">
             </div>
             <div id="back-btn">
                 
@@ -67,7 +67,7 @@ $project=$project->GetByUserID();*/
         <div id="item-list">
         </div>
     </section>
-    <aside> 
+    <aside>
     </aside>
 
     <!-- MODAL formulario -->
@@ -78,7 +78,7 @@ $project=$project->GetByUserID();*/
                 <span class="close">&times;</span>
                 <h2>Solicitud de Servicio
                     <!--div id="loadinggif"><img src="img/loading.gif" height="40" > </div>         -->
-                </h2>                       
+                </h2>
             </div>
             <div id="messagetop-modal">
                 <div id="messagetop_display-modal">
@@ -91,7 +91,7 @@ $project=$project->GetByUserID();*/
                     <form name="task" id='task' method="POST" >
                         <label for="title"><span class="input-field-lbl">Título<span class="required">*</span></span>
                             <input autofocus type="text"  id="title"  style="text-transform:uppercase"
-                                class="input-field" name="title" title="Título de la tarea"  required >                                
+                                class="input-field" name="title" title="Título de la tarea"  required >                            
                         </label>
                         <label for="description"><span class="input-field-lbl">Descripción<span class="required">*</span></span>
                             <input type="text"                                  
@@ -100,16 +100,11 @@ $project=$project->GetByUserID();*/
                         <div class="cmbfield">
                             <input type="text" id="project" name="project" placeholder="SELECCIONE EL PROYECTO" class="field" readonly="readonly"> <div> </div> </input>
                             <ul class="list">
-                                <?php
-                                    /*for($i=0; $i<count($project); $i++){
-                                        print('<li>'.$project[$i][1].'</li>');                            
-                                    }*/
-                                ?>
                             </ul>
                         </div>
                         <nav class="btnfrm">
                             <ul>
-                                <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>                                
+                                <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>                    
                                 <li><button type="button" class="nbtn_gray" onclick="Exit()" >Cerrar</button></li>
                             </ul>
                         </nav>                       
@@ -124,9 +119,7 @@ $project=$project->GetByUserID();*/
 
         </div>
     </div>      
-    <!-- FIN MODAL -->
-
-     
+    <!-- FIN MODAL -->     
     
     </body>
 </html>

@@ -46,9 +46,16 @@ class Project{
     
     function GetByUserID(){
         try {
-            $sql='SELECT p.id, p.name, u.role
+           /* $sql='SELECT p.id, p.name, u.role
                 FROM kanboard.projects p INNER JOIN kanboard.project_has_users u on p.id=u.project_id
-                where u.user_id=:userid';
+                    INNER JOIN kanboard.project_has_group g on p.id=g.project_id
+                where u.user_id=:userid';*/
+            $sql= 'SELECT distinct(p.id), p.name
+                FROM kanboard.projects p  
+                INNER JOIN  kanboard.project_has_users u on p.id=u.project_id             
+                LEFT JOIN  kanboard.project_has_groups g on p.id=g.project_id             
+                INNER JOIN  kanboard.group_has_users  gu  on u.user_id=gu.user_id
+                WHERE p.id is not null or g.project_id is not null or gu.user_id is not null or u.project_id is not null AND u.user_id=:userid';
             $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;

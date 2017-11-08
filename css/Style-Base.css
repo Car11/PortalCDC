@@ -354,6 +354,10 @@ nav.btnfrm li {
 	background: #1478b1;
 }
 
+.nbtn_blue-sp-c:hover {
+	background: #1478b1;
+}
+
 .nbtn_gray {
     background: #3F3F3F;
 	border: none;
@@ -387,6 +391,10 @@ nav.btnfrm li {
 }
 
 .nbtn_gray:hover {
+	background: #1478b1;
+}
+
+.nbtn_gray-sp-c:hover {
 	background: #1478b1;
 }
 
