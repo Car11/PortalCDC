@@ -85,6 +85,32 @@ function Load(){
     .fail(showError);
 };
 
+function CleanCtls(){
+    $("#title").val('');
+    $("#description").val('');
+    $("#date_creation").val('');
+    $("#project_id").val('');
+    $("#column_id").val('');
+    $("#owner_id").val('');
+    $("#date_started").val('');
+};
+
+function ShowTaskData(e){
+    // Limpia el controles
+    CleanCtls();
+    // carga lista con datos.
+    var data= JSON.parse(e);
+    $("#title").val(data[0].title);
+    $("#description").val(data[1].title);
+    $("#date_creation").val(data[2].title);
+    $("#project_id").val(data[3].title);
+    $("#column_id").val(data[4].title);
+    $("#owner_id").val(data[5].title); //assigned
+    $("#date_started").val(data[6].title);
+    // Call API in order to get attachments and comments.
+    
+};
+
 function UpdateEventHandler(){
     id = $(this).parents("tr").find("td").eq(0).text();                   
     $.ajax({
@@ -96,23 +122,9 @@ function UpdateEventHandler(){
         }            
     })
     .done(function( e ) {
-        // mensaje de visitante salida correcta.
-        /*var data= JSON.parse(e);
-        $("#cedula").val(data[0].cedula);
-        $("#empresa").val(data[0].empresa);
-        $("#nombre").val(data[0].nombre);
-        $("#permiso")[0].checked= data[0].permisoanual==1?true:false;
-        $(".modal").css({ display: "block" }); */
+        ShowTaskData(e);
     })    
-    .fail(function(e){
-        /*$(".modal").css({ display: "none" });  
-        $("#textomensaje").text(e);
-        $("#mensajetop").css("background-color", "firebrick");
-        $("#mensajetop").css("color", "white");    
-        $("#mensajetop").css("visibility", "visible");
-        $("#mensajetop").slideDown("slow");
-        $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");*/
-    });
+    .fail(showError);
 };
 
 // Muestra información en ventana

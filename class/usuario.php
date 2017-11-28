@@ -2,7 +2,7 @@
 //session_start();
 
 class Usuario{
-    
+  
 public $usuario;
 public $contrasena;
 public $rol;
@@ -66,7 +66,7 @@ function __construct(){
     }
 
 	
-    function ValidarUsuario(){    
+    function Validar(){    
         $sql='SELECT usuario, idrol FROM usuario where contrasena=:contrasena  AND usuario=:usuario';
         $param= array(':usuario'=>$this->usuario, ':contrasena'=>$this->contrasena);        
         $data = DATA::Ejecutar($sql,$param);
@@ -79,24 +79,30 @@ function __construct(){
         }        
     }
 
-    function BuscaRol(){    // valida rol en bd y administra accesos a elementos de la web
-        $sql='SELECT idrol FROM usuario where usuario=:usuario';
+    function KanboardUser(){    // valida rol en bd y administra accesos a elementos de la web
+        $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
         $param= array(':usuario'=>$this->usuario);        
         $data = DATA::Ejecutar($sql,$param);
         if (count($data) ) {
-            $this->idrol= $data[0]['idrol'];
+            $this->id= $data[0]['id'];
+            $this->nombre= $data[0]['name'];
+            $this->email= $data[0]['email'];
+            $this->rol= $data[0]['role'];
+            $this->is_active= $data[0]['is_active'];
         }else {        
-            $this->idrol= 2; // Rol 
+            $this->rol= -1; // Rol 
         }        
     }
 
-    function ValidarUsuarioLDAP (){
-        error_reporting(0);
+    function LDAPCheck (){
+        //error_reporting(0);
+        ini_set('error_reporting', .0);
         $adServer = "icetel.ice";
         $ldapport = 3268;
         $ldap = ldap_connect($adServer, $ldapport);        
         $ldapUser = $this->usuario;
         $ldapPasswd = $this->contrasena;
+        //$ldaprdn =  $ldapUser;
         $ldaprdn = 'icetel' . "\\" . $ldapUser;
         //ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
         //ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
@@ -104,13 +110,14 @@ function __construct(){
         if ($bind) {
             $filter="(sAMAccountName=$ldapUser)";
             $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
-            ldap_sort($ldap,$result,"sn");
+            //ldap_sort($ldap,$result,"sn");
             $info = ldap_get_entries($ldap, $result);
             for ($i=0; $i<$info["count"]; $i++)
             {
                 if($info['count'] > 1)
                     break;
-                $this::BuscaRol();
+                // busca rol definido por la aplicacion.
+                $this::KanboardUser();
                 log::Add('INFO', 'Inicio de sesión: '. $this->usuario);
                 return true;  
             }

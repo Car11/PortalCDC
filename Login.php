@@ -33,7 +33,6 @@
     <header>
         <h1>Servicios</h1>        
         <div id="logo"><img src="img/Logoice.png" height="75" > </div>
-        <div id="fechahora"><span id="date"></span></div>
     </header>
     
     <aside></aside>
@@ -51,7 +50,7 @@
                         </ul>
                     </nav>
                 </form>      
-                <div id="invalido">
+                <div id="invalid">
                     <h3>Usuario o Contraseña Inválido</h3>
                 </div>
             </div>     
