@@ -17,7 +17,7 @@ class DATA {
     }  
 
     private static function Conectar(){
-        try {
+        try {          
             self::ConfiguracionIni();
             if(!isset(self::$conn)) {                                
                 self::$conn = new PDO('mysql:host='. self::$config[Globals::app]['host'] .';dbname=' . self::$config[Globals::app]['dbname'].';charset=utf8', self::$config[Globals::app]['username'],   self::$config[Globals::app]['password']); 

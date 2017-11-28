@@ -72,6 +72,7 @@ if (!$sesion->estado){
 
     <!-- MODAL formulario -->
     <div class="modal" id="modal-task" >
+
         <!-- Modal content -->
         <div class="modal-content">
             <div class="modal-header">
@@ -109,6 +110,7 @@ if (!$sesion->estado){
                             <input type="text" name="date_started" value="" id="date_started" >  
                             <input type="text" name="column_id" value="" id="column_id" >  
                         </div>
+
                         <nav class="btnfrm">
                             <ul>
                                 <li><button type="button" class="nbtn_blue" onclick="Save()" >Guardar</button></li>                    
@@ -120,6 +122,7 @@ if (!$sesion->estado){
                 </div>
             </div>    
 
+
             <div class="modal-footer">
                 <br>
             </div>
@@ -128,7 +131,6 @@ if (!$sesion->estado){
     </div>      
     <!-- FIN MODAL -->     
 
-    
     
     </body>
 </html>

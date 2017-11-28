@@ -2,7 +2,16 @@
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
+require_once("Conexion.php");
+require_once("Log.php");
+
+function __construct(){
+    require_once("Conexion.php");
+    require_once("Log.php");
+}
+
 Globals::ConfiguracionIni();
+
 if(isset($_POST["action"])){
     $task= new Task();
     switch($_POST["action"]){       
@@ -36,7 +45,6 @@ if(isset($_POST["action"])){
             break;        
     }
 }
-    
 class Task{
     public $id='';
     public $send_id=123;   // definir que es este dato.
@@ -60,10 +68,12 @@ class Task{
     //
     function Insert(){
         try {
+
             $curl = curl_init();            
             $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $this->send_id . ", \"params\": { \"owner_id\": 0, \"creator_id\": ". $_SESSION["userid"] . ", 
                 \"date_due\": \"\", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title .  "\", \"project_id\": " . $this->project_id . 
                 ", \"color_id\": \"green\", \"column_id\": " . $this->column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";            
+
             /*$data2 = array('jsonrpc' => '2.0',
                 'method'=> 'createTask',
                 'id'=>$this->send_id,
@@ -85,7 +95,8 @@ class Task{
                     'recurrence_basedate'=>0
                 )
             );*/
-            //echo $cadenaRapida;            
+
+            //echo $cadenaRapida; 
             curl_setopt_array($curl, array(
               CURLOPT_URL => Globals::$jsonrpcURL,
               CURLOPT_RETURNTRANSFER => true,
@@ -202,7 +213,6 @@ class Task{
                         "1"
                     ]
                 }*/
-                        
         }     
         catch(Exception $e) {            
             //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
