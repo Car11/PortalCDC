@@ -18,9 +18,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Control de Acceso</title>
-    <link href="css/Estilo.css?v=<?php echo Globals::cssversion; ?>" rel="stylesheet" />
+    <link href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" rel="stylesheet" />
     <script src="js/jquery.js" type="text/jscript"></script>
-    <script src="js/Funciones.js" languaje="javascript" type="text/javascript"></script>
+    <script src="js/Form-Validate.js" languaje="javascript" type="text/javascript"></script>
      <script>
         $('#username').attr("autocomplete", "off");
         $('#password').attr("autocomplete", "off");
@@ -31,7 +31,7 @@
 </head>
 <body>
     <header>
-        <h1>Control de Acceso - Centros de Datos Corporativos</h1>        
+        <h1>Servicios</h1>        
         <div id="logo"><img src="img/Logoice.png" height="75" > </div>
         <div id="fechahora"><span id="date"></span></div>
     </header>
@@ -42,7 +42,7 @@
        <h2>Ingrese su usuario y contraseña</h2>
         <div id="form">
             <div class="login">    
-                <form  name="Usuario" action="request/EnviaUsuario.php" method="POST">                      
+                <form  name="Usuario" action="request/postUsuario.php" method="POST">                      
                     <input type="text" id="username" class="input-field" name="username" placeholder="USUARIO" maxlength="20" /><br>
                     <input type="password" id="password" class="input-field" name="password" placeholder="CONTRASEÑA" maxlength="20" />
                     <nav class="btnfrm">
@@ -64,10 +64,10 @@
 <script> 
     var ID = '<?php print $ID ?>';
     if(ID=='invalid'){            
-        $("#invalido").css("visibility", "visible");
+        $("#invalid").css("visibility", "visible");
         //$("#invalido").slideDown("slow");
-            $("#mensaje").css("visibility", "visible");
-        $("h3").css("color", "firebrick");
+            //$("#mensaje").css("visibility", "visible");
+        //$("h3").css("color", "firebrick");
     }
 </script>
 </body>

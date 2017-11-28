@@ -1,0 +1,95 @@
+.st_input-field-desc, .st_input-field-time, .st_input-field{
+    color: rgb(184, 179, 179);
+    background: #555555;
+}
+
+
+.tbl-items{
+    color: rgb(44, 43, 43);
+}
+
+.form-control-file{
+    color: #fff;
+}
+/***********************combo box ******************************/
+ /*fondo #016DC4
+    texto #FFFFFF*/
+    .cmbfield {
+        margin: 0 auto;
+        margin-top: 20;
+        width: 350;
+    }
+    
+    .cmbfield .field {
+        width:100%; 
+        background: #016DC4; 
+        color:#FFFFFF;     
+        padding:5px 5px; 
+        border:none; 
+        cursor:pointer;
+        font-family:'lucida sans unicode',sans-serif; font-size:1.2em;
+        border:solid 1px #C2C2C2;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+    }
+    
+    .cmbfield .field:hover {
+        border: solid 1px #C2C2C2;
+        -moz-box-shadow: 0 0 5px #999;
+        -webkit-box-shadow: 0 0 5px #999;
+        box-shadow: 0 0 5px #999
+    }
+    
+    .cmbfield>ul.list {
+        display: none;
+        position: absolute;
+        /*left: 30px;
+        top: -30px;*/
+        z-index: 999;
+        width: 15%;
+        margin: 0;
+        padding: 10px;
+        list-style: none;
+        background: #fff;
+        color: #333;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        -moz-box-shadow: 0 0 5px #999;
+        -webkit-box-shadow: 0 0 5px #999;
+        box-shadow: 0 0 5px #999;
+    }
+    
+    .cmbfield>ul.list li {
+        padding: 10px;
+        border-bottom: solid 1px #ccc;
+    }
+    
+    .cmbfield>ul.list li:hover {
+        background: #1478b1;
+        color: #fff;
+    }
+    
+    .cmbfield>ul.list li:last-child {
+        border: none
+    }
+    
+    .field::-webkit-input-placeholder {
+        color: #FFFFFF;
+        text-align: center;
+    }
+    
+    .field::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #FFFFFF;
+        text-align: center;
+    }
+    
+    .fieldID{
+        display: none;
+    }
+    
+    
+    
+    
+    
