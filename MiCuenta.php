@@ -71,7 +71,7 @@ if (!$sesion->estado){
     </aside>
 
     <!-- MODAL formulario -->
-    <div class="modal" id="modal-index" >
+    <div class="modal" id="modal-task" >
         <!-- Modal content -->
         <div class="modal-content">
             <div class="modal-header">
@@ -94,13 +94,20 @@ if (!$sesion->estado){
                                 class="input-field" name="title" title="Título de la tarea"  required >                            
                         </label>
                         <label for="description"><span class="input-field-lbl">Descripción<span class="required">*</span></span>
-                            <input type="text"                                  
-                                class="input-field" name="description" value="" id="description" required >
+                            <input type="text" class="input-field" name="description" value="" id="description" required >
+                        </label>
+                        <label for="owner_id"><span class="input-field-lbl">Asignado</span>
+                            <input type="text" class="input-field" name="owner_id" value="" id="owner_id" >
                         </label>
                         <div class="cmbfield">
-                            <input type="text" id="project" name="project" placeholder="SELECCIONE EL PROYECTO" class="field" readonly="readonly"> <div> </div> </input>
+                            <input type="text" id="project_id" name="project_id" placeholder="SELECCIONE EL PROYECTO" class="field" readonly="readonly"> <div> </div> </input>
                             <ul class="list">
                             </ul>
+                        </div>
+                        <div id="task-details">
+                            <input type="text" name="date_creation" value="" id="date_creation" >  
+                            <input type="text" name="date_started" value="" id="date_started" >  
+                            <input type="text" name="column_id" value="" id="column_id" >  
                         </div>
                         <nav class="btnfrm">
                             <ul>
@@ -120,6 +127,8 @@ if (!$sesion->estado){
         </div>
     </div>      
     <!-- FIN MODAL -->     
+
+    
     
     </body>
 </html>
