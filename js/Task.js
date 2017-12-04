@@ -101,14 +101,33 @@ function ShowTaskData(e){
     // carga lista con datos.
     var data= JSON.parse(e);
     $("#title").val(data[0].title);
-    $("#description").val(data[1].title);
-    $("#date_creation").val(data[2].title);
+    $("#description").val(data[0].description);
+    /*$("#date_creation").val(data[2].title);
     $("#project_id").val(data[3].title);
     $("#column_id").val(data[4].title);
-    $("#owner_id").val(data[5].title); //assigned
-    $("#date_started").val(data[6].title);
+    $("#owner_id").val(data[5]); //assigned
+    $("#date_started").val(data[6].title);*/
     // Call API in order to get attachments and comments.
-    
+    LoadAttachments();
+};
+
+function LoadAttachments(){             
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'LoadTaskFiles',                
+            id:  id
+        }            
+    })
+    .done(function( e ) {
+        showAttachments(e);
+    })    
+    .fail(showError);
+};
+
+function showAttachments(e){
+    var data= JSON.parse(e);
 };
 
 function UpdateEventHandler(){

@@ -22,6 +22,10 @@ if(isset($_POST["action"])){
             $task->id=$_POST["id"];
             echo json_encode($task->Load());
             break;
+        case "LoadTaskFiles":
+            $task->id=$_POST["id"];
+            echo json_encode($task->LoadTaskFiles());
+            break;
         case "LoadTasksByUser": 
             echo json_encode($task->LoadTasksByUser());
             break;        
@@ -186,7 +190,7 @@ class Task{
                 } else {
                     $response= explode(",",$response)[1];
                     $this->id= (int)explode(":",$response)[1]; // id task
-                    echo json_encode($this);
+                    // echo json_encode($this);
                 }                        
         }     
         catch(Exception $e) {            
