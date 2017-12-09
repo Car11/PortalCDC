@@ -158,7 +158,7 @@ class Task{
     }
 
     // lista de archivos adjuntos.
-    function LoadTaskFiles(){
+    /*function LoadTaskFiles(){
         try {
             $curl = curl_init();            
             $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"getAllTaskFiles\", \"id\": " . $this->id . ", \"params\": { \"task_id\": ". $this->id ." } }";
@@ -192,6 +192,24 @@ class Task{
                     $this->id= (int)explode(":",$response)[1]; // id task
                     // echo json_encode($this);
                 }                        
+        }     
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
+            exit;
+        }
+    }*/
+
+    function LoadTaskFiles(){
+        try {
+            $sql='SELECT id, name, date 
+                FROM task_has_files
+                where TASK_ID= :taskId AND IS_IMAGE=0              
+                ORDER BY name ';
+            $param= array(':taskId'=>$this->id);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
         }     
         catch(Exception $e) {            
             //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());

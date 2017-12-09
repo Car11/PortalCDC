@@ -1,6 +1,20 @@
 var id = "NULL";
 
 $(document).ready( function () {
+    //accordeon
+    var acc = document.getElementsByClassName("accordion");
+    var i;    
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function(){
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        }
+    }
     //vuelve al menu
     this.Exit = function(){
         $(".modal").css({ display: "none" });
@@ -36,6 +50,30 @@ function LoadProjects(){
          loadProjectsByUser(e);
     })    
     .fail(showError);
+};
+
+function showAttachments(e){
+    // Limpia el div que contiene la tabla.
+    $('#file-list').html(""); 
+    $('#file-list').append("<br><br><br> <table id='tbl-file' class='display' cellspacing='0' width='100%' > </table>");
+    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>Nombre del Archivo</th> <th>Fecha</th> </tr></thead>"+
+        "<tbody id='tableBody-file'>  </tbody>";
+    $('#tbl-file').append(col); 
+    //
+    var data= JSON.parse(e);
+    $.each(data, function(i, item) {
+        var row="<tr class=datarow>"+
+            "<td style='display:none;' >" + item.id +"</td>" +
+            "<td>"+ item.name + "</td>"+
+            "<td>"+ item.date + "</td>"+
+            // "<td><img id=imgdelete src=img/file_mod.png class=modificar></td>"+
+            //"<td><img id=imgdelete src=img/file_delete.png class=eliminar></td>"+
+        "</tr>";
+        $('#tableBody-file').append(row);
+    })
+    /*$('#tbl-file').DataTable( {
+        "order": [[ 1, "asc" ]]
+    } );*/
 };
 
 function ShowData(e){
@@ -126,11 +164,8 @@ function LoadAttachments(){
     .fail(showError);
 };
 
-function showAttachments(e){
-    var data= JSON.parse(e);
-};
-
 function UpdateEventHandler(){
+    $(".modal").css({ display: "block" });  
     id = $(this).parents("tr").find("td").eq(0).text();                   
     $.ajax({
         type: "POST",
@@ -140,7 +175,7 @@ function UpdateEventHandler(){
             id:  id
         }            
     })
-    .done(function( e ) {
+    .done(function( e ) {        
         ShowTaskData(e);
     })    
     .fail(showError);
