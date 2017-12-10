@@ -32,7 +32,7 @@ if (!$sesion->estado){
 
 <body> 
     <header>
-        <h1>LISTA DE VISITANTES</h1>        
+        <h1>Mis Tareas</h1>        
         <div id="logo"><img src="img/Logoice.png" height="75" > </div>
         <div id="signin">
             <span>Usuario: 
@@ -120,7 +120,7 @@ if (!$sesion->estado){
                                         <li>
                                             <a href="/kanboard/?controller=TaskFileController&amp;action=confirm&amp;task_id=2251&amp;project_id=11&amp;file_id=34" class="js-modal-confirm" title='' ><i class="fa fa-trash-o fa-fw js-modal-confirm" aria-hidden="true"></i>Suprimir</a>                                    </li>
                                     </ul>
-                                </div>-->
+                                </div>
                                 <ul id="menu">
                                     <li>
                                         <input id="check01" type="checkbox" name="menu"/>
@@ -130,7 +130,7 @@ if (!$sesion->estado){
                                         <li><a href="#">Sotto menu 2</a></li>
                                         </ul>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                         <button type='button' class="accordion">Comentarios</button>

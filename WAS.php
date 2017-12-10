@@ -74,12 +74,21 @@ if (!$sesion->estado){
                     <label for="app"><span class="">Nombre de la aplicación<span class="required">*</span></span>
                         <input autofocus type="text"  id="app" class="form-control"  style="text-transform:uppercase"  name="app" title="Aplicación"  required >                                                    
                     </label>
-                    <input autofocus type="text"  id="node" class="form-control"  style="text-transform:uppercase" name="node" title="Número del nodo" value="01" required >  
+                    <input type="text"  id="node" class="form-control"  style="text-transform:uppercase" name="node" title="Número del nodo" value="01" required >  
                     <label for="prd"><span class="">PRODUCCIÓN</span>
-                        <input type="checkbox" name="prd" id="prd" class="form-control" >
+                        <input type="checkbox" name="prd" id="prd"  >
                     </label>
                 </div>
                 
+                <div class="form-group">
+                    <label for="clustername"> <span class="">CLUSTER<span class="required">*</span></span>
+                    <input  type="text"  id="clustername"  
+                        class="form-control" name="clustername" title="cluster name"  required >                            
+                    </label>
+                    <label for="membername"><span class="">membername<span class="required">*</span></span>
+                        <input  type="text"  id="membername"  class="form-control" name="membername" title="member name"  required >                            
+                    </label>
+                </div>
             </div>
         </div> 
 
@@ -98,14 +107,7 @@ if (!$sesion->estado){
             
             
 
-            <label for="clustername"><span class="">CLUSTER<span class="required">*</span></span>
-                <input autofocus type="text"  id="clustername"  
-                    class="" name="clustername" title="cluster name"  required >                            
-            </label>
-            <label for="membername"><span class="">membername<span class="required">*</span></span>
-                <input autofocus type="text"  id="membername"  
-                    class="" name="membername" title="member name"  required >                            
-            </label>
+            
             <br><br>
 
             <label for="alias"><span class="">JAAS-ALIAS<span class="required">*</span></span>
