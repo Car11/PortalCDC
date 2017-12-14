@@ -186,7 +186,7 @@ class Task{
     function DownloadTaskFile(){
         try {
             $curl = curl_init();            
-            $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"downloadTaskFile\", \"id\": " . $this->idFile . ", \"params\": [\"1\"] }";
+            $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"downloadTaskFile\", \"id\": " . $this->idFile . ", \"params\": [". $this->idFile . "] }";
             //
             curl_setopt_array($curl, array(
                 CURLOPT_URL => Globals::$jsonrpcURL,
