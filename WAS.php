@@ -14,25 +14,23 @@ if (!$sesion->estado){
 
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Inventario WAS</title>
-    <!-- CSS -->     
-    <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
-    <link rel="stylesheet" href="css/Bootstrap.min.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-  
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="js/bootstrap.min.js" languaje="javascript" type="text/javascript"></script> 
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    
+    <link rel="stylesheet" href="assets/css/Checkbox-Button.css">
+    <link rel="stylesheet" href="assets/css/Checkbox-Button1.css">
+    <link rel="stylesheet" href="assets/css/PHP-Contact-Form-dark.css">
+    <link rel="stylesheet" href="assets/css/PHP-Contact-Form-dark1.css">
 
-    <!--<link rel="stylesheet" href="css/datatables.css" type="text/css">        
-    <link rel="stylesheet" href="css/sweetalert2.css" type="text/css"/> -->
-    <!-- JS  -->
+
+    <link rel="stylesheet" href="assets/css/styles.css">
     <script src="js/jquery.js" type="text/jscript"></script>
     <script src="js/Was.js" languaje="javascript" type="text/javascript"></script> 
-    <!--<script type="text/javascript" charset="utf8" src="js/datatables.js"></script>
-    <script src="js/sweetalert2.js"></script>
-    
-    <script src="js/Validaciones.js" languaje="javascript" type="text/javascript"></script>  -->
+    <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
     
 </head>
 
@@ -50,12 +48,113 @@ if (!$sesion->estado){
             </span>
         </div>
     </header>
-    
-    <div id="messagetop_display">
+
+    <div id="contact">
+        <div class="container">
+        <div id="messagetop_display">
         <div id="messagetop">
             <span id="messagetext"></span>
         </div>
     </div>  
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="button" id="btnGen" class="nbtn_blue-sp-c" value="Generar" onclick="Gen()">
+            </div>
+            <div class="col-lg-8" >
+                <input type="button" id="btnRefresh" class="nbtn_gray-sp-c" onclick="Load()" value="Recargar" >
+                <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'">
+            </div>
+            <br><br><br><br><br><br>
+        </div> 
+            <!--<div class="intro">
+                <h2>aplicaciones was</h2>
+                <p>Herramienta de diseño de aplicaciones web</p>
+            </div>-->
+            <form method="post" id="was-form">
+                <div class="messages"></div>
+                <div class="controls">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="app" class="control-label">Nombre de la aplicación* </label><input type="text" name="app" required placeholder="APP" style="text-transform:uppercase" autofocus class="form-control" id="app" data-error="Requerido" />
+                                <div  class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label for="node" class="control-label">NODO* </label><input type="number" name="node" required placeholder="Número del nodo donde se instala" value="01" inputmode="numeric" class="form-control" id="node" data-error="Requerido Numérico."
+                            />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"><label for="prd" class="control-label">PRODUCCIÓN    </label>
+                    <div class="btn-group" data-toggle="buttons">
+                        <input type="checkbox" id ="prd" />
+                        <!--<label class="btn btn-success active">
+                            
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>-->
+                    </div>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6" style="background-color:#4e4e4e;">
+                <div class="form-group"><label for="fullappname" class="control-label">Full App Name </label><input type="text" name="fullappname" readonly class="form-control" id="fullappname"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="clustername" class="control-label">Cluster </label>
+                    <input type="text" name="cluster" class="form-control" id="clustername" readonly />                     
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="membername" class="control-label">MemberName </label><input type="text" name="cluster" readonly class="form-control" id="membername"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="alias" class="control-label">JAAS-Alias </label><input type="text" readonly name="alias" class="form-control" id="alias"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="description" class="control-label">Descripción </label><input type="text" name="description" readonly class="form-control" id="description"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="datasource" class="control-label">Datasource </label><input type="text" readonly name="datasource" class="form-control" id="datasource"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="jndi" class="control-label">JNDI </label><input type="text" name="jndi" readonly class="form-control" id="jndi"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="ftp" class="control-label">FTP user</label><input type="text" name="ftp" readonly class="form-control" id="ftp"  />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--<div class="col-md-12"><button class="btn btn-success btn-send" type="submit" value="Enviar">Enviar </button></div>-->
+        </div>
+        </form>
+    </div>
+    </div>
+
+
+
+
+    <!--
+    
+    
 
     <div class="container">
         <div class="row">
@@ -136,9 +235,8 @@ if (!$sesion->estado){
             </label>
 
         </div>
-        <!-- <div id="item-list">
-         </div>-->
-    </div>
+
+    </div>-->
 
     
     </body>
