@@ -7,6 +7,10 @@ $(document).ready( function () {
 });
 
 function Gen(){
+    //FULL APP NAME
+    $("#fullappname").val(
+        ($("#prd")[0].checked ? "ASP" : "ASC") +  $("#app").val().toLowerCase()  + $("#node").val()
+    );
     // CLUSTER
     $("#clustername").val(
         "C" + $("#app").val().toUpperCase()  + ($("#prd")[0].checked ? "prd" : "cer")

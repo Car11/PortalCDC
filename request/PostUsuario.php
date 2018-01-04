@@ -1,5 +1,5 @@
 <?php 
-    require_once("../class/usuario.php");
+    require_once("../class/Usuario.php");
     require_once("../class/Sesion.php");
     require_once("../class/Log.php");
 

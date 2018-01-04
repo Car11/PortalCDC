@@ -41,7 +41,7 @@
        <h2>Ingrese su usuario y contraseña</h2>
         <div id="form">
             <div class="login">    
-                <form  name="Usuario" action="request/postUsuario.php" method="POST">                      
+                <form  name="Usuario" action="request/PostUsuario.php" method="POST">                      
                     <input type="text" id="username" class="input-field" name="username" placeholder="USUARIO" maxlength="20" /><br>
                     <input type="password" id="password" class="input-field" name="password" placeholder="CONTRASEÑA" maxlength="20" />
                     <nav class="btnfrm">
