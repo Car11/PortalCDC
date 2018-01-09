@@ -31,6 +31,7 @@ if (!$sesion->estado){
     <script src="js/jquery.js" type="text/jscript"></script>
     <script src="js/Was.js" languaje="javascript" type="text/javascript"></script> 
     <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
+    <script src="js/bootstrap.min.js" languaje="javascript" type="text/javascript"></script> 
     
 </head>
 
@@ -70,37 +71,48 @@ if (!$sesion->estado){
                 <h2>aplicaciones was</h2>
                 <p>Herramienta de diseño de aplicaciones web</p>
             </div>-->
-            <form method="post" id="was-form">
-                <div class="messages"></div>
-                <div class="controls">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group"><label for="app" class="control-label">Nombre de la aplicación* </label><input type="text" name="app" required placeholder="APP" style="text-transform:uppercase" autofocus class="form-control" id="app" data-error="Requerido" />
-                                <div  class="help-block with-errors"></div>
-                        </div>
-                    </div>
+        <form method="post" id="was-form">
+            <div class="messages"></div>
+            <div class="controls">
+                <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group"><label for="node" class="control-label">NODO* </label><input type="number" name="node" required placeholder="Número del nodo donde se instala" value="01" inputmode="numeric" class="form-control" id="node" data-error="Requerido Numérico."
-                            />
-                            <div class="help-block with-errors"></div>
-                        </div>
+                        <div class="form-group"><label for="app" class="control-label">Nombre de la aplicación* </label><input type="text" name="app" required placeholder="APP" style="text-transform:uppercase" autofocus class="form-control" id="app" data-error="Requerido" />
+                            <div  class="help-block with-errors"></div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group"><label for="node" class="control-label">NODO* </label><input type="number" name="node" required placeholder="Número del nodo donde se instala" value="01" inputmode="numeric" class="form-control" id="node" data-error="Requerido Numérico."
+                        />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group"><label for="prd" class="control-label">PRODUCCIÓN    </label>
                     <div class="btn-group" data-toggle="buttons">
                         <input type="checkbox" id ="prd" />
-                        <!--<label class="btn btn-success active">
-                            
+                        <!--<label class="btn btn-success active">                            
                             <span class="glyphicon glyphicon-ok"></span>
                         </label>-->
                     </div>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <div class="col-md-6" style="background-color:#4e4e4e;">
+            
+            <div class="col-md-6">
+                <div class="form-group"><label class="control-label" for="basedatos">Base de datos</label>
+                    <select class="selectpicker" id="basedatos">
+                        <option>Oracle</option>
+                        <option>Sybase</option>
+                        <option>SqlServer</option>
+                        <option>MySql</option>
+                    </select>
+                </div>
+            </div>           
+            
+            <div class="col-md-12" style="background-color:#4e4e4e;">
                 <div class="form-group"><label for="fullappname" class="control-label">Full App Name </label><input type="text" name="fullappname" readonly class="form-control" id="fullappname"  />
                     <div class="help-block with-errors"></div>
                 </div>
@@ -136,7 +148,7 @@ if (!$sesion->estado){
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group"><label for="ftp" class="control-label">FTP user</label><input type="text" name="ftp" readonly class="form-control" id="ftp"  />
                     <div class="help-block with-errors"></div>
                 </div>

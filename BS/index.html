@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body>
+<body><span class="label label-default" style="background-color:rgb(255,255,255);color:rgb(0,0,0);">Nombre de la aplicación</span><input type="text">
     <div id="contact">
         <div class="container">
             <div class="intro">
@@ -52,6 +52,18 @@
                 <div class="help-block with-errors"></div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group"><label class="control-label" for="form_email">Base de datos</label>
+                <div class="dropdown"><button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a href="#">First Item</a></li>
+                        <li role="presentation"><a href="#">Second Item</a></li>
+                        <li role="presentation"><a href="#">Third Item</a></li>
+                    </ul>
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
         <div class="col-md-6" style="background-color:#4e4e4e;">
             <div class="form-group"><label class="control-label" for="form_phone">Aplicación </label><input class="form-control" type="number" name="fullappname" disabled="" readonly="" id="form_phone" data-error="Telefonnummer erforderlich">
                 <div class="help-block with-errors"></div>
@@ -84,11 +96,6 @@
         </div>
         <div class="col-md-6">
             <div class="form-group"><label class="control-label" for="form_phone">JNDI </label><input class="form-control" type="number" name="jndi" readonly="" id="form_phone" data-error="Telefonnummer erforderlich">
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group"><label class="control-label" for="form_phone">FTP user</label><input class="form-control" type="number" name="ftpuser" readonly="" id="form_phone" data-error="Telefonnummer erforderlich">
                 <div class="help-block with-errors"></div>
             </div>
         </div>

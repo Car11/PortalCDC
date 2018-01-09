@@ -18,8 +18,21 @@ if(isset($_POST["action"])){
         case "Connect":
             $ldapp->username= $_POST["username"];
             $ldapp->password= $_POST["password"];
+            $ldapp->ambiente= $_POST["ambiente"];
             $ldapp->Connect();
-            echo 'ok';
+            break;    
+        case "getGroupsByAppName":
+            $ldapp->username= $_POST["username"];
+            $ldapp->password= $_POST["password"];
+            $ldapp->ambiente= $_POST["ambiente"];
+            $app= $_POST["app"];
+            $ldapp->getGroupsByAppName($app);
+            break;    
+        case "getMembershipByUser":
+            //$ldapp->username= $_POST["username"];
+            //$ldapp->password= $_POST["password"];
+            //$ldapp->ambiente= $_POST["ambiente"];            
+            $ldapp->getMembershipByUser($_POST["uids"]);
             break;    
     }
 }
@@ -28,8 +41,15 @@ class LDAPP{
   
 public $username;
 public $password;
-
-
+public $uid;
+public $ambiente;
+public $fulldn;
+public $dn;
+public $email;
+public $givenname;
+public $sn;
+public $ou;
+public $uniqueidentifier;
 
     function __construct(){
         require_once("Conexion.php");
@@ -50,41 +70,141 @@ public $password;
             $this->rol= -1; // Rol 
         }        
     }
-
    
     function Connect (){
-        //error_reporting(0);
-        ini_set('error_reporting', .0);
+        error_reporting(1);
+        ini_set('error_reporting', 1);
         $adServer = "10.129.20.138";
         $ldapport = 389;
-        $ldap = ldap_connect($adServer, $ldapport);        
-        $ldapUser = $this->usuario;
-        $ldapPasswd = $this->contrasena;
-        //$ldaprdn =  $ldapUser;
-        $ldaprdn = 'icetel' . "\\" . $ldapUser;
-        //ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-        //ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-        $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);
-        if ($bind) {
-            $filter="(sAMAccountName=$ldapUser)";
-            $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
-            //ldap_sort($ldap,$result,"sn");
-            $info = ldap_get_entries($ldap, $result);
-            for ($i=0; $i<$info["count"]; $i++)
-            {
-                if($info['count'] > 1)
-                    break;                
-                log::Add('INFO', 'Inicio de sesiÃ³n: '. $this->usuario);
-                return true;  
+        $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
+        if($ldapconn){
+            ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+            // binding to ldap server with standard user            
+            $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
+            $pwconn= 'ldaputil71';
+            $ldapbind = ldap_bind($ldapconn, $userconn, $pwconn);
+            if ($ldapbind) {
+                $dn = "o=grupoice,o=ice";
+                $filter="(|(cn=*$this->username*))";
+                $sr=ldap_search($ldapconn, $dn, $filter);
+                $first = ldap_first_entry($ldapconn, $sr);
+                $info = ldap_get_entries($ldapconn, $sr);
+                // full dn
+                $dn = ldap_get_dn($ldapconn, $first);
+                $_SESSION["FULLDN"]= $dn;
+                $attrs = ldap_get_attributes($ldapconn, $first);
+                $info = ldap_get_entries($ldapconn, $sr);
+                // membresías
+                // RAMA
+                // APPS-PRD
+                $dn=""; 
+                $filter = "objectClass=applicationEntity";
+                switch ($this->ambiente){
+                    case 'Desarrollo':
+                        $dn = "o=des,o=ice";
+                        //$filter = "objectClass=organizationalUnit";
+                        break;
+                    case 'Producción':
+                        $dn = "ou=grupos,o=grupoice,o=ice";
+                        //$filter = "objectClass=applicationEntity";
+                        break;
+                }          
+                //
+                $result=ldap_list($ldapconn, $dn, $filter) or die("No se encontraron aplicaciones."); 
+                $info = ldap_get_entries($ldapconn, $result);
+                echo json_encode($info);                            
             }
-            @ldap_close($ldap);
-        } else {
-            log::Add('INFO', 'Inicio de sesiÃ³n InvÃ¡lida: '. $this->usuario);
-            return false;  
-        }
+            else header("Status: 500 Not Found");; // error ajax
+        }  else header("Status: 500 LDAP Server Not Found");; // error ajax
+    }
+      
+    function getGroupsByAppName($app){
+        error_reporting(1);
+        ini_set('error_reporting', 1);
+        $adServer = "10.129.20.138";
+        $ldapport = 389;
+        $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
+        if($ldapconn){
+            ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+            // binding to ldap server with standard user            
+            $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
+            $pwconn= 'ldaputil71';
+            $ldapbind = ldap_bind($ldapconn, $userconn, $pwconn);
+            if ($ldapbind) {
+                $dn=""; 
+                $filter = "objectClass=groupOfNames";
+                switch ($this->ambiente){
+                    case 'Desarrollo':
+                        $dn = "cn=$app,o=des,o=ice";
+                        //$filter = "objectClass=organizationalUnit";
+                        break;
+                    case 'Producción':
+                        $dn = "cn=$app,ou=grupos,o=grupoice,o=ice";
+                        //$filter = "objectClass=applicationEntity";
+                        break;
+                }
+                //                
+                $result=ldap_list($ldapconn, $dn, $filter) or die("No se encontraron Grupos."); 
+                $info = ldap_get_entries($ldapconn, $result);
+                echo json_encode($info);
+
+            }
+        }        
     }
 
-	
+    function getMembershipByUser($uids){
+        error_reporting(1);
+        ini_set('error_reporting', 1);
+        $adServer = "10.129.20.138";
+        $ldapport = 389;
+        $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
+        if($ldapconn){
+            ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+            // binding to ldap server with standard user            
+            $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
+            $pwconn= 'ldaputil71';
+            $ldapbind = ldap_bind($ldapconn, $userconn, $pwconn);
+            if ($ldapbind) { 
+                $dn = "o=ice";
+                $filter="(|(cn=*$uids[0]*))";
+                $sr=ldap_search($ldapconn, $dn, $filter);
+                $first = ldap_first_entry($ldapconn, $sr);
+                $info = ldap_get_entries($ldapconn, $sr);
+                // full dn
+                //$dn = ldap_get_dn($ldapconn, $first);
+                //member of
+                $attrs = array("description");
+                $filter =  "(member=cn=Carlos Eduardo Chacon Calvo (cachac7),ou=empleados,o=grupoice,o=ice)";
+                //$ldap_dn = "CN=Users,DC=ad,DC=domain";
+                $result = ldap_search($ldapconn, $dn, $filter);
+                $entries = ldap_get_entries($ldapconn, $result);
+
+
+                if(isset($entries)){
+                    foreach($entries[0]['description'] as $grps){
+                        echo "$grps<br>";
+                    }
+                }
+
+
+
+
+                //$attributes = array('members');
+                //$result = ldap_read($ad, $userdn, "(memberof={*})", $attributes);
+                //if ($result === FALSE) { return FALSE; };
+                //$entries = ldap_get_entries($ad, $result);
+                //$result=ldap_list($ldapconn, $dn) or die("No se encontraron membresías."); 
+                //$info = ldap_get_entries($ldapconn, $result);
+            }
+        }        
+    }
+
+
+
+
     function Validar(){    
         $sql='SELECT usuario, idrol FROM usuario where contrasena=:contrasena  AND usuario=:usuario';
         $param= array(':usuario'=>$this->usuario, ':contrasena'=>$this->contrasena);        
@@ -97,8 +217,7 @@ public $password;
             return false;           
         }        
     }
-    
-    
+       
     
     function Cargar(){    
         $sql='SELECT nombre FROM usuario WHERE usuario=:usuario';
