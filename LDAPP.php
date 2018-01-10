@@ -18,12 +18,12 @@ if (!$sesion->estado){
     <title>Administración de usuarios de Aplicaciones WEB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSS -->     
-    <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="css/Style-Base.css" />
     <link rel="stylesheet" href="css/Bootstrap.min.css" />
     <link rel="stylesheet" href="LDaap/assets/css/bootstrap-select.css">
 
     <script src="js/jquery.js" type="text/jscript"></script>
-    <script src="js/bootstrap.min.js" languaje="javascript" type="text/javascript"></script> 
+    <script src="assets/bootstrap/js/bootstrap.min.js" languaje="javascript" type="text/javascript"></script> 
     <script src="LDaap/assets/js/bootstrap-select.js" languaje="javascript" type="text/javascript"></script>
     <script src="js/Ldapp.js" languaje="javascript" type="text/javascript"></script> 
     
