@@ -32,7 +32,10 @@ if(isset($_POST["action"])){
             //$ldapp->username= $_POST["username"];
             //$ldapp->password= $_POST["password"];
             //$ldapp->ambiente= $_POST["ambiente"];            
-            $ldapp->getMembershipByUser($_POST["uids"]);
+            echo json_encode($ldapp->getMembershipByUser($_POST["uids"]));
+            break;    
+        case "getRamas":           
+            echo json_encode($ldapp->getRamas());
             break;    
     }
 }
@@ -78,8 +81,8 @@ public $uniqueidentifier;
         $ldapport = 389;
         $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
         if($ldapconn){
-            ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-            ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+            ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
             // binding to ldap server with standard user            
             $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
             $pwconn= 'ldaputil71';
@@ -113,6 +116,7 @@ public $uniqueidentifier;
                 //
                 $result=ldap_list($ldapconn, $dn, $filter) or die("No se encontraron aplicaciones."); 
                 $info = ldap_get_entries($ldapconn, $result);
+                array_shift($info); 
                 echo json_encode($info);                            
             }
             else header("Status: 500 Not Found");; // error ajax
@@ -126,8 +130,8 @@ public $uniqueidentifier;
         $ldapport = 389;
         $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
         if($ldapconn){
-            ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-            ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+            ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
             // binding to ldap server with standard user            
             $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
             $pwconn= 'ldaputil71';
@@ -148,6 +152,7 @@ public $uniqueidentifier;
                 //                
                 $result=ldap_list($ldapconn, $dn, $filter) or die("No se encontraron Grupos."); 
                 $info = ldap_get_entries($ldapconn, $result);
+                array_shift($info); 
                 echo json_encode($info);
 
             }
@@ -161,47 +166,67 @@ public $uniqueidentifier;
         $ldapport = 389;
         $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
         if($ldapconn){
-            ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-            ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+            ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
             // binding to ldap server with standard user            
             $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
             $pwconn= 'ldaputil71';
             $ldapbind = ldap_bind($ldapconn, $userconn, $pwconn);
             if ($ldapbind) { 
-                $dn = "o=ice";
+                $basedn = "o=grupoice,o=ice";
                 $filter="(|(cn=*$uids[0]*))";
-                $sr=ldap_search($ldapconn, $dn, $filter);
+                $sr=ldap_search($ldapconn, $basedn, $filter);
                 $first = ldap_first_entry($ldapconn, $sr);
                 $info = ldap_get_entries($ldapconn, $sr);
                 // full dn
-                //$dn = ldap_get_dn($ldapconn, $first);
+                $dn = ldap_get_dn($ldapconn, $first);
                 //member of
                 $attrs = array("description");
-                $filter =  "(member=cn=Carlos Eduardo Chacon Calvo (cachac7),ou=empleados,o=grupoice,o=ice)";
-                //$ldap_dn = "CN=Users,DC=ad,DC=domain";
-                $result = ldap_search($ldapconn, $dn, $filter);
+                $filter =  "(&(member=*cavale*))"; //(&(member=*cavale*))";                
+                $result = ldap_search($ldapconn,$basedn,$filter, $attrs);
                 $entries = ldap_get_entries($ldapconn, $result);
-
-
+                //
                 if(isset($entries)){
-                    foreach($entries[0]['description'] as $grps){
-                        echo "$grps<br>";
-                    }
-                }
-
-
-
-
-                //$attributes = array('members');
-                //$result = ldap_read($ad, $userdn, "(memberof={*})", $attributes);
-                //if ($result === FALSE) { return FALSE; };
-                //$entries = ldap_get_entries($ad, $result);
-                //$result=ldap_list($ldapconn, $dn) or die("No se encontraron membresías."); 
-                //$info = ldap_get_entries($ldapconn, $result);
+                    array_shift($entries); 
+                    return $entries;
+                } else echo "No hay Datos";
             }
         }        
     }
 
+    function getRamas(){
+        $adServer = "10.129.20.138";
+        $ldapport = 389;
+        $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
+        if($ldapconn){
+            ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+            // binding to ldap server with standard user            
+            $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
+            $pwconn= 'ldaputil71';
+            $ldapbind = ldap_bind($ldapconn, $userconn, $pwconn);
+            if ($ldapbind) { 
+                $basedn = "o=grupoice,o=ice";
+                $filter="objectClass=organizationalUnit";
+                $attrs = array("ou");
+                $sr=ldap_search($ldapconn, $basedn, $filter, $attrs);
+                //$first = ldap_first_entry($ldapconn, $sr);
+                $info = ldap_get_entries($ldapconn, $sr);
+                // full dn
+                //$dn = ldap_get_dn($ldapconn, $first);
+                //member of
+                /*$attrs = array("description");
+                $filter =  "(&(member=*$uids[0]*))";                
+                $result = ldap_search($ldapconn,$basedn,$filter, $attrs);
+                $entries = ldap_get_entries($ldapconn, $result);*/
+                //
+                if(isset($info)){
+                    array_shift($info); 
+                    return $info;
+                } else echo "No Hay Datos.";
+            }
+        }        
+    }
 
 
 

@@ -81,13 +81,17 @@ if (!$sesion->estado){
             <div class="col-md-8 col-md-offset-1">
                 <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Ambiente </strong></p>
             </div>
-            <div class="col-md-10 col-md-offset-1"><select name="ambiente" id="ambiente" class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Ambiente"><option value>Desarrollo</option><option value>Producción</option></optgroup></select></div>
+            <div class="col-md-10 col-md-offset-1"><select name="ambiente" id="ambiente"  onchange="getGroupsByAppName()" class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Ambiente"><option value>Desarrollo</option><option value>Producción</option></optgroup></select></div>
         </div>
         <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
             <div class="col-md-8 col-md-offset-1">
                 <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Rama </strong></p>
             </div>
-            <div class="col-md-10 col-md-offset-1"><select name="rama" id="rama"  class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Gender"><option value>Empleados</option><option value>Clientes</option><option value>Proveedores</option></optgroup></select></div>
+            <div class="col-md-10 col-md-offset-1">
+                <select name="rama" id="rama"  class="form-control" style="font-family:Roboto, sans-serif;">
+                    <optgroup label="Rama"></optgroup>
+                </select>
+            </div>
         </div>
         <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
             <div class="col-md-8 col-md-offset-1">
@@ -114,7 +118,7 @@ if (!$sesion->estado){
                 <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Lista de Usuarios </strong></p>
             </div>            
             <div class="col-md-10 col-md-offset-1">
-                <textarea class="form-control" id="usuarios" placeholder="Copie y pegue la lista de usuarios." style="font-family:Roboto, sans-serif;" required></textarea>
+                <textarea class="form-control" id="usuarios" placeholder="Copie y pegue la lista de usuarios." style="font-family:Roboto, sans-serif;" required>cachac7</textarea>
             </div>
         </div>
 

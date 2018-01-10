@@ -2,8 +2,6 @@ var id = "NULL";
 
 $(document).ready( function () {
     
-    
-
 });
 
 function Connect(){
@@ -31,6 +29,37 @@ function Connect(){
         });
         // ordena arreglo
         sortSelect('aplicacion');
+        // carga Ramas
+        getRamas();
+    })    
+    .fail(function( e ) {        
+        alert('Err ' + e);        
+    });
+};
+
+function getRamas(){
+    // var idFile = $(this).parents("tr").find("td").eq(0).text();                   
+    $.ajax({
+        type: "POST",
+        url: "class/Ldapp.php",
+        data: { 
+            action: 'getRamas'
+        }            
+    })
+    .done(function( e ) {        
+        $('#rama').html("<optgroup label='Rama'></optgroup>");
+        // populate select aplicacion
+        var data= JSON.parse(e);
+        $.each(data,function(key, value) 
+        {
+            try {
+                $('#rama').append('<option value=' + key + '>' + value["ou"][0] + '</option>');
+             }
+             catch (e) {  }   
+        });
+        // ordena arreglo
+        sortSelect('rama');
+        $("#rama").val(0);
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        
@@ -111,26 +140,23 @@ function getMembershipByUser(){
         data: { 
             action: 'getMembershipByUser',   
             uids: arrayOfLines           
-            //username:  $("#username").val(),
-            //password: $("#password").val(),
-            //ambiente: $("#ambiente").find(":selected").text()
         }            
     })
     .done(function( e ) {        
-       /* $('#membresia').html("");
+       $('#membresia').html("");
         // populate select aplicacion
         var data= JSON.parse(e);
         $.each(data,function(key, value) 
         {
             try {
-                $('#membresia').append('<option value=' + key + '>' + value["cn"][0] + '</option>');
+                $('#membresia').append('<option value=' + key + '>' + value['dn'] + ' ['+ value['description'][0] +']' + '</option>');
              }
              catch (e) {  }   
         });
         // ordena arreglo
         sortSelect('membresia');
-        $("#membresia").selectpicker("refresh");*/
-        alert(e);
+        $("#membresia").selectpicker("refresh");
+        //alert(e);
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        
