@@ -35,6 +35,8 @@ if(isset($_POST["action"])){
             $ScheduledTask->dow= $_POST["dow"];
             $ScheduledTask->subTask= $_POST["subTask"];
             $ScheduledTask->subtask_des= $_POST["subtask_des"];
+            // $ScheduledTask->file= $_POST["file"];
+            // $ScheduledTask->objFile= json_decode($_POST['objFile']);
             $ScheduledTask->Insert();
             break;
         case "Update":
@@ -73,6 +75,9 @@ class ScheduledTask{
     public $project_id;
     public $column_id; 
     public $idTask;  
+    // $file $objFile no sirven estando aqui Preguntar
+    // public $file;  
+    // public $objFile;  
 
     //
     // Funciones de Mantenimiento.
@@ -107,15 +112,17 @@ class ScheduledTask{
     
     function Insert(){
         try {     
-            $sql='INSERT INTO scheduled_task (user_id, min, hour, dom, year, dow, title, detail, sub_task, project_id, column_id) VALUES (:user_id, :min, :hour, :dom, :year, :dow, :title, :description, :subTask, :projectid, (Select id from columns where title="En Espera" and project_id=:projectid))';
-            $param= array(':user_id'=>$_SESSION["userid"],':min'=>$this->minute, ':hour'=>$this->hour, ':dom'=>$this->dom, ':year'=>$this->year, ':dow'=>$this->dow, ':title'=>$this->title, ':description'=>$this->description, ':subTask'=>$this->subTask, ':projectid'=>$this->projectid);        
+            $file= $_POST["file"];
+            echo $file;
+
+            $sql='INSERT INTO scheduled_task (user_id, min, hour, dom, year, dow, title, detail, file, sub_task, project_id, column_id) VALUES (:user_id, :min, :hour, :dom, :year, :dow, :title, :description, :file, :subTask, :projectid, (Select id from columns where title="En Espera" and project_id=:projectid))';
+            $param= array(':user_id'=>$_SESSION["userid"],':min'=>$this->minute, ':hour'=>$this->hour, ':dom'=>$this->dom, ':year'=>$this->year, ':dow'=>$this->dow, ':title'=>$this->title, ':description'=>$this->description, ':file'=>$file, ':subTask'=>$this->subTask, ':projectid'=>$this->projectid);        
             $data = DATA::Ejecutar($sql,$param);
 
             $data_sub_Task = json_decode($_POST['subtask_des']);
+
+            $objFile= json_decode($_POST['objFile']);
             //echo var_dump($data2);
-
-
-           
             // if (count($data) ) {
             //     $this->idrol= $data[0]['idrol'];
             //     // log::Add('INFO', 'Inicio de sesión: '. $this->usuario);
@@ -126,18 +133,10 @@ class ScheduledTask{
             // $sql2='UPDATE scheduled_sub_task SET title=":esuno" WHERE id=12;';
             // $param= array(':esuno'=>$this->subTask);
             // $last_id = DATA::Ejecutar($sql2,$param);
-
-            if ($subTask = '1'){
+           
+            if ($subTask == '1'){
                 $sql='select last_insert_id();';
                 $last_id = DATA::Ejecutar($sql);
-
-                // $sql2='UPDATE scheduled_sub_task SET title=":esuno" WHERE id=12;';
-                // $param= array(':esuno'=>$this->last_id[0]['last_insert_id()']);
-                // $last_id = DATA::Ejecutar($sql2,$param);
-                // $sql='UPDATE scheduled_sub_task SET title="SubTask si es 1" WHERE id=12;';
-                // $last_id = DATA::Ejecutar($sql);
-                // $last_id->departamentos[0];
-
                 $id_task = $last_id[0]["last_insert_id()"];
 
                 foreach($data_sub_Task as $var1)
@@ -146,9 +145,22 @@ class ScheduledTask{
                     $sql='insert into kanboard.scheduled_sub_task (id_scheduled_task, title) values (:id_scheduled_task, :subtask_des);';
                     $param= array(':id_scheduled_task'=>$id_task, ':subtask_des'=> $var1);
                     $data = DATA::Ejecutar($sql,$param);  
-                }
+                }                                     
+            }
 
-                                     
+            if ($file == '1'){  
+                //saco el numero de elementos
+                $longitud = count($objFile)-1; 
+                echo "Longitud: ".$longitud;  
+                for ($i=0; $i<=$longitud; $i++){ 
+                  
+                    //echo $img_data;
+                    $sql='insert into scheduled_task_has_files (scheduled_task_id, name, image_file_base64) VALUES (:id_task, :nombre, :base64);';
+                    $param= array(':id_task'=>$id_task, ':nombre'=>$objFile[$i][0], ':base64'=>$objFile[$i][1]);
+                    $data = DATA::Ejecutar($sql,$param);  
+                }
+            }elseif ($file == '0') {
+                echo "sin archivos";
             }
         }     
         catch(Exception $e) {
