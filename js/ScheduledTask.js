@@ -1,5 +1,6 @@
 var id = "NULL";
-
+var arrayOfThisfile = [];
+var arrayOffiles = [];
 
 //Llama a la funcion de Load y LoadProjects al cargar la pagina
 $(document).ready( function () {
@@ -9,25 +10,41 @@ $(document).ready( function () {
     }; 
     Load();
     LoadProjects();
-    Check_SubTask_Status()
-
-    $("#inputFileToLoad").change(function() {
-        var filesSelected = document.getElementById("inputFileToLoad").files;
-        if (filesSelected.length > 0) {
-            var fileToLoad = filesSelected[0];
-            var fileReader = new FileReader();
-            fileReader.onload = function(fileLoadedEvent) {
-                var base64value = fileLoadedEvent.target.result;
-                console.log(base64value);
-                $("#response").val(base64value);
-            };
-            fileReader.readAsDataURL(fileToLoad);
-        }
-    });
-
-
-
+    Check_SubTask_Status();
+    encode_Files();
+   
 });
+
+function encode_Files() {
+    $("#inputFileToLoad").change(function() {
+        arrayOffiles = [];
+        var files = document.getElementById('inputFileToLoad').files;
+        if (files.length > 0) {
+            for (var i = 0; i < document.getElementById("inputFileToLoad").files.length; i+=1) {
+                    getBase64(files[i]);
+                }
+        }
+    }
+)};
+  
+function getBase64(file) {
+    arrayOfThisfile = [];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (f) {
+        arrayOfThisfile = [];
+        $("dataExt", {
+            src: f.target.result,
+            title: file.name
+        })
+        arrayOfThisfile.push(file.name);
+        arrayOfThisfile.push(f.target.result);
+        arrayOffiles.push(arrayOfThisfile);
+     };
+     reader.onerror = function (error) {
+       console.log('Error: ', error);
+     };
+  }
 
 // Llama a la funcion LoadScheduledTask dentro de class/ScheduledTask.php para
 // traer los datos de todas las tareas programadas en la base de datos
@@ -65,20 +82,6 @@ function LoadProjects(){
 };
 
 
-function Insert_Sub_Task_Image(){
-    $.ajax({
-        type: "POST",
-        url: "class/ScheduledTask.php",
-        data: { 
-            action: "Insert_Sub_Task_Image"
-        }
-    })
-    .done(function( e ) {            
-         //loadProjectsByUser(e);
-         alert(e);
-    })    
-    .fail(showError);
-};
 
 // Completa en la pagina web una tabla con todos los proyectos traidos desde la base de datos
 function loadProjectsByUser(e){
@@ -209,43 +212,6 @@ function New() {
     $(".modal").css({ display: "block" });         
 };
 
-
-// (function ($) {
-//     $.fn.styleddropdown = function () {
-//         return this.each(function () {
-//             var obj = $(this)
-//             obj.find('.field').click(function () { //onclick event, 'list' fadein
-//                 obj.find('.list').fadeIn(400);
-
-//                 $(document).keyup(function (event) { //keypress event, fadeout on 'escape'
-//                     if (event.keyCode == 27) {
-//                         obj.find('.list').fadeOut(400);
-//                     }
-//                 });
-
-//                 obj.find('.list').hover(function () {},
-//                     function () {
-//                         $(this).fadeOut(400);
-//                     });
-//             });
-
-//             obj.find('.list li').click(function () { //onclick event, change field value with selected 'list' item and fadeout 'list'
-//                 obj.find('.field')
-//                     .val($(this).html())
-//                     //.children('div',  $(this).attr('id')  ) 
-//                     .attr('id',  $(this).attr('id'))
-//                     .css({
-//                         'background': '#fff',
-//                         'color': '#333'
-//                     });
-//                 obj.find('.list').fadeOut(400);
-//             });
-//         });
-//     };
-// })(jQuery);
-
-
-
 function SaveScheduledTask(){   
     // Ajax: insert / Update.
     if(!FormValidate())
@@ -288,6 +254,24 @@ function SaveScheduledTask(){
         arraySubTask.push(desc_sub);
     });
     
+    if (arrayOffiles.length > 0){
+        for(var i=0; i<arrayOffiles.length; i++) {
+            var ImageURL = arrayOffiles[i][1];
+            // Split the base64 string in data and contentType
+            var block = ImageURL.split(";");
+            // Get the content type of the image
+            var contentType = block[0].split(":")[1];// In this case "image/gif"
+            // get the real base64 content of the file
+            var realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
+            arrayOffiles[i][1] = realData;            
+        }
+        var mifile = "1";
+        
+        
+    }else {
+        var mifile = "0";
+    }   
+    
     $.ajax({
         type: "POST",
         url: "class/ScheduledTask.php",
@@ -302,6 +286,8 @@ function SaveScheduledTask(){
             year:   $("#year").val(),
             subtask_des: JSON.stringify(arraySubTask),
             subTask: varSubTask,
+            file: mifile,
+            objFile: JSON.stringify(arrayOffiles),
             dow:    varDow            
         }
     })
@@ -319,22 +305,22 @@ function SaveScheduledTask(){
 };    
 
 
-function Check_SubTask_Status()
-{
-    var btnAdd = document.getElementById("btnAdd");
-    btnAdd.disabled = !btnAdd.disabled;
+// function Check_SubTask_Status()
+// {
+//     var btnAdd = document.getElementById("btnAdd");
+//     btnAdd.disabled = !btnAdd.disabled;
 
-    var btnDel = document.getElementById("btnDel");
-    btnDel.disabled = !btnDel.disabled;
+//     var btnDel = document.getElementById("btnDel");
+//     btnDel.disabled = !btnDel.disabled;
 
 
-    var tableSubtask = document.getElementById("chk");
-    tableSubtask.disabled = !tableSubtask.disabled;
+//     var tableSubtask = document.getElementById("chk");
+//     tableSubtask.disabled = !tableSubtask.disabled;
 
-    var tableSubtask = document.getElementById("subtask");
-    tableSubtask.disabled = !tableSubtask.disabled;
+//     var tableSubtask = document.getElementById("subtask");
+//     tableSubtask.disabled = !tableSubtask.disabled;
 
-}
+// }
 
 function addRow(tableID) {
     var table = document.getElementById(tableID);
@@ -356,6 +342,7 @@ function addRow(tableID) {
     var element2 = document.createElement("input");
     element2.type = "text";
     element2.name = "txtbox[]";
+    element2.className = " sub-task-desc"
     cell3.appendChild(element2);
 }
 
@@ -411,7 +398,14 @@ function FormValidate(){
         showError("La descripción debe tener mínimo 5 caracteres");
         return false;
     }
-    //        
+    //      
+    
+    
+    var cadena = $("#description").val();
+    CadenaSinEspacios = cadena.trim();
+    // document.getElementById('description').val() = CadenaSinEspacios;
+    document.getElementById ("description").value = CadenaSinEspacios;
+
     return true;
 };
 
@@ -442,6 +436,58 @@ function showError(){
 
 
 
+
+// (function ($) {
+//     $.fn.styleddropdown = function () {
+//         return this.each(function () {
+//             var obj = $(this)
+//             obj.find('.field').click(function () { //onclick event, 'list' fadein
+//                 obj.find('.list').fadeIn(400);
+
+//                 $(document).keyup(function (event) { //keypress event, fadeout on 'escape'
+//                     if (event.keyCode == 27) {
+//                         obj.find('.list').fadeOut(400);
+//                     }
+//                 });
+
+//                 obj.find('.list').hover(function () {},
+//                     function () {
+//                         $(this).fadeOut(400);
+//                     });
+//             });
+
+//             obj.find('.list li').click(function () { //onclick event, change field value with selected 'list' item and fadeout 'list'
+//                 obj.find('.field')
+//                     .val($(this).html())
+//                     //.children('div',  $(this).attr('id')  ) 
+//                     .attr('id',  $(this).attr('id'))
+//                     .css({
+//                         'background': '#fff',
+//                         'color': '#333'
+//                     });
+//                 obj.find('.list').fadeOut(400);
+//             });
+//         });
+//     };
+// })(jQuery);
+
+
+
+
+// function Insert_Sub_Task_Image(){
+//     $.ajax({
+//         type: "POST",
+//         url: "class/ScheduledTask.php",
+//         data: { 
+//             action: "Insert_Sub_Task_Image"
+//         }
+//     })
+//     .done(function( e ) {            
+//          //loadProjectsByUser(e);
+//          alert(e);
+//     })    
+//     .fail(showError);
+// };
 // function OpenSubScheduledTask(e){
 //     //$(".modal").css({ display: "block" });
 //     $('#myModal').modal('show')

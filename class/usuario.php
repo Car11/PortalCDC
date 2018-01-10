@@ -30,6 +30,7 @@ public $is_active;
             $this->rol= -1; // Rol 
         }        
     }
+    
 
     function LDAPCheck (){
         //error_reporting(0);
@@ -99,6 +100,7 @@ public $is_active;
         }
     }
 
+
 	
     function Validar(){    
         $sql='SELECT usuario, idrol FROM usuario where contrasena=:contrasena  AND usuario=:usuario';
@@ -112,9 +114,7 @@ public $is_active;
             return false;           
         }        
     }
-    
-    
-    
+
     function Cargar(){    
         $sql='SELECT nombre FROM usuario WHERE usuario=:usuario';
         $param= array(':usuario'=>$_SESSION['username']);        

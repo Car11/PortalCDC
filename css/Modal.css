@@ -19,9 +19,9 @@
     /* Full height */
     overflow: auto;
     /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(148, 17, 17);
     /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(42, 190, 29, 0.4);
     /* Black w/ opacity */
 }
 /* Modal Content */
@@ -80,9 +80,9 @@
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #222222;
+    background-color: #ec3131;
     color: #F2F2F2;
-    border-bottom: 1px solid #58585a;
+    border-bottom: 1px solid #1212a7;
     margin-bottom: 10px;
 }
 

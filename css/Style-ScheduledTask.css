@@ -1,6 +1,61 @@
+html,body{
+    
+    margin:0px;
+    height:100%;   
+    }
+
+.modal-dialog{
+    margin: 0px auto !important;    
+    overflow-y: hidden; 
+    overflow-x:hidden
+}
+ 
+.modal-header{
+border-bottom: none !important;
+}
+
+.control-label{
+    color:rgb(206, 206, 206);
+}
+.box{
+    color:rgb(10, 10, 10);
+    height: 100%;
+    background: #bbe20f; 
+    margin-bottom: 10%;  
+   /* margin-top: 10%;  */
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e;
+    position:relative;
+}
+.box1-label{
+    color:rgb(206, 206, 206);
+    padding-top: 15%;
+    padding-bottom: 5%; 
+    line-height: 200px; 
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    font-weight: bold;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.footer-box{
+    position:absolute;
+    bottom:5px;
+    width: 100%;
+    /* right:auto; */
+}
+
+
 .st_input-field-desc, .st_input-field-time, .st_input-field{
-    color: rgb(184, 179, 179);
-    background: #555555;
+    color: rgb(184, 179, 179) !important;
+    width: 100%;
+    resize:none;
 }
 
 
@@ -11,18 +66,30 @@
 .form-control-file{
     color: #fff;
 }
+
+
+
+.sub-task-desc{
+    width: 100%;
+}
+
+
+.form-control{
+    color: black !important;
+
+}
 /***********************combo box ******************************/
  /*fondo #016DC4
     texto #FFFFFF*/
     .cmbfield {
         margin: 0 auto;
-        margin-top: 20;
+        /* margin-top: 20; */
         width: 350;
     }
     
     .cmbfield .field {
         width:100%; 
-        background: #016DC4; 
+        background: #1e1e1e; 
         color:#FFFFFF;     
         padding:5px 5px; 
         border:none; 

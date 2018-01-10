@@ -18,15 +18,15 @@ if (!$sesion->estado){
     <meta charset="UTF-8">
     <title>Tareas Programdas</title>
     <!-- JS  -->
-    <script src="js/jquery.js" type="text/jscript"></script>
+    <script src="js/jquery.js" type="text/jscript"></script> -->
     <script src="js/datatables.js" type="text/javascript" charset="utf8"></script>
-    <script src="js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script> 
+    <script src="js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>
     <script src="js/bootstrap.min.js"></script> 
     <script src="js/sweetalert.min.js"></script> 
     <script src="js/sweetalert.js"></script> 
          <!-- CSS de Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.css">    
+    <link rel="stylesheet" href="css/bootstrap-theme.css">  
     <!-- CSS -->     
     <link rel="stylesheet" href="css/sweetalert.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="css/Style-ScheduledTask.css?v=<?php echo Globals::cssversion; ?>" />
@@ -34,9 +34,8 @@ if (!$sesion->estado){
     <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="css/Modal.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="css/Style-Task.css?v=<?php echo Globals::cssversion; ?>" />
-    <link rel="stylesheet" href="css/datatables.css" type="text/css"/>      
+    <link rel="stylesheet" href="css/datatables.css" type="text/css"/>       
     
-  
 
 </head>
 
@@ -61,15 +60,16 @@ if (!$sesion->estado){
             <span id="textomensaje"></span>
         </div>
     </div>
+
     <aside> 
     </aside>
+
     <section>         
         <div id="navigation-opt-btn">
             <div id="new-btn">
                 <input type="button" id="btnnew" class="nbtn_blue-sp-c" value="Nuevo" onclick="New()">
             </div>                
-            <div id="back-btn">                
-                <input type="button" id="btnRefresh2" class="nbtn_gray-sp-c" onclick="Insert_Sub_Task_Image()" value="Recargar" >
+            <div id="back-btn">
                 <input type="button" id="btnRefresh" class="nbtn_gray-sp-c" onclick="Load()" value="Recargar" >
                 <input type="button" id="btnback" class="nbtn_gray-sp-c" value="Atrás" onclick="location.href='index.html'">
             </div>
@@ -79,8 +79,11 @@ if (!$sesion->estado){
         </div>
         <div id="item-list"></div>
     </section>
-    <aside>
+
+    
+    <aside> 
     </aside>
+    
         
     <!-- MODAL formulario -->
     <div class="modal" id="modal-index" >
@@ -182,8 +185,14 @@ if (!$sesion->estado){
                     <div class="row">  <!--ROW  FILE -->
                         <div class="col-md-4">
                             <div class="form-group">
+
+
+
+
                                 <form action="test.php" method="post" enctype="multipart/form-data">
-                                    <input type="file" multiple="true" id="inputFileToLoad" class="form-control-file" placeholder="Archivo" accept="image/*;capture=camera" name="userPhoto" single />
+                                    <!-- <div id="dropzone" style='color: white;'>Drop files here</div> -->
+                                    <input type="file" multiple="true" id="inputFileToLoad" name="files[]" onchange="encodeImageFile()" class="form-control-file"/>
+                                    <output id="listFiles"></output>
                                     <input type="text" id="response" style='display:none;' />
                                     <br>
                                     <!-- <input type="file" name="archivo" id="archivo"></input>
@@ -292,12 +301,69 @@ if (!$sesion->estado){
             </div> 
         </div> 
     </div>    <!-- FIN del Modal -->
-    
-
-
-    <aside> 
-    </aside>
+                
 </body>
+
+<script>
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// CREA LISTA DE ARCHIVOS AGREGADOS //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', (f.name), '</li>');
+    }
+    document.getElementById('listFiles').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+   document.getElementById('inputFileToLoad').addEventListener('change', handleFileSelect, false);
+  
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// CREA LISTA DE ARCHIVOS AGREGADOS //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+</html>
+
+<!-- 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// ARRASTRA LOS ARCHIVOS A LA PAGINA//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+//   function handleFileSelect(evt) {
+//     evt.stopPropagation();
+//     evt.preventDefault();
+
+//     var files = evt.dataTransfer.files; // FileList object.
+
+//     // files is a FileList of File objects. List some properties.
+//     var output = [];
+//     for (var i = 0, f; f = files[i]; i++) {
+//       output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+//                   f.size, ' bytes, last modified: ',
+//                   f.lastModifiedDate.toLocaleDateString(), '</li>');
+//     }
+//     document.getElementById('listFiles').innerHTML = '<ul>' + output.join('') + '</ul>';
+//   }
+
+//   function handleDragOver(evt) {
+//     evt.stopPropagation();
+//     evt.preventDefault();
+//     evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+//   }
+
+//   // Setup the dnd listeners.
+//   var dropZone = document.getElementById('dropzone');
+//   dropZone.addEventListener('dragover', handleDragOver, false);
+//   dropZone.addEventListener('drop', handleFileSelect, false);
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// ARRASTRA LOS ARCHIVOS A LA PAGINA//////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////// -->
+
 
 <!-- <script>
     // Convert Base64 to Image
@@ -325,13 +391,6 @@ if (!$sesion->estado){
         });
     });
 </script> -->
-
-
-</html>
-
-
-
-
 
 
 
