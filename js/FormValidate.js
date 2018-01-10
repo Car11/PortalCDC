@@ -1,16 +1,16 @@
-$(document).ready(inicio);
+// $(document).ready(inicio);
 
-function inicio() {
+// function inicio() {
     
-    $("#enviar").click(onValidaInicio);
-    $("#EnviaNuevoPerfil").click(onValidaNuevoPerfil);
-    $("#EnviaInfoVisita").click(onValidaInfoVisita);
-    $("#btnInsertaFormulario").click(onValidaFormulario);
-    $("#btnModificaFormulario").click(onValidaFormulario);
-    $("#btnInsertaResponsable").click(onValidaResponsable);
-    $("#btnModificaResponsable").click(onValidaResponsable);
+//     $("#enviar").click(onValidaInicio);
+//     $("#EnviaNuevoPerfil").click(onValidaNuevoPerfil);
+//     $("#EnviaInfoVisita").click(onValidaInfoVisita);
+//     $("#btnInsertaFormulario").click(onValidaFormulario);
+//     $("#btnModificaFormulario").click(onValidaFormulario);
+//     $("#btnInsertaResponsable").click(onValidaResponsable);
+//     $("#btnModificaResponsable").click(onValidaResponsable);
     
-}
+// }
 
 this.MuestraMensajeTarjeta= function(){    
     $( ".dialog-message" ).dialog({
