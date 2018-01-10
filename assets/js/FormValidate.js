@@ -38,7 +38,7 @@ function isNumber(evt) {
         return false;
     }
     return true;
-}
+};
 
 function onValidaFormulario() {
     EnviaVisitante();
@@ -79,7 +79,7 @@ function onValidaFormulario() {
     if(visitante == ""){
         return false;
     }
-}
+};
 
 function onValidaResponsable() {
     var nombre = document.getElementById('txtnombre').value;
@@ -105,7 +105,7 @@ function onValidaResponsable() {
         document.getElementById('txtempresa').placeholder = "REQUERIDO";
         return false;
     }
-}
+};
 
 
 
@@ -135,7 +135,7 @@ function onValidaInicio() {
         $("#mensajetop").hide();
         return true;
     }
-}
+};
 
 function onValidaNuevoPerfil() {
     var formlisto = true;
@@ -190,7 +190,7 @@ function onValidaNuevoPerfil() {
     //
     return formlisto;
 
-}
+};
 
 function onValidaInfoVisita() {
     var formlisto = true;
@@ -251,4 +251,4 @@ function onValidaInfoVisita() {
     //
     return formlisto;
 
-}
+};

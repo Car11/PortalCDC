@@ -4,14 +4,13 @@ $(document).ready( function () {
     
 });
 
-function Connect(){
-    // var idFile = $(this).parents("tr").find("td").eq(0).text();                   
+function Connect(){                  
     $.ajax({
         type: "POST",
         url: "class/Ldapp.php",
         data: { 
             action: 'Connect',               
-            username:  $("#username").val(),
+            username: $("#username").val(),
             password: $("#password").val(),
             ambiente: $("#ambiente").find(":selected").text()
         }            
