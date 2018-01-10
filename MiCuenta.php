@@ -32,7 +32,7 @@ if (!$sesion->estado){
 
 <body> 
     <header>
-        <h1>LISTA DE VISITANTES</h1>        
+        <h1>Mis Tareas</h1>        
         <div id="logo"><img src="img/Logoice.png" height="75" > </div>
         <div id="signin">
             <span>Usuario: 
@@ -99,16 +99,50 @@ if (!$sesion->estado){
                         </label>
                         <label for="owner_id"><span class="input-field-lbl">Asignado</span>
                             <input type="text" class="input-field" name="owner_id" value="" id="owner_id" >
-                        </label>
+                        </label>      
+                        
                         <div class="cmbfield">
                             <input type="text" id="project_id" name="project_id" placeholder="SELECCIONE EL PROYECTO" class="field" readonly="readonly"> <div> </div> </input>
                             <ul class="list">
                             </ul>
                         </div>
+                        
+                        <button type='button' class="accordion">Adjuntos</button>
+                        <div id='attachment' class="panel">
+                            <div id="image-list">
+                            </div>                        
+                            <div id="file-list">
+                                <!--<div class="dropdown">
+                                    <a href="#" class="dropdown-menu dropdown-menu-link-text" title="00004Rana Cerca.jpeg">00004Rana Cerca.jpeg <i class="fa fa-caret-down"></i></a>
+                                    <ul>
+                                        <li>
+                                            <a href="/kanboard/?controller=FileViewerController&amp;action=download&amp;task_id=2251&amp;project_id=11&amp;file_id=34" class="" title='' ><i class="fa fa-fw fa-download" aria-hidden="true"></i>Descargar</a>                                </li>
+                                        <li>
+                                            <a href="/kanboard/?controller=TaskFileController&amp;action=confirm&amp;task_id=2251&amp;project_id=11&amp;file_id=34" class="js-modal-confirm" title='' ><i class="fa fa-trash-o fa-fw js-modal-confirm" aria-hidden="true"></i>Suprimir</a>                                    </li>
+                                    </ul>
+                                </div>
+                                <ul id="menu">
+                                    <li>
+                                        <input id="check01" type="checkbox" name="menu"/>
+                                        <label for="check01">Tasto menu 01</label>
+                                        <ul class="submenu">
+                                        <li><a href="#">Sotto menu 1</a></li>
+                                        <li><a href="#">Sotto menu 2</a></li>
+                                        </ul>
+                                    </li>
+                                </ul> -->
+                            </div>
+                        </div>
+                        <button type='button' class="accordion">Comentarios</button>
+                        <div id='comments' class="panel">
+                            <div id="comment-list">
+                            </div>     
+                        </div>
+
                         <div id="task-details">
-                            <input type="text" name="date_creation" value="" id="date_creation" >  
+                            <!--<input type="text" name="date_creation" value="" id="date_creation" >  
                             <input type="text" name="date_started" value="" id="date_started" >  
-                            <input type="text" name="column_id" value="" id="column_id" >  
+                            <input type="text" name="column_id" value="" id="column_id" >  -->
                         </div>
 
                         <nav class="btnfrm">
