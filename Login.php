@@ -50,6 +50,47 @@
 </head>
 
 <body>
+
+    <header>
+        <h1>Servicios</h1>        
+        <div id="logo"><img src="img/Logoice.png" height="75" > </div>
+    </header>
+    
+    <aside></aside>
+    
+    <section>
+       <h2>Ingrese su usuario y contraseña</h2>
+        <div id="form">
+            <div class="login">    
+                <form  name="Usuario" action="request/PostUsuario.php" method="POST">                      
+                    <input type="text" id="username" class="input-field" name="username" placeholder="USUARIO" maxlength="20" /><br>
+                    <input type="password" id="password" class="input-field" name="password" placeholder="CONTRASEÑA" maxlength="20" />
+                    <nav class="btnfrm">
+                        <ul>
+                            <li> <input class="nbtn_blue" type="submit" value="Ingresar" id="login" /></li>
+                        </ul>
+                    </nav>
+                </form>      
+                <div id="invalid">
+                    <h3>Usuario o Contraseña Inválido</h3>
+                </div>
+            </div>     
+        </div>
+        
+    </section>       
+    
+    <aside></aside>
+    
+<script> 
+    var ID = '<?php print $ID ?>';
+    if(ID=='invalid'){            
+        $("#invalid").css("visibility", "visible");
+        //$("#invalido").slideDown("slow");
+            //$("#mensaje").css("visibility", "visible");
+        //$("h3").css("color", "firebrick");
+    }
+</script>
+
     <form id="Usuario" name="Usuario" action="request/postUsuario.php" method="POST" style="font-family:Quicksand, sans-serif;background-color:rgba(44,40,52,0.73);width:320px;padding:40px;">
         <div><img class="img-rounded img-responsive" src="assets/img/LogoICEAmarilloBlanco.png" id="image" style="width:auto;height:auto;"></div>
         <div class="form-group"><input class="form-control" type="text" id="username" name="username" placeholder="Usuario"></div>
@@ -58,6 +99,7 @@
     <script
         src="assets/js/jquery.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
