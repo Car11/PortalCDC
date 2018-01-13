@@ -25,8 +25,8 @@ class Usuario{
     public $nombre;
     public $email;
     public $is_active;
-
     public $sesion; 
+    private $sessiondata = array(); // devuelve el estado del login.
 
     function __construct(){
         require_once("Conexion.php");
@@ -34,20 +34,30 @@ class Usuario{
     }
 
     function KanboardUser(){    // valida rol en bd y administra accesos a elementos de la web
-        $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
-        $param= array(':usuario'=>$this->usuario);        
-        $data = DATA::Ejecutar($sql,$param);
-        if (count($data) ) {
-            $this->id= $data[0]['id'];
-            $this->nombre= $data[0]['name'];
-            $this->email= $data[0]['email'];
-            $this->rol= $data[0]['role'];
-            $this->is_active= $data[0]['is_active'];        
-            //
-            $this::setSesion();    
-        }else {        
-            $this->rol= -1; // Rol 
-        }        
+        try {
+            $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
+            $param= array(':usuario'=>$this->usuario);        
+            $data = DATA::Ejecutar($sql,$param);
+            if (count($data) ) {
+                $this->id= $data[0]['id'];
+                $this->nombre= $data[0]['name'];
+                $this->email= $data[0]['email'];
+                $this->rol= $data[0]['role'];
+                $this->is_active= $data[0]['is_active'];        
+                //
+                $this::setSesion();    
+            }else {        
+                $this->rol= -1; // Rol 
+                $this->id= "";
+                $this->nombre= "";
+                $this->email= "";
+                /******************************* agrega nuevo usuario al KB con rol de usuario ********************************/
+                $this::setSesion();    
+            }     
+        }catch(Exception $e) {       
+            $sessiondata['status']='error'; 
+            echo json_encode($sessiondata);
+        }           
     }    
 
     function setSesion(){
@@ -55,44 +65,50 @@ class Usuario{
         $sesion->Inicio($this->usuario, $this->rol, $this->id, $this->nombre);
         //
         if(isset($_SESSION['url'])){
-            //header('Location: ../'. $_SESSION['url']); 
-            $url= $_SESSION['url'];            
+            $sessiondata['status']='OK';
+            $sessiondata['url']= $_SESSION['url'];            
             unset($_SESSION['url']);
-            echo $url;
+            echo json_encode($sessiondata);
         }
         else {
-            //header('Location: ../MiCuenta.php'); 
-            //exit;
-            echo '/MiCuenta.php';
+            $sessiondata['status']='OK';
+            $sessiondata['url']= 'MiCuenta.php';
+            echo json_encode($sessiondata);
         }
     }
 
     function LDAPCheck(){
-        //error_reporting(0);
-        //ini_set('error_reporting', 0);
-        $adServer = "icetel.ice";
-        $ldapport = 3268;
-        $ldap = ldap_connect($adServer, $ldapport);        
-        $ldapUser = $this->usuario;
-        $ldapPasswd = $this->contrasena;
-        $ldaprdn = 'icetel' . "\\" . $ldapUser;
-        $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);
-        if ($bind) {
-            $filter="(sAMAccountName=$ldapUser)";
-            $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
-            $info = ldap_get_entries($ldap, $result);
-            for ($i=0; $i<$info["count"]; $i++)
-            {
-                if($info['count'] > 1)
-                    break;
-                // busca rol definido por la aplicacion.
-                $this::KanboardUser();
-                return true;  
+        try {
+            $adServer = "icetel.ice";
+            $ldapport = 3268;
+            $ldap = ldap_connect($adServer, $ldapport);        
+            $ldapUser = $this->usuario;
+            $ldapPasswd = $this->contrasena;
+            $ldaprdn = 'icetel' . "\\" . $ldapUser;
+            $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);
+            if ($bind) {
+                $filter="(sAMAccountName=$ldapUser)";
+                $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
+                $info = ldap_get_entries($ldap, $result);
+                for ($i=0; $i<$info["count"]; $i++)
+                {
+                    if($info['count'] > 1)
+                        break;
+                    // busca rol definido por la aplicacion.
+                    $this::KanboardUser();
+                    return true;  
+                }
+                @ldap_close($ldap);
+            } else {
+                $sessiondata['status']='nologin';
+                echo json_encode($sessiondata);
+                return false;  
             }
-            @ldap_close($ldap);
-        } else {
-            return false;  
+        }catch(Exception $e) {   
+            $sessiondata['status']='error'; 
+            echo json_encode($sessiondata);
         }
+        
     }
 
     function wasLDAPCheck(){
