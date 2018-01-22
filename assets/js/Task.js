@@ -129,13 +129,16 @@ function ShowTaskData(e){
     var data= JSON.parse(e);
     $("#title").val(data[0].title);
     $("#description").val(data[0].description);
+    var taskdate= new Date(Number(data[0].date_due*1000));
+    $("#date_due").val(taskdate);
+    
+    $("#project_id").val(data[0].project_id);
     /*$("#date_creation").val(data[2].title);
-    $("#project_id").val(data[3].title);
     $("#column_id").val(data[4].title);
     $("#owner_id").val(data[5]); //assigned
     $("#date_started").val(data[6].title);*/
     // Call API in order to get attachments and comments.
-    //LoadAttachments();
+    LoadAttachments();
 };
 
 function loadProjectsByUser(e){
@@ -162,6 +165,48 @@ function LoadProjects(){
     })
     .done(function( e ) {            
          loadProjectsByUser(e);
+    })    
+    .fail(showError);
+};
+
+function showAttachments(e){
+    // Limpia el div que contiene la tabla.
+    $('#file-list').html(""); 
+    $('#file-list').append("<br><br><br> <table id='tbl-file' class='display' cellspacing='0' width='100%' > </table>");
+    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>Nombre del Archivo</th> <th>Fecha</th> <th>Descargar</th> <th>Eliminar</th> </tr></thead>"+
+        "<tbody id='tableBody-file'>  </tbody>";
+    $('#tbl-file').append(col); 
+    //
+    var data= JSON.parse(e);
+    $.each(data, function(i, item) {
+        var row="<tr class=datarow>"+
+            "<td style='display:none;' >" + item.id +"</td>" +
+            "<td>"+ item.name + "</td>"+
+            "<td>"+ item.date + "</td>"+
+            "<td><img id=imgdelete src=img/file_download.png class=download></td>"+
+            "<td><img id=imgdelete src=img/file_delete.png class=DeleteFile></td>"+
+        "</tr>";
+        $('#tableBody-file').append(row);
+    })
+    // evento click del boton modificar-eliminar
+    //$('.download').click(DownloadEventHandler);
+    //$('.eliminarArchivo').click(EventoClickEliminar);
+    /*$('#tbl-file').DataTable( {
+        "order": [[ 1, "asc" ]]
+    } );*/
+};
+
+function LoadAttachments(){             
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'LoadTaskFiles',                
+            id:  id
+        }            
+    })
+    .done(function( e ) {
+        showAttachments(e);
     })    
     .fail(showError);
 };

@@ -233,7 +233,9 @@ if (!isset($_SESSION))
                                 </ul> -->
                             </div>
                         </div>
+
                         <button type='button' class="accordion">Comentarios</button>
+                        
                         <div id='comments' class="panel">
                             <div id="comment-list">
                             </div>     

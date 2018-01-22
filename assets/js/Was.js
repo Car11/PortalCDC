@@ -147,6 +147,10 @@ function Gen(){
             db='mys';
             break;
     }
+    //APP NAME
+    $("#appname").val(
+         $("#app").val().toUpperCase()  + ($("#prd")[0].checked ? "prd" : "cer")
+    );
     //FULL APP NAME
     $("#fullappname").val(
         ($("#prd")[0].checked ? "ASP" : "ASC") +  $("#app").val().toLowerCase()  + $("#node").val()
@@ -160,23 +164,30 @@ function Gen(){
     );
     // JAAS
     $("#alias").val(
-        "J2C"  + db + $("#app").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer") + "Alias"
+        "J2C"  + db + $("#app").val().toUpperCase() + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer") + "Alias"
     );
     $("#description").val(
-        "JAAS "  + db.toUpperCase() + " " + $("#app").val().toUpperCase() + " (" +  ($("#prd")[0].checked ? "prd" : "cer") + ")"  
+        "JAAS "  + db.toUpperCase() + " " + $("#app").val().toUpperCase() + ' ' + $("#dsdescription").val().toUpperCase() + " (" +  ($("#prd")[0].checked ? "prd" : "cer") + ")"  
     );
     //DS
     $("#datasource").val(
-        "DS"  + db + $("#app").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
+        "DS"  + db + $("#app").val().toUpperCase() + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
     );
     $("#jndi").val(
-        "jdbc/"  + db + $("#app").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
+        "jdbc/"  + db + $("#app").val().toUpperCase() + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
     );
     //FTP
+    var dir= '';
+    switch($('#wasversion').val()){
+        case 'WAS 7':
+            dir=' /was7data'+ ($("#prd")[0].checked ? "prd" : "cer")  +'/logs/' + $("#fullappname").val() + ' ';
+            break;
+        case 'WAS 9':
+            dir=' /wasdata'+ ($("#prd")[0].checked ? "prd" : "cer")  +'/logs/' + $("#fullappname").val() + ' ';
+            break;
+    }
     $("#ftp").val(
-        "sudo mkftpuser ftp" +  $("#app").val().toLowerCase()  + " /was"
-        
-        + ($("#prd")[0].checked ? "prd" : "cer")   
+        "sudo mkftpuser ftp" +  $("#app").val().toLowerCase()  + dir + '"'  +  $("#encargado").val()  + ', ' + $("#email").val()  + ', ' + $("#dept").val()  +'"'
     );
 };
 /*
