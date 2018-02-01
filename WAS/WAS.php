@@ -114,7 +114,7 @@ if (!$sesion->estado){
                         <option>SqlServer</option>
                         <option>MySql</option>
                     </select>
-                    <input type="text" name="dsdescription" placeholder="Opcional: Descripción de la Base de Datos"  class="form-control" id="dsdescription" />
+                    <input type="text" name="dsdescription" placeholder="Opcional: Referencia de la Base de Datos"  class="form-control" id="dsdescription" />
                 </div>
             </div>           
             
