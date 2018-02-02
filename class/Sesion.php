@@ -1,4 +1,22 @@
 <?php
+/*if (!isset($_SESSION))
+	session_start();
+require_once('Globals.php');
+require_once("Conexion.php");
+require_once("Log.php");
+
+
+if(isset($_POST["action"])){
+    $usuario= new LDAPP();
+    switch($_POST["action"]){       
+        case "Login":
+            $ldapp->username= $_POST["username"];
+            $ldapp->password= $_POST["password"];
+            $ldapp->Connect();
+            break;      
+    }
+}*/
+
 class Sesion{
 	public $estado=false;
 	public $username;
@@ -10,14 +28,9 @@ class Sesion{
         if (!isset($_SESSION))
 			session_start();
 		$this->Verifica();
-		/*if($this->login){
-            return true;
-		} else {
-            return false;
-		}*/
 	}
 	
-	private function Verifica(){
+	private function Verifica(){		
 		if(isset($_SESSION["username"])){
 			$this->username = $_SESSION["username"];
 			$this->rol = $_SESSION["rol"];
@@ -32,7 +45,7 @@ class Sesion{
 			$this->estado = false;            
 		}
 	}
-	
+		
 	public function Inicio($username, $rol, $userid, $name){
         $this->username = $_SESSION["username"] = $username;
 		$this->rol = $_SESSION["rol"] = $rol;
