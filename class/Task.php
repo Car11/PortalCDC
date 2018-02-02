@@ -148,7 +148,7 @@ class Task{
 
     function Load(){
         try {
-            $sql='SELECT title, description, date_creation, project_id, column_id, owner_id, date_started
+            $sql='SELECT title, description, date_creation, project_id, column_id, owner_id, date_started, date_due
                 FROM tasks t 
                 where id=:id';
             $param= array(':id'=>$this->id);

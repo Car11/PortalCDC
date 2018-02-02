@@ -1,13 +1,13 @@
 <?php
 if (!isset($_SESSION))
   session_start();
-include_once('class/Globals.php');
+include_once('../class/Globals.php');
 // Sesion de usuario
-require_once("class/Sesion.php");
+require_once("../class/Sesion.php");
 $sesion = new Sesion();
 if (!$sesion->estado){
-    $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
-    header('Location: Login.php');
+    $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2] . '/' . explode('/',$_SERVER['REQUEST_URI'])[3];
+    header('Location: ../Login.php');
     exit;
 }
 ?>
@@ -18,27 +18,26 @@ if (!$sesion->estado){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
     
-    <link rel="stylesheet" href="assets/css/Checkbox-Button.css">
-    <link rel="stylesheet" href="assets/css/Checkbox-Button1.css">
-    <link rel="stylesheet" href="assets/css/PHP-Contact-Form-dark.css">
-    <link rel="stylesheet" href="assets/css/PHP-Contact-Form-dark1.css">
+    <link rel="stylesheet" href="../assets/css/Checkbox-Button.css">
+    <link rel="stylesheet" href="../assets/css/Checkbox-Button1.css">
+    <link rel="stylesheet" href="../assets/css/PHP-Contact-Form-dark.css">
+    <link rel="stylesheet" href="../assets/css/PHP-Contact-Form-dark1.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/Style-Base.css" />
 
-
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <script src="js/jquery.js" type="text/jscript"></script>
-    <script src="js/Was.js" languaje="javascript" type="text/javascript"></script> 
-    <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
-    <script src="js/bootstrap.min.js" languaje="javascript" type="text/javascript"></script> 
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/Was.js" languaje="javascript" type="text/javascript"></script> 
     
 </head>
 
 <body> 
     <header>
         <h1>Aplicaciones WAS</h1>        
-        <div id="logo"><img src="img/Logoice.png" height="75" > </div>
+        <div id="logo"><img src="../assets/img/Logoice.png" height="75" > </div>
         <div id="signin">
             <span>Usuario: 
                 <?php
@@ -89,17 +88,23 @@ if (!$sesion->estado){
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group"><label for="prd" class="control-label">PRODUCCIÓN    </label>
+            <div class="col-md-2">
+                <div class="form-group"><label for="prd" class="control-label">PRODUCCIÓN&nbsp</label>
                     <div class="btn-group" data-toggle="buttons">
-                        <input type="checkbox" id ="prd" />
-                        <!--<label class="btn btn-success active">                            
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>-->
+                        <input type="checkbox" id ="prd" />      
                     </div>
                     <div class="help-block with-errors"></div>
                 </div>
+                
             </div>
+            <div class="col-md-4">
+                <div class="form-group"><label class="control-label" for="wasversion">Versión WAS</label>
+                    <select class="selectpicker" id="wasversion">
+                        <option>WAS 7</option>
+                        <option>WAS 9</option>
+                    </select>
+                </div>
+            </div>           
             
             <div class="col-md-6">
                 <div class="form-group"><label class="control-label" for="basedatos">Base de datos</label>
@@ -109,14 +114,24 @@ if (!$sesion->estado){
                         <option>SqlServer</option>
                         <option>MySql</option>
                     </select>
+                    <input type="text" name="dsdescription" placeholder="Opcional: Referencia de la Base de Datos"  class="form-control" id="dsdescription" />
                 </div>
             </div>           
             
             <div class="col-md-12" style="background-color:#4e4e4e;">
-                <div class="form-group"><label for="fullappname" class="control-label">Full App Name </label><input type="text" name="fullappname" readonly class="form-control" id="fullappname"  />
-                    <div class="help-block with-errors"></div>
+                <div class="col-md-6" style="background-color:#4e4e4e;">
+                    <div class="form-group"><label for="appname" class="control-label">App Name </label><input type="text" name="appname" readonly class="form-control" id="appname"  />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                <div class="col-md-6" style="background-color:#4e4e4e;">
+                    <div class="form-group"><label for="fullappname" class="control-label">Full App Name </label><input type="text" name="fullappname" readonly class="form-control" id="fullappname"  />
+                        <div class="help-block with-errors"></div>
+                    </div>
                 </div>
+                
             </div>
+            
             <div class="col-md-6">
                 <div class="form-group"><label for="clustername" class="control-label">Cluster </label>
                     <input type="text" name="cluster" class="form-control" id="clustername" readonly />                     
@@ -148,11 +163,52 @@ if (!$sesion->estado){
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="form-group"><label for="ftp" class="control-label">FTP user</label><input type="text" name="ftp" readonly class="form-control" id="ftp"  />
-                    <div class="help-block with-errors"></div>
+
+            <!-- FTP -->
+            <div class="col-md-12" style="background-color:#4e4e4e;">
+                <div class="col-md-4">
+                    <div class="form-group"><label for="encargado" class="control-label">Nombre del Encargado</label><input type="text" name="encargado" class="form-control" id="encargado"  />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group"><label for="email" class="control-label">Correo</label><input type="text" name="email" class="form-control" id="email"  />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group"><label for="dept" class="control-label">Departamento</label><input type="text" name="dept" class="form-control" id="dept"  />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group"><label for="ftp" class="control-label">FTP user</label><input type="text" name="ftp" readonly class="form-control" id="ftp"  />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            
+            </div>            
+
+            <!--VARIABLES DE AMBIENTE  *** EN PRUEBAS ***
+            <div class="row">
+                <div class="col-lg-4">
+                    <input type="button" id="idVar" class="nbtn_blue-sp-c" value="Var" onclick="Var()">
                 </div>
             </div>
+            
+            <div class="col-md-6">
+                <div class="form-group"><label for="var01" class="control-label">VAR01</label><input type="text" name="var01" readonly class="form-control" id="var01"  />
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group"><label for="var02" class="control-label">VAR02</label><input type="text" name="var02" readonly class="form-control" id="var02"  />
+                    
+                </div>
+            </div>-->
         </div>
         <div class="row">
             <!--<div class="col-md-12"><button class="btn btn-success btn-send" type="submit" value="Enviar">Enviar </button></div>-->

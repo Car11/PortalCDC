@@ -132,6 +132,11 @@ h1 {
   float: left;
 }
 
+#task-tbody tr:hover{
+  background-color: #293033;
+  color: #c9d0d3;
+}
+
  
 #menu {width:100%; height:40px; background-color:#1e1e1e;}
 
