@@ -164,17 +164,17 @@ function Gen(){
     );
     // JAAS
     $("#alias").val(
-        "J2C"  + db + $("#app").val().toUpperCase() + '_' + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer") + "Alias"
+        "J2C"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer") + "Alias"
     );
     $("#description").val(
         "JAAS "  + db.toUpperCase() + " " + $("#app").val().toUpperCase() + ' ' + $("#dsdescription").val().toUpperCase() + " (" +  ($("#prd")[0].checked ? "prd" : "cer") + ")"  
     );
     //DS
     $("#datasource").val(
-        "DS"  + db + $("#app").val().toUpperCase() + '_' + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
+        "DS"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
     );
     $("#jndi").val(
-        "jdbc/"  + db + $("#app").val().toUpperCase() + '_' + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
+        "jdbc/"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
     );
     //FTP
     var dir= '';
