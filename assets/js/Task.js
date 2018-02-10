@@ -146,8 +146,8 @@ function ShowData(e){
                     '<a id=Delete'+item.id+' class="btn btn-danger"><em class="fa fa-trash"></em></a>'+
                 '</td>'+
                 '<td class="hidden-xs">'+ item.id +'</td>'+
-                '<td>'+ item.title +'</td>'+
-                '<td>'+ item.description + '</td>'+
+                '<td style="min-width: 17em; max-width: 17em;">'+ item.title +'</td>'+
+                '<td style="min-width: 22em; max-width: 22em;">'+ item.description + '</td>'+
                 //'<td>'+ item.owner_id + '</td>'+
                 '<td style="min-width: 6em; max-width: 7em;">'+ item.position +'</td>'+
                 //'<td>'+ 'PROYECTO X' +'</td>'+
@@ -158,7 +158,7 @@ function ShowData(e){
             '</tr>';
         $('#task-tbody').append(row);            
         // evento click del boton modificar-eliminar
-        $('#Update'+item.id).click(UpdateEventHandler);
+        //$('#Update'+item.id).click(UpdateEventHandler);
         //$('#Delete'+item.id).click(UpdateEventHandler);
     })
 };
