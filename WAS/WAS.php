@@ -31,6 +31,9 @@ if (!$sesion->estado){
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="../assets/js/Was.js" languaje="javascript" type="text/javascript"></script> 
+
+    
+    <script src="../assets/js/snippet.js" languaje="javascript" type="text/javascript"></script> 
     
 </head>
 
