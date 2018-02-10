@@ -48,7 +48,9 @@
             <div id="error"></div>
             <form id="login-form" name="login-form" style="font-family:Quicksand, sans-serif;background-color:rgba(44,40,52,0.73);width:320px;padding:40px;">
                 <div>
-                    <img class="img-rounded img-responsive" src="assets/img/LogoICEAmarilloBlanco.png" id="image" style="width:auto;height:auto;">
+                    <a href="index.html">
+                        <img class="img-rounded img-responsive" src="assets/img/LogoICEAmarilloBlanco.png" id="image" style="width:auto;height:auto;">
+                    </a>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="text" id="username" name="username" placeholder="Usuario" required>

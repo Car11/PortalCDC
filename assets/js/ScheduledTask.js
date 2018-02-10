@@ -5,13 +5,13 @@ var arrayOffiles = [];
 //Llama a la funcion de Load y LoadProjects al cargar la pagina
 $(document).ready( function () {
     //vuelve al menu
-    this.Exit = function(){
-        $(".modal").css({ display: "none" });
-    }; 
-    Load();
-    LoadProjects();
-    Check_SubTask_Status();
-    encode_Files();
+    // this.Exit = function(){
+    //     $(".modal").css({ display: "none" });
+    // }; 
+    //Load();
+    //LoadProjects();
+    //Check_SubTask_Status();
+    //encode_Files();
    
 });
 
@@ -49,37 +49,37 @@ function getBase64(file) {
 // Llama a la funcion LoadScheduledTask dentro de class/ScheduledTask.php para
 // traer los datos de todas las tareas programadas en la base de datos
 // y mostrarlas con el proceso ShowData(e)
-function Load(){
-    $.ajax({
-        type: "POST",
-        url: "class/ScheduledTask.php",
-        data: { 
-            action: "LoadScheduledTask"
-        }
-    })
-    .done(function( e ) {            
-        ShowData(e); 
-    })    
-    .fail(showError);
-};
+// function Load(){
+//     $.ajax({
+//         type: "POST",
+//         url: "class/ScheduledTask.php",
+//         data: { 
+//             action: "LoadScheduledTask"
+//         }
+//     })
+//     .done(function( e ) {            
+//         ShowData(e); 
+//     })    
+//     .fail(showError);
+// };
 
 // Llama a la funcion GetByUserID dentro de class/ScheduledTask.php para
 // traer los proyectos donde el usuario tiene permisos para crear tareas
 // una vez que trae los proyectos de la base de datos, se los enviar a 
 // loadProjectsByUser para que los impirima en una tabla dentro de la pagina web
-function LoadProjects(){
-    $.ajax({
-        type: "POST",
-        url: "class/ScheduledTask.php",
-        data: { 
-            action: "GetByUserID"
-        }
-    })
-    .done(function( e ) {            
-         loadProjectsByUser(e);
-    })    
-    .fail(showError);
-};
+// function LoadProjects(){
+//     $.ajax({
+//         type: "POST",
+//         url: "class/ScheduledTask.php",
+//         data: { 
+//             action: "GetByUserID"
+//         }
+//     })
+//     .done(function( e ) {            
+//          loadProjectsByUser(e);
+//     })    
+//     .fail(showError);
+// };
 
 
 
@@ -99,40 +99,40 @@ function loadProjectsByUser(e){
 };
 
 //Imprime en la pagina la tabla con las tareas existentes en la base de datos
-function ShowData(e){
-    // Limpia el div que contiene la tabla.
-    $('#item-list').html(""); 
-    $('#item-list').append("<br><br><br> <table id='tbl-items' class='display tbl-items' cellspacing='0' width='100%' > </table>");
-    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>Usuario</th> <th>Minuto</th>  <th>Hora</th> <th>DOM</th> <th>Año</th> <th>DOW</th> <th>Titulo</th> <th>Detalle</th><th>VER TAREA</th>  </tr></thead>"+
-        "<tbody id='tableBody'>  </tbody>";
-    $('#tbl-items').append(col); 
-    // carga lista con datos.
-    var data= JSON.parse(e);
-    // Recorre arreglo.
-    $.each(data, function(i, item) {
-        var row="<tr class=datarow>"+
-            "<td style='display:none;' >" + item.id +"</td>" +
-            "<td style='text-align:center'>"+ item.username + "</td>"+
-            "<td>"+ item.min + "</td>"+
-            "<td>"+ item.hour + "</td>"+
-            "<td>"+ item.dom +"</td>"+
-            "<td>"+ item.year +"</td>"+
-            "<td>"+ item.dow +"</td>"+
-            "<td>"+ item.title +"</td>"+
-            "<td>"+ item.detail +"</td>"+
-            //"<td><img id=imgdelete src=img/file_mod.png class=modificar></td>"+
-            "<td><img id=imgdelete src=img/file_delete.png class=eliminar></td>"+
-        "</tr>";
-        $('#tableBody').append(row);
-    })
-    // evento click del boton modificar-eliminar
-    //$('.modificar').click(UpdateEventHandler);
-    $('.eliminar').click(EventoClickEliminar);
-    // formato tabla
-    $('#tbl-items').DataTable( {
-        "order": [[ 5, "asc" ]]
-    } );
-};
+// function ShowData(e){
+//     // Limpia el div que contiene la tabla.
+//     $('#item-list').html(""); 
+//     $('#item-list').append("<br><br><br> <table id='tbl-items' class='display tbl-items' cellspacing='0' width='100%' > </table>");
+//     var col= "<thead><tr> <th style='display:none;'>ID</th> <th>Usuario</th> <th>Minuto</th>  <th>Hora</th> <th>DOM</th> <th>Año</th> <th>DOW</th> <th>Titulo</th> <th>Detalle</th><th>VER TAREA</th>  </tr></thead>"+
+//         "<tbody id='tableBody'>  </tbody>";
+//     $('#tbl-items').append(col); 
+//     // carga lista con datos.
+//     var data= JSON.parse(e);
+//     // Recorre arreglo.
+//     $.each(data, function(i, item) {
+//         var row="<tr class=datarow>"+
+//             "<td style='display:none;' >" + item.id +"</td>" +
+//             "<td style='text-align:center'>"+ item.username + "</td>"+
+//             "<td>"+ item.min + "</td>"+
+//             "<td>"+ item.hour + "</td>"+
+//             "<td>"+ item.dom +"</td>"+
+//             "<td>"+ item.year +"</td>"+
+//             "<td>"+ item.dow +"</td>"+
+//             "<td>"+ item.title +"</td>"+
+//             "<td>"+ item.detail +"</td>"+
+//             //"<td><img id=imgdelete src=img/file_mod.png class=modificar></td>"+
+//             "<td><img id=imgdelete src=img/file_delete.png class=eliminar></td>"+
+//         "</tr>";
+//         $('#tableBody').append(row);
+//     })
+//     // evento click del boton modificar-eliminar
+//     //$('.modificar').click(UpdateEventHandler);
+//     $('.eliminar').click(EventoClickEliminar);
+//     // formato tabla
+//     $('#tbl-items').DataTable( {
+//         "order": [[ 5, "asc" ]]
+//     } );
+// };
 
 // evento click del boton eliminar
 function EventoClickEliminar(){
@@ -183,7 +183,9 @@ function Eliminar(id){
                 alert('200 ec');         
             }
         }*/
-    })          //  codigo bueno ***************************
+    })          
+    
+    //  codigo bueno ***************************
     // .done(function(e){
     //     if(e=="Registro en uso")
     //     {
@@ -305,22 +307,22 @@ function SaveScheduledTask(){
 };    
 
 
-// function Check_SubTask_Status()
-// {
-//     var btnAdd = document.getElementById("btnAdd");
-//     btnAdd.disabled = !btnAdd.disabled;
+function Check_SubTask_Status()
+{
+    var btnAdd = document.getElementById("btnAdd");
+    btnAdd.disabled = !btnAdd.disabled;
 
-//     var btnDel = document.getElementById("btnDel");
-//     btnDel.disabled = !btnDel.disabled;
+    var btnDel = document.getElementById("btnDel");
+    btnDel.disabled = !btnDel.disabled;
 
 
-//     var tableSubtask = document.getElementById("chk");
-//     tableSubtask.disabled = !tableSubtask.disabled;
+    var tableSubtask = document.getElementById("chk");
+    tableSubtask.disabled = !tableSubtask.disabled;
 
-//     var tableSubtask = document.getElementById("subtask");
-//     tableSubtask.disabled = !tableSubtask.disabled;
+    var tableSubtask = document.getElementById("subtask");
+    tableSubtask.disabled = !tableSubtask.disabled;
 
-// }
+}
 
 function addRow(tableID) {
     var table = document.getElementById(tableID);

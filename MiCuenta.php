@@ -43,6 +43,7 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/Team-Grid.css">
     <link rel="stylesheet" href="assets/css/Team.css">
+    <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
@@ -50,19 +51,22 @@ if (!isset($_SESSION))
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script> 
+    <!-- <script src="assets/js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>  -->
 
 </head>
 
 <body>
     <nav class="navbar navbar-default custom-header">
         <div class="container-fluid">
-            <div class="navbar-header"><a class="navbar-brand" href="#"><span style="margin-left:27px;font-family:'News Cycle', sans-serif;color:rgb(253,250,254);">Portal Centro de Datos Corporativo </span> <img class="img-responsive" src="assets/img/ico-cerca-de-ti-log.png" width="auto" height="auto" style="width:43px;margin:-26px;margin-right:-27px;margin-top:-32px;margin-left:-33px;margin-bottom:-31px;"> </a>
-                <button
-                    class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"></button>
+            <div class="navbar-header"><a class="navbar-brand" href="index.html">
+                <span style="margin-left:27px;font-family:'News Cycle', sans-serif;color:rgb(253,250,254);">Portal Centro de Datos Corporativo </span> 
+                <img class="img-responsive" src="assets/img/ico-cerca-de-ti-log.png" width="auto" height="auto" style="width:43px;margin:-26px;margin-right:-27px;margin-top:-32px;margin-left:-33px;margin-bottom:-31px;"> 
+            </a>
+                <!-- <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"></button> -->
             </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse">
+            <!-- <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right"></ul>
-            </div>
+            </div> -->
         </div>
     </nav>
 
@@ -70,7 +74,7 @@ if (!isset($_SESSION))
         <div class="row">
             <p></p>
             <h1>Bienvenido a su cuenta</h1>
-            <p>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</p>
+            <p style="color: #DAD8D8;">Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</p>
 
             <div class="col-md-12">
                 <div class="panel panel-default panel-table">
@@ -86,7 +90,7 @@ if (!isset($_SESSION))
                                 </h3>
                             </div>
                             <div class="col col-xs-6 text-right">
-                                <button type="button" class="btn btn-sm btn-primary btn-create">Crear Nueva</button>
+                                <button type="button" id="btn-create-new-task" class="btn btn-sm btn-primary btn-create" data-toggle="modal" data-target=".bd-example-modal-lg">Crear Nueva</button>
                             </div>
                         </div>
                     </div>
@@ -97,9 +101,9 @@ if (!isset($_SESSION))
                                 <th><em class="fa fa-cog"></em></th>
                                 <th class="hidden-xs">ID</th>
                                 <th>Titulo</th>
-                                <th>Asignado</th>
+                                <th>Descripción</th>
                                 <th>Estado</th>
-                                <th>Proyecto</th>
+                                <th>Creado</th>
                             </tr> 
                         </thead>
                         <tbody id='task-tbody'>
@@ -109,7 +113,7 @@ if (!isset($_SESSION))
                 </div>
                 
                 <div class="panel-footer">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col col-xs-4">Page x of X
                         </div>
                         <div class="col col-xs-8">
@@ -125,44 +129,201 @@ if (!isset($_SESSION))
                                 <li><a href="#">»</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
         </div>
     </div><!-- END CONTAINER -->   
 
-    <div class="footer-dark navbar navbar-fixed-bottom">
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-md-push-4 item text">
-                        <h3 class="contac-center-h3">Contactenos </h3><i class="icon-earphones-alt icon" style="font-size:40px;color:#f0f9ff;float:left;margin-left:1px;margin-right:1px;opacity:0.6;"></i>
-                        <p style="font-size:xx-large; text-align: center;">2002-4040</p>
-                    </div>
-                    <div class="col-md-4 col-md-pull-4 col-sm-4 item">
-                        <h3>Servicios</h3>
-                        <ul>
-                            <li><a href="#">Operación y Monitoreo</a></li>
-                            <li><a href="#">Control y Producción</a></li>
-                            <li><a href="#">Gestión de Cambios</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4  col-sm-4 item">
-                        <h3>Sugerencias </h3>
-                        <ul>
-                            <li><a href="#">Cuéntanos tu experiencia</a></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                    </div>
-                </div>
-                <p class="copyright">Operaciones DCTI © 2018</p>
-            </div>
+    <div class="footer-dark navbar navbar-fixed-bottom" style="padding: 1px;">
+        <footer>                
+            <p class="copyright">Operaciones DCTI © 2018</p>
         </footer>
     </div><!-- END PAGEFOOTER -->   
 
-    <!-- MODAL formulario -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="height: 100%;">
+        <div class="modal-dialog modal-lg" style="height: 100%;">
+          <div class="modal-content" style="height: 100%;">   
+            
+          
+
+
+            <div  id="box3" class="box"><!-- caja 03 -->
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!-- <h4 class="modal-title">Modal Header</h4> -->
+              </div> <!-- Fin del Header -->
+              
+              <div class="row">           
+                <div class="col-sm-1 col-md-5">  </div> 
+                <div class="col-sm-8 col-md-4 box3-label">   
+                  <label class="text-center"> Detalles de Tarea: </label>
+                </div>
+                <div class="col-sm-1 col-md-3">  </div> 
+              </div>
+
+              <div class="row">
+                <div class="col-xs-1 col-md-1"></div>
+                <div class="col-xs-6 col-md-6">
+                  <label id="titlelbl" for="title"><span class="st_input-field-lbl control-label">Título<span class="required">*</span></span></label>   
+                </div>
+                <div class="col-xs-5 col-md-5">
+                  <label class="control-label">Seleccione un Proyecto: </label> 
+                </div>                
+              </div>
+
+              <div class="row">
+                <div class="col-xs-1 col-md-1"></div>
+                <div class="col-xs-1 col-md-6 selectContainer">
+                  <input  type="text"  id="title"  style="text-transform:uppercase"
+                      class="st_input-field" name="title" value="" title="Título de la tarea" required> 
+                </div>
+                <div class="col-xs-1 col-md-4 selectContainer">
+                  <select class="list form-control" name="projectid" id="projectid">
+                  </select>
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+                <div class="col-xs-1 col-md-1"></div>
+                <div class="col-xs-1 col-md-6">
+                  <label id="subtask_deslbl" for="subtask_deslbl"><span class="subtask_deslbl control-label">Descripción<span class="required">*</span></span>
+                  </label>
+                </div>
+                <div class="col-xs-4 col-md-5">
+                  <label class="control-label control-label">Seleccione una fecha de inicio: </label> 
+                </div> 
+              </div>
+
+              <div class="row">
+                <div class="col-xs-1 col-md-1"></div>
+                <div class="col-xs-1 col-md-6 selectContainer">
+                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" required> 
+                  </TEXTAREA>                            
+                </div>
+                <div class="col-xs-4 col-md-5">
+                  <input type="datetime-local" autocomplete="on" name="bdaytime" id="date_started">
+                  <br>
+                  <br>
+                  <label class="control-label control-label">Seleccione una fecha de final: </label> 
+                
+                  <input type="datetime-local" name="bdaytime" id="date_due">
+                  
+                </div> 
+              </div>
+              <div class="footer-box">              
+                <div class="col-sm-1 col-md-1"> 
+                  <!-- <a class="btn btn-primary btn-lg" href="#box1" role="button">Atras</a> -->
+                  <button type="button" id="cerrar-modal" class="btn btn-warning center-block" data-dismiss="modal">Cancelar</button> 
+                </div>   
+                <div class="col-sm-2 col-md-4"></div>
+                <div class="col-sm-9 col-md-2">
+                  <a class="btn btn-success btn-lg center-block" onclick="SaveTask()" role="button">Guardar</a> 
+                </div>                 
+                <div class="col-sm-2 col-md-3"></div>
+                <div class="col-sm-2 col-md-2 text-right">  
+                  <a class="btn btn-primary btn-lg" href="#box4" role="button">Siguiente</a>  
+                </div>
+                <div class="col-sm-5 col-md-5"> </div>
+              </div><!-- FIN Footer -->     
+            </div><!--FIN caja 03 -->
+
+            <div id="box4" class="box"><!-- caja 04 -->
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!-- <h4 class="modal-title">Modal Header</h4> -->
+              </div>
+
+
+
+              <div class="row">
+                <div class="col-md-12 text-center control-label">                         
+                  <h2>A continuacion puede agregar subtareas y/o archivos adjuntos.</h2>
+                </div>
+              </div>
+              <br>
+              <br>
+              <br>
+
+              <div class="row">
+                <div class="col-md-5">
+                  <INPUT id="btnAdd" type="button" value="Agregar Subtarea" onclick="addRow('dataTable')" />
+                  <INPUT id="btnDel" type="button" value="Eliminiar Subtarea" onclick="deleteRow('dataTable')" />
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+                <div class="col-md-5 control-label">
+                  <label>Detalle de SubTareas: </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="tabla" class="col-md-10">   
+                  <TABLE id="dataTable" width="100%" border="1">
+                    <TR>
+                      <TD><INPUT id="chk" type="checkbox" name="chk"/></TD>
+                      <TD> <span style='color:#ddd;'> 1 </span></TD>
+                      <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD>
+                    </TR>
+                  </TABLE>
+                  <!-- <input type="button" value="ok" id="ok" class="boton2" onclick="tableToJSON()"> -->
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-md-11">
+                  <div class="form-group">
+                    <form action="test.php" method="post" enctype="multipart/form-data">
+                        <!-- <div id="dropzone" style='color: white;'>Drop files here</div> -->
+                        <!-- <input type="file" multiple="true" id="inputFileToLoad" name="files[]" onchange="encodeImageFile()" class="form-control-file"/> -->
+                        <input type="file" multiple="true" id="inputFileToLoad" class="form-control-file" placeholder="Archivo" accept="image/*;capture=camera" name="userPhoto" single />
+                        <output id="listFiles"></output>
+                        <input type="text" id="response" style='display:none;' />
+                        <br>
+                        <!-- <input type="file" name="archivo" id="archivo"></input>
+                        <input type="submit" value="Subir archivo"></input> -->
+                    </form>
+                    <!-- <label for="exampleInputFile">Adjuntar un archivo</label>
+                    <input type="file" class="form-control-file" name="archivo" id="userfile" aria-describedby="fileHelp"> -->
+                    <!-- <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small> -->                         
+                  </div>
+                </div>         
+              </div>         
+
+
+
+
+
+
+              
+
+              <div class="footer-box">              
+                <div class="col-sm-1 col-md-1"> 
+                  <a class="btn btn-primary btn-lg" href="#box3" role="button">Atras</a> 
+                </div>   
+                <div class="col-sm-2 col-md-4"></div>
+                <div class="col-sm-9 col-md-2">
+                  <a class="btn btn-success btn-lg center-block" onclick="SaveTask()" role="button">Guardar</a> 
+                </div>                 
+                <div class="col-sm-2 col-md-3"></div>
+                <div class="col-sm-2 col-md-2 text-right">  
+                  <!-- <a class="btn btn-primary btn-lg" href="#box4" role="button">Siguiente</a>   -->
+                </div>
+                <div class="col-sm-5 col-md-5"> </div>            
+              </div><!-- FIN Footer -->     
+            </div><!--FIN caja 04 -->
+          </div><!--FIN modal-content -->
+        </div><!--FIN modal-dialog modal-lg -->
+      </div><!--modal fade bd-example-modal-lg -->
+   
+
+
+    <!-- MODAL formulario EDITAR -->
     <div class="modal" id="modal-task" >
         <!-- Modal content -->
         <div class="modal-content">
@@ -257,13 +418,32 @@ if (!isset($_SESSION))
                 </div>
             </div>    
 
-            <div class="modal-footer">
-                <br>
-            </div>
+            
             
         </div>
     </div>      
 <!-- FIN MODAL -->   
 </body>
+<script>
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// CREA LISTA DE ARCHIVOS AGREGADOS //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', (f.name), '</li>');
+    }
+    document.getElementById('listFiles').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+   document.getElementById('inputFileToLoad').addEventListener('change', handleFileSelect, false);
+  
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////// CREA LISTA DE ARCHIVOS AGREGADOS //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+</script>
 
 </html>

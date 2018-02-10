@@ -36,7 +36,14 @@ if(isset($_POST["action"])){
         case "Insert":
             $task->title= $_POST["title"];
             $task->description= $_POST["description"];
-            $task->project_id= $_POST["project_id"];
+            $task->project_id= $_POST["projectid"];
+            $task->subTask= $_POST["subTask"];
+            $task->date_started= $_POST["date_started"];
+            $task->date_due= $_POST["date_due"];
+            $task->file= $_POST["file"];
+            $task->subtask_des= json_decode($_POST["subtask_des"]);
+            $task->objFile= json_decode($_POST["objFile"]);
+            $task->creator_id= $_SESSION["userid"];
             $task->Insert();
             break;
         case "Update":
@@ -65,7 +72,17 @@ class Task{
     public $date_creation;
     public $date_modification;
     public $position;
-    public $column_id = 42;    // definir como se van a manejar las columnas del proyecto.
+    public $creator_id;
+    public $date_started;
+    public $subtask_des;
+    public $date_due;
+    public $file;
+    public $objFile;
+    public $subTask;
+
+    // public  $title_subTask = "0";
+    // public $id_scheduled_task = "0";
+    //public $column_id = 42;    // definir como se van a manejar las columnas del proyecto.
 
     public $idFile='';
 
@@ -77,74 +94,7 @@ class Task{
     //
     // Funciones de Mantenimiento.
     //
-    function Insert(){
-        try {
 
-            $curl = curl_init();            
-            $data = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $this->send_id . ", \"params\": { \"owner_id\": 0, \"creator_id\": ". $_SESSION["userid"] . ", 
-                \"date_due\": \"\", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title .  "\", \"project_id\": " . $this->project_id . 
-                ", \"color_id\": \"green\", \"column_id\": " . $this->column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";            
-
-            /*$data2 = array('jsonrpc' => '2.0',
-                'method'=> 'createTask',
-                'id'=>$this->send_id,
-                'params'=> $params=array(
-                    'owner_id'=>$_SESSION["userid"],
-                    'creator_id'=>$_SESSION["userid"],
-                    'date_due'=>'',
-                    'description'=>$this->description,
-                    'category_id'=>0,
-                    'score'=>0,
-                    'title'=>$this->title,
-                    'project_id'=>$this->project_id,
-                    'color_id'=>'green',
-                    'column_id'=> $this->column_id,
-                    'recurrence_status'=>0,
-                    'recurrence_trigger'=>0,
-                    'recurrence_factor'=>0,
-                    'recurrence_timeframe'=>0,
-                    'recurrence_basedate'=>0
-                )
-            );*/
-
-            //echo $cadenaRapida; 
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => Globals::$jsonrpcURL,
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS =>  $data,
-              CURLOPT_HTTPHEADER => array(
-                "authorization: Basic ". Globals::$token ."=",
-                "cache-control: no-cache",
-                "content-type: application/json",
-                "postman-token: ". Globals::$postmantoken
-              ),
-            ));
-            
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-            
-            curl_close($curl);
-            
-            if ($err) {
-                echo "Error #:" . $err;
-            } else {
-                $response= explode(",",$response)[1];
-                $this->id= (int)explode(":",$response)[1]; // id task
-                echo json_encode($this);
-            }
-        }     
-        catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar el insert', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
-        }
-    }
 
     function Load(){
         try {
@@ -226,10 +176,17 @@ class Task{
 
     function LoadTasksByUser(){
         try {
-            $sql='SELECT id, title, description, owner_id, position, date_creation, date_modification 
-                FROM tasks
-                where creator_id=:userid                
-                ORDER BY id desc';
+            // $sql='SELECT id, title, description, owner_id, position, date_creation, date_modification 
+            //     FROM tasks
+            //     where creator_id=:userid                
+            //     ORDER BY id desc';
+
+            $sql='SELECT t.id, t.title, t.description, C.title as position, t.date_creation 
+                FROM tasks as t            
+                INNER JOIN columns as C on t.column_id = C.id
+                where creator_id=:userid 
+                ORDER BY id desc;';   
+
             $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
@@ -241,6 +198,163 @@ class Task{
             exit;
         }
     }
+
+    function Insert(){
+        
+        $curl = curl_init();
+        //date_started sin convertir: 2018-02-10T12:59
+        //date_started debe tener el siguiente formato: 02/10/2018 19:43  || dia/mes/año hora:min       
+        // $t_started = ($this->date_started);
+        // $t_started = str_replace('-', '/', $t_started);
+        // $t_started = str_replace('T', ' ', $t_started);
+
+        $t_started = date("d/m/Y H:m", strtotime($this->date_started));
+
+        //date_due ebe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
+        $t_due = ($this->date_due);
+        // $t_due = str_replace('/', '-', $t_due);
+        $t_due = str_replace('T', ' ', $t_due);
+        
+
+        //$fecha =date("c");
+        $cadenaRapida = "{\"jsonrpc\": \"2.0\",\"method\": \"createTask\",\"id\": \"10\",\"params\": { \"owner_id\": ".$this->creator_id.", \"creator_id\":".$this->creator_id.", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title . "\", \"project_id\": 11, \"color_id\": \"green\", \"date_due\": \"" . $t_due . "\", \"date_started\":\"" . $t_started . "\", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0,\"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
+
+        // CURLOPT_URL => $Globals::$jsonrpcURL,
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => Globals::$jsonrpcURL,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $cadenaRapida,
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Basic ". Globals::$token ."=",
+            "cache-control: no-cache",
+            "content-type: application/json",
+            "Postman-Token: ". Globals::$postmantoken
+        ),        
+        // "Authorization: Basic anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg=",
+        //   "Postman-Token: 1ec2b092-199a-ee41-b698-37096a6c36f7"
+        ));
+            
+    
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        //echo $response;
+        $id_new_task = "";
+    
+        $inicio = strpos($response, ":",20);
+        $inicio =$inicio+1;
+        $fin = strrpos($response, ",");
+        //echo "Busca ':' inicio: ".$inicio." / Busca ',' Fin: ".$fin;
+    
+         //( string $response , mixed ":" [, int $caracter_de_inicio = 20 ] )
+        //int $fin ( string $response , mixed "," [, int $caracter_de_inicio2 = 20 ] )
+        for ($i = $inicio; $i < $fin; $i++) {
+            $id_new_task = "{$id_new_task}{$response[$i]}";
+        }
+        //echo "El numero de la nueva tarea es: ".$id_new_task;
+        curl_close($curl);
+    
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+                echo "Resumen de tarea: ".$response;
+            }
+    
+        if (($this->subTask) == "1"){
+            foreach (($this->subtask_des) as $value1) {
+                $this->crearSubTarea($id_new_task, $value1);
+                //$id_new_task, $value1
+            }
+        }
+    
+        if ($this-$file == "1"){
+            foreach (($this->objFile) as $value2) {
+                $this->addFilesToTask(($this->project_id), $id_new_task, $value2[0],$value2[1]);
+            }
+        }
+    
+    }
+
+    function crearSubTarea($new_task, $title_subTask){
+    //$this->id_scheduled_task, $title_subTask
+        $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createSubtask\", \"id\": 2041554661, \"params\": { \"task_id\":" . $new_task . ", \"title\": \"" . $title_subTask . "\" } }";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => Globals::$jsonrpcURL,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $cadenaRapida,
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Basic ". Globals::$token ."=",
+            "cache-control: no-cache",
+            "content-type: application/json",
+            "Postman-Token: ". Globals::$postmantoken
+        ),      
+        ));
+    
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }   
+    
+    }
+    
+    function addFilesToTask($id_project, $id_task, $name,$image_file_base64){
+    
+        // $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createSubtask\", \"id\": 2041554661, \"params\": { \"task_id\":" . $id_scheduled_task . ", \"title\": \"" . $title . "\" } }";
+        $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTaskFile\", \"id\": 94500810, \"params\": [" . $id_project . ", " . $id_task . ", \"" . $name . "\", \"" . $image_file_base64 . "\"]}";
+        $curl = curl_init();
+        echo "El id del project es: ".$id_project;
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => Globals::$jsonrpcURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $cadenaRapida,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Basic ". Globals::$token ."=",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "Postman-Token: ". Globals::$postmantoken
+            ),      
+        ));
+    
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+    
+        curl_close($curl);
+    
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
+    }
+
+
 }
 
 ?>
+
+
+
+

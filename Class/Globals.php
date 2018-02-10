@@ -4,8 +4,8 @@ class Globals {
     const version= '1.0';
     const cssversion= "1.0";
     public static $jsonrpcURL= "http://10.129.20.177/kanboard/jsonrpc.php";
-    public static $token="anNvbnJwYzphZWUzYzQ0YmZhZTJiZTg2MDRjYjU2MGQ5MDdiM2E3M2ViZjE4OTY4OWM0YTQ1ZDY0YTdmNmExYWY1Yzc";
-    public static $postmantoken="6f7211a7-99df-f951-788c-3274e311bb7b";
+    public static $token="anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg";
+    public static $postmantoken="1ec2b092-199a-ee41-b698-37096a6c36f7";
     private static $config="";
     //
 
