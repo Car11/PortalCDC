@@ -273,7 +273,7 @@ class Task{
             }
         }
     
-        if ($this-$file == "1"){
+        if ($this->$file == "1"){
             foreach (($this->objFile) as $value2) {
                 $this->addFilesToTask(($this->project_id), $id_new_task, $value2[0],$value2[1]);
             }
