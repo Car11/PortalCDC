@@ -200,15 +200,16 @@ if (!isset($_SESSION))
               <div class="row">
                 <div class="col-xs-1 col-md-1"></div>
                 <div class="col-xs-1 col-md-6 selectContainer">
-                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" required> 
+                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" required style="color:black;"
+> 
                   </TEXTAREA>                            
                 </div>
                 <div class="col-xs-4 col-md-5">
                   <input type="datetime-local" autocomplete="on" name="bdaytime" id="date_started">
                   <br>
                   <br>
-                  <label class="control-label control-label">Seleccione una fecha de final: </label> 
-                
+                  <label class="control-label control-label">Seleccione una fecha de final: </label>                 
+                  <br>
                   <input type="datetime-local" name="bdaytime" id="date_due">
                   
                 </div> 

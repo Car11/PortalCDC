@@ -365,7 +365,7 @@ function SaveTask(){
     
     $.ajax({
         type: "POST",
-        url: "Class/Task.php",
+        url: "class/Task.php",
         data: { 
             action: miAccion,           
             title:  $("#title").val(),
