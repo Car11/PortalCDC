@@ -391,7 +391,9 @@ function SaveTask(){
         // var cerrar = document.getElementById(".modal");
         // cerrar.click();
       })
-    .fail(showError)
+    .fail(function(data) {
+        //alert(data);
+    })
     //.always(ReCargar);
 };    
 

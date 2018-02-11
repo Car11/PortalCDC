@@ -200,83 +200,89 @@ class Task{
     }
 
     function Insert(){
-        
-        $curl = curl_init();
-        //date_started sin convertir: 2018-02-10T12:59
-        //date_started debe tener el siguiente formato: 02/10/2018 19:43  || dia/mes/año hora:min       
-        // $t_started = ($this->date_started);
-        // $t_started = str_replace('-', '/', $t_started);
-        // $t_started = str_replace('T', ' ', $t_started);
+        try {
+            $curl = curl_init();
+            //date_started sin convertir: 2018-02-10T12:59
+            //date_started debe tener el siguiente formato: 02/10/2018 19:43  || dia/mes/año hora:min       
+            // $t_started = ($this->date_started);
+            // $t_started = str_replace('-', '/', $t_started);
+            // $t_started = str_replace('T', ' ', $t_started);
 
-        $t_started = date("d/m/Y H:m", strtotime($this->date_started));
+            $t_started = date("d/m/Y H:m", strtotime($this->date_started));
 
-        //date_due ebe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
-        $t_due = ($this->date_due);
-        // $t_due = str_replace('/', '-', $t_due);
-        $t_due = str_replace('T', ' ', $t_due);
-        
-
-        //$fecha =date("c");
-        $cadenaRapida = "{\"jsonrpc\": \"2.0\",\"method\": \"createTask\",\"id\": \"10\",\"params\": { \"owner_id\": ".$this->creator_id.", \"creator_id\":".$this->creator_id.", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title . "\", \"project_id\": ".$this->project_id.", \"color_id\": \"green\", \"date_due\": \"" . $t_due . "\", \"date_started\":\"" . $t_started . "\", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0,\"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
-
-        // CURLOPT_URL => $Globals::$jsonrpcURL,
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => Globals::$jsonrpcURL,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => $cadenaRapida,
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: Basic ". Globals::$token ."=",
-            "cache-control: no-cache",
-            "content-type: application/json",
-            "Postman-Token: ". Globals::$postmantoken
-        ),        
-        // "Authorization: Basic anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg=",
-        //   "Postman-Token: 1ec2b092-199a-ee41-b698-37096a6c36f7"
-        ));
+            //date_due ebe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
+            $t_due = ($this->date_due);
+            // $t_due = str_replace('/', '-', $t_due);
+            $t_due = str_replace('T', ' ', $t_due);
             
-    
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        //echo $response;
-        $id_new_task = "";
-    
-        $inicio = strpos($response, ":",20);
-        $inicio =$inicio+1;
-        $fin = strrpos($response, ",");
-        //echo "Busca ':' inicio: ".$inicio." / Busca ',' Fin: ".$fin;
-    
-         //( string $response , mixed ":" [, int $caracter_de_inicio = 20 ] )
-        //int $fin ( string $response , mixed "," [, int $caracter_de_inicio2 = 20 ] )
-        for ($i = $inicio; $i < $fin; $i++) {
-            $id_new_task = "{$id_new_task}{$response[$i]}";
+
+            //$fecha =date("c");
+            $cadenaRapida = "{\"jsonrpc\": \"2.0\",\"method\": \"createTask\",\"id\": \"10\",\"params\": { \"owner_id\": ".$this->creator_id.", \"creator_id\":".$this->creator_id.", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title . "\", \"project_id\": ".$this->project_id.", \"color_id\": \"green\", \"date_due\": \"" . $t_due . "\", \"date_started\":\"" . $t_started . "\", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0,\"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
+
+            // CURLOPT_URL => $Globals::$jsonrpcURL,
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => Globals::$jsonrpcURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $cadenaRapida,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Basic ". Globals::$token ."=",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "Postman-Token: ". Globals::$postmantoken
+            ),        
+            // "Authorization: Basic anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg=",
+            //   "Postman-Token: 1ec2b092-199a-ee41-b698-37096a6c36f7"
+            ));
+                
+        
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            //echo $response;
+            $id_new_task = "";
+        
+            $inicio = strpos($response, ":",20);
+            $inicio =$inicio+1;
+            $fin = strrpos($response, ",");
+            //echo "Busca ':' inicio: ".$inicio." / Busca ',' Fin: ".$fin;
+        
+            //( string $response , mixed ":" [, int $caracter_de_inicio = 20 ] )
+            //int $fin ( string $response , mixed "," [, int $caracter_de_inicio2 = 20 ] )
+            for ($i = $inicio; $i < $fin; $i++) {
+                $id_new_task = "{$id_new_task}{$response[$i]}";
+            }
+            //echo "El numero de la nueva tarea es: ".$id_new_task;
+            curl_close($curl);
+        
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                    echo "Resumen de tarea: ".$response;
+                }
+        
+            if (($this->subTask) == "1"){
+                foreach (($this->subtask_des) as $value1) {
+                    $this->crearSubTarea($id_new_task, $value1);
+                    //$id_new_task, $value1
+                }
+            }
+        
+            if ($this->$file == "1"){
+                foreach (($this->objFile) as $value2) {
+                    $this->addFilesToTask(($this->project_id), $id_new_task, $value2[0],$value2[1]);
+                }
+            }
         }
-        //echo "El numero de la nueva tarea es: ".$id_new_task;
-        curl_close($curl);
-    
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-                echo "Resumen de tarea: ".$response;
-            }
-    
-        if (($this->subTask) == "1"){
-            foreach (($this->subtask_des) as $value1) {
-                $this->crearSubTarea($id_new_task, $value1);
-                //$id_new_task, $value1
-            }
-        }
-    
-        if ($this->$file == "1"){
-            foreach (($this->objFile) as $value2) {
-                $this->addFilesToTask(($this->project_id), $id_new_task, $value2[0],$value2[1]);
-            }
+        catch (Exception $e){
+            header('HTTP/1.1 500 Internal Server XXX');
+            header('Content-Type: application/json; charset=UTF-8');
+            die(json_encode(array('message' => 'ERROR:' . $e, 'code' => 666)));
         }
     
     }
