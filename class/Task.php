@@ -217,7 +217,7 @@ class Task{
             
 
             //$fecha =date("c");
-            $cadenaRapida = "{\"jsonrpc\": \"2.0\",\"method\": \"createTask\",\"id\": \"10\",\"params\": { \"owner_id\": ".$this->creator_id.", \"creator_id\":".$this->creator_id.", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title . "\", \"project_id\": ".$this->project_id.", \"color_id\": \"green\", \"date_due\": \"" . $t_due . "\", \"date_started\":\"" . $t_started . "\", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0,\"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
+            $cadenaRapida = "{\"jsonrpc\": \"2.0\",\"method\": \"createTask\",\"id\": \"10\",\"params\": { \"owner_id\": ".$this->creator_id.", \"creator_id\":".$this->creator_id.", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title . "\", \"project_id\": ".$this->project_id.", \"color_id\": \"yellow\", \"date_due\": \"" . $t_due . "\", \"date_started\":\"" . $t_started . "\", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0,\"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
 
             // CURLOPT_URL => $Globals::$jsonrpcURL,
             $curl = curl_init();
