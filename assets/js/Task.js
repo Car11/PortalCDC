@@ -1,4 +1,5 @@
 var id = "NULL";
+var mifile = "0";
 var arrayOfThisfile = [];
 var arrayOffiles = [];
 
@@ -356,11 +357,11 @@ function SaveTask(){
             var realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
             arrayOffiles[i][1] = realData;            
         }
-        var mifile = "1";
+        mifile = "1";
         
         
     }else {
-        var mifile = "0";
+        mifile = "0";
     }   
     
     $.ajax({
