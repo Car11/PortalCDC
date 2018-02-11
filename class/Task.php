@@ -40,7 +40,7 @@ if(isset($_POST["action"])){
             $task->subTask= $_POST["subTask"];
             $task->date_started= $_POST["date_started"];
             $task->date_due= $_POST["date_due"];
-            $task->file= $_POST["file"];
+            $task->mifile= $_POST["mifile"];
             $task->subtask_des= json_decode($_POST["subtask_des"]);
             $task->objFile= json_decode($_POST["objFile"]);
             $task->creator_id= $_SESSION["userid"];
@@ -76,7 +76,7 @@ class Task{
     public $date_started;
     public $subtask_des;
     public $date_due;
-    public $file;
+    public $mifile;
     public $objFile;
     public $subTask;
 
@@ -273,7 +273,7 @@ class Task{
                 }
             }
         
-            if ($this->$file == "1"){
+            if ($this->mifile == "1"){
                 foreach (($this->objFile) as $value2) {
                     $this->addFilesToTask(($this->project_id), $id_new_task, $value2[0],$value2[1]);
                 }

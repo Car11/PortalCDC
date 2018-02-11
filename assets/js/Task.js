@@ -374,7 +374,7 @@ function SaveTask(){
             projectid: $("#projectid").val(),
             date_started: $("#date_started").val(),
             date_due: $("#date_due").val(),
-            file: mifile,
+            mifile: mifile,
             subtask_des: JSON.stringify(arraySubTask),
             subTask: varSubTask,
             objFile: JSON.stringify(arrayOffiles)
