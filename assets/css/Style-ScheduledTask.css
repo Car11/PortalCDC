@@ -69,7 +69,7 @@ border-bottom: none !important;
 
 
 .st_input-field-desc, .st_input-field-time, .st_input-field{
-    color: rgb(184, 179, 179) !important;
+    /* color: rgb(184, 179, 179) !important; */
     width: 100%;
     resize:none;
 }
