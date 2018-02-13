@@ -256,6 +256,10 @@ function LoadProjects(){
     .fail(showError);
 };
 
+function clearAttachments(){
+    $('#file-list').empty()
+};
+
 function showAttachments(e){
     // Limpia el div que contiene la tabla.
     $('#file-list').html(""); 
@@ -386,6 +390,8 @@ function SaveTask(){
         $("#title").val('');
         $("#description").val('');
         formatTableSubTask("dataTable");
+        clearAttachments();
+        $('#file-list').empty();
         Load();
         $("#cerrar-modal").click();
         // var cerrar = document.getElementById(".modal");
