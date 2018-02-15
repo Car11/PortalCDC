@@ -5,7 +5,7 @@ if (!isset($_SESSION))
     // Sesion de usuario
     require_once("class/Sesion.php");
     $sesion = new Sesion();
-    if (!$sesion->estado){
+    if (!$sesion->estado){        
         $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
         header('Location: Login.php');
         exit;
@@ -200,7 +200,7 @@ if (!isset($_SESSION))
               <div class="row">
                 <div class="col-xs-1 col-md-1"></div>
                 <div class="col-xs-1 col-md-6 selectContainer">
-                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" required style="color:black;"
+                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" style="color:black;"
 > 
                   </TEXTAREA>                            
                 </div>
@@ -349,7 +349,7 @@ if (!isset($_SESSION))
                                 class="input-field" name="title" title="Título de la tarea"  required >                            
                         </label>
                         <label for="description"><span class="input-field-lbl">Descripción<span class="required">*</span></span>
-                            <input type="text" class="input-field" name="description" value="" id="description" required >
+                            <input type="text" class="input-field" name="description" value="" id="description"  >
                         </label>
 
                         <div class="form-group">

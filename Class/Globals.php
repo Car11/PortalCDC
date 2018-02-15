@@ -16,6 +16,9 @@ class Globals {
         } 
         else if (file_exists('../ini/config.ini')) {
             self::$config = parse_ini_file('../ini/config.ini',true); 
+        }
+        else if (file_exists('../../../ini/config.ini')) {
+            self::$config = parse_ini_file('../../../ini/config.ini',true); 
         }   
         self::$jsonrpcURL= self::$config[self::app]['jsonrpcURL'];
         self::$token= self::$config[self::app]['token'];

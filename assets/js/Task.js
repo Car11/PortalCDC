@@ -492,20 +492,17 @@ function FormValidate(){
         return false;
     }
     //
-    if($("#description").val()=="")
+    if($("#description").val()!="")
     {
-        $("#description").css("border", "0.3px solid firebrick");
-        document.getElementById('description').placeholder = "REQUERIDO";
-        $("#description").focus();
-        return false;
+        if($("#description").val().length<5)
+        {
+            $("#description").css("border", "0.3px solid firebrick");
+            // mensaje
+            showError("La descripción debe tener mínimo 5 caracteres");
+            return false;
+        }
     }
-    else if($("#description").val().length<5)
-    {
-        $("#description").css("border", "0.3px solid firebrick");
-        // mensaje
-        showError("La descripción debe tener mínimo 5 caracteres");
-        return false;
-    }
+    
     //      
     
     
