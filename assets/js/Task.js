@@ -257,7 +257,8 @@ function LoadProjects(){
 };
 
 function clearAttachments(){
-    $('#file-list').empty()
+    document.getElementById("inputFileToLoad").value = "";
+    $('#listFiles').html('');
 };
 
 function showAttachments(e){

@@ -208,7 +208,7 @@ class Task{
             // $t_started = str_replace('-', '/', $t_started);
             // $t_started = str_replace('T', ' ', $t_started);
 
-            $t_started = date("d/m/Y H:m", strtotime($this->date_started));
+            $t_started = date("m/d/Y H:m", strtotime($this->date_started));
 
             //date_due ebe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
             $t_due = ($this->date_due);
