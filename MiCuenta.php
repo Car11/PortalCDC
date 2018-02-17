@@ -44,11 +44,13 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/Team-Grid.css">
     <link rel="stylesheet" href="assets/css/Team.css">
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
+    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/sweetalert2.min.js"></script>
 
     <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script> 
     <!-- <script src="assets/js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>  -->
@@ -154,7 +156,6 @@ if (!isset($_SESSION))
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <!-- <h4 class="modal-title">Modal Header</h4> -->
               </div> <!-- Fin del Header -->
-              
               <div class="row">           
                 <div class="col-sm-1 col-md-5">  </div> 
                 <div class="col-sm-8 col-md-4 box3-label">   
@@ -166,7 +167,7 @@ if (!isset($_SESSION))
               <div class="row">
                 <div class="col-xs-1 col-md-1"></div>
                 <div class="col-xs-6 col-md-6">
-                  <label id="titlelbl" for="title"><span class="st_input-field-lbl control-label">Título<span class="required">*</span></span></label>   
+                  <label id="titlelbl" for="title"><span class="st_input-field-lbl control-label">Título<span class="required" >*</span></span></label>   
                 </div>
                 <div class="col-xs-5 col-md-5">
                   <label class="control-label">Seleccione un Proyecto: </label> 
@@ -177,7 +178,7 @@ if (!isset($_SESSION))
                 <div class="col-xs-1 col-md-1"></div>
                 <div class="col-xs-1 col-md-6 selectContainer">
                   <input  type="text"  id="title"  style="text-transform:uppercase"
-                      class="st_input-field" name="title" value="" title="Título de la tarea" required> 
+                      class="st_input-field" name="title" value="" title="Título de la tarea" required autofocus> 
                 </div>
                 <div class="col-xs-1 col-md-4 selectContainer">
                   <select class="list form-control" name="projectid" id="projectid">
@@ -200,9 +201,8 @@ if (!isset($_SESSION))
               <div class="row">
                 <div class="col-xs-1 col-md-1"></div>
                 <div class="col-xs-1 col-md-6 selectContainer">
-                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" style="color:black;"
-> 
-                  </TEXTAREA>                            
+                  <textarea value=" " rows="8" cols="29" class="st_input-field-desc" name="description" id="description" style="color:black;">
+                  </textarea>                            
                 </div>
                 <div class="col-xs-4 col-md-5">
                   <input type="datetime-local" autocomplete="on" name="bdaytime" id="date_started">

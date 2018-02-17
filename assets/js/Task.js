@@ -210,24 +210,8 @@ function ShowTaskData(e){
     LoadAttachments();
 };
 
-// function loadProjectsByUser(e){
-//     // DATA
-//     var data= JSON.parse(e);
-//     $.each(data, function(i, item) {
-//         var row="<li id="+item.id+">" + item.name + 
-//             // "<div id="+item.id+"></div>" +         
-//         "</li>";
-//         $('.list').append(row);
-//     });  
-//     //formato combobox
-//     //$('.cmbfield').styleddropdown();
-
-// };
-
-
 //Esta funcion carga en el dropdown los projectos a los
 //cuales el usuario tiene acceso a solicitar tareas  
-// Revisar duplicado
 function loadProjectsByUser(e){
     // DATA
     var data= JSON.parse(e);
@@ -309,31 +293,6 @@ function SaveTask(){
         return false;
     
     var miAccion= id=='NULL' ? 'Insert' : 'Update';
-    //var varDow;    
-    //var varDom;
-    // if(document.getElementById("chkDow").checked)
-    // {
-    //     varDow="t";
-    // }        
-    // else {
-    //     varDow=$("#dow").val();
-    // }
-    
-
-    // if(document.getElementById("chkDom").checked)
-    // {
-    //     varDom="t";
-    // }        
-    // else {
-    //     varDom=$("#dom").val();
-    // }
-
-    // if(document.getElementById("chkSubTask").checked)
-    // {
-    //     varSubTask="1";
-    // }else {
-    //     varSubTask="0";
-    // }      
     
     var arraySubTask = [];
     
@@ -382,12 +341,17 @@ function SaveTask(){
             mifile: mifile,
             subtask_des: JSON.stringify(arraySubTask),
             subTask: varSubTask,
-            objFile: JSON.stringify(arrayOffiles)
-                       
+            objFile: JSON.stringify(arrayOffiles)                       
         }
     })
     .done(function(data) {
-        // alert(data);
+        swal({
+            position: 'top-end',
+            type: 'success',
+            title: 'Tarea enviada',
+            showConfirmButton: false,
+            timer: 1500
+        });
         $("#title").val('');
         $("#description").val('');
         formatTableSubTask("dataTable");
@@ -395,8 +359,6 @@ function SaveTask(){
         $('#file-list').empty();
         Load();
         $("#cerrar-modal").click();
-        // var cerrar = document.getElementById(".modal");
-        // cerrar.click();
       })
     .fail(function(error) {
         var log= JSON.parse(error);
