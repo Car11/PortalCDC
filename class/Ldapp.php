@@ -5,12 +5,8 @@ require_once('Globals.php');
 require_once("Conexion.php");
 require_once("Log.php");
 
-function __construct(){
-    require_once("Conexion.php");
-    require_once("Log.php");
-}
 
-Globals::ConfiguracionIni();
+//Globals::ConfiguracionIni();
 
 if(isset($_POST["action"])){
     $ldapp= new LDAPP();
@@ -20,6 +16,12 @@ if(isset($_POST["action"])){
             $ldapp->password= $_POST["password"];
             $ldapp->ambiente= $_POST["ambiente"];
             $ldapp->Connect();
+            break;    
+        case "LoadPlantilla":
+            $ldapp->username= $_POST["username"];
+            $ldapp->password= $_POST["password"];
+            //$ldapp->ambiente= $_POST["ambiente"];
+            $ldapp->LoadPlantilla();
             break;    
         case "getGroupsByAppName":
             $ldapp->username= $_POST["username"];
@@ -59,6 +61,48 @@ public $uniqueidentifier;
         require_once("Log.php");
     }
 
+    function LoadPlantilla(){
+        try {
+            $adServer = "10.129.20.138";
+            $ldapport = 389;
+            $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
+            if($ldapconn){
+                ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+                ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+                // binding to ldap server with standard user            
+                $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
+                $pwconn= 'ldaputil71';
+                $ldapbind = ldap_bind($ldapconn, $userconn, $pwconn);
+                if ($ldapbind) {
+                    $dn = "o=grupoice,o=ice";
+                    $filter="(|(cn=*$this->username*))";
+                    $sr=ldap_search($ldapconn, $dn, $filter);
+                    $first = ldap_first_entry($ldapconn, $sr);
+                    $info = ldap_get_entries($ldapconn, $sr);
+                    // full dn
+                    $dn = ldap_get_dn($ldapconn, $first);
+                    $_SESSION["FULLDN"]= $dn;
+                    $attrs = ldap_get_attributes($ldapconn, $first);
+                    $info = ldap_get_entries($ldapconn, $sr);
+                    // APPS
+                    $dn=""; 
+                    $filter = "objectClass=applicationEntity";
+                    $dn = "ou=grupos,o=grupoice,o=ice";
+                    //
+                    $result=ldap_list($ldapconn, $dn, $filter) or die("No se encontraron aplicaciones."); 
+                    $info = ldap_get_entries($ldapconn, $result);
+                    array_shift($info); 
+                    echo json_encode($info);                            
+                }
+                else header("Status: 500 Not Found");; // error ajax
+            }  else header("Status: 500 LDAP Server Not Found");; // error ajax
+
+        }
+        catch(Exception $e){
+
+        }
+    }    
+
     function KanboardUser(){    // valida rol en bd y administra accesos a elementos de la web
         $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
         $param= array(':usuario'=>$this->usuario);        
@@ -74,9 +118,9 @@ public $uniqueidentifier;
         }        
     }
    
-    function Connect (){
-        error_reporting(1);
-        ini_set('error_reporting', 1);
+    function Connect(){
+        //error_reporting(1);
+        //ini_set('error_reporting', 1);
         $adServer = "10.129.20.138";
         $ldapport = 389;
         $ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");

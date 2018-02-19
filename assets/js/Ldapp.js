@@ -3,11 +3,13 @@ var id = "NULL";
 $(document).ready( function () {
     
 });
+function Send(){
+};
 
 function Connect(){                  
     $.ajax({
         type: "POST",
-        url: "class/Ldapp.php",
+        url: "../class/Ldapp.php",
         data: { 
             action: 'Connect',               
             username: $("#username").val(),
@@ -40,7 +42,7 @@ function getRamas(){
     // var idFile = $(this).parents("tr").find("td").eq(0).text();                   
     $.ajax({
         type: "POST",
-        url: "class/Ldapp.php",
+        url: "../class/Ldapp.php",
         data: { 
             action: 'getRamas'
         }            
@@ -58,7 +60,6 @@ function getRamas(){
         });
         // ordena arreglo
         sortSelect('rama');
-        $("#rama").val(0);
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        
@@ -69,7 +70,7 @@ function getGroupsByAppName(){
     // var idFile = $(this).parents("tr").find("td").eq(0).text();                   
     $.ajax({
         type: "POST",
-        url: "class/Ldapp.php",
+        url: "../class/Ldapp.php",
         data: { 
             action: 'getGroupsByAppName',               
             username:  $("#username").val(),
@@ -135,7 +136,7 @@ function getMembershipByUser(){
     //});               
     $.ajax({
         type: "POST",
-        url: "class/Ldapp.php",
+        url: "../class/Ldapp.php",
         data: { 
             action: 'getMembershipByUser',   
             uids: arrayOfLines           

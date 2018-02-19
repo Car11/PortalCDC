@@ -2,27 +2,87 @@ var id = "NULL";
 var vardata= Array;
 
 $(document).ready( function () {
-    
-    
 
 });
 
-function simulateKeyPress(character) {
-    jQuery.event.trigger({ type : 'keypress', which : character.charCodeAt(0) });
-  }
 
-function Var(){
+function Gen(){
+    //data base
+    var db="";
+    switch($('#basedatos').val()){
+        case 'Oracle':
+            db='ora';
+            break;
+        case 'Sybase':
+            db='syb';
+            break;
+        case 'SqlServer':
+            db='sql';
+            break;
+        case 'MySql':
+            db='mys';
+            break;
+    }
+    //APP NAME
+    $("#appname").val(
+         $("#app").val().toUpperCase()  + ($("#prd")[0].checked ? "prd" : "cer")
+    );
+    //FULL APP NAME
+    $("#fullappname").val(
+        ($("#prd")[0].checked ? "ASP" : "ASC") +  $("#app").val().toLowerCase()  + $("#node").val()
+    );
+    // CLUSTER
+    $("#clustername").val(
+        "C" + $("#app").val().toUpperCase()  + ($("#prd")[0].checked ? "prd" : "cer")
+    );
+    $("#membername").val(
+        "AS" + ($("#prd")[0].checked ? "P" : "C") + $("#app").val().toLowerCase() + $("#node").val()
+    );
+    // JAAS
+    $("#alias").val(
+        "J2C"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer") + "Alias"
+    );
+    $("#description").val(
+        "JAAS "  + db.toUpperCase() + " " + $("#app").val().toUpperCase() + ' ' + $("#dsdescription").val().toUpperCase() + " (" +  ($("#prd")[0].checked ? "prd" : "cer") + ")"  
+    );
+    //DS
+    $("#datasource").val(
+        "DS"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
+    );
+    $("#jndi").val(
+        "jdbc/"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
+    );
+    //FTP
+    var dir= '';
+    switch($('#wasversion').val()){
+        case 'WAS 7':
+            dir=' /was7data'+ ($("#prd")[0].checked ? "prd" : "cer")  +'/logs/' + $("#fullappname").val() + ' ';
+            break;
+        case 'WAS 9':
+            dir=' /wasdata'+ ($("#prd")[0].checked ? "prd" : "cer")  +'/logs/' + $("#fullappname").val() + ' ';
+            break;
+    }
+    $("#ftp").val(
+        "sudo mkftpuser ftp" +  $("#app").val().toLowerCase().substring(0, 5) + dir + '"'  +  $("#encargado").val()  + ', ' + $("#email").val()  + ', ' + $("#dept").val()  +'"'
+    );
+};
+
+// function simulateKeyPress(character) {
+//     jQuery.event.trigger({ type : 'keypress', which : character.charCodeAt(0) });
+//   }
+
+// function Var(){
    
     
-    setTimeout(function() {
+//     setTimeout(function() {
 
-          $(function() {
-            $('body').keypress(function(e) {
-              alert(e.which);
-            });
+//           $(function() {
+//             $('body').keypress(function(e) {
+//               alert(e.which);
+//             });
           
-            simulateKeyPress("e");
-          });
+//             simulateKeyPress("e");
+//           });
 
 
 
@@ -88,7 +148,7 @@ function Var(){
             console.log("Your string: ", data);
           });*/
 
-    }, 5000);
+    // }, 5000);
 
 
     
@@ -112,7 +172,7 @@ function Var(){
            }
         }
     });*/
-}
+
 /*
 function onEnterKey (formElement) {
     var press;
@@ -130,66 +190,6 @@ function onEnterKey (formElement) {
     return true 
 }*/
 
-function Gen(){
-    //data base
-    var db="";
-    switch($('#basedatos').val()){
-        case 'Oracle':
-            db='ora';
-            break;
-        case 'Sybase':
-            db='syb';
-            break;
-        case 'SqlServer':
-            db='sql';
-            break;
-        case 'MySql':
-            db='mys';
-            break;
-    }
-    //APP NAME
-    $("#appname").val(
-         $("#app").val().toUpperCase()  + ($("#prd")[0].checked ? "prd" : "cer")
-    );
-    //FULL APP NAME
-    $("#fullappname").val(
-        ($("#prd")[0].checked ? "ASP" : "ASC") +  $("#app").val().toLowerCase()  + $("#node").val()
-    );
-    // CLUSTER
-    $("#clustername").val(
-        "C" + $("#app").val().toUpperCase()  + ($("#prd")[0].checked ? "prd" : "cer")
-    );
-    $("#membername").val(
-        "AS" + ($("#prd")[0].checked ? "P" : "C") + $("#app").val().toLowerCase() + $("#node").val()
-    );
-    // JAAS
-    $("#alias").val(
-        "J2C"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer") + "Alias"
-    );
-    $("#description").val(
-        "JAAS "  + db.toUpperCase() + " " + $("#app").val().toUpperCase() + ' ' + $("#dsdescription").val().toUpperCase() + " (" +  ($("#prd")[0].checked ? "prd" : "cer") + ")"  
-    );
-    //DS
-    $("#datasource").val(
-        "DS"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
-    );
-    $("#jndi").val(
-        "jdbc/"  + db + $("#app").val().toUpperCase() + ($("#dsdescription").val()==''?'':'_') + $("#dsdescription").val().toLowerCase() + ($("#prd")[0].checked ? "prd" : "cer")   
-    );
-    //FTP
-    var dir= '';
-    switch($('#wasversion').val()){
-        case 'WAS 7':
-            dir=' /was7data'+ ($("#prd")[0].checked ? "prd" : "cer")  +'/logs/' + $("#fullappname").val() + ' ';
-            break;
-        case 'WAS 9':
-            dir=' /wasdata'+ ($("#prd")[0].checked ? "prd" : "cer")  +'/logs/' + $("#fullappname").val() + ' ';
-            break;
-    }
-    $("#ftp").val(
-        "sudo mkftpuser ftp" +  $("#app").val().toLowerCase().substring(0, 5) + dir + '"'  +  $("#encargado").val()  + ', ' + $("#email").val()  + ', ' + $("#dept").val()  +'"'
-    );
-};
 /*
 String.prototype.format = function() {
     var str = this;
