@@ -25,7 +25,7 @@ function Login() {
 function submitForm(){
     $.ajax({
         type: "POST",
-        url: "class/Usuario.php",
+        url: "class/usuario.php",
         data: { 
             action: 'Login',               
             username:  $("#username").val(),
