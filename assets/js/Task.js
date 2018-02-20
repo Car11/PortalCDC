@@ -295,6 +295,12 @@ function SaveTask(){
     var miAccion= id=='NULL' ? 'Insert' : 'Update';
     
     var arraySubTask = [];
+
+    //Del texto de descripción elimina los espacios en blanco al inicio y al final del texto asi como las tabulaciones y los saltos de linea 
+    var textoDes = $("#description").val();
+    textoDes = textoDes.split("\t").join(" ");
+    textoDes = textoDes.split("\n").join(" ");
+    textoDes = $.trim(textoDes);
     
     $("table#dataTable tr").each(function() {
         var arrayOfThisRow = [];
@@ -334,7 +340,7 @@ function SaveTask(){
         data: { 
             action: miAccion,           
             title:  $("#title").val(),
-            description: $("#description").val(),
+            description: textoDes,
             projectid: $("#projectid").val(),
             date_started: $("#date_started").val(),
             date_due: $("#date_due").val(),

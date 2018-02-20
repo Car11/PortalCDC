@@ -213,7 +213,7 @@ class Task{
             //date_due ebe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
             $t_due = ($this->date_due);
             // $t_due = str_replace('/', '-', $t_due);
-            $t_due = str_replace('T', ' ', $t_due);
+            $t_due = str_replace('T', ' ', $t_due);            
 
             //$fecha =date("c");
             $cadenaRapida = "{\"jsonrpc\": \"2.0\",\"method\": \"createTask\",\"id\": \"10\",\"params\": { \"owner_id\": ".$this->creator_id.", \"creator_id\":".$this->creator_id.", \"description\": \"" . $this->description . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $this->title . "\", \"project_id\": ".$this->project_id.", \"color_id\": \"yellow\", \"date_due\": \"" . $t_due . "\", \"date_started\":\"" . $t_started . "\", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0,\"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
