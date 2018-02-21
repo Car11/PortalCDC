@@ -9,7 +9,7 @@ class Globals {
     public static $postmantoken= "";
     private static $config="";
     // WAS LDAP
-    public static $adServer="55";
+    public static $adServer="";
     public static $ldapport="";
     public static $userconn="";
     public static $pwconn="";
@@ -31,6 +31,8 @@ class Globals {
     }  
 
     public static function ConfiguracionLdap(){     
+        error_reporting(1);
+        ini_set('error_reporting', 1);
         if (file_exists('../../ini/config.ini')) {
             self::$config = parse_ini_file('../../ini/config.ini',true); 
         } 

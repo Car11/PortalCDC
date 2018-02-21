@@ -1,7 +1,11 @@
 var id = "NULL";
 
 $(document).ready( function () {
-    $('#btnLogin').click(LoadPlantilla);
+    //$('#btnLogin').click(LoadPlantilla); 
+    $('#btnLogin').click(function(){
+        getApps();
+        getRamas();
+    }); 
     //
     //DisableForm();
     //$('#frmPlantilla').children(':input').attr('disabled', 'disabled');
@@ -53,25 +57,34 @@ function Send(){
     alert('Send();');
 };
 
-function LoadPlantilla(){                  
-    $.ajax({
-        type: "POST",
-        url: "../class/Ldapp.php",
-        data: { 
-            action: 'Connect',//'LoadPlantilla',               
-            username: $("#username").val(),
-            password: $("#password").val(),
-            ambiente: $("#ambiente").find(":selected").text()
-        }            
-    })
-    .done(function( e ) {    
-        // apps
-        getApps(e);
-        // carga Ramas
-        getRamas();
-        //$("#rama").val(3);
-    })    
-    .fail(function( e ) {        
-        alert('Err ' + e);        
-    });
-};
+// function LoadPlantilla(){                  
+//     $.ajax({
+//         type: "POST",
+//         url: "../class/Ldapp.php",
+//         data: { 
+//             action: 'Connect',//'LoadPlantilla',               
+//             username: $("#username").val(),
+//             password: $("#password").val(),
+//             ambiente: $("#ambiente").find(":selected").text()
+//         }            
+//     })
+//     .done(function( e ) {    
+//         var data= JSON.parse(e); 
+//         // Check for data errors
+//         if(data.iderr!=null){
+//             $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
+//             $('#rama').html("<optgroup label='Rama'></optgroup>");
+//             $('#grupo').html("<optgroup label='Grupo'></optgroup>");
+//             alert(data.iderr + ': ' + data.error)
+//             return;
+//         }
+//         // apps
+//         getApps();
+//         // carga Ramas
+//         //getRamas();
+//         //$("#rama").val(3);
+//     })    
+//     .fail(function( e ) {        
+//         alert('Err ' + e);        
+//     });
+// };

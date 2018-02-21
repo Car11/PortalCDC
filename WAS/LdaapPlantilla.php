@@ -102,7 +102,9 @@
                         <div class="col-md-8 col-md-offset-1">
                             <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Lista de Usuarios </strong></p>
                         </div>
-                        <div class="col-md-10 col-md-offset-1"><input class="form-control" type="text" name="userlist" id="userlist"  placeholder="Copie y pegue la lista de usuarios" style="margin-left:0px;font-family:Roboto, sans-serif;" /></div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <textarea  class="form-control" type="text" name="userlist" id="userlist"  placeholder="Copie y pegue la lista de usuarios" style="margin-left:0px;font-family:Roboto, sans-serif;"></textarea>
+                        </div>
                     </div>
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;">
                         <div class="col-md-12 col-md-offset-3" >

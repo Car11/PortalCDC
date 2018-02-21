@@ -18,34 +18,60 @@ function Connect(){
         }            
     })
     .done(function( e ) {   
-        // carga Ramas
-        getRamas();     
+        var data= JSON.parse(e); 
+        // Check for data errors
+        if(data.iderr!=null){
+            $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
+            $('#rama').html("<optgroup label='Rama'></optgroup>");
+            $('#grupo').html("<optgroup label='Grupo'></optgroup>");
+            alert(data.iderr + ': ' + data.error)
+            return;
+        }
         // Carga Aplicaciones LDAP
-        getApps(e);        
+        //getApps(e);        
+        // carga Ramas
+        //getRamas();     
+        
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        
     });
 };
 
-function getApps(e){
-    $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
-    var data= JSON.parse(e); 
-    // Check for data errors
-    if(data.iderr!=null){
-        alert(data.iderr + ': ' + data.error)
-        return;
-    }
-    // populate select - aplicacion
-    $.each(data,function(key, value) 
-    {
-        try {
-            $('#aplicacion').append('<option value=' + key + '>' + value["cn"][0] + '</option>');
-         }
-         catch (e) {  }   
+function getApps(){
+    $.ajax({
+        type: "POST",
+        url: "../class/Ldapp.php",
+        data: { 
+            action: 'getApps',
+            username: $("#username").val(),
+            password: $("#password").val(),
+            ambiente: 'Producción' //$("#ambiente").find(":selected").text()
+        }            
+    })
+    .done(function( e ) {        
+        $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
+        var data= JSON.parse(e); 
+        // Check for errors
+        if(data.ide!=null){
+            alert(data.ide + ': ' + data.error)
+            return;
+        }
+        // populate select - aplicacion
+        $.each(data,function(key, value) 
+        {
+            try {
+                $('#aplicacion').append('<option value=' + key + '>' + value["cn"][0] + '</option>');
+            }
+            catch (e) {  }   
+        });
+        // ordena arreglo
+        sortSelect('aplicacion');
+    })    
+    .fail(function( e ) {        
+        alert('Err ' + e);        
     });
-    // ordena arreglo
-    sortSelect('aplicacion');
+
 };
 
 function getRamas(){ 
@@ -53,7 +79,10 @@ function getRamas(){
         type: "POST",
         url: "../class/Ldapp.php",
         data: { 
-            action: 'getRamas'
+            action: 'getRamas',
+            username: $("#username").val(),
+            password: $("#password").val(),
+            ambiente: 'Producción' //$("#ambiente").find(":selected").text()
         }            
     })
     .done(function( e ) {        
@@ -74,6 +103,7 @@ function getRamas(){
         });
         // ordena arreglo
         sortSelect('rama');
+        $('#rama').val(0);
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        

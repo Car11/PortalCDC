@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_POST["action"])){
     $ldapp= new LDAPP();
     switch($_POST["action"]){       
@@ -8,18 +9,18 @@ if(isset($_POST["action"])){
             $ldapp->ambiente= $_POST["ambiente"];
             $ldapp->Connect();
             break;    
-        case "LoadPlantilla":
-            $ldapp->username= $_POST["username"];
-            $ldapp->password= $_POST["password"];
-            //$ldapp->ambiente= $_POST["ambiente"];
-            $ldapp->LoadPlantilla();
-            break;    
+        // case "LoadPlantilla":
+        //     $ldapp->username= $_POST["username"];
+        //     $ldapp->password= $_POST["password"];
+        //     //$ldapp->ambiente= $_POST["ambiente"];
+        //     $ldapp->LoadPlantilla();
+        //     break;    
         case "getGroupsByAppName":
             $ldapp->username= $_POST["username"];
             $ldapp->password= $_POST["password"];
             $ldapp->ambiente= $_POST["ambiente"];
             $app= $_POST["app"];
-            $ldapp->getGroupsByAppName($app);
+            echo json_encode($ldapp->getGroupsByAppName($app));
             break;    
         case "getMembershipByUser":
             //$ldapp->username= $_POST["username"];
@@ -28,7 +29,16 @@ if(isset($_POST["action"])){
             echo json_encode($ldapp->getMembershipByUser($_POST["uids"]));
             break;    
         case "getRamas":           
+            $ldapp->username= $_POST["username"];
+            $ldapp->password= $_POST["password"];
+            $ldapp->ambiente= $_POST["ambiente"];
             echo json_encode($ldapp->getRamas());
+            break;    
+        case "getApps":          
+            $ldapp->username= $_POST["username"];
+            $ldapp->password= $_POST["password"];
+            $ldapp->ambiente= $_POST["ambiente"]; 
+            echo json_encode($ldapp->getApps());
             break;    
     }
 }
@@ -139,10 +149,7 @@ class LDAPP{
                 // binding to ldap server with standard user      
                 $this->ldapbind = ldap_bind($this->ldapconn, Globals::$userconn, Globals::$pwconn);
                 if ($this->ldapbind) {
-                    echo(json_encode(array(
-                        'id' => 02,
-                        'mensaje' => 'Conexión Exitosa'))
-                    );
+                    return true;
                 }
                 else die(json_encode(array(
                     'id' => 01,
@@ -162,51 +169,60 @@ class LDAPP{
     }
 
     function getApps(){
-        if ($this->ldapbind) {
-            $dn = "o=grupoice,o=ice";
-            $filter="(|(cn=*$this->username*))";
+        try{
+            $this->Connect();
             //
-            $search=ldap_search($this->ldapconn, $dn, $filter);
-            $first = ldap_first_entry($this->ldapconn, $search);
-            //$info = ldap_get_entries($this->ldapconn, $search);
-            // full dn
-            $dn = ldap_get_dn($this->ldapconn, $first);
-            $_SESSION["FULLDN"]= $dn;
-            //$attrs = ldap_get_attributes($this->ldapconn, $first);
-            $info = ldap_get_entries($this->ldapconn, $search);
-            // APPS
-            $dn=""; 
-            $filter = "objectClass=applicationEntity";
-            switch ($this->ambiente){
-                case 'Desarrollo':
-                    $dn = "o=des,o=ice";
-                    //$filter = "objectClass=organizationalUnit";
-                    break;
-                case 'Producción':
-                    $dn = "ou=grupos,o=grupoice,o=ice";
-                    //$filter = "objectClass=applicationEntity";
-                    break;
-            }          
-            //
-            $result=ldap_list($this->ldapconn, $dn, $filter) or die(json_encode(array('id' => 03, 'mensaje' => 'No se encontraron aplicaciones.')));
-            $info = ldap_get_entries($this->ldapconn, $result);
-            array_shift($info); 
-            echo json_encode($info);                            
+            if ($this->ldapbind) {
+                $dn = "o=grupoice,o=ice";
+                $filter="(|(cn=*$this->username*))";
+                //
+                $search=ldap_search($this->ldapconn, $dn, $filter);
+                $first = ldap_first_entry($this->ldapconn, $search);
+                //$info = ldap_get_entries($this->ldapconn, $search);
+                // full dn
+                $dn = ldap_get_dn($this->ldapconn, $first);
+                $_SESSION["FULLDN"]= $dn;
+                //$attrs = ldap_get_attributes($this->ldapconn, $first);
+                $info = ldap_get_entries($this->ldapconn, $search);
+                // APPS
+                $dn=""; 
+                $filter = "objectClass=applicationEntity";
+                switch ($this->ambiente){
+                    case 'Desarrollo':
+                        $dn = "o=des,o=ice";
+                        //$filter = "objectClass=organizationalUnit";
+                        break;
+                    case 'Producción':
+                        $dn = "ou=grupos,o=grupoice,o=ice";
+                        //$filter = "objectClass=applicationEntity";
+                        break;
+                }          
+                //
+                $result=ldap_list($this->ldapconn, $dn, $filter) or die(json_encode(array('id' => 03, 'mensaje' => 'No se encontraron aplicaciones.')));
+                $info = ldap_get_entries($this->ldapconn, $result);
+                // 
+                if(isset($info)){
+                    array_shift($info); 
+                    return $info;
+                } 
+            }
+        }
+        catch(Exception $e){
+            //header('Content-Type: application/json; charset=UTF-8');
+            header('HTTP/1.1 500 Internal Server Error');
+            die(json_encode(array(
+                'iderr' => $e->getCode(),
+                'detalle'=> $e->getMessage(),
+                'error' => 'No es posible conectar.'))
+            );
         }
     }
 
     function getRamas(){
-        //$adServer = "10.129.20.138";
-        //$ldapport = 389;
-        //$this->ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
-        if($this->ldapconn){
-            ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-            ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
-            // binding to ldap server with standard user            
-            $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
-            $pwconn= 'ldaputil71';
-            $ldapbind = ldap_bind($this->ldapconn, $userconn, $pwconn);
-            if ($ldapbind) { 
+        try{
+            $this->Connect();
+            //
+            if ($this->ldapbind) {
                 $basedn = "o=grupoice,o=ice";
                 $filter="objectClass=organizationalUnit";
                 $attrs = array("ou");
@@ -223,26 +239,26 @@ class LDAPP{
                 //
                 if(isset($info)){
                     array_shift($info); 
-                    return $info;
-                } else echo "No Hay Datos.";
-            }
-        }        
+                    return $info;    
+                }
+            }   
+        }
+        catch(Exception $e){
+            //header('Content-Type: application/json; charset=UTF-8');
+            header('HTTP/1.1 500 Internal Server Error');
+            die(json_encode(array(
+                'iderr' => $e->getCode(),
+                'detalle'=> $e->getMessage(),
+                'error' => 'No es posible conectar.'))
+            );
+        }     
     }
       
     function getGroupsByAppName($app){
-        error_reporting(1);
-        ini_set('error_reporting', 1);
-        $adServer = "10.129.20.138";
-        $ldapport = 389;
-        $this->ldapconn = ldap_connect($adServer, $ldapport) or die("Could not connect to LDAP server.");
-        if($this->ldapconn){
-            ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-            ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
-            // binding to ldap server with standard user            
-            $userconn = 'cn=usersdutiles,cn=directoryServer,ou=grupos,o=grupoice,o=ice'; 
-            $pwconn= 'ldaputil71';
-            $ldapbind = ldap_bind($this->ldapconn, $userconn, $pwconn);
-            if ($ldapbind) {
+        try{
+            $this->Connect();
+            //            
+            if ($this->ldapbind) {
                 $dn=""; 
                 $filter = "objectClass=groupOfNames";
                 switch ($this->ambiente){
@@ -262,11 +278,22 @@ class LDAPP{
                 );
                 //
                 $info = ldap_get_entries($this->ldapconn, $result);
-                array_shift($info); 
-                echo json_encode($info);
-
-            }
-        }        
+                //
+                if(isset($info)){
+                    array_shift($info); 
+                    return $info;    
+                }
+            }        
+        } 
+        catch(Exception $e){
+            //header('Content-Type: application/json; charset=UTF-8');
+            header('HTTP/1.1 500 Internal Server Error');
+            die(json_encode(array(
+                'iderr' => $e->getCode(),
+                'detalle'=> $e->getMessage(),
+                'error' => 'No es posible conectar.'))
+            );
+        }           
     }
 
     function getMembershipByUser($uids){
