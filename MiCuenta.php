@@ -6,7 +6,7 @@ if (!isset($_SESSION))
     require_once("class/Sesion.php");
     $sesion = new Sesion();
     if (!$sesion->estado){        
-        $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
+        $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[1]; //indexar a 1 cuando el sitio este en la raiz
         header('Location: Login.php');
         exit;
     }
