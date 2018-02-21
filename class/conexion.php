@@ -1,7 +1,7 @@
 <?php 
 
 class DATA {
-
+    
 	public static $conn;
     private static $connSql;
     private static $config="";
