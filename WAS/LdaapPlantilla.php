@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../assets/css/Responsive-Form1.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/KD_Header1.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-select.css">
     <!-- FONTS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
@@ -32,6 +33,7 @@
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="../assets/js/PHP-Contact-Form-dark.js"></script>
     <script src="../assets/js/PHP-Contact-Form-dark1.js"></script>
+    <script src="../assets/js/bootstrap-select.js" languaje="javascript" type="text/javascript"></script>
     <script src="../assets/js/LdappPlantilla.js" languaje="javascript" type="text/javascript"></script>     
     <script src="../assets/js/Ldapp.js" languaje="javascript" type="text/javascript"></script>     
 
@@ -69,20 +71,20 @@
         </div>
     </div>
     <div class="container">
-        <form id='frmPlantilla'>
+        <form id='frmPlantilla' >
             <div class="form-group">
                 <div id="formdiv">
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
                         <div class="col-md-8 col-md-offset-1">
                             <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Ambiente </strong></p>
                         </div>
-                        <div class="col-md-10 col-md-offset-1"><select name="ambiente" id="ambiente" class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Ambiente"><option value>Desarrollo</option><option value>Producción</option></optgroup></select></div>
+                        <div class="col-md-10 col-md-offset-1"><select name="ambiente" id="ambiente" class="selectpicker show-menu-arrow form-control" multiple data-max-options="10" style="font-family:Roboto, sans-serif;"><optgroup label="Ambiente"><option value>Desarrollo</option><option value>Producción</option></optgroup></select></div>
                     </div>
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
                         <div class="col-md-8 col-md-offset-1">
                             <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Rama </strong></p>
                         </div>
-                        <div class="col-md-10 col-md-offset-1"><select name="rama" id="rama"  class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Gender"></optgroup></select></div>
+                        <div class="col-md-10 col-md-offset-1"><select name="rama" id="rama"  class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Rama"></optgroup></select></div>
                     </div>
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
                         <div class="col-md-8 col-md-offset-1">
@@ -94,7 +96,7 @@
                         <div class="col-md-8 col-md-offset-1">
                             <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Grupo/Rol </strong></p>
                         </div>
-                        <div class="col-md-10 col-md-offset-1"><select class="form-control" name="grupo" id="grupo" style="font-family:Roboto, sans-serif;"><optgroup label="Grupos"><</optgroup></select></div>
+                        <div class="col-md-10 col-md-offset-1"><select class="selectpicker show-menu-arrow form-control" multiple data-max-options="10" name="grupo" id="grupo" style="font-family:Roboto, sans-serif;"><optgroup label="Grupos">  </optgroup></select></div>                        
                     </div>
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;">
                         <div class="col-md-8 col-md-offset-1">
@@ -103,7 +105,10 @@
                         <div class="col-md-10 col-md-offset-1"><input class="form-control" type="text" name="userlist" id="userlist"  placeholder="Copie y pegue la lista de usuarios" style="margin-left:0px;font-family:Roboto, sans-serif;" /></div>
                     </div>
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;">
-                        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0"><button class="btn btn-default btn-lg" type="reset" style="font-family:Roboto, sans-serif;">Clear </button><button class="btn btn-default btn-lg" type="submit" style="margin-left:16px;">Submit </button>
+                        <div class="col-md-12 col-md-offset-3" >
+                            <button class="btn btn-default btn-lg" type="reset" style="font-family:Roboto, sans-serif;">Limpiar </button>
+                            <button class="btn btn-default btn-lg" type="submit" style="margin-left:16px;">Agregar </button>
+                            <button class="btn btn-default btn-lg" type="submit" style="margin-left:16px;">Continuar </button>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,10 @@ var id = "NULL";
 $(document).ready( function () {
     $('#btnLogin').click(LoadPlantilla);
     //
+    //DisableForm();
+    //$('#frmPlantilla').children(':input').attr('disabled', 'disabled');
+    //$('#frmPlantilla').children(':select').attr('disabled', 'disabled');
+    //
      // Filtro por fecha
      $('#aplicacion').on('change', function (e) {
         //var optionSelected = $("option:selected", this);
@@ -37,6 +41,14 @@ $(document).ready( function () {
     
 });
 
+function DisableForm(){
+    $('#frmPlantilla').children(':input').attr('disabled', 'disabled');
+};
+
+function EnableForm(){
+    $('#frmPlantilla').children(':input').removeAttr('disabled');
+};
+
 function Send(){
     alert('Send();');
 };
@@ -46,28 +58,18 @@ function LoadPlantilla(){
         type: "POST",
         url: "../class/Ldapp.php",
         data: { 
-            action: 'LoadPlantilla',               
+            action: 'Connect',//'LoadPlantilla',               
             username: $("#username").val(),
             password: $("#password").val(),
-            //ambiente: $("#ambiente").find(":selected").text()
+            ambiente: $("#ambiente").find(":selected").text()
         }            
     })
-    .done(function( e ) {        
-        $('#aplicacion').html("");
-        // populate select - aplicaciones
-        var data= JSON.parse(e);
-        $.each(data,function(key, value) 
-        {
-            try {
-                $('#aplicacion').append('<option value=' + key + '>' + value["cn"][0] + '</option>');
-             }
-             catch (e) {  }   
-        });
-        // ordena arreglo de aplicaciones
-        sortSelect('aplicacion');
+    .done(function( e ) {    
+        // apps
+        getApps(e);
         // carga Ramas
         getRamas();
-        $("#rama").val(3);
+        //$("#rama").val(3);
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        

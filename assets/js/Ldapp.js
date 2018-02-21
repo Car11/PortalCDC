@@ -6,7 +6,7 @@ $(document).ready( function () {
 function Send(){
 };
 
-function Connect(){                  
+function Connect(){
     $.ajax({
         type: "POST",
         url: "../class/Ldapp.php",
@@ -17,29 +17,38 @@ function Connect(){
             ambiente: $("#ambiente").find(":selected").text()
         }            
     })
-    .done(function( e ) {        
-        $('#aplicacion').html("");
-        // populate select aplicacion
-        var data= JSON.parse(e);
-        $.each(data,function(key, value) 
-        {
-            try {
-                $('#aplicacion').append('<option value=' + key + '>' + value["cn"][0] + '</option>');
-             }
-             catch (e) {  }   
-        });
-        // ordena arreglo
-        sortSelect('aplicacion');
+    .done(function( e ) {   
         // carga Ramas
-        getRamas();
+        getRamas();     
+        // Carga Aplicaciones LDAP
+        getApps(e);        
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        
     });
 };
 
-function getRamas(){
-    // var idFile = $(this).parents("tr").find("td").eq(0).text();                   
+function getApps(e){
+    $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
+    var data= JSON.parse(e); 
+    // Check for data errors
+    if(data.iderr!=null){
+        alert(data.iderr + ': ' + data.error)
+        return;
+    }
+    // populate select - aplicacion
+    $.each(data,function(key, value) 
+    {
+        try {
+            $('#aplicacion').append('<option value=' + key + '>' + value["cn"][0] + '</option>');
+         }
+         catch (e) {  }   
+    });
+    // ordena arreglo
+    sortSelect('aplicacion');
+};
+
+function getRamas(){ 
     $.ajax({
         type: "POST",
         url: "../class/Ldapp.php",
@@ -49,8 +58,13 @@ function getRamas(){
     })
     .done(function( e ) {        
         $('#rama').html("<optgroup label='Rama'></optgroup>");
-        // populate select aplicacion
-        var data= JSON.parse(e);
+        var data= JSON.parse(e); 
+        // Check for errors
+        if(data.ide!=null){
+            alert(data.ide + ': ' + data.error)
+            return;
+        }
+        // populate select aplicacion        
         $.each(data,function(key, value) 
         {
             try {
@@ -75,15 +89,19 @@ function getGroupsByAppName(){
             action: 'getGroupsByAppName',               
             username:  $("#username").val(),
             password: $("#password").val(),
-            ambiente: $("#ambiente").find(":selected").text(),
+            ambiente: 'Producción',//$("#ambiente").find(":selected").text(),
             app: $("#aplicacion").find(":selected").text()
         }            
     })
     .done(function( e ) {        
         $('#grupo').html("");
-        // populate select aplicacion
         var data= JSON.parse(e); 
-        //$("#grupo").selectpicker();
+        // Check for errors
+        if(data.ide!=null){
+            alert(data.ide + ': ' + data.error)
+            return;
+        }
+        // populate select aplicacion 
         $.each(data,function(key, value) 
         {
             try {
@@ -93,10 +111,13 @@ function getGroupsByAppName(){
         });       
         //ordena arreglo
         sortSelect('grupo');
-        $("#grupo").selectpicker("refresh");
+        
     })    
     .fail(function( e ) {        
         alert('Err ' + e);        
+    })
+    .always(function(){
+        $("#grupo").selectpicker("refresh");
     });
 };
 
