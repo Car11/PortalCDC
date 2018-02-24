@@ -22,20 +22,10 @@ $(document).ready( function () {
     this.Exit = function(){
         $(".modal").css({ display: "none" });
     };
-    
-    $("#btn-create-new-task").click(function(){
-        $(function () {
-            var d_actual = new Date(Date()+"GMT-0000");
-            var d_actual_iso = d_actual.toISOString().slice(0, 16);
-            document.getElementById("date_started").value = d_actual_iso;
-        });
-    
-    });
 
 
-    
-
-    Load();
+    //Load();
+    LoadColumns(); 
     LoadProjects();
     encode_Files();
 
@@ -54,6 +44,128 @@ $(document).ready( function () {
         }
     });
 });
+
+
+
+function BtnCreateNew(){
+    $(function () {
+        var d_actual = new Date(Date()+"GMT-0000");
+        var d_actual_iso = d_actual.toISOString().slice(0, 16);
+        document.getElementById("date_started").value = d_actual_iso;
+    });
+    CleanCtls();
+};
+
+function LoadColumns(){
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: "LoadColumns"
+        }
+    })
+    .done(function( e ) {            
+        //alert(e);
+        ShowColumn(e); 
+    })    
+    //.fail();
+};
+
+function ShowColumn(e){
+    // Limpia el div que contiene la tabla.
+    $('#drag-list').html(""); 
+    // carga lista con datos.
+    var data= JSON.parse(e);
+
+    var class_position="";
+    var btn_add="";
+    // Recorre arreglo.
+    $.each(data, function(i, item) {   
+        switch(item.position) {
+            case '1':
+                class_position ="drag-column-on-hold";
+                btn_add = '<button type="button" style="background-color: transparent; border: 0;" id="btn-create-new-task" onclick="BtnCreateNew()" data-toggle="modal" data-target=".bd-example-modal-lg"> <span class="fa fa-plus-circle" aria-hidden="true" </span></button>';
+                    
+    //btn_add = '<button type="button"> <span class="fa fa-plus-circle" aria-hidden="true"></span> </button>';
+                break;
+            case '2':
+                class_position = "drag-column-in-progress";
+                btn_add="";
+                break;
+            case '3':
+                class_position = "drag-column-needs-review";
+                btn_add="";
+                break;
+            case '4':
+                class_position = "drag-column-approved";
+                btn_add="";
+                break;
+            default:
+                class_position = "drag-column-on-hold";
+                btn_add="";
+        }
+
+        var row=
+            // '<li class="drag-column drag-column-on-hold" id=column' + item.position + '>' +
+                '<li class="drag-column ' + class_position + '">' +
+                '<span class="drag-column-header">' +
+                    '<h2 style="color: white; font-family: Lato; font-size: 1.3rem; margin: 0; text-transform: uppercase; font-weight: 150; line-height: 1.5; -webkit-font-smoothing: antialiased;">' + item.title + '</h2>' +
+                    // '<button type="button" id="btn-create-new-task" class="btn btn-sm btn-primary btn-create" data-toggle="modal" data-target=".bd-example-modal-lg">Crear Nueva</button>' +
+                    btn_add +
+                    // '<svg class="drag-header-more" data-target="options' + item.position + '" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>' +
+                '</span>' +                    
+                '<div class="drag-options" id="options7"></div>' + 
+                '<ul class="drag-inner-list" id="' + item.position + '">' +
+                '</ul>' +
+            '</li>';
+        $('#drag-list').append(row);            
+        // evento click del boton modificar-eliminar
+        //$('#Update'+item.id).click(UpdateEventHandler);
+        //$('#Delete'+item.id).click(UpdateEventHandler);
+    })
+    LoadTask();
+};
+
+
+function LoadTask(){
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: "LoadTask"
+        }
+    })
+    .done(function( e ) {            
+        //alert(e);
+        ShowTask(e); 
+    })    
+    // .fail(showError);
+};
+
+
+function ShowTask(e){ 
+    // carga lista con datos.
+    var data= JSON.parse(e);
+
+    // Recorre arreglo.
+    $.each(data, function(i, item) {  
+        var d_creation = new Date((item.date_creation)*1000);
+        var d_creation_iso = d_creation.toISOString().slice(0, 16).replace('T', ' ');
+        var posicion = '#'+item.position;
+        var row=
+            '<li class="drag-item">' +
+                '<p>' +
+                    'No: ' + item.id + '<br>' +
+                    'Fecha: ' + d_creation_iso + '<br>' +  
+                    'Asunto: ' + item.title + '<br>' +			
+                '</p>' +
+            '</li>'
+        $(posicion).append(row);            
+        // evento click del boton modificar-eliminar
+        //$('#Update'+item.id).click(UpdateEventHandler);
+        //$('#Delete'+item.id).click(UpdateEventHandler);
+    })
+};
 
 
 function encode_Files() {
@@ -184,11 +296,9 @@ function UpdateEventHandler(){
 function CleanCtls(){
     $("#title").val('');
     $("#description").val('');
-    $("#date_creation").val('');
     $("#project_id").val('');
     $("#column_id").val('');
     $("#owner_id").val('');
-    $("#date_started").val('');
 };
 
 function ShowTaskData(e){
@@ -296,11 +406,20 @@ function SaveTask(){
     
     var arraySubTask = [];
 
-    //Del texto de descripción elimina los espacios en blanco al inicio y al final del texto asi como las tabulaciones y los saltos de linea 
+    // Del texto de descripción elimina los espacios en blanco al inicio y al final  
+    // del texto asi como las tabulaciones, los saltos de linea y las comillas dobles.
     var textoDes = $("#description").val();
     textoDes = textoDes.split("\t").join(" ");
     textoDes = textoDes.split("\n").join(" ");
+    textoDes = textoDes.split("\"").join("'");
     textoDes = $.trim(textoDes);
+
+    var title_validate = $("#title").val();
+    title_validate = title_validate.split("\t").join(" ");
+    title_validate = title_validate.split("\n").join(" ");
+    title_validate = title_validate.split("\"").join("'");
+    title_validate = $.trim(title_validate);
+
     
     $("table#dataTable tr").each(function() {
         var arrayOfThisRow = [];
@@ -309,6 +428,10 @@ function SaveTask(){
         if(desc_sub.length>2)
         {
             varSubTask="1";
+            desc_sub = desc_sub.split("\t").join(" ");
+            desc_sub = desc_sub.split("\n").join(" ");
+            desc_sub = desc_sub.split("\"").join("'");
+            desc_sub = $.trim(desc_sub);
         }        
         else {
             varSubTask="0";
@@ -339,7 +462,7 @@ function SaveTask(){
         url: "class/Task.php",
         data: { 
             action: miAccion,           
-            title:  $("#title").val(),
+            title:  title_validate,
             description: textoDes,
             projectid: $("#projectid").val(),
             date_started: $("#date_started").val(),

@@ -7,11 +7,42 @@ html,body{
 .modal-dialog{
     margin: 0px auto !important;    
     overflow-y: hidden; 
-    overflow-x:hidden
+    overflow-x:hidden;
 }
- 
+
+.modal-content {
+    background-color: #1e1e1e !important;
+    color: rgb(206, 206, 206);
+    /* color: #337ab7; */
+}
+.modal-new-task{
+    width: 70% !important;
+    margin: auto !important;
+}
+
 .modal-header{
-border-bottom: none !important;
+    border-bottom: none !important;
+    background-color: #212121 !important;
+}
+.modal-title{
+    color: #f0f0f0 !important;
+}
+.modal-body{
+    background-color: #131310 !important;
+
+}
+
+.modal-panel{
+    background-color: #212121 !important;
+}
+
+.modal-panel-heading{
+    background-color: #424242 !important;
+}
+
+.modal-footer{
+    border-bottom: none !important;
+    background-color: #212121 !important;
 }
 
 .control-label{
@@ -68,12 +99,15 @@ border-bottom: none !important;
 }
 
 
-.st_input-field-desc, .st_input-field-time, .st_input-field{
-    /* color: rgb(184, 179, 179) !important; */
+.st_input-field-desc, .st_input-field{
+    color: black !important;
     width: 100%;
-    resize:none;
+    /* resize:none; */
 }
 
+.st_input-field-time{
+    color: black !important;
+}
 
 .tbl-items{
     color: rgb(44, 43, 43);
@@ -83,10 +117,9 @@ border-bottom: none !important;
     color: #fff;
 }
 
-
-
 .sub-task-desc{
     width: 100%;
+    color: black !important;
 }
 
 
@@ -100,7 +133,7 @@ border-bottom: none !important;
     .cmbfield {
         margin: 0 auto;
         /* margin-top: 20; */
-        width: 350;
+        width: 350px;
     }
     
     .cmbfield .field {

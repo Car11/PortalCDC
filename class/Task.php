@@ -22,6 +22,12 @@ if(isset($_POST["action"])){
             $task->id=$_POST["id"];
             echo json_encode($task->Load());
             break;
+        case "LoadColumns": 
+            echo json_encode($task->LoadColumns());
+            break;
+        case "LoadTask": 
+            echo json_encode($task->LoadTask());
+            break;
         case "LoadTaskFiles":
             $task->id=$_POST["id"];
             echo json_encode($task->LoadTaskFiles());
@@ -94,7 +100,43 @@ class Task{
     //
     // Funciones de Mantenimiento.
     //
+    function LoadColumns(){
+        try {
+            $sql='SELECT position, title
+            FROM columns 
+            WHERE project_id = :project_id
+            ORDER BY position ASC;';   
 
+            $param= array(':project_id'=>17);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
+            exit;
+        }
+    }
+
+    function LoadTask(){
+        try {
+            $sql='SELECT t.id, t.title, t.date_creation, c.position
+            FROM kanboard.tasks as t
+            INNER JOIN columns as c ON t.column_id = c.id
+            where c.project_id = :project_id and t.is_active =1;';   
+
+            $param= array(':project_id'=>17);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
+            exit;
+        }
+    }
 
     function Load(){
         try {

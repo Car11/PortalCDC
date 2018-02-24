@@ -1,22 +1,6 @@
-<?php
-if (!isset($_SESSION))
-    session_start();
-    include_once('class/Globals.php');
-    // Sesion de usuario
-    require_once("class/Sesion.php");
-    $sesion = new Sesion();
-    if (!$sesion->estado){        
-        $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[1]; //indexar a 1 cuando el sitio este en la raiz
-        header('Location: Login.php');
-        exit;
-    }
-?>
 <!DOCTYPE html>
-<html lang="en" >
-
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Mi Cuenta</title>
 
 	<!-- ///////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////// -->
@@ -27,9 +11,8 @@ if (!isset($_SESSION))
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	<link rel="stylesheet" href="assets/css/dragula.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- <link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
 	<!-- <link rel="stylesheet" href="assets/fonts/ionicons.min.css"> -->
@@ -70,32 +53,28 @@ if (!isset($_SESSION))
 	///////////////////////////////////////////////////////*/ -->
 	<script src="assets/js/jquery.min.js"></script>	
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
 	<script src="assets/js/dragula.min.js"></script>
 	<script  src="assets/js/MiCuenta.js"></script>
-	<script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <script src="assets/js/sweetalert2.min.js"></script>
+ 
 
 </head>
-
 <body>
 
-  	<section class="section">
-		<h1>Bienvenido a su cuenta</h1>
-		<br>                         
-		<h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>
-	</section>
+    <div class="container">
+        <div class="col col-xs-6 text-right">
+            <button type="button" id="btn-create-new-task" class="btn btn-sm btn-primary btn-create" data-toggle="modal" data-target=".bd-example-modal-lg">Crear Nueva</button>
+        </div>
+    </div>
 
-	<div class="drag-container">
-		<ul class="drag-list" id="drag-list" >
-			
-		</ul>
-	</div>
-	<section class="section">
-		<a href="#">Operaciones DCTI © 2018</a>
-	</section>
-<!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-new-task" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -169,12 +148,12 @@ if (!isset($_SESSION))
                                         </textarea>                            
                                     </div>
                                     <div class="col-xs-4 col-md-5">
-                                        <input type="datetime-local" class="st_input-field-time" autocomplete="on" name="bdaytime" id="date_started">
+                                        <input type="datetime-local" autocomplete="on" name="bdaytime" id="date_started">
                                         <br>
                                         <br>
                                         <label class="control-label control-label">Seleccione una fecha de final: </label>                 
                                         <br>
-                                        <input type="datetime-local" class="st_input-field-time" name="bdaytime" id="date_due">
+                                        <input type="datetime-local" name="bdaytime" id="date_due">
                                         
                                     </div> 
                                     </div>
@@ -290,18 +269,15 @@ if (!isset($_SESSION))
 
         </div>
         <div class="modal-footer">
-            <button type="button" id="cerrar-modal" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
-            <button type="button" onclick="SaveTask()" class="btn btn-primary">Enviar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
+            <button type="button" class="btn btn-primary">Enviar</button>
         </div>
         </div>
     </div>
     </div>
-   
-
 
 
 
 
 </body>
-
 </html>
