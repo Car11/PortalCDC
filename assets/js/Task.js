@@ -486,8 +486,8 @@ function SaveTask(){
         formatTableSubTask("dataTable");
         clearAttachments();
         $('#file-list').empty();
-        Load();
         $("#cerrar-modal").click();
+        LoadColumns(); 
       })
     .fail(function(error) {
         var log= JSON.parse(error);
