@@ -147,6 +147,7 @@ class LDAPP{
                 ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
                 ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
                 // binding to ldap server with standard user      
+                $this->ldapbind = ldap_bind($this->ldapconn, $this->username, $this->password);
                 $this->ldapbind = ldap_bind($this->ldapconn, Globals::$userconn, Globals::$pwconn);
                 if ($this->ldapbind) {
                     return true;

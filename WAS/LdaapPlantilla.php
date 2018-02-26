@@ -76,6 +76,14 @@
                 <div id="formdiv">
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
                         <div class="col-md-8 col-md-offset-1">
+                            <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Acción</strong></p>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1"><select name="accion" id="accion" class="selectpicker show-menu-arrow form-control" data-max-options="10" style="font-family:Roboto, sans-serif;" >
+                            <optgroup label="Acción"><option value="Agregar">Agregar</option><option value="Eliminar">Eliminar</option></optgroup></select>   
+                        </div>
+                    </div>
+                    <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
+                        <div class="col-md-8 col-md-offset-1">
                             <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Ambiente </strong></p>
                         </div>
                         <div class="col-md-10 col-md-offset-1"><select name="ambiente" id="ambiente" class="selectpicker show-menu-arrow form-control" multiple data-max-options="10" style="font-family:Roboto, sans-serif;"><optgroup label="Ambiente"><option value>Desarrollo</option><option value>Producción</option></optgroup></select></div>

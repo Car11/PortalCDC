@@ -13,11 +13,11 @@ function Connect(){
         data: { 
             action: 'Connect',               
             username: $("#username").val(),
-            password: $("#password").val(),
-            ambiente: $("#ambiente").find(":selected").text()
+            password: $("#password").val()
+            //ambiente: $("#ambiente").find(":selected").text()
         }            
     })
-    .done(function( e ) {   
+    .done(function( e ) {
         var data= JSON.parse(e); 
         // Check for data errors
         if(data.iderr!=null){
@@ -25,16 +25,18 @@ function Connect(){
             $('#rama').html("<optgroup label='Rama'></optgroup>");
             $('#grupo').html("<optgroup label='Grupo'></optgroup>");
             alert(data.iderr + ': ' + data.error)
-            return;
+            return false;
         }
+        else return true;
         // Carga Aplicaciones LDAP
         //getApps(e);        
         // carga Ramas
         //getRamas();     
         
     })    
-    .fail(function( e ) {        
+    .fail(function( e ) {
         alert('Err ' + e);        
+        return false;
     });
 };
 
@@ -151,36 +153,6 @@ function getGroupsByAppName(){
     });
 };
 
-function sortSelect(ctlSelect){
-    var options = $('#'+ctlSelect+' option');
-    var arr = options.map(function(_, o) {
-        return {
-            t: $(o).text(),
-            v: o.value
-        };
-    }).get();
-    arr.sort(function(o1, o2) {
-        var t1 = o1.t.toLowerCase(), t2 = o2.t.toLowerCase();
-        return t1 > t2 ? 1 : t1 < t2 ? -1 : 0;
-    });
-    options.each(function(i, o) {
-        //console.log(i);
-        o.value = arr[i].v;
-        $(o).text(arr[i].t);
-    });
-};
-
-function AddUser(){
-    if(!$('#userlist').val()==''){
-        $("#grupo option:selected").each(function() {
-        alert(this.text + ' ' + this.value);        
-        // llama a codigo php para agregar usuario a grupo.
-        // muestra mensaje de usuario agregado o fallido.
-        // muestra lista de grupos a los que pertenece.
-        });
-    } else alert('Ingrese los valores del usuario.');
-}
-
 function getMembershipByUser(){
     var arrayOfLines = $('#usuarios').val().split('\n');
     //$.each(arrayOfLines, function(index, item) {
@@ -213,3 +185,33 @@ function getMembershipByUser(){
         alert('Err ' + e);        
     });
 };
+
+function sortSelect(ctlSelect){
+    var options = $('#'+ctlSelect+' option');
+    var arr = options.map(function(_, o) {
+        return {
+            t: $(o).text(),
+            v: o.value
+        };
+    }).get();
+    arr.sort(function(o1, o2) {
+        var t1 = o1.t.toLowerCase(), t2 = o2.t.toLowerCase();
+        return t1 > t2 ? 1 : t1 < t2 ? -1 : 0;
+    });
+    options.each(function(i, o) {
+        //console.log(i);
+        o.value = arr[i].v;
+        $(o).text(arr[i].t);
+    });
+};
+
+function AddUser(){
+    if(!$('#userlist').val()==''){
+        $("#grupo option:selected").each(function() {
+        alert(this.text + ' ' + this.value);        
+        // llama a codigo php para agregar usuario a grupo.
+        // muestra mensaje de usuario agregado o fallido.
+        // muestra lista de grupos a los que pertenece.
+        });
+    } else alert('Ingrese los valores del usuario.');
+}

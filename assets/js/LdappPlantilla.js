@@ -1,10 +1,20 @@
 var id = "NULL";
 
 $(document).ready( function () {
-    //$('#btnLogin').click(LoadPlantilla); 
+    $("#frmPlantilla :input").prop("disabled", true);
+    //
     $('#btnLogin').click(function(){
-        getApps();
-        getRamas();
+        if (Connect()){
+            // Habilita
+            $("#frmPlantilla :input").prop("disabled", false);
+            $("#grupo").selectpicker("refresh");
+            $("#ambiente").selectpicker("refresh");
+            $("#accion").selectpicker("refresh");
+            $("#accion option").val("Agregar");
+            // Carga datos        
+            //getRamas();
+            //getApps();
+        }
     }); 
     //
     //DisableForm();
