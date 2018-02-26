@@ -9,11 +9,11 @@
         <?php
         // Datos de la base de datos
         $usuario = "operti";
-        $password = "SanPedro1";
-        $servidor = "10.129.20.177";
+        $password = "b7F3sW7P*8g-4b_e";
+        $servidor = "10.3.2.197";
         $basededatos = "kanboard";
-        $jsonRPC = "http://10.129.20.177/kanboard/jsonrpc.php";
-        $authorization = "anNvbnJwYzphZWUzYzQ0YmZhZTJiZTg2MDRjYjU2MGQ5MDdiM2E3M2ViZjE4OTY4OWM0YTQ1ZDY0YTdmNmExYWY1Yzc";
+        $jsonRPC = "http://10.3.2.197/kanboard/jsonrpc.php";
+        $authorization = "anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg";
 
         // creación de la conexión a la base de datos con mysql_connect()
         $conexion = mysqli_connect( $servidor, $usuario, $password ) or die ("No se ha podido conectar al servidor de Base de datos");
@@ -51,10 +51,10 @@
         while ($columna = mysqli_fetch_array( $resultado ))
         {
             echo "<tr>";
-            echo "<td>" . $columna['id'] . "</td><td>" . $columna['min'] . "</td><td>" . $columna['hour'] . "</td><td>" . $columna['dom'] . "</td><td>" . $columna['year'] . "</td><td>" . $columna['dow'] . "</td><td>" . $columna['title'] . "</td><td>" . $columna['detail'] . "</td><td>" . $columna['file'] ."</td><td>" . $columna['sub_task'] . "</td><td>" . $columna['project_id'] . "</td><td>" . $columna['column_id'] . "</td>";
+            echo "<td>" . $columna['id'] . "</td><td>" . $columna['user_id'] . "</td><td>" . $columna['min'] . "</td><td>" . $columna['hour'] . "</td><td>" . $columna['dom'] . "</td><td>" . $columna['year'] . "</td><td>" . $columna['dow'] . "</td><td>" . $columna['title'] . "</td><td>" . $columna['detail'] . "</td><td>" . $columna['file'] ."</td><td>" . $columna['sub_task'] . "</td><td>" . $columna['project_id'] . "</td><td>" . $columna['column_id'] . "</td>";
 
             echo "</tr>";
-            crearTarea($columna['id'], $columna['title'], $columna['detail'], $columna['file'],  $columna['sub_task'], $columna['project_id'], $columna['column_id']);
+            crearTarea($columna['id'], $columna['user_id'], $columna['title'], $columna['detail'], $columna['file'],  $columna['sub_task'], $columna['project_id'], $columna['column_id']);
         }
 
         echo "</table>"; // Fin de la tabla
@@ -62,12 +62,12 @@
         mysqli_close( $conexion );
         
         
-        function crearTarea($id, $title, $detail, $file, $subTask, $project_id, $column_id)
+        function crearTarea($id, $user_id, $title, $detail, $file, $subTask, $project_id, $column_id)
         {
             $curl = curl_init();
             global $jsonRPC;
             global $authorization;
-            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $id . ", \"params\": { \"owner_id\": 1, \"creator_id\": 0, \"date_due\": \"\", \"description\": \"" . $detail . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $title .  "\", \"project_id\": " . $project_id . ", \"color_id\": \"green\", \"column_id\": " . $column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
+            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $id . ", \"params\": { \"owner_id\": " . $user_id . ", \"creator_id\": 0, \"date_due\": \"\", \"description\": \"" . $detail . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $title .  "\", \"project_id\": " . $project_id . ", \"color_id\": \"green\", \"column_id\": " . $column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
             // echo $cadenaRapida;
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $jsonRPC,
