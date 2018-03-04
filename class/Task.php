@@ -124,9 +124,11 @@ class Task{
             $sql='SELECT t.id, t.title, t.date_creation, c.position
             FROM kanboard.tasks as t
             INNER JOIN columns as c ON t.column_id = c.id
-            where c.project_id = :project_id and t.is_active =1;';   
-
-            $param= array(':project_id'=>17);
+            where c.project_id = :project_id and 
+            t.is_active =1 and
+            creator_id = :userid
+            order by t.id desc;';   
+            $param= array(':project_id'=>17, ':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
         }     

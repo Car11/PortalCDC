@@ -123,11 +123,11 @@ function ShowColumn(e){
         //$('#Update'+item.id).click(UpdateEventHandler);
         //$('#Delete'+item.id).click(UpdateEventHandler);
     })
-    LoadTask();
+    LoadTasks();
 };
 
 
-function LoadTask(){
+function LoadTasks(){
     $.ajax({
         type: "POST",
         url: "class/Task.php",
@@ -137,23 +137,24 @@ function LoadTask(){
     })
     .done(function( e ) {            
         //alert(e);
-        ShowTask(e); 
+        ShowTasks(e); 
     })    
     // .fail(showError);
 };
 
 
-function ShowTask(e){ 
+function ShowTasks(e){ 
     // carga lista con datos.
     var data= JSON.parse(e);
 
     // Recorre arreglo.
     $.each(data, function(i, item) {  
-        var d_creation = new Date((item.date_creation)*1000);
-        var d_creation_iso = d_creation.toISOString().slice(0, 16).replace('T', ' ');
-        var posicion = '#'+item.position;
+        var d_creation = moment(item.date_creation*1000).format();
+        var d_creation_iso = d_creation.slice(0, 16).replace('T', ' ');
+        var posicion = '#'+item.position;       
         var row=
-            '<li class="drag-item">' +
+            // '<li class="drag-item" onclick="open_task()">' +
+            '<li onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)">'+
                 '<p>' +
                     'No: ' + item.id + '<br>' +
                     'Fecha: ' + d_creation_iso + '<br>' +  
@@ -166,6 +167,35 @@ function ShowTask(e){
         //$('#Delete'+item.id).click(UpdateEventHandler);
     })
 };
+
+
+function open_task(id_task) {
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'Load',                
+            id:  id_task
+        }            
+    })
+    .done(function( e ) {        
+        ShowTaskData(e);
+    })    
+    .fail(showError);
+    
+    $('.modal').modal('show')
+}
+
+function taskMouseOver(x) {
+    x.style.backgroundColor = "#33363d";
+    x.style.fontWeight = "600"
+    x.style.cursor = "pointer";
+}
+
+function taskMouseOut(x) {
+    x.style.backgroundColor = "#1e2026";
+    x.style.fontWeight = "400"
+}
 
 
 function encode_Files() {
@@ -308,11 +338,22 @@ function ShowTaskData(e){
     var data= JSON.parse(e);
     $("#title").val(data[0].title);
     $("#description").val(data[0].description);
-    var taskdate= new Date(Number(data[0].date_due*1000));
-    $("#date_due").val(taskdate);
-    
+
+
+    if ((data[0].date_started).length > 2){
+
+        var d_started = moment((data[0].date_started)*1000).format();
+        var d_started_iso = d_started.slice(0, 16);
+    }
+
+    if ((data[0].date_due).length > 2){
+        var d_due = new Date((data[0].date_due)*1000);
+        var d_due_iso = d_due.toISOString().slice(0, 16);
+    }
     $("#project_id").val(data[0].project_id);
-    /*$("#date_creation").val(data[2].title);
+    $("#date_started").val(d_started_iso);
+    $("#date_due").val(d_due_iso);
+    /*
     $("#column_id").val(data[4].title);
     $("#owner_id").val(data[5]); //assigned
     $("#date_started").val(data[6].title);*/
