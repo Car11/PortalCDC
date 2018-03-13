@@ -170,6 +170,7 @@ function ShowTasks(e){
 
 
 function open_task(id_task) {
+    id= id_task;
     $.ajax({
         type: "POST",
         url: "class/Task.php",
