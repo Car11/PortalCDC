@@ -208,7 +208,9 @@ if (!isset($_SESSION))
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Archivos y Comentarios</a>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Archivos y Comentarios
+                                            <div id="file-list">
+                                        </a>
                                     </h4>
                                 </div>
                                 <div id="collapse3" class="panel-collapse collapse modal-panel">

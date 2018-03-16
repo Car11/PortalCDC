@@ -170,6 +170,7 @@ function ShowTasks(e){
 
 
 function open_task(id_task) {
+    id= id_task;
     $.ajax({
         type: "POST",
         url: "class/Task.php",
@@ -228,6 +229,13 @@ function getBase64(file) {
        console.log('Error: ', error);
      };
 };
+
+function decode_file(e){
+    var data= JSON.parse(e);
+    var strdata= JSON.stringify(data);
+    var filedec= strdata.split('"');
+    var decodedData = window.atob(filedec[0]); 
+}
 
 // Muestra información en ventana
 function showInfo(){     
@@ -416,11 +424,29 @@ function showAttachments(e){
         $('#tableBody-file').append(row);
     })
     // evento click del boton modificar-eliminar
-    //$('.download').click(DownloadEventHandler);
+    $('.download').click(DownloadEventHandler);
     //$('.eliminarArchivo').click(EventoClickEliminar);
     /*$('#tbl-file').DataTable( {
         "order": [[ 1, "asc" ]]
     } );*/
+};
+
+function DownloadEventHandler(){  
+    //$(".modal").css({ display: "block" });  
+    idFile = $(this).parents("tr").find("td").eq(0).text();  //Columna 1 = ID tarea.
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'DownloadTaskFile',                
+            idFile:  idFile
+        }            
+    })
+    .done(function( e ) {        
+        // descarga de archivo
+        decode_file(e);
+    })    
+    .fail(showError);
 };
 
 function LoadAttachments(){             
