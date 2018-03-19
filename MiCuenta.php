@@ -209,7 +209,7 @@ if (!isset($_SESSION))
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Archivos y Comentarios
-                                            <div id="file-list">
+                                            
                                         </a>
                                     </h4>
                                 </div>
@@ -229,10 +229,11 @@ if (!isset($_SESSION))
                                                     <!-- <input type="file" name="archivo" id="archivo"></input>
                                                     <input type="submit" value="Subir archivo"></input> -->
                                                 </form>
+                                                <div id="file-list"></div>
                                                 <!-- <label for="exampleInputFile">Adjuntar un archivo</label>
                                                 <input type="file" class="form-control-file" name="archivo" id="userfile" aria-describedby="fileHelp"> -->
                                                 <!-- <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small> -->                         
-                                            </div>
+                                                </div>
                                             </div>         
                                         </div>   
                                     </div>
@@ -243,7 +244,7 @@ if (!isset($_SESSION))
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="cerrar-modal" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
-                    <button type="button" onclick="SaveTask()" class="btn btn-primary">Enviar</button>
+                    <button type="button" onclick="SaveTask()" id="btnSaveTask" class="btn btn-primary">Enviar</button>
                 </div>
             </div>
         </div>
