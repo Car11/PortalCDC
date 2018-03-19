@@ -418,17 +418,41 @@ function showAttachments(e){
             "<td style='display:none;' >" + item.id +"</td>" +
             "<td>"+ item.name + "</td>"+
             "<td>"+ item.date + "</td>"+
-            "<td><img id=imgdelete src=img/file_download.png class=download></td>"+
-            "<td><img id=imgdelete src=img/file_delete.png class=DeleteFile></td>"+
-        "</tr>";
+            "<td><img id=update" + item.id +" src=img/file_download.png class=download></td>"+
+            "<td><img id=delete" + item.id +" src=img/file_delete.png class=DeleteFile></td>"+
+        "</tr>";        
         $('#tableBody-file').append(row);
-    })
-    // evento click del boton modificar-eliminar
-    $('.download').click(DownloadEventHandler);
-    //$('.eliminarArchivo').click(EventoClickEliminar);
+        // evento click del boton modificar-eliminar
+        $('#update' + item.id).click(DownloadEventHandler);
+        $('#delete' + item.id).click(DeleteAttachmentEventHandler);
+    })    
     /*$('#tbl-file').DataTable( {
         "order": [[ 1, "asc" ]]
     } );*/
+};
+
+function DeleteAttachmentEventHandler(){  
+    //$(".modal").css({ display: "block" });  
+    idFile = $(this).parents("tr").find("td").eq(0).text();  //Columna 1 = ID tarea.
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'DeleteAttachment',                
+            idFile:  idFile
+        }            
+    })
+    .done(function() {   
+        // limpia control      
+        swal({
+            position: 'top-end',
+            type: 'success',
+            title: 'Archivo Eliminado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    })    
+    .fail(showError);
 };
 
 function DownloadEventHandler(){  
@@ -464,15 +488,12 @@ function LoadAttachments(){
     .fail(showError);
 };
 
-function SaveTask(){   
+function SaveTask(){       
     // Ajax: insert / Update.
     if(!FormValidate())
-        return false;
-    
-    var miAccion= id=='NULL' ? 'Insert' : 'Update';
-    
+        return false;    
+    var miAccion= id=='NULL' ? 'Insert' : 'Update';    
     var arraySubTask = [];
-
     // Del texto de descripción elimina los espacios en blanco al inicio y al final  
     // del texto asi como las tabulaciones, los saltos de linea y las comillas dobles.
     var textoDes = $("#description").val();
@@ -523,12 +544,13 @@ function SaveTask(){
     }else {
         mifile = "0";
     }   
-    
+    $('#btnSaveTask').attr("disabled", "disabled");
     $.ajax({
         type: "POST",
         url: "class/Task.php",
         data: { 
-            action: miAccion,           
+            action: miAccion, 
+            id: id,          
             title:  title_validate,
             description: textoDes,
             projectid: $("#projectid").val(),
@@ -560,7 +582,9 @@ function SaveTask(){
         var log= JSON.parse(error);
         alert(log);
     })
-    //.always(ReCargar);
+    .always(function() {
+        setTimeout('$("#btnSaveTask").removeAttr("disabled")', 1500);
+    });
 };    
 
 
