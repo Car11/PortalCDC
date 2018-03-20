@@ -293,7 +293,7 @@ class Task{
 
     function Update(){
         try{
-            $t_started = date("m/d/Y H:m", strtotime($this->date_started));
+            $t_started = date("m/d/Y H:i", strtotime($this->date_started));
             $t_due = ($this->date_due);
             $t_due = str_replace('T', ' ', $t_due);
             //
@@ -333,12 +333,8 @@ class Task{
         try {
             $curl = curl_init();
             //date_started sin convertir: 2018-02-10T12:59
-            //date_started debe tener el siguiente formato: 02/10/2018 19:43  || dia/mes/año hora:min       
-            // $t_started = ($this->date_started);
-            // $t_started = str_replace('-', '/', $t_started);
-            // $t_started = str_replace('T', ' ', $t_started);
-
-            $t_started = date("m/d/Y H:m", strtotime($this->date_started));
+            //date_started debe tener el siguiente formato: 02/10/2018 19:43  || mes/dia/año hora:min       
+            $t_started = date("m/d/Y H:i", strtotime($this->date_started));
 
             //date_due debe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
             $t_due = ($this->date_due);
