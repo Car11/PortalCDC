@@ -355,9 +355,11 @@ function ShowTaskData(e){
     }
 
     if ((data[0].date_due).length > 2){
-        var d_due = new Date((data[0].date_due)*1000);
-        var d_due_iso = d_due.toISOString().slice(0, 16);
+        var d_due = moment((data[0].date_due)*1000).format();
+        // var d_due_iso = d_started.slice(0, 16).replace('T', ' ');
+        var d_due_iso = d_due.slice(0, 16);
     }
+
     $("#project_id").val(data[0].project_id);
     $("#date_started").val(d_started_iso);
     $("#date_due").val(d_due_iso);

@@ -1,3 +1,4 @@
 {
-    "jshint.enable": false
+    "jshint.enable": false,
+    "php.suggest.basic": false
 }
