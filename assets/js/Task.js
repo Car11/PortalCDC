@@ -2,6 +2,7 @@ var id = "NULL";
 var mifile = "0";
 var arrayOfThisfile = [];
 var arrayOffiles = [];
+var arraySubTask = [];
 
 $(document).ready( function () {
     //accordeon
@@ -42,6 +43,14 @@ $(document).ready( function () {
             };
             fileReader.readAsDataURL(fileToLoad);
         }
+    });
+
+    $("#cerrar-modal").click(function(){
+        // arraySubTask = [];
+        // var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" name="estado" value="Pendiente"/></TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
+        // $('#dataTable').empty();
+        // $('#dataTable').append(input); 
+        CleanCtls();
     });
 });
 
@@ -126,7 +135,6 @@ function ShowColumn(e){
     LoadTasks();
 };
 
-
 function LoadTasks(){
     $.ajax({
         type: "POST",
@@ -141,7 +149,6 @@ function LoadTasks(){
     })    
     // .fail(showError);
 };
-
 
 function ShowTasks(e){ 
     // carga lista con datos.
@@ -167,7 +174,6 @@ function ShowTasks(e){
         //$('#Delete'+item.id).click(UpdateEventHandler);
     })
 };
-
 
 function open_task(id_task) {
     id= id_task;
@@ -197,7 +203,6 @@ function taskMouseOut(x) {
     x.style.backgroundColor = "#1e2026";
     x.style.fontWeight = "400"
 }
-
 
 function encode_Files() {
     $("#inputFileToLoad").change(function() {
@@ -231,11 +236,17 @@ function getBase64(file) {
 };
 
 function decode_file(e){
-    var data= JSON.parse(e);
-    var strdata= JSON.stringify(data);
-    var filedec= strdata.split('"');
-    var decodedData = window.atob(filedec[0]); 
-}
+    //var data= JSON.parse(e);
+    //var strdata= JSON.stringify(data);
+    var filedec= e.split('"');
+    var newstr= filedec[1]; //.replace('\', "");
+    newstr= newstr.replace(/\\/g, '');
+    var decodedData = window.atob(newstr); 
+};
+
+// function replaceAll(str, find, replace) {
+//     return str.replace(new RegExp(find, 'g'), replace);
+// };
 
 // Muestra información en ventana
 function showInfo(){     
@@ -269,7 +280,7 @@ function Load(){
             action: "LoadTasksByUser"
         }
     })
-    .done(function( e ) {            
+    .done(function( e ) {
         ShowData(e); 
     })    
     .fail(showError);
@@ -337,6 +348,13 @@ function CleanCtls(){
     $("#project_id").val('');
     $("#column_id").val('');
     $("#owner_id").val('');
+    //
+    arrayOffiles = [];
+    //
+    arraySubTask = [];
+    var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" id="estado" name="estado" value="Pendiente"/> </TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
+    $('#dataTable').empty();
+    $('#dataTable').append(input); 
 };
 
 function ShowTaskData(e){
@@ -369,6 +387,7 @@ function ShowTaskData(e){
     $("#date_started").val(data[6].title);*/
     // Call API in order to get attachments and comments.
     LoadAttachments();
+    LoadSubTasksByTask();
 };
 
 //Esta funcion carga en el dropdown los projectos a los
@@ -454,7 +473,10 @@ function DeleteAttachmentEventHandler(){
             timer: 1500
         });
     })    
-    .fail(showError);
+    .fail(showError)
+    .always(function(){
+        LoadAttachments();
+    });
 };
 
 function DownloadEventHandler(){  
@@ -475,7 +497,7 @@ function DownloadEventHandler(){
     .fail(showError);
 };
 
-function LoadAttachments(){             
+function LoadAttachments(){
     $.ajax({
         type: "POST",
         url: "class/Task.php",
@@ -490,12 +512,44 @@ function LoadAttachments(){
     .fail(showError);
 };
 
-function SaveTask(){       
+function LoadSubTasksByTask(){
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'LoadSubTasksByTask',                
+            id:  id
+        }            
+    })
+    .done(function( e ) {
+        showSubTasks(e);
+    })    
+    .fail(showError);
+};
+
+function showSubTasks(e){
+    var data= JSON.parse(e);
+    $.each(data, function(i, item) {
+        if(i==0) // primer linea
+        {
+            $('#subtask').val(item.title);
+            $('#estado').val(EstadoTarea(item.status));
+            $('#idSubTask').val(item.id);
+        }
+        else
+        {
+            addRow('dataTable', item.title, item.position, item.status, item.id);
+        }
+    })    
+};
+
+function SaveTask(){
     // Ajax: insert / Update.
     if(!FormValidate())
         return false;    
-    var miAccion= id=='NULL' ? 'Insert' : 'Update';    
-    var arraySubTask = [];
+    var miAccion= id=='NULL' ? 'Insert' : 'Update';   
+    //
+    var subTaskElement = new Object();
     // Del texto de descripción elimina los espacios en blanco al inicio y al final  
     // del texto asi como las tabulaciones, los saltos de linea y las comillas dobles.
     var textoDes = $("#description").val();
@@ -509,24 +563,28 @@ function SaveTask(){
     title_validate = title_validate.split("\n").join(" ");
     title_validate = title_validate.split("\"").join("'");
     title_validate = $.trim(title_validate);
-
-    
+    //    
+    varSubTask="0";
     $("table#dataTable tr").each(function() {
         var arrayOfThisRow = [];
         var tableData = $(this).find('td');
         var desc_sub = (tableData[2].firstElementChild.value);
-        if(desc_sub.length>2)
-        {
+        var id_sub = (tableData[4].firstElementChild.value);
+        //if(desc_sub.length>2)
+        //{
             varSubTask="1";
             desc_sub = desc_sub.split("\t").join(" ");
             desc_sub = desc_sub.split("\n").join(" ");
             desc_sub = desc_sub.split("\"").join("'");
             desc_sub = $.trim(desc_sub);
-        }        
-        else {
-            varSubTask="0";
-        }
-        arraySubTask.push(desc_sub);
+            subTaskElement = new Object();
+            subTaskElement.title= desc_sub;
+            subTaskElement.id= id_sub;
+        //}        
+        //else {
+        //  varSubTask="0";
+        //}
+        arraySubTask.push(subTaskElement);
     });
     
     if (arrayOffiles.length > 0){    
@@ -586,13 +644,15 @@ function SaveTask(){
     })
     .always(function() {
         setTimeout('$("#btnSaveTask").removeAttr("disabled")', 1500);
+        arraySubTask = [];
+        var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" id="estado" name="estado" value="Pendiente"/> </TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
+        $('#dataTable').append(input); 
     });
 };    
 
-
-  //Esta funcion se encarga de agregar
+//Esta funcion se encarga de agregar
 //mas filas en la pantalla de subtareas
-function addRow(tableID) {
+function addRow(tableID, contenido=null, posicion=null , estado=null, subtaskId=null) {
     var table = document.getElementById(tableID);
 
     var rowCount = table.rows.length;
@@ -607,13 +667,31 @@ function addRow(tableID) {
     var cell2 = row.insertCell(1);
     Count = rowCount + 1;
     cell2.innerHTML =  "<span style='color:#ddd;'>" + Count + "<\/span>";
-
+    // contenido texto
     var cell3 = row.insertCell(2);
     var element2 = document.createElement("input");
     element2.type = "text";
     element2.name = "txtbox[]";
     element2.className = " sub-task-desc"
+    if(contenido!=null)
+        element2.value= contenido;
     cell3.appendChild(element2);
+    // estado
+    var cell4 = row.insertCell(3);
+    var element3 = document.createElement("input");
+    element3.type = "text";
+    if (estado!=null)
+        element3.value= EstadoTarea(estado);
+    else element3.value= 'Pendiente';
+    cell4.appendChild(element3);    
+    // subtask id
+    var cell5 = row.insertCell(4);
+    var element4 = document.createElement("input");
+    element4.type = "text";   
+    if (subtaskId!=null)
+        element4.value= subtaskId;
+    else element4.value= 'new';
+    cell5.appendChild(element4); 
 };
 
 //Esta funcion borra las filas seleccionadas en 
@@ -660,7 +738,6 @@ function formatTableSubTask(tableID) {
     }
 };
 
-
 function FormValidate(){
     if($("#title").val()=="")
     {
@@ -698,3 +775,14 @@ function FormValidate(){
 
     return true;
 };
+
+function EstadoTarea(e=null){
+    if (e==null)
+    return 'Desconocido';
+    else if(e==0)
+        return 'Pendiente';
+    else if(e==1)
+        return 'En Ejecución';
+    else if(e==2)
+        return 'Completado';
+}

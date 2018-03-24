@@ -2,19 +2,19 @@
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
-require_once("Conexion.php");
-require_once("Log.php");
+// require_once("Conexion.php");
+// require_once("Log.php");
 
-function __construct(){
-    require_once("Conexion.php");
-    require_once("Log.php");
-}
+// function __construct(){
+//     require_once("Conexion.php");
+//     require_once("Log.php");
+// }
 
 Globals::ConfiguracionIni();
 
 if(isset($_POST["action"])){
     $task= new Task();
-    switch($_POST["action"]){       
+    switch($_POST["action"]){
         case "LoadAll":
             //echo json_encode($visitante->CargarTodos());
             break;
@@ -73,7 +73,11 @@ if(isset($_POST["action"])){
         case "Delete":
             /*$visitante->ID= $_POST["idvisitante"];            
             $visitante->Eliminar();*/
-            break;        
+            break;    
+        case "LoadSubTasksByTask":
+            $task->id=$_POST["id"];
+            echo json_encode($task->LoadSubTasksByTask());
+            break;
     }
 }
 
@@ -170,9 +174,8 @@ class Task{
 
     function LoadTaskFiles(){
         try {
-            $sql='SELECT id, name, date 
+                $sql='SELECT id, name, date 
                 FROM task_has_files
-                where TASK_ID= :taskId AND IS_IMAGE=1              
                 ORDER BY name ';
             $param= array(':taskId'=>$this->id);
             $data= DATA::Ejecutar($sql,$param);
@@ -291,6 +294,23 @@ class Task{
         }
     }
 
+    function LoadSubTasksByTask(){
+        try {
+            $sql='SELECT id, title, status, position FROM subtasks 
+                WHERE task_id= :taskId
+                ORDER BY position';
+            $param= array(':taskId'=>$this->id);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {            
+            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
+            //$_SESSION['errmsg']= $e->getMessage();
+            header('Location: ../Error.php');            
+            exit;
+        }
+    }
+
     function Update(){
         try{
             $t_started = date("m/d/Y H:m", strtotime($this->date_started));
@@ -324,7 +344,11 @@ class Task{
                 }
             }
             //SUB-TAREAS
-
+            foreach (($this->subtask_des) as $subT) {
+                if($subT->id=="new")
+                    $this->crearSubTarea($subT->title);
+                else $this->actualizarSubTarea($subT->id, $subT->title);
+            }
         }
         catch(Exception $e){}
     }
@@ -369,42 +393,26 @@ class Task{
             // "Authorization: Basic anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg=",
             //   "Postman-Token: 1ec2b092-199a-ee41-b698-37096a6c36f7"
             ));
-                
-        
             $response = curl_exec($curl);
             $err = curl_error($curl);
-            //echo $response;
-            $id_new_task = "";
-        
-            $inicio = strpos($response, ":",20);
-            $inicio =$inicio+1;
-            $fin = strrpos($response, ",");
-            //echo "Busca ':' inicio: ".$inicio." / Busca ',' Fin: ".$fin;
-        
-            //( string $response , mixed ":" [, int $caracter_de_inicio = 20 ] )
-            //int $fin ( string $response , mixed "," [, int $caracter_de_inicio2 = 20 ] )
-            for ($i = $inicio; $i < $fin; $i++) {
-                $id_new_task = "{$id_new_task}{$response[$i]}";
-            }
-            //echo "El numero de la nueva tarea es: ".$id_new_task;
+            $this->id =json_decode($response)->result;
             curl_close($curl);
-        
+            //
             if ($err) {
                 echo "cURL Error #:" . $err;
             } else {
                 echo "Resumen de tarea: ".$response;
             }
-        
+            //
             if (($this->subTask) == "1"){
-                foreach (($this->subtask_des) as $value1) {
-                    $this->crearSubTarea($id_new_task, $value1);
-                    //$id_new_task, $value1
+                foreach (($this->subtask_des) as $subT) {
+                    $this->crearSubTarea($subT->title);
                 }
             }
         
             if ($this->mifile == "1"){
                 foreach (($this->objFile) as $value2) {
-                    $this->addFilesToTask(($this->project_id), $id_new_task, $value2[0],$value2[1]);
+                    $this->addFilesToTask(($this->project_id), $this->id, $value2[0],$value2[1]);
                 }
             }
         }
@@ -416,9 +424,9 @@ class Task{
     
     }
 
-    function crearSubTarea($new_task, $title_subTask){
+    function crearSubTarea($title_subTask){
     //$this->id_scheduled_task, $title_subTask
-        $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createSubtask\", \"id\": 2041554661, \"params\": { \"task_id\":" . $new_task . ", \"title\": \"" . $title_subTask . "\" } }";
+        $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createSubtask\", \"id\": 2041554661, \"params\": { \"task_id\":" . $this->id . ", \"title\": \"" . $title_subTask . "\" } }";
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => Globals::$jsonrpcURL,
@@ -446,9 +454,41 @@ class Task{
             echo "cURL Error #:" . $err;
         } else {
             echo $response;
-        }   
-    
+        }       
     }
+
+    function actualizarSubTarea($id_subTask, $title_subTask){
+        //$this->id_scheduled_task, $title_subTask
+            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"updateSubtask\", \"id\": 2041554661, \"params\": {  \"id\":" . $id_subTask . ", \"task_id\":" . $this->id . ", \"title\": \"" . $title_subTask . "\" } }";
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => Globals::$jsonrpcURL,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => $cadenaRapida,
+                CURLOPT_HTTPHEADER => array(
+                    "Authorization: Basic ". Globals::$token ."=",
+                    "cache-control: no-cache",
+                    "content-type: application/json",
+                    "Postman-Token: ". Globals::$postmantoken
+                ),
+            ));
+        
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+    
+            curl_close($curl);
+        
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                echo $response;
+            }       
+        }
     
     function addFilesToTask($id_project, $id_task, $name,$image_file_base64){
     
