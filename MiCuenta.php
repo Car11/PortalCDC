@@ -193,10 +193,12 @@ if (!isset($_SESSION))
                                         <div class="row">
                                             <div id="tabla" class="col-md-10">   
                                             <TABLE id="dataTable" width="100%" border="1">
-                                                <TR>
-                                                <TD><INPUT id="chk" type="checkbox" name="chk"/></TD>
-                                                <TD> <span style='color:#ddd;'> 1 </span></TD>
-                                                <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD>
+                                                <TR>                                                
+                                                    <TD><INPUT id="chk" type="checkbox" name="chk"/>></TD>
+                                                    <TD> <span style='color:#ddd;'> 1 </span></TD>
+                                                    <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/>> </TD>
+                                                    <TD> <INPUT id="estado" type="text" name="estado" value="Pendiente"/></TD>
+                                                    <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD>
                                                 </TR>
                                             </TABLE>
                                             <!-- <input type="button" value="ok" id="ok" class="boton2" onclick="tableToJSON()"> -->
