@@ -4,6 +4,8 @@ var arrayOfThisfile = [];
 var arrayOffiles = [];
 var arraySubTask = [];
 
+let comentario = new Comment();
+
 $(document).ready( function () {
     //accordeon
     //var acc = document.getElementsByClassName("accordion");
@@ -54,8 +56,6 @@ $(document).ready( function () {
     });
 
 });
-
-
 
 function BtnCreateNew(){
     $(function () {
@@ -245,10 +245,6 @@ function decode_file(e){
     var decodedData = window.atob(newstr); 
 };
 
-// function replaceAll(str, find, replace) {
-//     return str.replace(new RegExp(find, 'g'), replace);
-// };
-
 // Muestra información en ventana
 function showInfo(){     
     alert('show info');
@@ -393,18 +389,19 @@ function ShowTaskData(e){
 };
 
 function LoadComments(){
-    var nombre = "CARLOS CHACON CALVO";
-    var commentBox= '<div class="comment " id="commentXXXx" > </div>'
-    var avatar='<div class="avatar avatar-48 avatar-left"> '+
-        '<div class="avatar-letter" style="background-color: rgb(154, 108, 224)" title="'+ "carlos cha " +'">'+ "xx" +'</div> </div>';
-    var commentTitle= ` <div class="comment-title"> <strong class="comment-username"> ${nombre} </strong> </div> `;
-        // <small class="comment-date">Creado en:  </small>
-        // <small class="comment-date">Actualizado en: </small> </div> `;
-    var commentContent= '<div class="comment-content"> <div class="markdown"> <p> '+ "PRUEBA XXX" +'</p> </div>';
+    comentario= new Comment(000, 001, 002, 'Cachac6','Carlos chacon calvo', 'Pruebas clase Comentarios', 'reference', '00/00/01 ', '01/02/0003');
+    //
+    var commentBox= `
+        <div class="comment " id="comment${comentario.id}" > 
+            <div class="avatar avatar-48 avatar-left"> 
+                <div class="avatar-letter" style="background-color: rgb(154, 108, 224)" title="${comentario.name}">${comentario.username}</div> 
+            </div>
+            <div class="comment-title"> <strong class="comment-username"> ${comentario.name} </strong> </div>
+            <div class="comment-content"> <div class="markdown"> <p> ${comentario.comment} </p> </div>
+        </div>
+    `; 
     //
     $('#commentBox').append(commentBox);
-    $('#commentXXXx').append(avatar+commentTitle+commentContent);
-    //
 };
 
 //Esta funcion carga en el dropdown los projectos a los
