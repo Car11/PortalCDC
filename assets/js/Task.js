@@ -52,6 +52,7 @@ $(document).ready( function () {
         // $('#dataTable').append(input); 
         CleanCtls();
     });
+
 });
 
 
@@ -388,6 +389,22 @@ function ShowTaskData(e){
     // Call API in order to get attachments and comments.
     LoadAttachments();
     LoadSubTasksByTask();
+    LoadComments();
+};
+
+function LoadComments(){
+    var nombre = "CARLOS CHACON CALVO";
+    var commentBox= '<div class="comment " id="commentXXXx" > </div>'
+    var avatar='<div class="avatar avatar-48 avatar-left"> '+
+        '<div class="avatar-letter" style="background-color: rgb(154, 108, 224)" title="'+ "carlos cha " +'">'+ "xx" +'</div> </div>';
+    var commentTitle= ` <div class="comment-title"> <strong class="comment-username"> ${nombre} </strong> </div> `;
+        // <small class="comment-date">Creado en:  </small>
+        // <small class="comment-date">Actualizado en: </small> </div> `;
+    var commentContent= '<div class="comment-content"> <div class="markdown"> <p> '+ "PRUEBA XXX" +'</p> </div>';
+    //
+    $('#commentBox').append(commentBox);
+    $('#commentXXXx').append(avatar+commentTitle+commentContent);
+    //
 };
 
 //Esta funcion carga en el dropdown los projectos a los
@@ -563,6 +580,10 @@ function SaveTask(){
     title_validate = title_validate.split("\n").join(" ");
     title_validate = title_validate.split("\"").join("'");
     title_validate = $.trim(title_validate);
+    //
+    $("table#dataTable tr").each(function(i, row) {
+        console.log(row);
+    });
     //    
     varSubTask="0";
     $("table#dataTable tr").each(function() {
