@@ -196,7 +196,7 @@ if (!isset($_SESSION))
                                                 <TR>                                                
                                                     <TD><INPUT id="chk" type="checkbox" name="chk"/>></TD>
                                                     <TD> <span style='color:#ddd;'> 1 </span></TD>
-                                                    <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/>> </TD>
+                                                    <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD>
                                                     <TD> <INPUT id="estado" type="text" name="estado" value="Pendiente"/></TD>
                                                     <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD>
                                                 </TR>
@@ -221,23 +221,59 @@ if (!isset($_SESSION))
                                             <div class="col-md-11">
                                             <div class="form-group">
                                                 <div class="custom-file">
-                                                <form action="test.php" method="post" enctype="multipart/form-data">
-                                                    <!-- <div id="dropzone" style='color: white;'>Drop files here</div> -->
-                                                    <!-- <input type="file" multiple="true" id="inputFileToLoad" name="files[]" onchange="encodeImageFile()" class="form-control-file"/> -->
-                                                    <input type="file" multiple="true" id="inputFileToLoad" class="form-control-file" placeholder="Archivo" accept="image/*;capture=camera" name="userPhoto" single />
-                                                    <output id="listFiles"></output>
-                                                    <input type="text" id="response" style='display:none;' />
-                                                    <br>
-                                                    <!-- <input type="file" name="archivo" id="archivo"></input>
-                                                    <input type="submit" value="Subir archivo"></input> -->
-                                                </form>
-                                                <div id="file-list"></div>
-                                                <!-- <label for="exampleInputFile">Adjuntar un archivo</label>
-                                                <input type="file" class="form-control-file" name="archivo" id="userfile" aria-describedby="fileHelp"> -->
-                                                <!-- <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small> -->                         
+                                                    <form method="post" enctype="multipart/form-data">
+                                                        <!-- <div id="dropzone" style='color: white;'>Drop files here</div> -->
+                                                        <!-- <input type="file" multiple="true" id="inputFileToLoad" name="files[]" onchange="encodeImageFile()" class="form-control-file"/> -->
+                                                        <input type="file" multiple="true" id="inputFileToLoad" class="form-control-file" placeholder="Archivo" accept="image/*;capture=camera" name="userPhoto" single />
+                                                        <output id="listFiles"></output>
+                                                        <input type="text" id="response" style='display:none;' />
+                                                        <br>
+                                                        <!-- <input type="file" name="archivo" id="archivo"></input>
+                                                        <input type="submit" value="Subir archivo"></input> -->
+                                                    </form>
+                                                    <div id="file-list"></div>                                                    
                                                 </div>
                                             </div>         
                                         </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="form-group" id="commentBox">
+                                                <!-- COMENTARIOS -->
+                                                    <!--<div class="comment " id="comment-X">
+                                                    <div class="avatar avatar-48 avatar-left">
+                                                        <div class="avatar-letter" style="background-color: rgb(154, 108, 224)" title="Chacón Calvo Carlos Eduardo">xx</div>
+                                                    </div>
+                                                    
+                                                    <div class="comment-title">
+                                                        <strong class="comment-username"></strong>                                                        
+                                                        <small class="comment-date">Creado en: 00/00/0000 00:00</small>
+                                                        <small class="comment-date">Actualizado en: 00/00/0000 00:00</small>
+                                                    </div>
+
+                                                    <!-- <div class="comment-actions">
+                                                        <div class="dropdown">
+                                                            <a href="#" class="dropdown-menu dropdown-menu-link-icon"><i class="fa fa-cog"></i><i class="fa fa-caret-down"></i></a>
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="/kanboard/?controller=TaskViewController&amp;action=show&amp;task_id=4774&amp;project_id=17#comment-68" class="" title=""><i class="fa fa-fw fa-link" aria-hidden="true"></i>Enlace</a>                </li>
+                                                                                    <li>
+                                                                        <a href="/kanboard/?controller=CommentController&amp;action=edit&amp;task_id=4774&amp;project_id=17&amp;comment_id=68" class="js-modal-medium" title=""><i class="fa fa-edit fa-fw js-modal-medium" aria-hidden="true"></i>Modificar</a>                    </li>
+                                                                    <li>
+                                                                        <a href="/kanboard/?controller=CommentController&amp;action=confirm&amp;task_id=4774&amp;project_id=17&amp;comment_id=68" class="js-modal-confirm" title=""><i class="fa fa-trash-o fa-fw js-modal-confirm" aria-hidden="true"></i>Suprimir</a>                    </li>
+                                                                            </ul>
+                                                        </div>
+                                                    </div> -->
+                                                    
+                                                    <!--<div class="comment-content">
+                                                        <div class="markdown">
+                                                            <p>prueba</p>        
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <!-- FIN COMENTARIOS -->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
