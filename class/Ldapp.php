@@ -14,7 +14,7 @@ if(isset($_POST["action"])){
         //     $ldapp->password= $_POST["password"];
         //     //$ldapp->ambiente= $_POST["ambiente"];
         //     $ldapp->LoadPlantilla();
-        //     break;    
+        //     break;     
         case "getGroupsByAppName":
             $ldapp->username= $_POST["username"];
             $ldapp->password= $_POST["password"];
