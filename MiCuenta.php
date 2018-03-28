@@ -23,13 +23,16 @@ if (!isset($_SESSION))
 
 
 	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	<link rel="stylesheet" href="assets/css/dragula.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/sweetalert2.css">
+    <link rel="stylesheet" href="assets/css/validator.css">
+    
 
     <!-- <link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
 	<!-- <link rel="stylesheet" href="assets/fonts/ionicons.min.css"> -->
@@ -56,26 +59,25 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/Team-Grid.css">
     <link rel="stylesheet" href="assets/css/Team.css">
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/sweetalert2.min.js"></script> -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script> -->
 
-
-
-<!-- /*	///////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////*/ -->
 	<script src="assets/js/jquery.min.js"></script>	
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/dragula.min.js"></script>
 	<script  src="assets/js/MiCuenta.js"></script>
-	<script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
+
+    <script src="assets/js/Comment.js" languaje="javascript" type="text/javascript"></script>
+    <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
+    
+    
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <script src="assets/js/sweetalert2.min.js"></script>
+    <script src="assets/js/sweetalert2.js"></script>
     <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/validator.min.js" ></script>
 </head>
 
 <body>
@@ -113,10 +115,12 @@ if (!isset($_SESSION))
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in modal-panel">
-                                <div class="panel-body">
+                                <div class="panel-body">                                    
                                     <div class="row"> 
                                         <div class="row">
-                                            <div class="col-xs-1 col-md-1"></div>
+                                            <div class="col-xs-1 col-md-1">
+                                                <label id="hascomments" style = "display:none"  ><span class="st_input-field-lbl control-label" href="/PortalCDC/MiCuenta.php?&amp;" >Comentarios!!</span></label>   
+                                            </div>
                                             <div class="col-xs-6 col-md-6">
                                                 <label id="titlelbl" for="title"><span class="st_input-field-lbl control-label">Título<span class="required" >*</span></span></label>   
                                             </div>
@@ -238,41 +242,24 @@ if (!isset($_SESSION))
                                     </div>
                                     <div class="row">
                                         <div class="col-md-11">
-                                            <div class="form-group" id="commentBox">
-                                                <!-- COMENTARIOS -->
-                                                    <!--<div class="comment " id="comment-X">
-                                                    <div class="avatar avatar-48 avatar-left">
-                                                        <div class="avatar-letter" style="background-color: rgb(154, 108, 224)" title="Chacón Calvo Carlos Eduardo">xx</div>
+                                            <form data-toggle="validator" role="form" id="frmComment">
+                                                <div class="form-group" id="commentBox">
+                                                </div>
+                                                <div class="form-group" id="newCommentBox">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <label for="newComment"><span class="st_input-field-lbl control-label">Nuevo Comentario</span></label>   
                                                     </div>
-                                                    
-                                                    <div class="comment-title">
-                                                        <strong class="comment-username"></strong>                                                        
-                                                        <small class="comment-date">Creado en: 00/00/0000 00:00</small>
-                                                        <small class="comment-date">Actualizado en: 00/00/0000 00:00</small>
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <textarea id="newComment" class="st_input-field-desc" data-error="Comentario requerido" required> </textarea>
+                                                        <div class="help-block with-errors"></div>
                                                     </div>
-
-                                                    <!-- <div class="comment-actions">
-                                                        <div class="dropdown">
-                                                            <a href="#" class="dropdown-menu dropdown-menu-link-icon"><i class="fa fa-cog"></i><i class="fa fa-caret-down"></i></a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="/kanboard/?controller=TaskViewController&amp;action=show&amp;task_id=4774&amp;project_id=17#comment-68" class="" title=""><i class="fa fa-fw fa-link" aria-hidden="true"></i>Enlace</a>                </li>
-                                                                                    <li>
-                                                                        <a href="/kanboard/?controller=CommentController&amp;action=edit&amp;task_id=4774&amp;project_id=17&amp;comment_id=68" class="js-modal-medium" title=""><i class="fa fa-edit fa-fw js-modal-medium" aria-hidden="true"></i>Modificar</a>                    </li>
-                                                                    <li>
-                                                                        <a href="/kanboard/?controller=CommentController&amp;action=confirm&amp;task_id=4774&amp;project_id=17&amp;comment_id=68" class="js-modal-confirm" title=""><i class="fa fa-trash-o fa-fw js-modal-confirm" aria-hidden="true"></i>Suprimir</a>                    </li>
-                                                                            </ul>
-                                                        </div>
-                                                    </div> -->
-                                                    
-                                                    <!--<div class="comment-content">
-                                                        <div class="markdown">
-                                                            <p>prueba</p>        
-                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <button type="submit" id="btnSaveComment" class="btn btn-primary">Agregar</button>
                                                     </div>
-                                                </div>-->
-                                                <!-- FIN COMENTARIOS -->
-                                            </div>
+                                                </div>                                                
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

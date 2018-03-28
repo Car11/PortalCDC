@@ -281,12 +281,11 @@ class Task{
                 INNER JOIN columns as C on t.column_id = C.id
                 where creator_id=:userid 
                 ORDER BY id desc;';   
-
             $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
         }     
-        catch(Exception $e) {            
+        catch(Exception $e) {
             //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
             //$_SESSION['errmsg']= $e->getMessage();
             header('Location: ../Error.php');            
