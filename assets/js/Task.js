@@ -4,8 +4,6 @@ var arrayOfThisfile = [];
 var arrayOffiles = [];
 var arraySubTask = [];
 
-let comentario = new Comment();
-
 $(document).ready( function () {
     //accordeon
     //var acc = document.getElementsByClassName("accordion");
@@ -25,7 +23,6 @@ $(document).ready( function () {
     this.Exit = function(){
         $(".modal").css({ display: "none" });
     };
-
 
     //Load();
     LoadColumns(); 
@@ -54,6 +51,22 @@ $(document).ready( function () {
         // $('#dataTable').append(input); 
         CleanCtls();
     });
+
+    $("#btnSaveComment").click(function(){
+        comment.taskId= id;
+        comment.Save;
+        $("#frmComment").validator('update') 
+    });
+
+    // $('#frmComment').validator().on('submit', function (e) {
+    //     if (e.isDefaultPrevented()) {
+    //       alert('no');
+    //     } else {
+    //         comment.taskId= id;
+    //         comment.Save;
+    //         //$("#frmComments").validator('update') 
+    //     }
+    //   })
 
 });
 
@@ -246,27 +259,25 @@ function decode_file(e){
 };
 
 // Muestra información en ventana
-function showInfo(){     
-    alert('show info');
-    /*$(".modal").css({ display: "none" });  
-    $("#textomensaje").text("Información almacenada correctamente!!");
-    $("#mensajetop").css("background-color", "#016DC4");
-    $("#mensajetop").css("color", "#FFFFFF");    
-    $("#mensajetop").css("visibility", "visible");
-    $("#mensajetop").slideDown("slow");
-    $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");*/
+function showInfo(){
+    swal({
+        position: 'top-end',
+        type: 'success',
+        title: 'Good!',
+        showConfirmButton: false,
+        timer: 1500
+    });
 };
 
 // Muestra errores en ventana
-function showError(){        
-    alert('show error');
-    /*$(".modal").css({ display: "none" });  
-    $("#textomensaje").text("Error al procesar la información");
-    $("#mensajetop").css("background-color", "firebrick");
-    $("#mensajetop").css("color", "white");    
-    $("#mensajetop").css("visibility", "visible");
-    $("#mensajetop").slideDown("slow");
-    $("#mensajetop").slideDown("slow").delay(3000).slideUp("slow");*/
+function showError(e){
+    var data = JSON.parse(e.responseText);
+    swal({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Algo no está bien (' + data.code + '): ' + data.msg, 
+        footer: '<a href>Contacte a Soporte Técnico</a>',
+      })
 };
 
 function Load(){
@@ -294,7 +305,7 @@ function ShowData(e){
 
 
     // Recorre arreglo.
-    $.each(data, function(i, item) {   
+    $.each(data, function(i, item) {
 
         var d_creation = new Date((item.date_creation)*1000);
         var d_creation_iso = d_creation.toISOString().slice(0, 16).replace('T', ' ');
@@ -333,25 +344,29 @@ function UpdateEventHandler(){
             id:  id
         }            
     })
-    .done(function( e ) {        
+    .done(function( e ) {
         ShowTaskData(e);
     })    
     .fail(showError);
 };
 
 function CleanCtls(){
+    //controls generales
     $("#title").val('');
     $("#description").val('');
     $("#project_id").val('');
     $("#column_id").val('');
     $("#owner_id").val('');
-    //
+    $('#newComment').val('');
+    // adjuntos
     arrayOffiles = [];
-    //
+    // subtareas
     arraySubTask = [];
     var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" id="estado" name="estado" value="Pendiente"/> </TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
     $('#dataTable').empty();
     $('#dataTable').append(input); 
+    // comentarios
+    $('#commentBox').html('');
 };
 
 function ShowTaskData(e){
@@ -385,23 +400,9 @@ function ShowTaskData(e){
     // Call API in order to get attachments and comments.
     LoadAttachments();
     LoadSubTasksByTask();
-    LoadComments();
-};
-
-function LoadComments(){
-    comentario= new Comment(000, 001, 002, 'Cachac6','Carlos chacon calvo', 'Pruebas clase Comentarios', 'reference', '00/00/01 ', '01/02/0003');
-    //
-    var commentBox= `
-        <div class="comment " id="comment${comentario.id}" > 
-            <div class="avatar avatar-48 avatar-left"> 
-                <div class="avatar-letter" style="background-color: rgb(154, 108, 224)" title="${comentario.name}">${comentario.username}</div> 
-            </div>
-            <div class="comment-title"> <strong class="comment-username"> ${comentario.name} </strong> </div>
-            <div class="comment-content"> <div class="markdown"> <p> ${comentario.comment} </p> </div>
-        </div>
-    `; 
-    //
-    $('#commentBox').append(commentBox);
+    // Comentarios
+    comment.taskId= id;
+    comment.LoadbyTask;
 };
 
 //Esta funcion carga en el dropdown los projectos a los
@@ -428,7 +429,7 @@ function LoadProjects(){
             action: "GetByUserID"
         }
     })
-    .done(function( e ) {            
+    .done(function( e ) {
          loadProjectsByUser(e);
     })    
     .fail(showError);
@@ -561,7 +562,7 @@ function SaveTask(){
     // Ajax: insert / Update.
     if(!FormValidate())
         return false;    
-    var miAccion= id=='NULL' ? 'Insert' : 'Update';   
+    var miAccion= id=='NULL' ? 'Insert' : 'Update';
     //
     var subTaskElement = new Object();
     // Del texto de descripción elimina los espacios en blanco al inicio y al final  

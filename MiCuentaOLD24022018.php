@@ -44,13 +44,13 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/Team-Grid.css">
     <link rel="stylesheet" href="assets/css/Team.css">
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/sweetalert2.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/sweetalert2.min.js"></script>
+    <script src="assets/js/sweetalert2.js"></script>
 
     <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script> 
     <!-- <script src="assets/js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>  -->
