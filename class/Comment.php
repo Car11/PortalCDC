@@ -37,7 +37,7 @@ class Comment{
         Globals::ConfiguracionIni();
         // identificador único
         if(isset($_POST["id"])){
-            $this->id= $obj["id"] ?? null;
+            $this->id= $_POST["id"];
         }
         //
         if(isset($_POST["obj"])){
