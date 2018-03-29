@@ -101,7 +101,7 @@ if (!isset($_SESSION))
         <div class="modal-dialog modal-new-task" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Ingresar Nueva Tarea</h5>
+                    <h5 class="modal-title" id="ModalLabel" style="color: black;">Ingresar Nueva Tarea</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -202,7 +202,7 @@ if (!isset($_SESSION))
                                                     <TD> <span style='color:#ddd;'> 1 </span></TD>
                                                     <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD>
                                                     <TD> <INPUT id="estado" type="text" name="estado" value="Pendiente"/></TD>
-                                                    <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD>
+                                                    <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new" style = "display:none" /></TD>
                                                 </TR>
                                             </TABLE>
                                             <!-- <input type="button" value="ok" id="ok" class="boton2" onclick="tableToJSON()"> -->

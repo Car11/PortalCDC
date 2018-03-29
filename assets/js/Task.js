@@ -21,7 +21,8 @@ $(document).ready( function () {
     }*/
     //vuelve al menu
     this.Exit = function(){
-        $(".modal").css({ display: "none" });
+        CleanCtls();
+        $(".modal").css({ display: "none" });        
     };
 
     //Load();
@@ -45,10 +46,6 @@ $(document).ready( function () {
     });
 
     $("#cerrar-modal").click(function(){
-        // arraySubTask = [];
-        // var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" name="estado" value="Pendiente"/></TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
-        // $('#dataTable').empty();
-        // $('#dataTable').append(input); 
         CleanCtls();
     });
 
@@ -58,20 +55,16 @@ $(document).ready( function () {
         $("#frmComment").validator('update') 
     });
 
-    // $('#frmComment').validator().on('submit', function (e) {
-    //     if (e.isDefaultPrevented()) {
-    //       alert('no');
-    //     } else {
-    //         comment.taskId= id;
-    //         comment.Save;
-    //         //$("#frmComments").validator('update') 
-    //     }
-    //   })
-
+    $(".modal-open").click(function(){
+        alert('cerrar modal');
+    });
 });
 
 function BtnCreateNew(){
     $(function () {
+        id= "NULL";
+        $('#newComment').attr("disabled", "disabled");
+        $('#ModalLabel').text('Ingresar Nueva Tarea');
         var d_actual = new Date(Date()+"GMT-0000");
         var d_actual_iso = d_actual.toISOString().slice(0, 16);
         document.getElementById("date_started").value = d_actual_iso;
@@ -199,7 +192,7 @@ function open_task(id_task) {
             id:  id_task
         }            
     })
-    .done(function( e ) {        
+    .done(function( e ) {
         ShowTaskData(e);
     })    
     .fail(showError);
@@ -333,7 +326,7 @@ function ShowData(e){
     })
 };
 
-function UpdateEventHandler(){  
+function UpdateEventHandler(){
     $(".modal").css({ display: "block" });  
     id = $(this).parents("tr").find("td").eq(1).text();  //Columna 1 = ID tarea.
     $.ajax({
@@ -361,17 +354,32 @@ function CleanCtls(){
     // adjuntos
     arrayOffiles = [];
     // subtareas
-    arraySubTask = [];
-    var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" id="estado" name="estado" value="Pendiente"/> </TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
+    arraySubTask = [];        
     $('#dataTable').empty();
-    $('#dataTable').append(input); 
+    // 
+    $('#dataTable').append(`
+        <tr>
+            <td> <input id="chk" type="checkbox" name="chk"/> </td>
+            <td> <span style="color:#ddd;"> 1 </span> </td>
+            <td> <input id="subtask" class="sub-task-desc" type="text"/> </td>
+            <td> <label id="estado" name="estado" class="label label-primary"> Pendiente </label> </td>
+            <td  style="visibility: hidden"> <input id="idSubTask" name="idSubTask" value="new"/> </td>
+        </tr>
+    `); 
     // comentarios
     $('#commentBox').html('');
+    id="NULL";
 };
 
 function ShowTaskData(e){
     // Limpia el controles
-    CleanCtls();
+    //CleanCtls();
+    clearAttachments();
+    //deshabilita comentarios si es una tarea nueva
+    if(id=="NULL"){
+        $('#newComment').attr("disabled", "disabled");
+    } else $('#newComment').removeAttr("disabled"); 
+    $('#ModalLabel').text('Modificar Tarea');
     // carga lista con datos.
     var data= JSON.parse(e);
     $("#title").val(data[0].title);
@@ -444,21 +452,31 @@ function showAttachments(e){
     // Limpia el div que contiene la tabla.
     $('#file-list').html(""); 
     $('#file-list').append("<br><br><br> <table id='tbl-file' class='display' cellspacing='0' width='100%' > </table>");
-    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>Nombre del Archivo</th> <th>Fecha</th> <th>Descargar</th> <th>Eliminar</th> </tr></thead>"+
+    var col= "<thead><tr> <th style='display:none;'>ID</th> <th>Nombre del Archivo</th> <th>Fecha</th> <th></th> <th></th> </tr></thead>"+
         "<tbody id='tableBody-file'>  </tbody>";
     $('#tbl-file').append(col); 
     //
     var data= JSON.parse(e);
     $.each(data, function(i, item) {
-        var row="<tr class=datarow>"+
-            "<td style='display:none;' >" + item.id +"</td>" +
-            "<td>"+ item.name + "</td>"+
-            "<td>"+ item.date + "</td>"+
-            "<td><img id=update" + item.id +" src=img/file_download.png class=download></td>"+
-            "<td><img id=delete" + item.id +" src=img/file_delete.png class=DeleteFile></td>"+
-        "</tr>";        
-        $('#tableBody-file').append(row);
+        // var row=""+
+        //     "" +
+        //     ""+
+        //     ""+
+        //     "<td><img id=update" + item.id +" class=download></td>"+
+        //     "<td><img id=delete" + item.id +" src=img/file_delete.png class=DeleteFile></td>"+
+        // "";        
+        // $('#tableBody-file').append(row);
         // evento click del boton modificar-eliminar
+        $('#tableBody-file').append(`
+            <tr class=datarow>
+                <td style='display:none;' > ${item.id} </td>
+                <td> ${item.name} </td>
+                <td>${moment(item.date*1000).format('MMMM Do YYYY, h:mm')} </td>
+                <td> <a class="js-modal-confirm" id="update${item.id}" > <i class="glyphicon glyphicon-download-alt" aria-hidden="true"> </i> Descargar </a>
+                <td> <a class="js-modal-confirm" id="delete${item.id}"> <i class="glyphicon glyphicon-trash" aria-hidden="true"> </i> Eliminar </a>
+                <img id=update" + item.id +" class=download></td>
+            </tr>
+        `);
         $('#update' + item.id).click(DownloadEventHandler);
         $('#delete' + item.id).click(DeleteAttachmentEventHandler);
     })    
@@ -543,13 +561,16 @@ function LoadSubTasksByTask(){
 };
 
 function showSubTasks(e){
+    $('#dataTable').empty();
     var data= JSON.parse(e);
     $.each(data, function(i, item) {
         if(i==0) // primer linea
         {
             $('#subtask').val(item.title);
-            $('#estado').val(EstadoTarea(item.status));
+            $('#estado').text(EstadoTarea(item.status));
+            $('#estado').addClass("label label-primary");
             $('#idSubTask').val(item.id);
+            $('#idSubTask').addClass("tdhide");
         }
         else
         {
@@ -662,16 +683,14 @@ function SaveTask(){
         alert(log);
     })
     .always(function() {
-        setTimeout('$("#btnSaveTask").removeAttr("disabled")', 1500);
-        arraySubTask = [];
-        var input = '<TR><TD><INPUT id="chk" type="checkbox" name="chk"/></TD> <TD> <span style="color:#ddd;"> 1 </span></TD> <TD> <INPUT id="subtask" class="sub-task-desc" type="text"/> </TD> <TD> <INPUT type="text" id="estado" name="estado" value="Pendiente"/> </TD> <TD> <INPUT id="idSubTask" type="text" name="idSubTask" value="new"/></TD> </TR>';
-        $('#dataTable').append(input); 
+        setTimeout('$("#btnSaveTask").removeAttr("disabled")', 1500);                
+        CleanCtls();
     });
 };    
 
 //Esta funcion se encarga de agregar
 //mas filas en la pantalla de subtareas
-function addRow(tableID, contenido=null, posicion=null , estado=null, subtaskId=null) {
+function addRow(tableID, contenido=null, posicion=null , estado=null, subtaskId='new') {
     var table = document.getElementById(tableID);
 
     var rowCount = table.rows.length;
@@ -695,39 +714,35 @@ function addRow(tableID, contenido=null, posicion=null , estado=null, subtaskId=
     if(contenido!=null)
         element2.value= contenido;
     cell3.appendChild(element2);
-    // estado
-    var cell4 = row.insertCell(3);
-    var element3 = document.createElement("input");
-    element3.type = "text";
-    if (estado!=null)
-        element3.value= EstadoTarea(estado);
-    else element3.value= 'Pendiente';
-    cell4.appendChild(element3);    
+    // estado    
+    var cell4 = row.insertCell(3);    
+    cell4.innerHTML+=`
+        <label class="label label-primary" > ${EstadoTarea(estado)}  </label>
+    `;
     // subtask id
-    var cell5 = row.insertCell(4);
-    var element4 = document.createElement("input");
-    element4.type = "text";   
-    if (subtaskId!=null)
-        element4.value= subtaskId;
-    else element4.value= 'new';
-    cell5.appendChild(element4); 
+    var cell5 = row.insertCell(4);    
+    cell5.className= "tdhide";
+    cell5.innerHTML+=`
+        <input name="idSubTask" value="${subtaskId}" />
+    `;
 };
 
 //Esta funcion borra las filas seleccionadas en 
 //la pantalla de crear subtareas
 function deleteRow(tableID) {
     try {
-    var table = document.getElementById(tableID);
-    var rowCount = table.rows.length;
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
 
-    for(var i=0; i<rowCount; i++) {
-        var row = table.rows[i];
-        var chkbox = row.cells[0].childNodes[0];
-        if(null != chkbox && true == chkbox.checked) {
-            table.deleteRow(i);
-            rowCount--;
-            i--;
-        }
+        for(var i=0; i<rowCount; i++) {
+            var row = table.rows[i];
+            var chkbox = row.cells[0].childNodes[0];
+            if(null != chkbox && true == chkbox.checked) {
+                DeleteSubTask(table.rows[i].lastChild.childNodes[1].value);
+                table.deleteRow(i);
+                rowCount--;
+                i--;
+            }
     }
     }catch(e) {
         alert(e);
@@ -797,11 +812,38 @@ function FormValidate(){
 
 function EstadoTarea(e=null){
     if (e==null)
-    return 'Desconocido';
-    else if(e==0)
+    {
         return 'Pendiente';
+    }
+    else if(e==0)
+    {
+        return 'Pendiente';
+    }
     else if(e==1)
         return 'En Ejecución';
     else if(e==2)
         return 'Completado';
+}
+
+function DeleteSubTask(idSubTaskDeleted) {
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: 'DeleteSubTask',                
+            idSubTask:  idSubTaskDeleted
+        }            
+    })
+    .done(function() {
+        // swal({
+        //     //position: 'top-end',
+        //     type: 'success',
+        //     title: 'Eliminado!',
+        //     showConfirmButton: false,
+        //     timer: 1000
+        // });
+    })    
+    .fail(function (e) {
+        showError(e);
+    });
 }

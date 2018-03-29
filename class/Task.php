@@ -78,6 +78,11 @@ if(isset($_POST["action"])){
             $task->id=$_POST["id"];
             echo json_encode($task->LoadSubTasksByTask());
             break;
+        case "DeleteSubTask":
+            $task->id=$_POST["idSubTask"];
+            $task->DeleteSubTask();
+            break;
+            
     }
 }
 
@@ -174,14 +179,15 @@ class Task{
 
     function LoadTaskFiles(){
         try {
-                $sql='SELECT id, name, date 
+            $sql='SELECT id, name, date 
                 FROM task_has_files
+                where TASK_ID= :taskId
                 ORDER BY name ';
             $param= array(':taskId'=>$this->id);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
         }     
-        catch(Exception $e) {            
+        catch(Exception $e) {
             //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
             //$_SESSION['errmsg']= $e->getMessage();
             header('Location: ../Error.php');            
@@ -420,7 +426,6 @@ class Task{
     }
 
     function crearSubTarea($title_subTask){
-    //$this->id_scheduled_task, $title_subTask
         $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createSubtask\", \"id\": 2041554661, \"params\": { \"task_id\":" . $this->id . ", \"title\": \"" . $title_subTask . "\" } }";
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -453,37 +458,68 @@ class Task{
     }
 
     function actualizarSubTarea($id_subTask, $title_subTask){
-        //$this->id_scheduled_task, $title_subTask
-            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"updateSubtask\", \"id\": 2041554661, \"params\": {  \"id\":" . $id_subTask . ", \"task_id\":" . $this->id . ", \"title\": \"" . $title_subTask . "\" } }";
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => Globals::$jsonrpcURL,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $cadenaRapida,
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: Basic ". Globals::$token ."=",
-                    "cache-control: no-cache",
-                    "content-type: application/json",
-                    "Postman-Token: ". Globals::$postmantoken
-                ),
-            ));
-        
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
+        $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"updateSubtask\", \"id\": 2041554661, \"params\": {  \"id\":" . $id_subTask . ", \"task_id\":" . $this->id . ", \"title\": \"" . $title_subTask . "\" } }";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => Globals::$jsonrpcURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $cadenaRapida,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Basic ". Globals::$token ."=",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "Postman-Token: ". Globals::$postmantoken
+            ),
+        ));
     
-            curl_close($curl);
-        
-            if ($err) {
-                echo "cURL Error #:" . $err;
-            } else {
-                echo $response;
-            }       
-        }
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }       
+    }
+
+    function DeleteSubTask(){
+        $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"removeSubtask\", \"id\": 546879, \"params\": {  \"subtask_id\":" . $this->id ." } }";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => Globals::$jsonrpcURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $cadenaRapida,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Basic ". Globals::$token ."=",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "Postman-Token: ". Globals::$postmantoken
+            ),
+        ));
+    
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }       
+    }
     
     function addFilesToTask($id_project, $id_task, $name,$image_file_base64){
     
