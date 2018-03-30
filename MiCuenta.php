@@ -196,7 +196,7 @@ if (!isset($_SESSION))
 
                                         <div class="row">
                                             <div id="tabla" class="col-md-10">   
-                                            <TABLE id="dataTable" width="100%" border="1">
+                                            <TABLE id="dataTable" width="100%" border="0">
                                                 <TR>                                                
                                                     <TD><INPUT id="chk" type="checkbox" name="chk"/>></TD>
                                                     <TD> <span style='color:#ddd;'> 1 </span></TD>
