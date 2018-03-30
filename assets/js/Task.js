@@ -61,15 +61,16 @@ $(document).ready( function () {
 });
 
 function BtnCreateNew(){
-    $(function () {
-        id= "NULL";
-        $('#newComment').attr("disabled", "disabled");
-        $('#ModalLabel').text('Ingresar Nueva Tarea');
-        var d_actual = new Date(Date()+"GMT-0000");
-        var d_actual_iso = d_actual.toISOString().slice(0, 16);
-        document.getElementById("date_started").value = d_actual_iso;
-    });
+    id= "NULL";
+    $('#newComment').attr("disabled", "disabled");
+    $('#ModalLabel').text('Ingresar Nueva Tarea');
+    //
+    var d_actual = new Date(Date()+"GMT-0000");
+    var d_actual_iso = d_actual.toISOString().slice(0, 16);
+    document.getElementById("date_started").value = d_actual_iso;
+    //
     CleanCtls();
+    clearAttachments();
 };
 
 function LoadColumns(){
@@ -564,18 +565,19 @@ function showSubTasks(e){
     $('#dataTable').empty();
     var data= JSON.parse(e);
     $.each(data, function(i, item) {
-        if(i==0) // primer linea
-        {
-            $('#subtask').val(item.title);
-            $('#estado').text(EstadoTarea(item.status));
-            $('#estado').addClass("label label-primary");
-            $('#idSubTask').val(item.id);
-            $('#idSubTask').addClass("tdhide");
-        }
-        else
-        {
-            addRow('dataTable', item.title, item.position, item.status, item.id);
-        }
+        addRow('dataTable', item.title, item.position, item.status, item.id);
+//         if(i==0) // primer linea
+//         {
+//             $('#subtask').val(item.title);
+//             $('#estado').text(EstadoTarea(item.status));
+//             $('#estado').addClass("label label-primary");
+//             $('#idSubTask').val(item.id);
+//             $('#idSubTask').addClass("tdhide");
+//         }
+//         else
+//         {
+//             addRow('dataTable', item.title, item.position, item.status, item.id);
+//         }
     })    
 };
 

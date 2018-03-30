@@ -113,7 +113,7 @@ class Comment{
                 \"params\": { 
                     \"task_id\": \"$this->taskId\",
                     \"user_id\": \"$this->userId\",
-                    \"content\": \"$this->comment\"
+                    \"content\": \"". utf8_encode($this->comment) ."\"
                 } 
             }";
             $curl = curl_init();

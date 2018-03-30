@@ -53,10 +53,8 @@ class Comment {
         $('#btnSaveComment').attr("disabled", "disabled");
         var miAccion= this.id==null ? 'Insert' : 'Update';       
         this.comment= $('#newComment').val();
-        // this.comment = this.comment.split("\t").join(" ");
-        // this.comment = this.comment.split("\n").join(" ");
-        // this.comment = this.comment.split("\"").join("'");
-        // this.comment = $.trim(this.comment);
+        this.comment = this.comment.replace(/\n/g,"<br>");
+        this.comment = this.comment.replace(/\r/g,"<br>");
         //
         $.ajax({
             type: "POST",
@@ -64,9 +62,6 @@ class Comment {
             data: { 
                 action: miAccion,
                 obj: JSON.stringify(this)
-                // id: this.id,
-                // taskId: this.taskId,
-                // comment: this.comment,
             }
         })
         .done(function() {

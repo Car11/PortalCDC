@@ -227,7 +227,7 @@ class Task{
                 return $response= explode("result\":\"",$response)[1];                    
             }     
         }     
-        catch(Exception $e) {            
+        catch(Exception $e) {
             //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
             //$_SESSION['errmsg']= $e->getMessage();
             //header('Location: ../Error.php');            
