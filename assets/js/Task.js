@@ -229,7 +229,7 @@ function showInfo(){
         type: 'success',
         title: 'Good!',
         showConfirmButton: false,
-        timer: 1500
+        timer: 750
     });
 };
 
@@ -442,7 +442,7 @@ function DeleteAttachmentEventHandler(){
             type: 'success',
             title: 'Archivo Eliminado',
             showConfirmButton: false,
-            timer: 1500
+            timer: 750
         });
     })    
     .fail(showError)
@@ -596,7 +596,7 @@ function SaveTask(){
             type: 'success',
             title: 'Tarea enviada',
             showConfirmButton: false,
-            timer: 1500
+            timer: 750
         });
         $("#title").val('');
         $("#description").val('');
@@ -611,7 +611,7 @@ function SaveTask(){
         alert(log);
     })
     .always(function() {
-        setTimeout('$("#btnSaveTask").removeAttr("disabled")', 1500);                
+        setTimeout('$("#btnSaveTask").removeAttr("disabled")', 750);                
         CleanCtls();
     });
 };    
