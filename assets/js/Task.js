@@ -5,31 +5,15 @@ var arrayOffiles = [];
 var arraySubTask = [];
 
 $(document).ready( function () {
-    //accordeon
-    //var acc = document.getElementsByClassName("accordion");
-    /*var i;    
-    for (i = 0; i < acc.length; i++) {
-        acc[i].onclick = function(){
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        }
-    }*/
     //vuelve al menu
     this.Exit = function(){
         CleanCtls();
         $(".modal").css({ display: "none" });        
     };
-
-    //Load();
+    //
     LoadColumns(); 
     LoadProjects();
     encode_Files();
-
     //Permite la importacion de archivos
     $("#inputFileToLoad").change(function() {
         var filesSelected = document.getElementById("inputFileToLoad").files;
@@ -44,17 +28,14 @@ $(document).ready( function () {
             fileReader.readAsDataURL(fileToLoad);
         }
     });
-
     $("#cerrar-modal").click(function(){
         CleanCtls();
     });
-
     $("#btnSaveComment").click(function(){
         comment.taskId= id;
         comment.Save;
-        $("#frmComment").validator('update') 
+        //$("#frmComment").validator('update') 
     });
-
     $(".modal-open").click(function(){
         alert('cerrar modal');
     });
@@ -62,12 +43,13 @@ $(document).ready( function () {
 
 function BtnCreateNew(){
     id= "NULL";
-    $('#newComment').attr("disabled", "disabled");
+    $('#row-comments').hide();
     $('#ModalLabel').text('Ingresar Nueva Tarea');
     //
     var d_actual = new Date(Date()+"GMT-0000");
     var d_actual_iso = d_actual.toISOString().slice(0, 16);
     document.getElementById("date_started").value = d_actual_iso;
+    document.getElementById("date_due").value = "";
     //
     CleanCtls();
     clearAttachments();
@@ -81,11 +63,9 @@ function LoadColumns(){
             action: "LoadColumns"
         }
     })
-    .done(function( e ) {            
-        //alert(e);
+    .done(function( e ) {
         ShowColumn(e); 
     })    
-    //.fail();
 };
 
 function ShowColumn(e){
@@ -93,7 +73,7 @@ function ShowColumn(e){
     $('#drag-list').html(""); 
     // carga lista con datos.
     var data= JSON.parse(e);
-
+    //
     var class_position="";
     var btn_add="";
     // Recorre arreglo.
@@ -102,8 +82,6 @@ function ShowColumn(e){
             case '1':
                 class_position ="drag-column-on-hold";
                 btn_add = '<button type="button" style="background-color: transparent; border: 0;" id="btn-create-new-task" onclick="BtnCreateNew()" data-toggle="modal" data-target=".bd-example-modal-lg"> <span class="fa fa-plus-circle" aria-hidden="true" </span></button>';
-                    
-    //btn_add = '<button type="button"> <span class="fa fa-plus-circle" aria-hidden="true"></span> </button>';
                 break;
             case '2':
                 class_position = "drag-column-in-progress";
@@ -121,7 +99,7 @@ function ShowColumn(e){
                 class_position = "drag-column-on-hold";
                 btn_add="";
         }
-
+        //
         var row=
             // '<li class="drag-column drag-column-on-hold" id=column' + item.position + '>' +
                 '<li class="drag-column ' + class_position + '">' +
@@ -136,9 +114,6 @@ function ShowColumn(e){
                 '</ul>' +
             '</li>';
         $('#drag-list').append(row);            
-        // evento click del boton modificar-eliminar
-        //$('#Update'+item.id).click(UpdateEventHandler);
-        //$('#Delete'+item.id).click(UpdateEventHandler);
     })
     LoadTasks();
 };
@@ -155,13 +130,11 @@ function LoadTasks(){
         //alert(e);
         ShowTasks(e); 
     })    
-    // .fail(showError);
 };
 
 function ShowTasks(e){ 
     // carga lista con datos.
     var data= JSON.parse(e);
-
     // Recorre arreglo.
     $.each(data, function(i, item) {  
         var d_creation = moment(item.date_creation*1000).format();
@@ -177,9 +150,6 @@ function ShowTasks(e){
                 '</p>' +
             '</li>'
         $(posicion).append(row);            
-        // evento click del boton modificar-eliminar
-        //$('#Update'+item.id).click(UpdateEventHandler);
-        //$('#Delete'+item.id).click(UpdateEventHandler);
     })
 };
 
@@ -293,14 +263,8 @@ function ShowData(e){
     $('#task-tbody').html(""); 
     // carga lista con datos.
     var data= JSON.parse(e);
-
-    // var taskdate= new Date(Number(data[0].date_due*1000));
-    // $("#date_due").val(taskdate);
-
-
     // Recorre arreglo.
     $.each(data, function(i, item) {
-
         var d_creation = new Date((item.date_creation)*1000);
         var d_creation_iso = d_creation.toISOString().slice(0, 16).replace('T', ' ');
         var row=
@@ -312,18 +276,10 @@ function ShowData(e){
                 '<td class="hidden-xs">'+ item.id +'</td>'+
                 '<td style="min-width: 17em; max-width: 17em;">'+ item.title +'</td>'+
                 '<td style="min-width: 22em; max-width: 22em;">'+ item.description + '</td>'+
-                //'<td>'+ item.owner_id + '</td>'+
                 '<td style="min-width: 6em; max-width: 7em;">'+ item.position +'</td>'+
-                //'<td>'+ 'PROYECTO X' +'</td>'+
-                //'<td>'+ (item.date_creation+2000000) +'</td>'+
                  '<td style="min-width: 9em; max-width: 9em;">'+ d_creation_iso +'</td>'+
-                //'<td>'+ item.date_creation +'</td>'+
-                //'<td>'+ item.date_modification +'</td>'+
             '</tr>';
-        $('#task-tbody').append(row);            
-        // evento click del boton modificar-eliminar
-        //$('#Update'+item.id).click(UpdateEventHandler);
-        //$('#Delete'+item.id).click(UpdateEventHandler);
+        $('#task-tbody').append(row);
     })
 };
 
@@ -373,13 +329,13 @@ function CleanCtls(){
 };
 
 function ShowTaskData(e){
-    // Limpia el controles
-    //CleanCtls();
     clearAttachments();
     //deshabilita comentarios si es una tarea nueva
-    if(id=="NULL"){
+    /*if(id=="NULL"){
         $('#newComment').attr("disabled", "disabled");
-    } else $('#newComment').removeAttr("disabled"); 
+    } else  */
+    $('#newComment').removeAttr("disabled");
+    $('#row-comments').show();
     $('#ModalLabel').text('Modificar Tarea');
     // carga lista con datos.
     var data= JSON.parse(e);
@@ -402,10 +358,6 @@ function ShowTaskData(e){
     $("#project_id").val(data[0].project_id);
     $("#date_started").val(d_started_iso);
     $("#date_due").val(d_due_iso);
-    /*
-    $("#column_id").val(data[4].title);
-    $("#owner_id").val(data[5]); //assigned
-    $("#date_started").val(data[6].title);*/
     // Call API in order to get attachments and comments.
     LoadAttachments();
     LoadSubTasksByTask();
@@ -425,9 +377,6 @@ function loadProjectsByUser(e){
         "</option>";
         $('.list').append(row);
     });  
-    //formato combobox
-    //$('.cmbfield').styleddropdown();
-
 };
 
 function LoadProjects(){
@@ -459,14 +408,6 @@ function showAttachments(e){
     //
     var data= JSON.parse(e);
     $.each(data, function(i, item) {
-        // var row=""+
-        //     "" +
-        //     ""+
-        //     ""+
-        //     "<td><img id=update" + item.id +" class=download></td>"+
-        //     "<td><img id=delete" + item.id +" src=img/file_delete.png class=DeleteFile></td>"+
-        // "";        
-        // $('#tableBody-file').append(row);
         // evento click del boton modificar-eliminar
         $('#tableBody-file').append(`
             <tr class=datarow>
@@ -481,9 +422,6 @@ function showAttachments(e){
         $('#update' + item.id).click(DownloadEventHandler);
         $('#delete' + item.id).click(DeleteAttachmentEventHandler);
     })    
-    /*$('#tbl-file').DataTable( {
-        "order": [[ 1, "asc" ]]
-    } );*/
 };
 
 function DeleteAttachmentEventHandler(){  
@@ -566,18 +504,6 @@ function showSubTasks(e){
     var data= JSON.parse(e);
     $.each(data, function(i, item) {
         addRow('dataTable', item.title, item.position, item.status, item.id);
-//         if(i==0) // primer linea
-//         {
-//             $('#subtask').val(item.title);
-//             $('#estado').text(EstadoTarea(item.status));
-//             $('#estado').addClass("label label-primary");
-//             $('#idSubTask').val(item.id);
-//             $('#idSubTask').addClass("tdhide");
-//         }
-//         else
-//         {
-//             addRow('dataTable', item.title, item.position, item.status, item.id);
-//         }
     })    
 };
 
@@ -755,20 +681,12 @@ function deleteRow(tableID) {
 //la pantalla de crear subtareas
 function formatTableSubTask(tableID) {
     try {
-
         $("#subtask").val('');
-    //$(("table#dataTable tr td").firstElementChild).val('');
-
-
-
-
-    var table = document.getElementById(tableID);
-    var rowCount = table.rows.length;
-
-    for(var i=0; i<(rowCount-1); i++) {
-            table.deleteRow(rowCount-i-1);
-    }
-    //addRow(tableID);
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        for(var i=0; i<(rowCount-1); i++) {
+                table.deleteRow(rowCount-i-1);
+        }
     }catch(e) {
         alert(e);
     }
@@ -800,15 +718,9 @@ function FormValidate(){
             return false;
         }
     }
-    
-    //      
-    
-    
     var cadena = $("#description").val();
     CadenaSinEspacios = cadena.trim();
-    // document.getElementById('description').val() = CadenaSinEspacios;
     document.getElementById ("description").value = CadenaSinEspacios;
-
     return true;
 };
 
