@@ -51,7 +51,7 @@ class Comment {
 
     get Save() {
         $('#btnSaveComment').attr("disabled", "disabled");
-        var miAccion= this.id==null ? 'Insert' : 'Update';       
+        var miAccion= this.id==null ? 'Insert' : 'Update';      
         this.comment= $('#newComment').val();
         this.comment = this.comment.replace(/\n/g,"<br>");
         this.comment = this.comment.replace(/\r/g,"<br>");

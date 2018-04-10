@@ -17,13 +17,8 @@ if (!isset($_SESSION))
 <head>
 	<meta charset="UTF-8">
 	<title>Mi Cuenta</title>
-
-	<!-- ///////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////// -->
-
-
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-	
+    <!-- CSS -->
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">	
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -32,48 +27,13 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
     <link rel="stylesheet" href="assets/css/sweetalert2.css">
     <link rel="stylesheet" href="assets/css/validator.css">
-    
-
-    <!-- <link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
-	<!-- <link rel="stylesheet" href="assets/fonts/ionicons.min.css"> -->
-    <!-- <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700"> -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie"> -->
-    <!-- <link rel="stylesheet" href="assets/css/KD_Header2.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/Article-List.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/dh-navbar-inverse.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/Features-Boxed-Remixed.css">
-    <link rel="stylesheet" href="assets/css/Features-Boxed-Remixed1.css">
-    <link rel="stylesheet" href="assets/css/Features-Boxed-Remixed2.css">
-    <link rel="stylesheet" href="assets/css/Features-Boxed-Remixed3.css">
-    <link rel="stylesheet" href="assets/css/Features-Clean.css">
-    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
-    <link rel="stylesheet" href="assets/css/Carousel-Hero.css">
-    <link rel="stylesheet" href="assets/css/Header-Dark.css">
-    <link rel="stylesheet" href="assets/css/KD_Header1.css">
-    <link rel="stylesheet" href="assets/css/KD_Header.css">
-    <link rel="stylesheet" href="assets/css/MUSA_panel-table.css">
-    <link rel="stylesheet" href="assets/css/MUSA_panel-table1.css">
-    <link rel="stylesheet" href="assets/css/Parallax-Scroll-Effect1.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/Team-Grid.css">
-    <link rel="stylesheet" href="assets/css/Team.css">
-    <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script> -->
-
+    <!-- JS -->
 	<script src="assets/js/jquery.min.js"></script>	
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/dragula.min.js"></script>
 	<script  src="assets/js/MiCuenta.js"></script>
-
     <script src="assets/js/Comment.js" languaje="javascript" type="text/javascript"></script>
     <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
-    
-    
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="assets/js/sweetalert2.js"></script>
     <script src="assets/js/moment.min.js"></script>
@@ -240,7 +200,7 @@ if (!isset($_SESSION))
                                             </div>         
                                         </div>   
                                     </div>
-                                    <div class="row">
+                                    <div id="row-comments" class="row">
                                         <div class="col-md-11">
                                             <form data-toggle="validator" role="form" id="frmComment">
                                                 <div class="form-group" id="commentBox">
