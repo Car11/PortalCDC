@@ -213,14 +213,96 @@ function getBase64(file) {
      };
 };
 
-function decode_file(e){
-    //var data= JSON.parse(e);
-    //var strdata= JSON.stringify(data);
+
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+};
+
+// var blobObject = null;
+
+// function createDownloadLink(anchorSelector, str, fileName){
+	
+//     var link = document.createElement("a");
+//     link.setAttribute("id", "export");
+
+// 	if(window.navigator.msSaveOrOpenBlob) {
+// 		var fileData = [str];
+// 		blobObject = new Blob(fileData);
+// 		link.click(function(){
+// 			window.navigator.msSaveOrOpenBlob(blobObject, fileName);
+// 		});
+// 	} else {
+//         // var url = "data:text/plain;charset=utf-8," + encodeURIComponent(str);
+//         var url = encodeURIComponent(str);
+//         link.setAttribute("href", url);
+//         link.click();
+// 	}
+// }
+
+
+
+function saveFile (name, type, data) {
+	if (data != null && navigator.msSaveBlob)
+		return navigator.msSaveBlob(new Blob([data], { type: type }), name);
+	var a = $("<a style='display: none;'/>");
+    var url = window.URL.createObjectURL(new Blob([data], {type: type}));
+	a.attr("href", url);
+	a.attr("download", name);
+	$("body").append(a);
+	a[0].click();
+  window.URL.revokeObjectURL(url);
+  a.remove();
+}
+
+function decode_file(e, filename){
     var filedec= e.split('"');
     var newstr= filedec[1]; //.replace('\', "");
     newstr= newstr.replace(/\\/g, '');
-    var decodedData = window.atob(newstr); 
+    //var decodedData = window.atob(newstr); 
+
+    var res = newstr.substr(0, 5);
+    
+    switch(res) {
+         case "iVBOR":
+            newstr = "data:image/png;base64,"+newstr;
+            break;
+         case "/9J/4":
+            newstr = "data:application/pdf;base64,"+newstr;
+            break;
+         case"AAAAF":
+            newstr = "data:video/mp4;base64,"+newstr;
+            break;
+         case "JVBER":
+            newstr = "data:application/pdf;base64,"+newstr;
+            break;
+         case "UEsDB":
+            newstr = "data:application/msword;base64,"+newstr;
+            break;
+        case "TVqQA":
+            newstr = "data:application/x-msdownload;base64,"+newstr;
+            break;
+        case "PGh0b":
+            newstr = "data:text/html;base64,"+newstr;
+            // newstr = "data:application/xhtml+xml,"+newstr;
+            
+            break;
+        default:
+            newstr = "data:application/octet-stream,"+newstr;    
+    }
+
+    // newstr = "data:application/pdf;base64,"+newstr;
+    
+    download(newstr, filename);
+
 };
+
+
 
 // Muestra información en ventana
 function showInfo(){
@@ -453,6 +535,8 @@ function DeleteAttachmentEventHandler(){
 function DownloadEventHandler(){  
     //$(".modal").css({ display: "block" });  
     idFile = $(this).parents("tr").find("td").eq(0).text();  //Columna 1 = ID tarea.
+    idName = $(this).parents("tr").find("td").eq(1).text().trim();  //Columna 2 = Nombre de Archivo.
+
     $.ajax({
         type: "POST",
         url: "class/Task.php",
@@ -463,7 +547,9 @@ function DownloadEventHandler(){
     })
     .done(function( e ) {        
         // descarga de archivo
-        decode_file(e);
+        //window.location = 'data:jpg/image;base64,iVBORw0KGgoAAAANSUhEUgAAAK8AAACvAQMAAACxXBw2AAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAWVJREFUSInNlr2Vg0AMhMUjIKQEl0Jpx3ZGKS7BIYHfzukPHevDKVolmO85mBWaWRG0Nhrf82vZMOprpe4wGMuPwMQlf3vT4/kjD64czJJUMAtUzDq3wPyX+UU9YMA7eInXbvCnwKFKn6kDjDqhaawPROB2Tu7EbhKITlx554ul7sYfAr0GYKcFK7V1Jz6UMX4ApU47e3wNrO80JOOjnoTAGjvxoGknSsJeHtQ8oRyHVQ8gjZbUlMbSnIVhn9wFlkMgD6McAJaaRZ1FWdhm0Dpoc1DJvITyF49p2N4Dh7n16iuemhQTm4Nj+Nwkmpqz53c2HiMHrQKL2Wm0CVVMeVi2MM1BK73qxFKOPcY3SsQ+fC4wYl3aLv2WRxJ2Sc02c74BJZS2PnArUA6z+P4NP9Wagk8bdVTtEOMacyjJzY3I7zRsX/oKq5fUSfnYG3jaqHGEkuw6OdgkNQLP6y3kyqZ/W+9t+BeB6j/x9fcYdwAAAABJRU5ErkJggg==' 
+
+        decode_file(e, idName);
     })    
     .fail(showError);
 };
