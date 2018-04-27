@@ -386,10 +386,10 @@ function CleanCtls(){
     //controls generales
     $("#title").val('');
     $("#description").val('');
-    $("#project_id").val('');
     $("#column_id").val('');
     $("#owner_id").val('');
     $('#newComment').val('');
+    $('#hascomments').hide();
     // adjuntos
     arrayOffiles = [];
     // subtareas
@@ -436,8 +436,6 @@ function ShowTaskData(e){
         // var d_due_iso = d_started.slice(0, 16).replace('T', ' ');
         var d_due_iso = d_due.slice(0, 16);
     }
-
-    $("#project_id").val(data[0].project_id);
     $("#date_started").val(d_started_iso);
     $("#date_due").val(d_due_iso);
     // Call API in order to get attachments and comments.
@@ -478,6 +476,7 @@ function LoadProjects(){
 function clearAttachments(){
     document.getElementById("inputFileToLoad").value = "";
     $('#listFiles').html('');
+    $('#file-list').html(""); 
 };
 
 function showAttachments(e){
@@ -667,7 +666,6 @@ function SaveTask(){
             id: id,          
             title:  title_validate,
             description: textoDes,
-            projectid: $("#projectid").val(),
             date_started: $("#date_started").val(),
             date_due: $("#date_due").val(),
             mifile: mifile,

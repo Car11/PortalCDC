@@ -42,7 +42,6 @@ if(isset($_POST["action"])){
         case "Insert":
             $task->title= $_POST["title"];
             $task->description= $_POST["description"];
-            $task->project_id= $_POST["projectid"];
             $task->subTask= $_POST["subTask"];
             $task->date_started= $_POST["date_started"];
             $task->date_due= $_POST["date_due"];
@@ -56,7 +55,6 @@ if(isset($_POST["action"])){
             $task->id= $_POST["id"];
             $task->title= $_POST["title"];
             $task->description= $_POST["description"];
-            $task->project_id= $_POST["projectid"];
             $task->subTask= $_POST["subTask"];
             $task->date_started= $_POST["date_started"];
             $task->date_due= $_POST["date_due"];
@@ -91,7 +89,7 @@ class Task{
     public $send_id=123;   // definir que es este dato.
     public $title;
     public $description;
-    public $project_id;
+    public $project_id='17'; //17 des-cer; 18 prd.
     public $date_completed;
     public $owner_id;
     public $date_creation;
@@ -126,7 +124,7 @@ class Task{
             WHERE project_id = :project_id
             ORDER BY position ASC;';   
 
-            $param= array(':project_id'=>18);
+            $param= array(':project_id'=>$this->project_id);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
         }     
