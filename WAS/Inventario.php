@@ -6,7 +6,8 @@ include_once('../class/Globals.php');
 require_once("../class/Sesion.php");
 $sesion = new Sesion();
 if (!$sesion->estado){
-    $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2] . '/' . explode('/',$_SERVER['REQUEST_URI'])[3];
+    // $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2] . '/' . explode('/',$_SERVER['REQUEST_URI'])[3];
+    $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[1] . '/' . explode('/',$_SERVER['REQUEST_URI'])[2]; 
     header('Location: ../Login.php');
     exit;
 }
@@ -31,7 +32,6 @@ if (!$sesion->estado){
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="../assets/js/Was.js" languaje="javascript" type="text/javascript"></script> 
-
     
     <script src="../assets/js/snippet.js" languaje="javascript" type="text/javascript"></script> 
     

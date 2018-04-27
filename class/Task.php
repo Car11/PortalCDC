@@ -290,7 +290,7 @@ class Task{
                 FROM tasks as t            
                 INNER JOIN columns as C on t.column_id = C.id
                 where creator_id=:userid 
-                ORDER BY id desc;';   
+                ORDER BY id desc;';    
             $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
