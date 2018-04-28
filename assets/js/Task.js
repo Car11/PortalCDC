@@ -289,14 +289,13 @@ function decode_file(e, filename){
             break;
         case "PGh0b":
             newstr = "data:text/html;base64,"+newstr;
-            // newstr = "data:application/xhtml+xml,"+newstr;
-            
+            break;
+        case "/9j/4":
+            newstr = "data:image/jpg;base64,"+newstr;//data:image/jpeg;base64,/9j/4AAQSk
             break;
         default:
             newstr = "data:application/octet-stream,"+newstr;    
     }
-
-    // newstr = "data:application/pdf;base64,"+newstr;
     
     download(newstr, filename);
 
@@ -422,7 +421,7 @@ function ShowTaskData(e){
     // carga lista con datos.
     var data= JSON.parse(e);
     $("#title").val(data[0].title);
-    $("#description").val(data[0].description);
+    $("#description").html(data[0].description);
 
 
     if ((data[0].date_started).length > 2){
@@ -602,9 +601,17 @@ function SaveTask(){
     // Del texto de descripción elimina los espacios en blanco al inicio y al final  
     // del texto asi como las tabulaciones, los saltos de linea y las comillas dobles.
     var textoDes = $("#description").val();
-    textoDes = textoDes.split("\t").join(" ");
-    textoDes = textoDes.split("\n").join(" ");
-    textoDes = textoDes.split("\"").join("'");
+
+    textoDes = textoDes.replace(/\n/g,"<br>");
+    textoDes = textoDes.replace(/\r/g,"<br>");
+    textoDes = textoDes.replace(/\t/g,"<br>");
+    textoDes = textoDes.replace(/"/g,"'");
+    
+    // this.comment = this.comment.replace(/\n/g,"<br>");
+    // this.comment = this.comment.replace(/\r/g,"<br>");
+    // textoDes = textoDes.split("\t").join(" ");
+    // textoDes = textoDes.split("\n").join(" ");
+    // textoDes = textoDes.split("\"").join("'");
     textoDes = $.trim(textoDes);
 
     var title_validate = $("#title").val();

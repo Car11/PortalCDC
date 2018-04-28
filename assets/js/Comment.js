@@ -55,6 +55,8 @@ class Comment {
         this.comment= $('#newComment').val();
         this.comment = this.comment.replace(/\n/g,"<br>");
         this.comment = this.comment.replace(/\r/g,"<br>");
+        this.comment = this.comment.replace(/\t/g,"<br>");
+        this.comment = this.comment.replace(/"/g,"'");
         //
         $.ajax({
             type: "POST",

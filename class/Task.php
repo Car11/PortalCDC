@@ -89,7 +89,7 @@ class Task{
     public $send_id=123;   // definir que es este dato.
     public $title;
     public $description;
-    public $project_id='17'; //17 des-cer; 18 prd.
+    public $project_id='18'; //17 des-cer; 18 prd.
     public $date_completed;
     public $owner_id;
     public $date_creation;
@@ -149,7 +149,7 @@ class Task{
                     INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id and t.is_active =1
                     order by t.id desc
                 ) AS T
-                ON T.creator_id = user_id;'; 
+                ON T.creator_id = user_id GROUP BY id;'; 
             $param= array(':project_id'=>18, ':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
