@@ -39,7 +39,7 @@ if (!isset($_SESSION))
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/validator.min.js" ></script>
     
-    <script src='//js.zapjs.com/js/download.js'></script>
+    <script src='assets/js/download.js'></script>
 </head>
 
     <body>
