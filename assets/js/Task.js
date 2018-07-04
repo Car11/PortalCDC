@@ -415,14 +415,20 @@ function ShowTaskData(e){
     /*if(id=="NULL"){
         $('#newComment').attr("disabled", "disabled");
     } else  */
+
     $('#newComment').removeAttr("disabled");
     $('#row-comments').show();
     $('#ModalLabel').text('Modificar Tarea');
     // carga lista con datos.
     var data= JSON.parse(e);
-    $("#title").val(data[0].title);
-    $("#description").html(data[0].description);
 
+    data[0].description = data[0].description.replace(/<br\s*[\/]?>/gi, "\n");
+    data[0].description = data[0].description.replace(/<tab\s*[\/]?>/gi, "\t");
+    data[0].description = data[0].description.replace(/'/g, '"');
+
+    
+    $("#title").val(data[0].title);
+    $("#description").html(data[0].description);  
 
     if ((data[0].date_started).length > 2){
 
@@ -604,7 +610,7 @@ function SaveTask(){
 
     textoDes = textoDes.replace(/\n/g,"<br>");
     textoDes = textoDes.replace(/\r/g,"<br>");
-    textoDes = textoDes.replace(/\t/g,"<br>");
+    textoDes = textoDes.replace(/\t/g,"<tab>");
     textoDes = textoDes.replace(/"/g,"'");
     
     // this.comment = this.comment.replace(/\n/g,"<br>");

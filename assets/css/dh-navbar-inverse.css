@@ -142,7 +142,7 @@ audio, canvas, iframe, img, svg, video {
 
 audio, canvas, img, video {
   max-width:100%;
-  height:auto;
+  /* height:auto; */
   box-sizing:border-box;
 }
 
