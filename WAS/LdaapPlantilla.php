@@ -98,7 +98,11 @@
                         <div class="col-md-8 col-md-offset-1">
                             <p style="margin-left:2%;font-family:Roboto, sans-serif;font-size:24px;"><strong>Aplicación </strong></p>
                         </div>
-                        <div class="col-md-10 col-md-offset-1"><select name="aplicacion" id="aplicacion" class="form-control" style="font-family:Roboto, sans-serif;"><optgroup label="Aplicaciones"></optgroup></select></div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <select name="aplicacion" id="aplicacion" class="form-control" style="font-family:Roboto, sans-serif;">
+                                <optgroup label="Aplicaciones"></optgroup>
+                            </select>
+                        </div>
                     </div>
                     <div class="row" style="margin-right:0px;margin-left:0px;padding-top:24px;margin-top:-16px;">
                         <div class="col-md-8 col-md-offset-1">
