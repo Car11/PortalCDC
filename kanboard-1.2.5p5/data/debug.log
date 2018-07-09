@@ -1,0 +1,23 @@
+[2018-07-05 02:35:37] [error] LDAP authentication failure for "cachac6" => Code="49"; Error="Invalid credentials"; ExtendedError="80090308: LdapErr: DSID-0C09042F, comment: AcceptSecurityContext error, data 52e, v2580"
+[2018-07-05 02:35:42] [error] LDAP authentication failure for "cachac6" => Code="49"; Error="Invalid credentials"; ExtendedError="80090308: LdapErr: DSID-0C09042F, comment: AcceptSecurityContext error, data 52e, v2580"
+[2018-07-05 02:36:56] [error] Domain: Set @domain name.
+[2018-07-05 02:37:08] [error] LDAP authentication failure for "cachac6" => Code="49"; Error="Invalid credentials"; ExtendedError="80090308: LdapErr: DSID-0C09042F, comment: AcceptSecurityContext error, data 52e, v2580"
+[2018-07-05 02:46:06] [error] LDAP authentication failure for "cachac6" => Code="49"; Error="Invalid credentials"; ExtendedError="80090308: LdapErr: DSID-0C09042F, comment: AcceptSecurityContext error, data 52e, v2580"
+[2018-07-05 02:50:49] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 02:51:43] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 02:52:27] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 02:53:37] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:02:56] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:03:58] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:04:03] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:04:10] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:05:16] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:06:37] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:07:02] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:10:37] [info] User (cachac6@icetel.ice) not found in LDAP server
+[2018-07-05 03:11:39] [error] Domain: Set @domain name.
+[2018-07-05 03:18:17] [info] Authenticate this user: CN=Chacón Calvo Carlos Eduardo,OU=Usuarios,OU=DIC,DC=icetel,DC=ice
+[2018-07-05 03:19:10] [info] Authenticate this user: CN=Chacón Calvo Carlos Eduardo,OU=Usuarios,OU=DIC,DC=icetel,DC=ice
+[2018-07-09 20:02:07] [error] Domain: Set @domain name.
+[2018-07-09 20:02:12] [error] Domain: Set @domain name.
+[2018-07-09 20:02:48] [info] Authenticate this user: CN=Muñoz Arce Gerardo,OU=Usuarios,OU=Direccion,OU=Direccion Proteccion Seguridad Institucional,OU=Servicios Compartidos,DC=sabana,DC=ice
