@@ -30,17 +30,13 @@
     <script src="assets/js/jquery.validate.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-
-    
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 </head>
 
 <body>
 
     <header>
-        <!--<h1>Servicios</h1>        
-        <div id="logo"><img src="assets/img/Logoice.png" height="75" > </div>-->
     </header>   
 
     <div class="signin-form">

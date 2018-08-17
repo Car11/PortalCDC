@@ -56,7 +56,7 @@ if (!isset($_SESSION))
             </ul>
         </div>
         <section class="section">
-            <a href="#">Operaciones DCTI © 2018</a>
+            <a href="#">Operaciones DTI © 2018</a>
         </section>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -50,7 +50,6 @@ class Comment{
             $this->reference= $obj["reference"] ?? '';
             $this->comment= $obj["comment"] ?? '';
         }
-
     }
     //
     function Load(){

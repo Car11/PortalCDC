@@ -95,8 +95,8 @@ class log{
                 $doc = new DOMDocument('1.0', 'utf-8');
                 $doc->formatOutput = true;
                 $root = $doc->createElement('EventLogger');
-                $root->setAttribute('Desarrollado', 'Operaciones DCTI');
-                $root->setAttribute('Aplicacion', 'Bitacora DCTI');
+                $root->setAttribute('Desarrollado', 'Operaciones DTI');
+                $root->setAttribute('Aplicacion', 'Bitacora DTI');
                 $root->setAttribute('Fecha_Inicio', date("Y-m-d H:i:s") );                                
                 $root = $doc->appendChild($root);
                 $doc->save(self::$path);
