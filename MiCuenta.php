@@ -47,13 +47,7 @@ if (!isset($_SESSION))
         <section class="section">
             <h1>Bienvenido a su cuenta</h1>
             <br>
-            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>
-            <br>
-            <div class="item form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
-                </div>
-            </div>
+            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>            
         </section>
 
         <div class="drag-container">
@@ -63,6 +57,11 @@ if (!isset($_SESSION))
         </div>
         <section class="section">
             <a href="#">Operaciones DTI © 2018</a>
+            <div class="item form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
+                </div>
+            </div>
         </section>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
