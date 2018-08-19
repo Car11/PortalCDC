@@ -11,7 +11,9 @@ $(document).ready( function () {
         $(".modal").css({ display: "none" });        
     };
     //
-    LoadColumns(); 
+    setInterval(function() {
+        LoadColumns(); 
+    }, 60000);       
     LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
