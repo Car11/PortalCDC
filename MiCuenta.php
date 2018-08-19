@@ -48,6 +48,12 @@ if (!isset($_SESSION))
             <h1>Bienvenido a su cuenta</h1>
             <br>
             <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>
+            <br>
+            <div class="item form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
+                </div>
+            </div>
         </section>
 
         <div class="drag-container">
