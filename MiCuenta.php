@@ -58,7 +58,7 @@ if (!isset($_SESSION))
         <section class="section">
             <a href="#">Operaciones DTI © 2018</a>
             <div class="item form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                     <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
                 </div>
             </div>
