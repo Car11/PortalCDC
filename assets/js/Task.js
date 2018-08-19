@@ -14,7 +14,7 @@ $(document).ready( function () {
     setInterval(function() {
         LoadColumns(); 
     }, 60000);       
-    LoadProjects();
+    // LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
     $("#inputFileToLoad").change(function() {
