@@ -96,14 +96,11 @@ class Usuario{
             $ldapPasswd = $this->contrasena;
             $ldaprdn = $dn[0] . "\\" . $user_domain[0];
             $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);            
-            if ($bind) {
-                error_log("bind ok");
-                error_log($dn[0]."-".$dn[1]);
-                error_log($dn[0]."-".$dn[1]);
+            if ($bind) {                
                 $filter="(sAMAccountName=".$user_domain[0].")";
                 $result = ldap_search($ldap,"dc=".$dn[0].",dc=".$dn[1],$filter);
                 $info = ldap_get_entries($ldap, $result);
-                error_log("entires". $info);
+                //
                 for ($i=0; $i<$info["count"]; $i++)
                 {
                     if($info['count'] > 1)
