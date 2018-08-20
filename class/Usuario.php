@@ -36,7 +36,7 @@ class Usuario{
     function KanboardUser(){    // valida rol en bd y administra accesos a elementos de la web
         try {
             $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
-            $param= array(':usuario'=>$this->usuario);        
+            $param= array(':usuario'=>explode('@',$this->usuario)[0]);
             $data = DATA::Ejecutar($sql,$param);
             if (count($data)) {
                 $this->id= $data[0]['id'];
@@ -64,7 +64,6 @@ class Usuario{
     }    
 
     function setSesion(){
-        error_log('setSesion: ' );
         $sesion = new Sesion();
         $sesion->Inicio($this->usuario, $this->rol, $this->id, $this->nombre);
         //
