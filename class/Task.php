@@ -136,7 +136,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -164,7 +164,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -192,7 +192,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -212,7 +212,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -232,7 +232,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -274,7 +274,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -317,7 +317,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -343,7 +343,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
@@ -362,7 +362,7 @@ class Task{
             header('HTTP/1.0 400 Bad error');
             die(json_encode(array(
                 'code' => $e->getCode() ,
-                'msg' => 'Error al cargar la bodega'))
+                'msg' => 'Error al cargar'))
             );
         }
     }
