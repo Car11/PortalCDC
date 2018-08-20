@@ -79,16 +79,21 @@ class Usuario{
 
     function LDAPCheck(){
         try {
-            $adServer = "icetel.ice";
+            $user_domain= explode ('@', $this->usuario);
+            $dn= explode ('.', $user_domain[1]);
+            if(sizeof($user_domain)<2)
+                return false;
+            $dominio = $user_domain[1];
+            $adServer = $dominio;
             $ldapport = 3268;
             $ldap = ldap_connect($adServer, $ldapport);        
-            $ldapUser = $this->usuario;
+            //$ldapUser = $this->usuario;
             $ldapPasswd = $this->contrasena;
-            $ldaprdn = 'icetel' . "\\" . $ldapUser;
+            $ldaprdn = $dn[0] . "\\" . $user_domain[0];
             $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);
             if ($bind) {
-                $filter="(sAMAccountName=$ldapUser)";
-                $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
+                $filter="(sAMAccountName=$user_domain[0])";
+                $result = ldap_search($ldap,"dc=".$dn[0].",dc=".$dn[1],$filter);
                 $info = ldap_get_entries($ldap, $result);
                 for ($i=0; $i<$info["count"]; $i++)
                 {

@@ -11,6 +11,11 @@ $(document).ready( function () {
         $(".modal").css({ display: "none" });        
     };
     //
+    $('#btnSearch').click(function(){
+        $('#search').show();
+    });
+    //
+    LoadColumns();
     setInterval(function() {
         LoadColumns(); 
     }, 60000);       

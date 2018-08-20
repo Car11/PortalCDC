@@ -51,20 +51,29 @@ if (!isset($_SESSION))
         </section>
 
         <div class="drag-container">
-            
-            <ul class="drag-list" id="drag-list">
-
-            </ul>
-        </div>
-        <section>
-            <div class="item form-group">
-                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
-                    <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <span class="glyphicon glyphicon-search " id='btnSearch' style='cursor:pointer' aria-hidden="true"></span>
+                </div>
+                <div id='search' class="item form-group" style="display:none">
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-1">
+                        <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
+                    </div>
+                    <br>
+                    <br>
                 </div>
             </div>
-            <br>
+            <div class="row">
+                <ul class="drag-list" id="drag-list">
+
+                </ul>
+            </div>
+        </div>
+        <section>
+            
         </section>
-        <section class="section">
+
+        <section class="section">            
             <a href="#">Operaciones DTI © 2018</a>            
         </section>
         <!-- Modal -->
