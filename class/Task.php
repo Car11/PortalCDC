@@ -28,6 +28,9 @@ if(isset($_POST["action"])){
         case "LoadTask": 
             echo json_encode($task->LoadTask());
             break;
+        case "LoadTaskByName": 
+            echo json_encode($task->LoadTaskByName());
+            break;
         case "LoadTaskFiles":
             $task->id=$_POST["id"];
             echo json_encode($task->LoadTaskFiles());
@@ -149,6 +152,34 @@ class Task{
                 (SELECT t.id, t.title, t.creator_id, t.date_creation, c.position 
                 FROM kanboard.tasks as t
                     INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id and t.is_active =1
+                    order by t.id desc
+                ) AS T
+                ON T.creator_id = user_id GROUP BY id;'; 
+            $param= array(':project_id'=>18, ':userid'=>$_SESSION["userid"]);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {            
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la bodega'))
+            );
+        }
+    }
+
+    function LoadTaskByName(){
+        try {            
+            $sql='SELECT  id, title, date_creation, position FROM (
+                SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
+                INNER JOIN 
+                (SELECT group_id, user_id FROM group_has_users) as U
+                ON GU.group_id = U.group_id
+                INNER JOIN
+                (SELECT t.id, t.title, t.creator_id, t.date_creation, c.position 
+                FROM kanboard.tasks as t
+                    INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id
                     order by t.id desc
                 ) AS T
                 ON T.creator_id = user_id GROUP BY id;'; 

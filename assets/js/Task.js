@@ -21,12 +21,16 @@ $(document).ready( function () {
                 showCurrentLi = currentLiText.indexOf(searchText) !== -1;
             $(this).toggle(showCurrentLi);
         });  
+        if (e.keyCode == 113) {
+            // Al presionar f2 busca en el historial las tareas cerradas.
+            LoadTaskByName();
+        }
     });
     //
     LoadColumns();
     setInterval(function() {
         LoadColumns(); 
-    }, 60000);       
+    }, 300000);       
     // LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
@@ -85,7 +89,7 @@ function LoadColumns(){
 
 function ShowColumn(e){
     // Limpia el div que contiene la tabla.
-    $('#drag-list').html(""); 
+    $('#drag-list').html("");
     // carga lista con datos.
     var data= JSON.parse(e);
     //
@@ -147,7 +151,22 @@ function LoadTasks(){
     })    
 };
 
+function LoadTaskByName(){
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: "LoadTaskByName"
+        }
+    })
+    .done(function( e ) {            
+        //alert(e);
+        ShowTasks(e); 
+    })    
+};
+
 function ShowTasks(e){ 
+    $('li.task').html('');
     // carga lista con datos.
     var data= JSON.parse(e);
     // Recorre arreglo.
@@ -157,7 +176,7 @@ function ShowTasks(e){
         var posicion = '#'+item.position;       
         var row=
             // '<li class="drag-item" onclick="open_task()">' +
-            '<li class="'+item.title+'" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)">'+
+            '<li class="'+item.title+' task" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)">'+
                 '<p>' +
                     'No: ' + item.id + '<br>' +
                     'Fecha: ' + d_creation_iso + '<br>' +  
