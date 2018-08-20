@@ -10,7 +10,7 @@ class DATA {
         if (file_exists('../../../ini/config.ini')) {
             self::$config = parse_ini_file('../../../ini/config.ini',true); 
         }       
-        else throw new Exception('Acceso denegado al Archivo de configuración.',-1);  
+        else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);  
     }  
 
     private static function Conectar(){
