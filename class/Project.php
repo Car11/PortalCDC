@@ -61,10 +61,12 @@ class Project{
             return $data;
         }     
         catch(Exception $e) {
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar el GetByUserID', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');       
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la bodega'))
+            );
         }
     }
 

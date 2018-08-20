@@ -103,10 +103,12 @@ class ScheduledTask{
             return $data;
         }     
         catch(Exception $e) {
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar el GetByUserID', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');       
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la bodega'))
+            );
         }
     }
     
@@ -164,9 +166,12 @@ class ScheduledTask{
             }
         }     
         catch(Exception $e) {
-            log::AddD('FATAL', 'Ha ocurrido un error al realizar la Entrada del Visitante', $e->getMessage());
-            header('Location: ../Error.php?w=conectar&id='.$e->getMessage());
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la bodega'))
+            );
         }
 
     }
@@ -188,10 +193,12 @@ class ScheduledTask{
             return $data;
         }     
         catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la bodega'))
+            );
         }
     }
 
@@ -204,10 +211,12 @@ function Delete(){
         return $data;
     }     
     catch(Exception $e) {            
-        //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-        //$_SESSION['errmsg']= $e->getMessage();
-        header('Location: ../Error.php');            
-        exit;
+        error_log($e->getMessage());
+        header('HTTP/1.0 400 Bad error');
+        die(json_encode(array(
+            'code' => $e->getCode() ,
+            'msg' => 'Error al cargar la bodega'))
+        );
     }
 }
 
@@ -272,10 +281,12 @@ function Insert_Sub_Task_Image(){
         }
     }     
     catch(Exception $e) {            
-        //log::AddD('FATAL', 'Ha ocurrido un error al realizar el insert', $e->getMessage());
-        //$_SESSION['errmsg']= $e->getMessage();
-        header('Location: ../Error.php');            
-        exit;
+        error_log($e->getMessage());
+        header('HTTP/1.0 400 Bad error');
+        die(json_encode(array(
+            'code' => $e->getCode() ,
+            'msg' => 'Error al cargar la bodega'))
+        );
     }
 }
 
