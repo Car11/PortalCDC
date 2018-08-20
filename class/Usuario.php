@@ -113,6 +113,7 @@ class Usuario{
             }
         }catch(Exception $e) {   
             $sessiondata['status']='error'; 
+            $sessiondata['errmsg']=$e->getMessage(); 
             echo json_encode($sessiondata);
         }
         
