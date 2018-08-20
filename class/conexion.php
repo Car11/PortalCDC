@@ -7,14 +7,8 @@ class DATA {
     private static $config="";
 
 	private static function ConfiguracionIni(){
-        require_once('Globals.php');
-        if (file_exists('../../ini/config.ini')) {
-            self::$config = parse_ini_file('../../ini/config.ini',true); 
-        } 
-        else if (file_exists('../ini/config.ini')) {
-            self::$config = parse_ini_file('../ini/config.ini',true); 
-        }    
-        else if (file_exists('../../../ini/config.ini')) {
+        require_once('Globals.php'); 
+        if (file_exists('../../../ini/config.ini')) {
             self::$config = parse_ini_file('../../../ini/config.ini',true); 
         }         
     }  
@@ -27,8 +21,8 @@ class DATA {
                 return self::$conn;
             }
         } catch (PDOException $e) {
-            require_once("Log.php");  
-            log::AddD('FATAL', 'Ha ocurrido al Conectar con la base de datos MySQL[01]', $e->getMessage());
+            //require_once("Log.php");  
+            //log::AddD('FATAL', 'Ha ocurrido al Conectar con la base de datos MySQL[01]', $e->getMessage());
             $_SESSION['errmsg']= 'Problemas de Conexión';
             header('Location: ../Error.php');
             exit;

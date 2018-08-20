@@ -52,6 +52,8 @@ class Usuario{
                 $this->nombre= "";
                 $this->email= "";
                 /******************************* agrega nuevo usuario al KB con rol de usuario ********************************/
+
+                /******************************* ********************************************* ********************************/
                 $this::setSesion();    
             }     
         }catch(Exception $e) {       

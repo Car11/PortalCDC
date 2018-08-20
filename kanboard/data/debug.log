@@ -22,3 +22,104 @@
 [2018-07-09 20:02:12] [error] Domain: Set @domain name.
 [2018-07-09 20:02:48] [info] Authenticate this user: CN=Muñoz Arce Gerardo,OU=Usuarios,OU=Direccion,OU=Direccion Proteccion Seguridad Institucional,OU=Servicios Compartidos,DC=sabana,DC=ice
 [2018-08-20 00:50:38] [info] Authenticate this user: CN=Chacón Calvo Carlos Eduardo,OU=Usuarios,OU=DIC,DC=icetel,DC=ice
+[2018-08-19 18:56:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:36] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:36] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:36] [info] Authenticate this user: CN=Chacón Calvo Carlos Eduardo,OU=Usuarios,OU=DIC,DC=icetel,DC=ice
+[2018-08-19 18:56:36] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:56:36] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:16] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:16] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:21] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:21] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:27] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:27] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:29] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:29] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:42] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:42] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:49] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:49] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:54] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:57:54] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:58:04] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:58:04] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:58:06] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:58:06] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:59:07] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:59:07] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:59:07] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 18:59:07] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:38] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:38] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:40] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:40] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:40] [info] Authenticate this user: CN=Chacón Calvo Carlos Eduardo,OU=Usuarios,OU=DIC,DC=icetel,DC=ice
+[2018-08-19 19:00:41] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:41] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:48] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:48] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:50] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:50] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:52] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:52] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:52] [error] Process could not be started [The system cannot find the path specified.
+]
+[2018-08-19 19:00:52] [error] Process could not be started [The system cannot find the path specified.
+]
+[2018-08-19 19:00:52] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:00:52] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:01:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:01:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:02:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:02:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:03:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:03:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:04:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:04:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:05:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:05:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:06:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:06:53] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:33] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:33] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:34] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:34] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:34] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:34] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:37] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:37] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:37] [info] Authenticate this user: CN=Chacón Calvo Carlos Eduardo,OU=Usuarios,OU=DIC,DC=icetel,DC=ice
+[2018-08-19 19:07:37] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:37] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:40] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:40] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:44] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:44] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:45] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:45] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:49] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:49] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:07:49] [error] Process could not be started [The system cannot find the path specified.
+]
+[2018-08-19 19:08:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:08:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:10:21] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:10:21] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:10:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:10:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:11:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:11:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:12:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:12:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:13:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:13:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:14:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:14:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:14:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2018-08-19 19:14:46] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
