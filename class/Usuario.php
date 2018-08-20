@@ -99,7 +99,7 @@ class Usuario{
             if ($bind) {                
                 $filter="(sAMAccountName=".$user_domain[0].")";
                 $result = ldap_search($ldap,"dc=".$dn[0].",dc=".$dn[1],$filter);
-                $info = ldap_get_entries($ldap, $result);
+                $info = ldap_get_entries($ldap, $result);                
                 //
                 for ($i=0; $i<$info["count"]; $i++)
                 {
@@ -116,6 +116,7 @@ class Usuario{
                 return false;  
             }
         }catch(Exception $e) {   
+            error_log($e->getMessage());
             $sessiondata['status']='error'; 
             $sessiondata['errmsg']=$e->getMessage(); 
             echo json_encode($sessiondata);
