@@ -81,10 +81,13 @@ class Usuario{
 
     function LDAPCheck(){
         try {
-            $user_domain= explode ('@', $this->usuario);
-            $dn= explode ('.', $user_domain[1]);
-            if(sizeof($user_domain)<2)
+            $user_domain= explode ('@', $this->usuario);            
+            if(sizeof($user_domain)<2){
+                $sessiondata['status']='badUsername';
+                echo json_encode($sessiondata);
                 return false;
+            }
+            $dn= explode ('.', $user_domain[1]);
             $dominio = $user_domain[1];
             $adServer = $dominio;
             $ldapport = 3268;
