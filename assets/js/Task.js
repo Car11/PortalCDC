@@ -15,17 +15,12 @@ $(document).ready( function () {
         $('#search').show();
     });
     $("#search").on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            var filter = $("#search").val().toUpperCase();
-            var lis = document.getElementsByTagName('li');
-            for (var i = 0; i < lis.length; i++) {
-                var name = lis[i].getElementsByClassName('drag-inner-list')[0].innerHTML;
-                if (name.toUpperCase().indexOf(filter) == 0) 
-                    lis[i].style.display = 'list-item';
-                else
-                    lis[i].style.display = 'none';
-            }
-        }
+        var searchText = $('#buscar').val();
+        $('.drag-inner-list > li').each(function(){            
+            var currentLiText = $(this)[0].className,
+                showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+            $(this).toggle(showCurrentLi);
+        });  
     });
     //
     LoadColumns();
@@ -162,7 +157,7 @@ function ShowTasks(e){
         var posicion = '#'+item.position;       
         var row=
             // '<li class="drag-item" onclick="open_task()">' +
-            '<li onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)">'+
+            '<li class="'+item.title+'" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)">'+
                 '<p>' +
                     'No: ' + item.id + '<br>' +
                     'Fecha: ' + d_creation_iso + '<br>' +  
@@ -170,7 +165,8 @@ function ShowTasks(e){
                 '</p>' +
             '</li>'
         $(posicion).append(row);            
-    })
+    });
+    $('#buscar').val('');
 };
 
 function open_task(id_task) {
