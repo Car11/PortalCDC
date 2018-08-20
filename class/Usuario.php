@@ -35,6 +35,7 @@ class Usuario{
 
     function KanboardUser(){    // valida rol en bd y administra accesos a elementos de la web
         try {
+            error_log('kb user');
             $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
             $param= array(':usuario'=>$this->usuario);        
             $data = DATA::Ejecutar($sql,$param);
@@ -56,7 +57,8 @@ class Usuario{
                 /******************************* ********************************************* ********************************/
                 $this::setSesion();    
             }     
-        }catch(Exception $e) {       
+        }catch(Exception $e) {     
+            error_log($e->getMessage());  
             $sessiondata['status']='error'; 
             echo json_encode($sessiondata);
         }           
