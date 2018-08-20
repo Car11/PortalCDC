@@ -39,7 +39,8 @@ class Usuario{
             $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
             $param= array(':usuario'=>$this->usuario);        
             $data = DATA::Ejecutar($sql,$param);
-            if (count($data) ) {
+            error_log('count: ' );
+            if (count($data)) {
                 $this->id= $data[0]['id'];
                 $this->nombre= $data[0]['name'];
                 $this->email= $data[0]['email'];
@@ -65,6 +66,7 @@ class Usuario{
     }    
 
     function setSesion(){
+        error_log('setSesion: ' );
         $sesion = new Sesion();
         $sesion->Inicio($this->usuario, $this->rol, $this->id, $this->nombre);
         //
