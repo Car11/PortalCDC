@@ -81,21 +81,27 @@ class Usuario{
 
     function LDAPCheck(){
         try {
+            error_log("check");
             $user_domain= explode ('@', $this->usuario);            
             if(sizeof($user_domain)<2){
                 $sessiondata['status']='badUsername';
                 echo json_encode($sessiondata);
                 return false;
             }
+            error_log("domain name ok");
             $dn= explode ('.', $user_domain[1]);
             $dominio = $user_domain[1];
             $adServer = $dominio;
             $ldapport = 3268;
+            error_log("ldapconn");
             $ldap = ldap_connect($adServer, $ldapport);        
+            error_log("conn ok");
             //$ldapUser = $this->usuario;
             $ldapPasswd = $this->contrasena;
             $ldaprdn = $dn[0] . "\\" . $user_domain[0];
+            error_log("bind");
             $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);
+            error_log("bind ok");
             if ($bind) {
                 $filter="(sAMAccountName=$user_domain[0])";
                 $result = ldap_search($ldap,"dc=".$dn[0].",dc=".$dn[1],$filter);
