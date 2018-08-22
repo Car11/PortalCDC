@@ -9,8 +9,11 @@ class DATA {
         require_once('Globals.php'); 
         if (file_exists('/var/ini/config.ini')) {
             self::$config = parse_ini_file('/var/ini/config.ini',true); 
-        }       
-        else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);  
+        }        
+        else if (file_exists('../../ini/config.ini')) {
+            self::$config = parse_ini_file('../../ini/config.ini',true); 
+        }   
+        else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);   
     }  
 
     private static function Conectar(){
