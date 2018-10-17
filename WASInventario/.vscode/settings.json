@@ -1,0 +1,4 @@
+{
+    "git.ignoreLimitWarning": true,
+    "es6-css-minify.minifyOnSave": "exists"
+}
