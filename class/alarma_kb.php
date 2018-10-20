@@ -12,7 +12,7 @@
         $curl = curl_init();
         //
         curl_setopt_array($curl, array(
-            CURLOPT_URL => http://10.129.20.177/kanboard/jsonrpc.php,
+            CURLOPT_URL => "http://10.129.20.177/kanboard/jsonrpc.php",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

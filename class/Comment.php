@@ -31,8 +31,8 @@ class Comment{
     public $dateModification;
     //
     function __construct(){
-        require_once("Conexion.php");
-        require_once("Globals.php");
+        require_once("conexion.php");
+        require_once("globals.php");
         //
         Globals::ConfiguracionIni();
         // identificador único

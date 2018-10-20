@@ -1,8 +1,8 @@
 <?php
 /*if (!isset($_SESSION))
 	session_start();
-require_once('Globals.php');
-require_once("Conexion.php");
+require_once('globals.php');
+require_once("conexion.php");
 require_once("Log.php");
 
 

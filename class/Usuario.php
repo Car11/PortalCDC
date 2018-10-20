@@ -1,8 +1,8 @@
 <?php 
 if (!isset($_SESSION))
     session_start();
-require_once('Globals.php');
-require_once("Conexion.php");
+require_once('globals.php');
+require_once("conexion.php");
 require_once("Log.php");
 require_once("Sesion.php");
 
@@ -29,7 +29,7 @@ class Usuario{
     private $sessiondata = array(); // devuelve el estado del login.
 
     function __construct(){
-        require_once("Conexion.php");
+        require_once("conexion.php");
         require_once("Log.php");
     }
 
