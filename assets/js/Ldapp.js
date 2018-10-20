@@ -1,8 +1,5 @@
 var id = "NULL";
 
-$(document).ready( function () {
-    
-});
 function Send(){
 };
 
@@ -24,14 +21,15 @@ function Connect(){
             $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
             $('#rama').html("<optgroup label='Rama'></optgroup>");
             $('#grupo').html("<optgroup label='Grupo'></optgroup>");
-            alert(data.iderr + ': ' + data.error)
+            alert(data.iderr + ': ' + data.mensaje)
             return false;
         }
-        else return true;
+        // else return true;
+        $("#frmPlantilla :input").prop("disabled", false);
         // Carga Aplicaciones LDAP
-        //getApps(e);        
+        getApps(e);  
         // carga Ramas
-        //getRamas();     
+        getRamas();     
         
     })    
     .fail(function( e ) {
@@ -55,8 +53,8 @@ function getApps(){
         $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
         var data= JSON.parse(e); 
         // Check for errors
-        if(data.ide!=null){
-            alert(data.ide + ': ' + data.error)
+        if(data.iderr!=null){
+            alert(data.iderr + ': ' + data.mensaje)
             return;
         }
         // populate select - aplicacion
@@ -91,8 +89,8 @@ function getRamas(){
         $('#rama').html("<optgroup label='Rama'></optgroup>");
         var data= JSON.parse(e); 
         // Check for errors
-        if(data.ide!=null){
-            alert(data.ide + ': ' + data.error)
+        if(data.iderr!=null){
+            alert(data.iderr + ': ' + data.mensaje)
             return;
         }
         // populate select aplicacion        
@@ -129,8 +127,8 @@ function getGroupsByAppName(){
         $('#grupo').html("");
         var data= JSON.parse(e); 
         // Check for errors
-        if(data.ide!=null){
-            alert(data.ide + ': ' + data.error)
+        if(data.iderr!=null){
+            alert(data.iderr + ': ' + data.mensaje)
             return;
         }
         // populate select aplicacion 

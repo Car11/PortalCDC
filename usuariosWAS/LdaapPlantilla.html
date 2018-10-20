@@ -33,13 +33,8 @@
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="../assets/js/PHP-Contact-Form-dark.js"></script>
     <script src="../assets/js/PHP-Contact-Form-dark1.js"></script>
-    <script src="../assets/js/bootstrap-select.js" languaje="javascript" type="text/javascript"></script>
-    <script src="../assets/js/LdappPlantilla.js" languaje="javascript" type="text/javascript"></script>     
+    <script src="../assets/js/bootstrap-select.js" languaje="javascript" type="text/javascript"></script>   
     <script src="../assets/js/Ldapp.js" languaje="javascript" type="text/javascript"></script>     
-
-     
-
-
 </head>
 
 <body>
@@ -139,3 +134,47 @@
 </body>
 
 </html>
+
+<script>
+    var id = "NULL";
+    $(document).ready( function () {
+        $("#frmPlantilla :input").prop("disabled", true);
+        //
+        $('#btnLogin').click(function(){
+            if (Connect()){
+                // Habilita
+                $("#frmPlantilla :input").prop("disabled", false);
+                $("#grupo").selectpicker("refresh");
+                $("#ambiente").selectpicker("refresh");
+                $("#accion").selectpicker("refresh");
+                $("#accion option").val("Agregar");
+                // Carga datos        
+                //getRamas();
+                //getApps();
+            }
+        }); 
+        //
+        //DisableForm();
+        //$('#frmPlantilla').children(':input').attr('disabled', 'disabled');
+        //$('#frmPlantilla').children(':select').attr('disabled', 'disabled');
+        //
+        // Filtro por fecha
+        $('#aplicacion').on('change', function (e) {
+            //var optionSelected = $("option:selected", this);
+            //filtrofecha = this.value;
+            getGroupsByAppName();
+        });    
+    });
+
+    function DisableForm(){
+        $('#frmPlantilla').children(':input').attr('disabled', 'disabled');
+    };
+
+    function EnableForm(){
+        $('#frmPlantilla').children(':input').removeAttr('disabled');
+    };
+
+    function Send(){
+        alert('Send();');
+    };
+</script>
