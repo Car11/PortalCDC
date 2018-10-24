@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION))
     session_start();
-    include_once('class/Globals.php');
+    include_once('class/globals.php');
     // Sesion de usuario
     require_once("class/Sesion.php");
     $sesion = new Sesion();
@@ -47,16 +47,34 @@ if (!isset($_SESSION))
         <section class="section">
             <h1>Bienvenido a su cuenta</h1>
             <br>
-            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>
+            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>            
         </section>
 
         <div class="drag-container">
-            <ul class="drag-list" id="drag-list">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <span class="glyphicon glyphicon-search " id='btnSearch' style='cursor:pointer' aria-hidden="true"></span>
+                </div>
+                <div id='search' class="item form-group" style="display:none">
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-1">
+                        <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="drag-list" id="drag-list">
 
-            </ul>
+                </ul>
+            </div>
         </div>
-        <section class="section">
-            <a href="#">Operaciones DCTI © 2018</a>
+        <section>
+            
+        </section>
+
+        <section class="section">            
+            <a href="#">Operaciones DTI © 2018</a>            
         </section>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -91,12 +91,12 @@ class log{
             // Archivo log.
             if (!file_exists(self::$path)) {
                 // Si no existe el archivo, lo crea.
-                // require_once('Globals.php');                
+                // require_once('globals.php');                
                 $doc = new DOMDocument('1.0', 'utf-8');
                 $doc->formatOutput = true;
                 $root = $doc->createElement('EventLogger');
-                $root->setAttribute('Desarrollado', 'Operaciones DCTI');
-                $root->setAttribute('Aplicacion', 'Bitacora DCTI');
+                $root->setAttribute('Desarrollado', 'Operaciones DTI');
+                $root->setAttribute('Aplicacion', 'Bitacora DTI');
                 $root->setAttribute('Fecha_Inicio', date("Y-m-d H:i:s") );                                
                 $root = $doc->appendChild($root);
                 $doc->save(self::$path);

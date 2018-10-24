@@ -1,12 +1,12 @@
 <?php
 if (!isset($_SESSION))
     session_start();
-require_once('Globals.php');
-// require_once("Conexion.php");
+require_once('globals.php');
+// require_once("conexion.php");
 // require_once("Log.php");
 
 // function __construct(){
-//     require_once("Conexion.php");
+//     require_once("conexion.php");
 //     require_once("Log.php");
 // }
 
@@ -27,6 +27,9 @@ if(isset($_POST["action"])){
             break;
         case "LoadTask": 
             echo json_encode($task->LoadTask());
+            break;
+        case "LoadTaskByName": 
+            echo json_encode($task->LoadTaskByName());
             break;
         case "LoadTaskFiles":
             $task->id=$_POST["id"];
@@ -110,7 +113,7 @@ class Task{
     public $idFile='';
 
     function __construct(){
-        require_once("Conexion.php");
+        require_once("conexion.php");
         require_once("Log.php");
     }
 
@@ -129,10 +132,12 @@ class Task{
             return $data;
         }     
         catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -155,10 +160,40 @@ class Task{
             return $data;
         }     
         catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
+        }
+    }
+
+    function LoadTaskByName(){
+        try {            
+            $sql='SELECT  id, title, date_creation, position FROM (
+                SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
+                INNER JOIN 
+                (SELECT group_id, user_id FROM group_has_users) as U
+                ON GU.group_id = U.group_id
+                INNER JOIN
+                (SELECT t.id, t.title, t.creator_id, t.date_creation, c.position 
+                FROM kanboard.tasks as t
+                    INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id
+                    order by t.id desc
+                ) AS T
+                ON T.creator_id = user_id GROUP BY id;'; 
+            $param= array(':project_id'=>18, ':userid'=>$_SESSION["userid"]);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {            
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -173,10 +208,12 @@ class Task{
                         
         }     
         catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -191,10 +228,12 @@ class Task{
             return $data;
         }     
         catch(Exception $e) {
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -231,10 +270,12 @@ class Task{
             }     
         }     
         catch(Exception $e) {
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            //header('Location: ../Error.php');            
-            //exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -272,10 +313,12 @@ class Task{
             }                        
         }     
         catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -296,10 +339,12 @@ class Task{
             return $data;
         }     
         catch(Exception $e) {
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 
@@ -313,10 +358,12 @@ class Task{
             return $data;
         }     
         catch(Exception $e) {            
-            //log::AddD('FATAL', 'Ha ocurrido un error al realizar la carga de datos', $e->getMessage());
-            //$_SESSION['errmsg']= $e->getMessage();
-            header('Location: ../Error.php');            
-            exit;
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
         }
     }
 

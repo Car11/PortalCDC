@@ -41,6 +41,10 @@ function submitForm(){
             $("#error").fadeIn(2000, function(){      
                 $("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Usuario/Contraseña inválido!</div>');
             });
+        if(data.status=='badUsername')
+            $("#error").fadeIn(2000, function(){      
+                $("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; El usuario debe ser: usuario@dominio.ice</div>');
+            });
         else if(data.status=='error')
             $("#error").fadeIn(2000, function(){      
                 $("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error!</div>');
