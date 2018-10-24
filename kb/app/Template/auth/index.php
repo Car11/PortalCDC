@@ -18,7 +18,8 @@
         <?= $this->form->password('password', $values, $errors, array('required')) ?>
 
         <?= $this->form->label(t('Dominio'), 'dominio') ?>
-        <?= $this->form->select('dominio', array('ICETEL','SABANA'),array('icetel.ice','sabana.ice'), $errors, array('required')) ?>
+
+       <?= $this->form->text('dominio', $values, $errors, array('required')) ?>
 
         <?php if (isset($captcha) && $captcha): ?>
             <?= $this->form->label(t('Enter the text below'), 'captcha') ?>

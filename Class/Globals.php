@@ -1,6 +1,6 @@
 <?php
 class Globals {
-    const app = 'PORTAL';
+    const app = 'PORTALQA';
     const version= '1.0';
     const cssversion= "1.0";
     // KB
