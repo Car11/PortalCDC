@@ -16,13 +16,24 @@ class Globals {
     public static $pwconn="";
     
     public static function ConfiguracionIni(){     
-        if (file_exists('/var/ini/config.ini')) {
-            self::$config = parse_ini_file('/var/ini/config.ini',true); 
-        } 
-        //
-        self::$jsonrpcURL= self::$config[self::app]['jsonrpcURL'];
-        self::$token= self::$config[self::app]['token'];
-        self::$postmantoken= self::$config[self::app]['postmantoken'];
+        try{
+            if (file_exists(self::configFile)) {
+                self::$config = parse_ini_file(self::configFile,true); 
+            }
+            else throw new Exception('[ERROR] Acceso denegado al Archivo de configuración.',ERROR_CONFI_FILE_NOT_FOUND);
+            //
+            self::$jsonrpcURL= self::$config[self::app]['jsonrpcURL'];
+            self::$token= self::$config[self::app]['token'];
+            self::$postmantoken= self::$config[self::app]['postmantoken'];
+        }
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar el archivo de configuración'))
+            );
+        }
     }  
 
     public static function ConfiguracionLdap(){

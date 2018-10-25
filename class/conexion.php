@@ -33,6 +33,8 @@ class DATA {
     // Ejecuta consulta SQL, $fetch = false envía los datos en 'crudo', $fetch=TRUE envía los datos en arreglo (fetchAll).
     public static function Ejecutar($sql, $param=NULL, $fetch=true) {
         try{
+            error_reporting(0);
+        ini_set('error_reporting', 0);
             //conecta a BD
             self::Conectar();
             $st=self::$conn->prepare($sql);
