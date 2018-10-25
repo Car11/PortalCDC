@@ -17,13 +17,6 @@
         <?= $this->form->label(t('Password'), 'password') ?>
         <?= $this->form->password('password', $values, $errors, array('required')) ?>
 
-<<<<<<< HEAD:kb/app/Template/auth/index.php
-        <?= $this->form->label(t('Dominio'), 'dominio') ?>
-
-       <?= $this->form->text('dominio', $values, $errors, array('required')) ?>
-
-=======
->>>>>>> 79f950c80a45c72b900527679529b959333bfab4:kanboard/app/Template/auth/index.php
         <?php if (isset($captcha) && $captcha): ?>
             <?= $this->form->label(t('Enter the text below'), 'captcha') ?>
             <img src="<?= $this->url->href('CaptchaController', 'image') ?>" alt="Captcha">
