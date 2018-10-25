@@ -30,7 +30,7 @@ $(document).ready( function () {
     LoadColumns();
     setInterval(function() {
         LoadColumns(); 
-    }, 300000);       
+    }, 10000);       
     // LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
