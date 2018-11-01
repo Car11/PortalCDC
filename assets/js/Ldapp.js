@@ -25,12 +25,16 @@ function Connect(){
             return false;
         }
         // else return true;
-        $("#frmPlantilla :input").prop("disabled", false);
+        $("#frmPlantilla :input").removeAttr("disabled");
         // Carga Aplicaciones LDAP
-        getApps(e);  
+        getApps(e);
         // carga Ramas
-        getRamas();     
-        
+        getRamas();
+        //
+        $("#grupo").selectpicker("refresh");
+        $("#ambiente").selectpicker("refresh");
+        $("#accion").selectpicker("refresh");
+        $("#accion option").val("Agregar");        
     })    
     .fail(function( e ) {
         alert('Err ' + e);        
