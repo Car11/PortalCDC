@@ -113,7 +113,7 @@ class Task{
     public $idFile='';
 
     function __construct(){
-        require_once("Conexion.php");
+        require_once("conexion.php");
         require_once("Log.php");
     }
 
