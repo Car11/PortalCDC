@@ -1,4 +1,8 @@
 <?php 
+
+error_log("Busca: ../../ini/config.ini");
+
+
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
@@ -7,7 +11,6 @@ require_once("Log.php");
 require_once("Sesion.php");
 
 if(isset($_POST["action"])){
-    error_log("Busca: ../../ini/config.ini");
     $usuario= new Usuario();   
     switch($_POST["action"]){       
         case "Login":
