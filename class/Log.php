@@ -91,7 +91,7 @@ class log{
             // Archivo log.
             if (!file_exists(self::$path)) {
                 // Si no existe el archivo, lo crea.
-                // require_once('globals.php');                
+                // require_once('Globals.php');                
                 $doc = new DOMDocument('1.0', 'utf-8');
                 $doc->formatOutput = true;
                 $root = $doc->createElement('EventLogger');

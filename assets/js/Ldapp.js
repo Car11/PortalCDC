@@ -1,5 +1,8 @@
 var id = "NULL";
 
+$(document).ready( function () {
+    
+});
 function Send(){
 };
 
@@ -21,20 +24,15 @@ function Connect(){
             $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
             $('#rama').html("<optgroup label='Rama'></optgroup>");
             $('#grupo').html("<optgroup label='Grupo'></optgroup>");
-            alert(data.iderr + ': ' + data.mensaje)
+            alert(data.iderr + ': ' + data.error)
             return false;
         }
-        // else return true;
-        $("#frmPlantilla :input").removeAttr("disabled");
+        else return true;
         // Carga Aplicaciones LDAP
-        getApps(e);
+        //getApps(e);        
         // carga Ramas
-        getRamas();
-        //
-        $("#grupo").selectpicker("refresh");
-        $("#ambiente").selectpicker("refresh");
-        $("#accion").selectpicker("refresh");
-        $("#accion option").val("Agregar");        
+        //getRamas();     
+        
     })    
     .fail(function( e ) {
         alert('Err ' + e);        
@@ -57,8 +55,8 @@ function getApps(){
         $('#aplicacion').html("<optgroup label='Aplicaciones'></optgroup>");
         var data= JSON.parse(e); 
         // Check for errors
-        if(data.iderr!=null){
-            alert(data.iderr + ': ' + data.mensaje)
+        if(data.ide!=null){
+            alert(data.ide + ': ' + data.error)
             return;
         }
         // populate select - aplicacion
@@ -93,8 +91,8 @@ function getRamas(){
         $('#rama').html("<optgroup label='Rama'></optgroup>");
         var data= JSON.parse(e); 
         // Check for errors
-        if(data.iderr!=null){
-            alert(data.iderr + ': ' + data.mensaje)
+        if(data.ide!=null){
+            alert(data.ide + ': ' + data.error)
             return;
         }
         // populate select aplicacion        
@@ -131,8 +129,8 @@ function getGroupsByAppName(){
         $('#grupo').html("");
         var data= JSON.parse(e); 
         // Check for errors
-        if(data.iderr!=null){
-            alert(data.iderr + ': ' + data.mensaje)
+        if(data.ide!=null){
+            alert(data.ide + ': ' + data.error)
             return;
         }
         // populate select aplicacion 

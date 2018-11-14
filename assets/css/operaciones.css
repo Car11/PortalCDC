@@ -1,0 +1,79 @@
+/*!
+ * Start Bootstrap - 3 Col Portfolio (https://startbootstrap.com/template-overviews/3-col-portfolio)
+ * Copyright 2013-2018 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio/blob/master/LICENSE)
+ */
+
+body {
+    padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+body {
+    padding-top: 56px;
+}
+}
+
+.portfolio-item {
+    margin-bottom: 30px;
+}
+
+.pagination {
+    margin-bottom: 30px;
+}
+
+.title-header{
+    margin-left:27px;
+    font-family:'News Cycle', sans-serif;
+    color:rgb(253,250,254);
+}
+
+.icon-header{
+    /* width="auto" height="auto" style=" */
+    width:43px;
+    margin:-26px;
+    margin-right:-27px;
+    margin-top:-32px;
+    margin-left:-33px;
+    margin-bottom:-31px;
+}
+
+.header-operacion {
+    background: #292c2f;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
+}
+
+.title-header:hover {
+    text-decoration: underline;
+}
+
+.footer-icon {
+    font-size:40px;
+    color:#f0f9ff;
+    float:left;
+    margin-left:1px;
+    margin-right:1px;
+    opacity:0.6;
+}
+
+.phone-1 {
+    font-size:40px;
+    color:#f0f9ff;
+    padding-right: 2em;
+    /* float:left; */
+    /* margin-left:-10px; */
+    /* margin-right:1px; */
+    opacity:0.6;
+}
+.phone-2 {
+    font-size:40px;
+    color:#f0f9ff;
+    /* padding-right: 2em; */
+    /* float:left; */
+    /* margin-left:-10px; */
+    /* margin-right:1px; */
+    opacity:0.6;
+}

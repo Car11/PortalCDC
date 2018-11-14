@@ -1,40 +1,36 @@
 <?php 
-define('ERROR_CONFI_FILE_NOT_FOUND', '-001');
-define('ERROR_CONN_ERR', '-002');
 
 class DATA {
     
-	public static $conn;    
+	public static $conn;
     private static $config="";
-    
+
 	private static function ConfiguracionIni(){
-        require_once('globals.php');
-        if (file_exists(Globals::configFile)) {
-            self::$config = parse_ini_file(Globals::configFile, true); 
-        }         
-        else throw new Exception('[ERROR] Acceso denegado al Archivo de configuración.',ERROR_CONFI_FILE_NOT_FOUND);
+        require_once('Globals.php'); 
+        if (file_exists('/var/ini/config.ini')) {
+            self::$config = parse_ini_file('/var/ini/config.ini',true); 
+        }       
+        else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);  
     }  
 
     private static function Conectar(){
         try {          
             self::ConfiguracionIni();
-            if(!isset(self::$conn)) {
-                self::$conn = new PDO('mysql:host='. self::$config[Globals::app]['host'] .';port='. self::$config[Globals::app]['port'] .';dbname=' . self::$config[Globals::app]['dbname'].';charset=utf8', self::$config[Globals::app]['username'],   self::$config[Globals::app]['password']); 
+            if(!isset(self::$conn)) {                                
+                self::$conn = new PDO('mysql:host='. self::$config[Globals::app]['host'] .';dbname=' . self::$config[Globals::app]['dbname'].';charset=utf8', self::$config[Globals::app]['username'],   self::$config[Globals::app]['password']); 
                 return self::$conn;
             }
         } catch (PDOException $e) {
-            throw new Exception('[ERROR] '.$e->getMessage(), $e->getCode());
+            throw new Exception($e->getMessage(),$e->getCode());
         }
         catch(Exception $e){
-            throw new Exception('[ERROR] '.$e->getMessage(),$e->getCode());
+            throw new Exception($e->getMessage(),$e->getCode());
         }
-    }
-    
-    // Ejecuta consulta SQL, $fetch = false envía los datos en 'crudo', $fetch=TRUE envía los datos en arreglo (fetchAll).
-    public static function Ejecutar($sql, $param=NULL, $fetch=true) {
+    }  
+
+    // Ejecuta consulta SQL, $op = true envía los datos en 'crudo', $op=false envía los datos en arreglo (fetch).
+    public static function Ejecutar($sql, $param=NULL, $op=false) {
         try{
-            error_reporting(0);
-        ini_set('error_reporting', 0);
             //conecta a BD
             self::Conectar();
             $st=self::$conn->prepare($sql);
@@ -42,11 +38,11 @@ class DATA {
             if($st->execute($param))
             {
                 self::$conn->commit(); 
-                if($fetch)
+                if(!$op)
                     return  $st->fetchAll();
                 else return $st;    
             } else {
-                throw new Exception('[ERROR] Error al ejecutar el comando en base de datos.',00);
+                throw new Exception('Error al ejecutar.',00);
             }            
         } catch (Exception $e) {
             if(isset(self::$conn))
@@ -55,6 +51,14 @@ class DATA {
                 throw new Exception($st->errorInfo()[2],$st->errorInfo()[1]);
             else throw new Exception($e->getMessage(),$e->getCode());
         }
+    }
+    
+	private static function Close(){
+		mysqli_close(self::$conn);			
+	}
+
+    public static function getLastID(){
+        return self::$conn->lastInsertId();
     }
 }
 ?>

@@ -30,7 +30,7 @@ $(document).ready( function () {
     LoadColumns();
     setInterval(function() {
         LoadColumns(); 
-    }, 10000);       
+    }, 300000);       
     // LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
@@ -646,7 +646,7 @@ function SaveTask(){
     textoDes = textoDes.replace(/\n/g,"<br>");
     textoDes = textoDes.replace(/\r/g,"<br>");
     textoDes = textoDes.replace(/\t/g,"<tab>");
-    textoDes = textoDes.replace(/"/g,"\"");
+    textoDes = textoDes.replace(/"/g,"'");
     
     // this.comment = this.comment.replace(/\n/g,"<br>");
     // this.comment = this.comment.replace(/\r/g,"<br>");

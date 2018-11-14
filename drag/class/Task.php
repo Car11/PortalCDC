@@ -1,12 +1,12 @@
 <?php
 if (!isset($_SESSION))
 session_start();
-require_once('../../class/globals.php');
-require_once("../../class/conexion.php");
+require_once('../../class/Globals.php');
+require_once("../../class/Conexion.php");
 require_once("../../class/Log.php");
 
 function __construct(){
-require_once("../../class/conexion.php");
+require_once("../../class/Conexion.php");
 require_once("../../class/Log.php");
 }
 

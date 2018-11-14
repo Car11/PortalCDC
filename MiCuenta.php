@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION))
     session_start();
-    include_once('class/globals.php');
+    include_once('class/Globals.php');
     // Sesion de usuario
     require_once("class/Sesion.php");
     $sesion = new Sesion();
@@ -40,6 +40,7 @@ if (!isset($_SESSION))
     <script src="assets/js/validator.min.js" ></script>
     
     <script src='assets/js/download.js'></script>
+    <link rel="icon" type="image/png" sizes="310x310" href="./assets/img/logos/favIcon/ms-icon-310x310.png">
 </head>
 
     <body>

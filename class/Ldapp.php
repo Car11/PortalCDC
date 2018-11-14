@@ -6,8 +6,8 @@ if(isset($_POST["action"])){
         case "Connect":
             $ldapp->username= $_POST["username"];
             $ldapp->password= $_POST["password"];
-            //$ldapp->ambiente= $_POST["ambiente"];
-            echo json_encode($ldapp->Connect());
+            $ldapp->ambiente= $_POST["ambiente"];
+            $ldapp->Connect();
             break;    
         // case "LoadPlantilla":
         //     $ldapp->username= $_POST["username"];
@@ -63,8 +63,8 @@ class LDAPP{
     function __construct(){
         if (!isset($_SESSION))
             session_start();
-        require_once('globals.php');
-        require_once("conexion.php");
+        require_once('Globals.php');
+        require_once("Conexion.php");
         require_once("Log.php");
         // carga configuración de conexión.
         Globals::ConfiguracionLdap();
@@ -75,7 +75,7 @@ class LDAPP{
             $adServer = "10.129.20.138";
             $ldapport = 389;
             $this->ldapconn = ldap_connect($adServer, $ldapport) or die(json_encode(array(
-                'iderr' => 'Could not connect to LDAP server',
+                'ide' => 'Could not connect to LDAP server',
                 'error' => 01))
             );
             if($this->ldapconn){
@@ -102,7 +102,7 @@ class LDAPP{
                     $dn = "ou=grupos,o=grupoice,o=ice";
                     //
                     $result=ldap_list($this->ldapconn, $dn, $filter) or die(json_encode(array(
-                        'iderr' => 'No se encontraron aplicaciones',
+                        'ide' => 'No se encontraron aplicaciones',
                         'error' => 02))
                     );
                     
@@ -137,32 +137,24 @@ class LDAPP{
    
     function Connect(){
         try{
-            error_reporting(1);
-            ini_set('error_reporting', 1);
             // Conexión
             $this->ldapconn = ldap_connect(Globals::$adServer, Globals::$ldapport) or die(json_encode(array(
                 'iderr' => 01,
-                'error' => 'No es posible conectar con LDAP.'))
+                'error' => 'No es posible conectar.'))
             );
             // Standard Login
             if($this->ldapconn){
                 ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
                 ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
-                // binding to ldap server with standard user
-                //$dn = "cn=*".$this->username."*,ou=empleados,o=grupoice,o=ice";
-                //$this->ldapbind = ldap_bind($this->ldapconn, $dn , $this->password);
+                // binding to ldap server with standard user      
+                $this->ldapbind = ldap_bind($this->ldapconn, $this->username, $this->password);
                 $this->ldapbind = ldap_bind($this->ldapconn, Globals::$userconn, Globals::$pwconn);
                 if ($this->ldapbind) {
-                    // valida usuario.
-                    // $dn = "o=grupoice,o=ice";
-                    // $filter="(|(cn=*$this->username*))";
-                    // //
-                    // $search=ldap_search($this->ldapconn, $dn, $filter);
                     return true;
                 }
                 else die(json_encode(array(
-                    'iderr' => 01,
-                    'mensaje' => 'No es posible conectar con LDAP.'))
+                    'id' => 01,
+                    'mensaje' => 'No es posible conectar.'))
                 );
             }
         }
@@ -172,7 +164,7 @@ class LDAPP{
             die(json_encode(array(
                 'iderr' => $e->getCode(),
                 'detalle'=> $e->getMessage(),
-                'error' => 'No es posible conectar con LDAP.'))
+                'error' => 'No es posible conectar.'))
             );
         }
     }
@@ -222,7 +214,7 @@ class LDAPP{
             die(json_encode(array(
                 'iderr' => $e->getCode(),
                 'detalle'=> $e->getMessage(),
-                'error' => 'No es posible conectar con LDAP.'))
+                'error' => 'No es posible conectar.'))
             );
         }
     }
@@ -258,7 +250,7 @@ class LDAPP{
             die(json_encode(array(
                 'iderr' => $e->getCode(),
                 'detalle'=> $e->getMessage(),
-                'error' => 'No es posible conectar con LDAP.'))
+                'error' => 'No es posible conectar.'))
             );
         }     
     }
@@ -300,7 +292,7 @@ class LDAPP{
             die(json_encode(array(
                 'iderr' => $e->getCode(),
                 'detalle'=> $e->getMessage(),
-                'error' => 'No es posible conectar con LDAP.'))
+                'error' => 'No es posible conectar.'))
             );
         }           
     }
