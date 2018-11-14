@@ -1,8 +1,5 @@
 <?php 
 
-error_log("Busca: ../../ini/config.ini");
-
-
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
