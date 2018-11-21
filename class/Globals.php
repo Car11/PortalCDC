@@ -15,8 +15,8 @@ class Globals {
     public static $pwconn="";
     
     public static function ConfiguracionIni(){     
-        if (file_exists('../../ini/config.ini')) {
-            self::$config = parse_ini_file('../../ini/config.ini',true); 
+        if (file_exists('../../../ini/config.ini')) {
+            self::$config = parse_ini_file('../../../ini/config.ini',true); 
         } 
         //
         self::$jsonrpcURL= self::$config[self::app]['jsonrpcURL'];

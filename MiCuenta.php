@@ -54,7 +54,7 @@ if (!isset($_SESSION))
         <div class="drag-container">
             <div class="row">
                 <div class="col-md-2 col-sm-2 col-xs-2">
-                    <span class="glyphicon glyphicon-search " id='btnSearch' style='cursor:pointer' aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-search " id='btnSearch' style='cursor:pointer;font-size: 35px;' aria-hidden="true"></span>
                 </div>
                 <div id='search' class="item form-group" style="display:none">
                     <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-1">
@@ -64,6 +64,7 @@ if (!isset($_SESSION))
                     <br>
                 </div>
             </div>
+                <br>
             <div class="row">
                 <ul class="drag-list" id="drag-list">
 

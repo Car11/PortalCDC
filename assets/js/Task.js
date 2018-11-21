@@ -457,13 +457,13 @@ function ShowTaskData(e){
     // carga lista con datos.
     var data= JSON.parse(e);
 
-    data[0].description = data[0].description.replace(/<br\s*[\/]?>/gi, "\n");
-    data[0].description = data[0].description.replace(/<tab\s*[\/]?>/gi, "\t");
-    data[0].description = data[0].description.replace(/'/g, '"');
-
+    // data[0].description = data[0].description.replace(/<br\s*[\/]?>/gi, "\n");
+    // data[0].description = data[0].description.replace(/<tab\s*[\/]?>/gi, "\t");
+    // data[0].description = data[0].description.replace(/'/g, '"');
+//FIN
     
     $("#title").val(data[0].title);
-    $("#description").html(data[0].description);  
+    $("#description").val(data[0].description);  
 
     if ((data[0].date_started).length > 2){
 
@@ -547,7 +547,7 @@ function showAttachments(e){
 
 function DeleteAttachmentEventHandler(){  
     //$(".modal").css({ display: "block" });  
-    idFile = $(this).parents("tr").find("td").eq(0).text();  //Columna 1 = ID tarea.
+    idFile =$(this).parents("tr").find("td").eq(0).text().trim();  //Columna 1 = ID tarea.
     $.ajax({
         type: "POST",
         url: "class/Task.php",
@@ -574,7 +574,7 @@ function DeleteAttachmentEventHandler(){
 
 function DownloadEventHandler(){  
     //$(".modal").css({ display: "block" });  
-    idFile = $(this).parents("tr").find("td").eq(0).text();  //Columna 1 = ID tarea.
+    idFile = $(this).parents("tr").find("td").eq(0).text().trim();  //Columna 1 = ID tarea.
     idName = $(this).parents("tr").find("td").eq(1).text().trim();  //Columna 2 = Nombre de Archivo.
 
     $.ajax({
@@ -643,10 +643,10 @@ function SaveTask(){
     // del texto asi como las tabulaciones, los saltos de linea y las comillas dobles.
     var textoDes = $("#description").val();
 
-    textoDes = textoDes.replace(/\n/g,"<br>");
-    textoDes = textoDes.replace(/\r/g,"<br>");
-    textoDes = textoDes.replace(/\t/g,"<tab>");
-    textoDes = textoDes.replace(/"/g,"'");
+    textoDes = textoDes.replace(/\n/g,"\n\r");
+    // textoDes = textoDes.replace(/\r/g,"<br>");
+    // textoDes = textoDes.replace(/\t/g,"<tab>");
+    // textoDes = textoDes.replace(/"/g,"'");
     
     // this.comment = this.comment.replace(/\n/g,"<br>");
     // this.comment = this.comment.replace(/\r/g,"<br>");
@@ -656,9 +656,9 @@ function SaveTask(){
     textoDes = $.trim(textoDes);
 
     var title_validate = $("#title").val();
-    title_validate = title_validate.split("\t").join(" ");
-    title_validate = title_validate.split("\n").join(" ");
-    title_validate = title_validate.split("\"").join("'");
+    // title_validate = title_validate.split("\t").join(" ");
+    // title_validate = title_validate.split("\n").join(" ");
+    // title_validate = title_validate.split("\"").join("'");
     title_validate = $.trim(title_validate);
     //
     $("table#dataTable tr").each(function(i, row) {
@@ -674,9 +674,9 @@ function SaveTask(){
         //if(desc_sub.length>2)
         //{
             varSubTask="1";
-            desc_sub = desc_sub.split("\t").join(" ");
-            desc_sub = desc_sub.split("\n").join(" ");
-            desc_sub = desc_sub.split("\"").join("'");
+            // desc_sub = desc_sub.split("\t").join(" ");
+            // desc_sub = desc_sub.split("\n").join(" ");
+            // desc_sub = desc_sub.split("\"").join("'");
             desc_sub = $.trim(desc_sub);
             subTaskElement = new Object();
             subTaskElement.title= desc_sub;
