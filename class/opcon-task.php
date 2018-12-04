@@ -1,5 +1,6 @@
 <?php
 try {
+    error_log('Inicio OpCon');
     //date_started sin convertir: 2018-02-10T12:59
     //date_started debe tener el siguiente formato: 02/10/2018 19:43  || mes/dia/año hora:min       
     $t_started = date("m/d/Y H:i", strtotime('04/12/2018 10:50'));
@@ -75,11 +76,13 @@ try {
     //         $this->addFilesToTask(($this->project_id), $this->id, $value2[0],$value2[1]);
     //     }
     // }
+    error_log('Fin OpCon');
 }
 catch (Exception $e){
-    header('HTTP/1.1 500 Internal Server XXX');
-    header('Content-Type: application/json; charset=UTF-8');
-    die(json_encode(array('message' => 'ERROR:' . $e, 'code' => 666)));
+    // header('HTTP/1.1 500 Internal Server XXX');
+    // header('Content-Type: application/json; charset=UTF-8');
+    // die(json_encode(array('message' => 'ERROR:' . $e, 'code' => 666)));
+    error_log('Error OpCon - php');
 }
 
 ?>
