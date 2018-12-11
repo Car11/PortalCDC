@@ -19,11 +19,13 @@ class DATA {
     private static function Conectar(){
         try {          
             self::ConfiguracionIni();
+            error_log("[DEBUG]  : TNS: " . self::$config[Globals::app]['tns']);
             if(!isset(self::$conn)) {                                
                 self::$conn = new PDO("oci:dbname=" . self::$config[Globals::app]['tns'] . ";charset=utf8", self::$config[Globals::app]['username'], self::$config[Globals::app]['password'], array(
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_EMULATE_PREPARES => false,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
+                    error_log("[DEBUG]  : CONN OK!!! ");
                 return self::$conn;
             }
         } catch (PDOException $e) {
