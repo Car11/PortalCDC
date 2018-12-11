@@ -3,7 +3,7 @@
 class DATA {
     
 	public static $conn;    
-    private static $config="";
+    private static $config="";    
     
 	private static function ConfiguracionIni(){
         require_once('Globals.php');
@@ -20,7 +20,10 @@ class DATA {
         try {          
             self::ConfiguracionIni();
             if(!isset(self::$conn)) {                                
-                self::$conn = new PDO('mysql:host='. self::$config[Globals::app]['host'] .';port='. self::$config[Globals::app]['port'] .';dbname=' . self::$config[Globals::app]['dbname'].';charset=utf8', self::$config[Globals::app]['username'],   self::$config[Globals::app]['password']); 
+                self::$conn = new PDO("oci:dbname=" . self::$config[Globals::app]['tns'] . ";charset=utf8", self::$config[Globals::app]['username'], self::$config[Globals::app]['password'], array(
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
                 return self::$conn;
             }
         } catch (PDOException $e) {
