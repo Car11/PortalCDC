@@ -7,9 +7,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="images/favicon.ico" type="image/ico" />
+  <link rel="icon" href="assets/images/favicon.ico" type="image/ico" />
 
-  <title>Operation MMS | </title>
+  <title>BRM Reporter | Dashboard </title>
 
   <!-- Bootstrap -->
   <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -26,13 +26,13 @@
   <link href="../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
   <!-- bootstrap-daterangepicker -->
   <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-  <link href="css/bootstrap-select.css" rel="stylesheet">
+  <link href="../../vendors/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
   <!-- Ion.RangeSlider -->
   <link href="../../vendors/normalize-css/normalize.css" rel="stylesheet">
   <link href="../../vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
   <link href="../../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
   <!-- Custom Theme Style -->
-  <link href="../build/css/custom.min.css" rel="stylesheet">
+  <link href="assets/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -41,7 +41,7 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-bullhorn"></i> <span>Operation MMS </span></a>
+            <a href="index.html" class="site_title"><i class="fa fa-bullhorn"></i> <span>BRM Reporter </span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -49,11 +49,11 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+              <img src="assets/images/img.jpg" alt="" class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
-              <h2>Jairo León</h2>
+              <!-- <h2>Jairo León</h2> -->
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -70,16 +70,16 @@
                     <li><a href="index.html">Dashboard</a></li>
                   </ul>
                 </li>
-                <li><a><i class="fa fa-edit"></i> MMS<span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-edit"></i> Mantenimiento<span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="form.html">Nuevo Componente</a></li>                    
+                    <!-- <li><a href="form.html">Nuevo Componente</a></li>                    
                     <li><a href="tables.html">Historial</a></li>
-                    <li><a href="form.html">Lista de Componentes</a></li>
+                    <li><a href="form.html">Lista de Componentes</a></li> -->
                   </ul>
                 </li>
-                <li><a><i class="fa fa-desktop"></i> Seguridad <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-desktop"></i> Reportes <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="tables2.html">General Elements</a></li>
+                    <!-- <li><a href="tables2.html">General Elements</a></li> -->
                   </ul>
                 </li>
               </ul>
@@ -208,11 +208,11 @@
         <!-- top tiles -->
         <div class="row tile_count">
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span id="paramA" class="count_top"><i class="fa fa-clock-o"></i> Factor de potencia R</span>
+            <span id="paramA" class="count_top"><i class="fa fa-clock-o"></i> Cantidad de Transacciones por minuto</span>
             <div id="paramCA" class="count">0.00</div>
             <span id="paramPA"class="count_bottom"><i class="green">0% </i> Actual</span>
           </div>
-          <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+          <!-- <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span id="paramB" class="count_top"><i class="fa fa-clock-o"></i> Factor de potencia S</span>
             <div id="paramCB" class="count">0.00</div>
             <span id="paramPB" class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Actual</span>
@@ -221,7 +221,7 @@
             <span id="paramC" class="count_top"><i class="fa fa-clock-o"></i> Factor de potencia T</span>
             <div  id="paramCC" class="count">0.00</div>
             <span id="paramPC"class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Actual</span>
-          </div>
+          </div> -->
         </div>
         <!-- /top tiles -->
 
@@ -243,14 +243,9 @@
 
                 <div class="item form-group">
                     <div class="col-md-3 col-sm-3 col-xs-3">
-                        <select class="selectpicker show-menu-arrow form-control" multiple id="tipo" name="tipo">
-                            <option value="1">Frecuencia</option>
-                            <option value="2" >Corriente Fase R</option>
-                            <option value="3" >Corriente Fase S</option>
-                            <option value="4" >Corriente Fase T</option>
-                            <option value="5" selected>Factor Potencia Fase R</option>
-                            <option value="6" >Factor Potencia Fase S</option>
-                            <option value="7" >Factor Potencia Fase T</option>                            
+                        <select class="selectpicker show-menu-arrow form-control" id="tipo" name="tipo">
+                            <option value="1" selected>Billing</option>
+                            <option value="2" >Invoice + Export</option>
                         </select>
                     </div>
                 </div>
@@ -274,19 +269,9 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-6">
-                    <p>Factor de potencia R</p>
+                    <p>Billing</p>
                     <!-- <input type="text" id="range_paramA" value="" name="" class="irs-hidden-input" > -->
                     <input type="hidden" id="range_paramA" value="" name="range" class="irs-hidden-input" readonly="">
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-6">
-                    <p>Factor de potencia S</p>
-                    <input type="hidden" id="range_paramB" value="" name="" class="irs-hidden-input" >
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-6">
-                    <p>Factor de potencia T</p>
-                    <input type="hidden" id="range_paramC" value="" name="" class="irs-hidden-input" >
                 </div>
 
                 <!-- <div class="col-md-12 col-sm-12 col-xs-6"> -->
@@ -336,7 +321,7 @@
           <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="x_panel tile fixed_height_320">
               <div class="x_title">
-                <h2>FACTOR DE POTENCIA R</h2>
+                <h2>Billing</h2>
                 <ul class="nav navbar-right panel_toolbox">
                 </ul>
                 <div class="clearfix"></div>
@@ -772,7 +757,7 @@
       <!-- footer content -->
       <footer>
         <div class="pull-right">
-          Operation MMS - Instituto Costarricense de Electricidad</a>
+          BRM Reporter - DTI - Instituto Costarricense de Electricidad</a>
         </div>
         <div class="clearfix"></div>
       </footer>
@@ -804,8 +789,8 @@
   <script src="../../vendors/Flot/jquery.flot.time.js"></script>
   <script src="../../vendors/Flot/jquery.flot.stack.js"></script>
   <script src="../../vendors/Flot/jquery.flot.resize.js"></script>
-  <script src="js/jquery.flot.selection.js" ></script>
-  <script src="js/jquery.flot.navigate.js" ></script>
+  <script src="assets/js/jquery.flot.selection.js" ></script>
+  <script src="assets/js/jquery.flot.navigate.js" ></script>
   <!-- Flot plugins -->
   <script src="../../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
   <script src="../../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
@@ -824,12 +809,12 @@
   <script src="../../vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
 
   <!-- JS  -->
-  <script src="js/monitoreo.js"></script>
-  <script src="js/tipo.js"></script>
-  <script src="js/bootstrap-select.js"></script>
+  <script src="assets/js/monitoreo.js"></script>
+  <script src="assets/js/tipo.js"></script>
+  <script src="../../vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
   <!-- Custom Theme Scripts -->
-  <script src="../build/js/custom.js"></script>
+  <script src="assets/js/custom.min.js"></script>
 
 </body>
 
