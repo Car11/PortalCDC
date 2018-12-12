@@ -21,7 +21,7 @@ class DATA {
             self::ConfiguracionIni();
             error_log("[DEBUG]  : TNS: " . self::$config[Globals::app]['tns']);
             if(!isset(self::$conn)) {                                
-                self::$conn = oci_connect(self::$config[Globals::app]['username'], self::$config[Globals::app]['password'], self::$config[Globals::app]['tns']);
+                self::$conn = OCILogon(self::$config[Globals::app]['username'], self::$config[Globals::app]['password'], self::$config[Globals::app]['tns']);
                 //new PDO("oci:dbname=" . self::$config[Globals::app]['tns'], self::$config[Globals::app]['username'], self::$config[Globals::app]['password']);
                 // , array(
                 //     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -46,20 +46,23 @@ class DATA {
         try{
             //conecta a BD
             self::Conectar();
-            $st=self::$conn->prepare($sql);
-            self::$conn->beginTransaction(); 
-            if($st->execute($param))
-            {
-                self::$conn->commit(); 
-                if($fetch)
-                    return  $st->fetchAll();
+            $st= oci_parse(self::$conn, $sql); 
+            $r= oci_execute($st);
+            if($r)
+            {                
+                if($fetch){
+                    $rows= oci_fetch_array($st, OCI_ASSOC+OCI_RETURN_NULLS);
+                    oci_free_statement($stid);
+                    oci_close($conn);
+                    return $rows;
+                }
                 else return $st;    
             } else {
                 throw new Exception('Error al ejecutar.',00);
             }            
         } catch (Exception $e) {
-            if(isset(self::$conn))
-                self::$conn->rollback(); 
+            // if(isset(self::$conn))
+            //     self::$conn->rollback(); 
             if(isset($st))
                 throw new Exception($st->errorInfo()[2],$st->errorInfo()[1]);
             else throw new Exception($e->getMessage(),$e->getCode());
