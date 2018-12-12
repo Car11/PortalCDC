@@ -53,7 +53,7 @@ class DATA {
                 if($fetch){
                     $rows= oci_fetch_array($st, OCI_ASSOC+OCI_RETURN_NULLS);
                     oci_free_statement($st);
-                    oci_close($conn);
+                    oci_close(self::$conn);
                     return $rows;
                 }
                 else return $st;    
