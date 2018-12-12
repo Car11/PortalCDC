@@ -26,9 +26,12 @@ class DATA {
                 // , array(
                 //     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 //     PDO::ATTR_EMULATE_PREPARES => false,
-                //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
-                error_log("[DEBUG]  : CONN OK!!! ");
-                return self::$conn;
+                //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));                
+                if($conn){
+                    error_log("[DEBUG]  : CONN OK!!! ");
+                    return self::$conn;
+                }
+                else throw new Exception('Error de Conexión.',-100);
             }
         } catch (PDOException $e) {
             throw new Exception($e->getMessage(),$e->getCode());
