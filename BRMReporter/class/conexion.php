@@ -53,14 +53,14 @@ class DATA {
             if($r)
             {                
                 if($fetch){
-                    //$rows= oci_fetch_array($st, OCI_ASSOC+OCI_RETURN_NULLS);
+                    $rows= oci_fetch_array($st, OCI_ASSOC);
                     // while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_LOBS)) {
                         
                     //     // In a loop, freeing the large variable before the 2nd fetch reduces PHP's peak memory usage
                     //     unset($row);  
                     // }
 
-                    while($row = oci_fetch_array($st_handle, OCI_ASSOC)) {
+                    while($row = oci_fetch_array($st, OCI_ASSOC)) {
                         error_log("[DEBUG]  : ROWS: " . $row['PROM']);
                         //var_dump($row['another_field']);
                     }
