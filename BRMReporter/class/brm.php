@@ -12,7 +12,7 @@ switch($_POST["action"]){
     case "readBilling":
         // $brm->brm= $_POST["username"];
         // $brm->contrasena= $_POST["password"];
-        $brm->readBilling(12,8,2018,00,00);
+        echo json_encode($brm->readBilling(12,8,2018,00,00));        
         break;      
 }
 }
@@ -35,6 +35,7 @@ class BRM{
                 order by HORA";
             //$param= array(':tsMin'=>'1544543190');
             $data = DATA::Ejecutar($sql);
+            return $data;
         }
         catch(Exception $e) {
             error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
