@@ -47,11 +47,14 @@ class DATA {
             //conecta a BD
             self::Conectar();
             $st= oci_parse(self::$conn, $sql); 
+            error_log("[DEBUG]  : ST: " . $st);
             $r= oci_execute($st);
+            error_log("[DEBUG]  : ST: " . $r);
             if($r)
             {                
                 if($fetch){
                     $rows= oci_fetch_array($st, OCI_ASSOC+OCI_RETURN_NULLS);
+                    error_log("[DEBUG]  : ST: " . $rows);
                     oci_free_statement($st);
                     oci_close(self::$conn);
                     return $rows;
