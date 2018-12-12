@@ -21,7 +21,7 @@ class DATA {
             self::ConfiguracionIni();
             error_log("[DEBUG]  : TNS: " . self::$config[Globals::app]['tns']);
             if(!isset(self::$conn)) {                                
-                self::$conn = new PDO("oci:dbname=" . self::$config[Globals::app]['tns'] . ";charset=utf8", self::$config[Globals::app]['username'], self::$config[Globals::app]['password']);
+                self::$conn = new PDO("oci:dbname=" . self::$config[Globals::app]['tns'], self::$config[Globals::app]['username'], self::$config[Globals::app]['password']);
                 // , array(
                 //     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 //     PDO::ATTR_EMULATE_PREPARES => false,
