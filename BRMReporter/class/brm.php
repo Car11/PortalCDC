@@ -49,7 +49,9 @@ class BRM{
                 array_push ($evento->data, [ $i, floatval($value['CANT'])]);
                 $i++;
             }
-            return $evento;
+            $resultado= [];
+            array_push ($resultado, $evento->data);
+            return $resultado;
         }
         catch(Exception $e) {
             error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());

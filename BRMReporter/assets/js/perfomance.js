@@ -162,8 +162,8 @@ class Performance {
 
     showEvents(e){
         var data = JSON.parse(e);
-        series = [[0, 3], [4, 8], [8, 5], [9, 13]];
-        //data; // event array.
+        series = data[0]; // event array.
+        //[[0, 3], [4, 8], [8, 5], [9, 13]];        
         if ($("#chart_plot_01").length) {
             plot= $.plot($("#chart_plot_01"),  series,
                 chart_plot_01_settings
