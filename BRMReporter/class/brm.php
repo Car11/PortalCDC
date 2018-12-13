@@ -50,7 +50,7 @@ class BRM{
                 $i++;
             }
             $resultado= [];
-            array_push ($resultado, $evento->data);
+            array_push ($resultado, $evento);
             return $resultado;
         }
         catch(Exception $e) {
