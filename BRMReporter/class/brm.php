@@ -35,7 +35,16 @@ class BRM{
                 order by HORA";
             //$param= array(':tsMin'=>'1544543190');
             $data = DATA::Ejecutar($sql);
-            return $data;
+            $evento = new varEvents();
+            $evento->label = 'Billing';
+            $evento->data = [];
+            $i =0;
+            foreach ($data as $key => $value){
+                //$_SESSION['ultMedicion']= $value['medicion'];
+                array_push ($evento->data, [ $i, floatval($value['CANT'])]);
+                $i++;
+            }
+            return $evento;
         }
         catch(Exception $e) {
             error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
