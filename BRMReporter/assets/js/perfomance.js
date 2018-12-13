@@ -162,7 +162,7 @@ class Performance {
 
     showEvents(e){
         var data = JSON.parse(e);
-        series = data["PROM"]; // event array.
+        series = data[1]; // event array.
         if ($("#chart_plot_01").length) {
             plot= $.plot($("#chart_plot_01"),  series,
                 chart_plot_01_settings
