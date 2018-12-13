@@ -25,9 +25,9 @@ class BRM{
     public static function readBilling($diadom, $mesdom, $anndom, $hora, $min){
         try{
             //long tsMin = app.TimeStampDom(app.MesDOM.ToString(), app.DiaDOM.ToString(), app.AnnDOM.ToString());//, ultimosminutos.Hour.ToString(), ultimosminutos.Minute.ToString(), "0");
-            error_log("[DEBUG]  : INICIANDO");
             $sql="SELECT  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') HORA,
-                    count(*) CANT , count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')))  MINN, 
+                    count(*) CANT ,                     
+                    count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')))  MINN, 
                     CAST( COUNT(*)/ count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi'))) AS DECIMAL(10,0) )PROM 
                 FROM bill_t
                 where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = '1543644000'

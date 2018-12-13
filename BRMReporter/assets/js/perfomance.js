@@ -566,10 +566,166 @@ class Performance {
                 .ajaxStart(NProgress.start)
                 .ajaxStop(NProgress.done);
         });
+        //
+        // tipo.id= $('#tipo').val();
+        // $('#tipo').change(function(){
+        //     tipo.id=this.value;
+        //     //tipo.readEvents;
+        // });
+        $('#btnIniciar').click(function(){
+            tipo.readEvents;
+            //rt= true;
+        });
+        $('#btnDetener').click(function(){
+            clearTimeout(rt);
+        });
+        // gauge
+        chart_gauge_settings = {
+            lines: 12,
+            angle: 0,
+            lineWidth: 0.4,
+            pointer: {
+                length: 0.75,
+                strokeWidth: 0.042,
+                color: '#1D212A'
+            },
+            limitMax: 'false',
+            colorStart: '#1ABC9C',
+            colorStop: '#1ABC9C',
+            strokeColor: '#F0F3F3',
+            generateGradient: true
+        };
+        chart_gauge_settings_err = {
+            lines: 12,
+            angle: 0,
+            lineWidth: 0.4,
+            pointer: {
+                length: 0.75,
+                strokeWidth: 0.042,
+                color: '#1D212A'
+            },
+            limitMax: 'false',
+            colorStart: '#CF2B25',
+            colorStop: '#CF644F',
+            strokeColor: '#F0F3F3',
+            generateGradient: true
+        }; 
+        //
+        var chart_gauge_elem = document.getElementById('chart_gauge_a');
+        var chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
+        chart_gauge.maxValue = 100;
+        chart_gauge.animationSpeed = 32;
+        chart_gauge.set(0);
+        chart_gauge.setTextField(document.getElementById("gauge-text"));
+        //
+        chart_gauge_elem = document.getElementById('chart_gauge_b');
+        chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
+        chart_gauge.maxValue = 100;
+        chart_gauge.animationSpeed = 32;
+        chart_gauge.set(0);
+        chart_gauge.setTextField(document.getElementById("gauge-text"));
+        //
+        chart_gauge_elem = document.getElementById('chart_gauge_c');
+        chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
+        chart_gauge.maxValue = 100;
+        chart_gauge.animationSpeed = 32;
+        chart_gauge.set(0);
+        chart_gauge.setTextField(document.getElementById("gauge-text"));
+        //configuracion del plot
+        chart_plot_01_settings = {
+            series: {
+            lines: {
+                show: false,
+                fill: true
+            },
+            splines: {
+                show: true,
+                tension: 0.1,
+                lineWidth: 1,
+                fill: 0.4
+            },
+            points: {
+                radius: 0,
+                show: true
+            },
+            shadowSize: 2
+            },
+            grid: {
+                verticalLines: true,
+                hoverable: true,
+                clickable: true,
+                tickColor: "#d5d5d5",
+                borderWidth: 1,
+                color: '#fff'
+            },
+            colors: ["rgba(38, 185, 154, 0.38)", "rgba(3, 88, 106, 0.38)"],
+            xaxis: {
+                tickColor: "rgba(51, 51, 51, 0.06)",
+                mode: "time",
+                tickSize: [1, "second"],
+                tickLength: 10,
+                axisLabel: "Fq",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 10
+            },
+            yaxis: {
+                ticks: 8,
+                tickColor: "rgba(51, 51, 51, 0.06)",
+                display: true,
+            },
+            tooltip: true,
+            zoom: {
+				interactive: true
+			},
+			pan: {
+				interactive: true
+			}
+        }
+        if( typeof ($.fn.ionRangeSlider) === 'undefined'){ return; }
+        //console.log('init_IonRangeSlider');
+        $("#range_paramA").ionRangeSlider({
+            type: "double",
+            min: 0,
+            max: 0,
+            from: 0,
+            to: 0,
+            step: 0,
+            grid: true,
+            grid_snap: true
+        });	
+        $("#range_paramB").ionRangeSlider({
+            type: "double",
+            min: 0,
+            max: 0,
+            from: 0,
+            to: 0,
+            step: 0,
+            grid: true,
+            grid_snap: true
+        });	
+        $("#range_paramC").ionRangeSlider({
+            type: "double",
+            min: 0,
+            max: 0,
+            from: 0,
+            to: 0,
+            step: 0,
+            grid: true,
+            grid_snap: true
+        });	
 
         
 
     };
 }
-
+var anterior=0;
+var rt= false;
+var ts;
+var series;
+var plot;
+var chart_gauge_settings;
+var chart_gauge_settings_err;
+var chart_plot_01_settings;
 let perf = new Performance();

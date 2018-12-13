@@ -19,7 +19,6 @@ class DATA {
     private static function Conectar(){
         try {          
             self::ConfiguracionIni();
-            error_log("[DEBUG]  : TNS: " . self::$config[Globals::app]['tns']);
             if(!isset(self::$conn)) {                                
                 self::$conn = OCILogon(self::$config[Globals::app]['username'], self::$config[Globals::app]['password'], self::$config[Globals::app]['tns']);
                 //new PDO("oci:dbname=" . self::$config[Globals::app]['tns'], self::$config[Globals::app]['username'], self::$config[Globals::app]['password']);
@@ -28,7 +27,6 @@ class DATA {
                 //     PDO::ATTR_EMULATE_PREPARES => false,
                 //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));                
                 if(self::$conn){
-                    error_log("[DEBUG]  : CONN OK!!! ");
                     return self::$conn;
                 }
                 else throw new Exception('Error de Conexión.',-100);
@@ -47,9 +45,7 @@ class DATA {
             //conecta a BD
             self::Conectar();
             $st= oci_parse(self::$conn, $sql); 
-            error_log("[DEBUG]  : ST: " . $st);
             $r= oci_execute($st);
-            error_log("[DEBUG]  : R: " . $r);
             if($r)
             {                
                 if($fetch){
