@@ -14,7 +14,12 @@ switch($_POST["action"]){
         // $brm->contrasena= $_POST["password"];
         echo json_encode($brm->readBilling(12,8,2018,00,00));        
         break;      
+    }
 }
+
+class varEvents{
+    public $data= [];
+    public $label='';
 }
 
 class BRM{
