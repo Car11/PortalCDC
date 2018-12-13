@@ -30,7 +30,7 @@ class BRM{
                     count(*) CANT , count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')))  MINN, 
                     CAST( COUNT(*)/ count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi'))) AS DECIMAL(10,0) )PROM 
                 FROM bill_t
-                where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = '1544292000000'
+                where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = '1543644000'
                 GROUP BY  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') 
                 order by HORA";
             //$param= array(':tsMin'=>'1544543190');
