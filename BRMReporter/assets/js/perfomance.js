@@ -162,14 +162,15 @@ class Performance {
 
     showEvents(e){
         var data = JSON.parse(e);
-        series = data; // event array.
+        series = [[0, 3], [4, 8], [8, 5], [9, 13]];
+        //data; // event array.
         if ($("#chart_plot_01").length) {
             plot= $.plot($("#chart_plot_01"),  series,
                 chart_plot_01_settings
             );
         }        
         // ultima toma
-        ts= series[0];
+        //ts= series[0];
         // debe recorrer los componentes seleccionados y desplegar los rangos, el % de cambio y el gauge.
         //$.each(data[0], function (i, item) {
             // rangos
