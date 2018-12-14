@@ -172,7 +172,7 @@ class Performance {
         // ultima toma
         ts= data[0];
         // debe recorrer los componentes seleccionados y desplegar los rangos, el % de cambio y el gauge.
-        $.each(data[0], function (i, item) {
+        $.each(data[0].data, function (i, item) {
             //rangos
             if (i==0)
                var range=  $("#range_paramA").data("ionRangeSlider");
