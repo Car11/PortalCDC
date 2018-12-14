@@ -173,7 +173,7 @@ class Performance {
         ts= data[0];
         // debe recorrer los componentes seleccionados y desplegar los rangos, el % de cambio y el gauge.
         $.each(data[0], function (i, item) {
-            rangos
+            //rangos
             if (i==0)
                var range=  $("#range_paramA").data("ionRangeSlider");
             
@@ -195,18 +195,18 @@ class Performance {
                     $('#paramCA').addClass('red');
                 else $('#paramCA').removeClass('red');
             }
-            else if (i==1){
-                $('#paramCB')[0].textContent = ultima;     
-                if(ultima<parseFloat(item.bajo))
-                    $('#paramCB').addClass('red');
-                else $('#paramCB').removeClass('red');  
-            }
-            else if (i==2){
-                $('#paramCC')[0].textContent = ultima;
-                if(ultima<parseFloat(item.bajo))
-                    $('#paramCC').addClass('red');
-                else $('#paramCC').removeClass('red');
-            }
+            // else if (i==1){
+            //     $('#paramCB')[0].textContent = ultima;     
+            //     if(ultima<parseFloat(item.bajo))
+            //         $('#paramCB').addClass('red');
+            //     else $('#paramCB').removeClass('red');  
+            // }
+            // else if (i==2){
+            //     $('#paramCC')[0].textContent = ultima;
+            //     if(ultima<parseFloat(item.bajo))
+            //         $('#paramCC').addClass('red');
+            //     else $('#paramCC').removeClass('red');
+            // }
             anterior= ultima;
             //actualiza GAUGE.
             var chart_gauge_elem;
@@ -217,14 +217,14 @@ class Performance {
                 chart_gauge_elem = document.getElementById('chart_gauge_a');
                 txt= document.getElementById("gauge-text-A");                
             }
-            else if (i==1){
-                chart_gauge_elem = document.getElementById('chart_gauge_b');
-                txt= document.getElementById("gauge-text-B");                
-            }
-            else if (i==2){
-                chart_gauge_elem = document.getElementById('chart_gauge_c');
-                txt= document.getElementById("gauge-text-C");
-            }
+            // else if (i==1){
+            //     chart_gauge_elem = document.getElementById('chart_gauge_b');
+            //     txt= document.getElementById("gauge-text-B");                
+            // }
+            // else if (i==2){
+            //     chart_gauge_elem = document.getElementById('chart_gauge_c');
+            //     txt= document.getElementById("gauge-text-C");
+            // }
             if(ultima<parseFloat(item.bajo))
                 chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings_err);
             else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
