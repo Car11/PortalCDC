@@ -188,13 +188,14 @@ class Performance {
                 grid_snap: true
             });
             // encabezado valor actual.
-            var ultima= parseFloat(item.ultMedicion);
-            if (i==0){
+            //var ultima= parseFloat(item.ultMedicion);
+            var ultima= parseFloat(item[1]); // cantidad
+            //if (i==0){
                 $('#paramCA')[0].textContent = ultima;
-                if(ultima<parseFloat(item.bajo))
+                if(ultima<parseFloat(1000))
                     $('#paramCA').addClass('red');
                 else $('#paramCA').removeClass('red');
-            }
+            //}
             // else if (i==1){
             //     $('#paramCB')[0].textContent = ultima;     
             //     if(ultima<parseFloat(item.bajo))
@@ -213,10 +214,10 @@ class Performance {
             var chart_gauge;
             var txt;            
             
-            if (i==0){
+            //if (i==0){
                 chart_gauge_elem = document.getElementById('chart_gauge_a');
                 txt= document.getElementById("gauge-text-A");                
-            }
+            //}
             // else if (i==1){
             //     chart_gauge_elem = document.getElementById('chart_gauge_b');
             //     txt= document.getElementById("gauge-text-B");                
@@ -225,15 +226,15 @@ class Performance {
             //     chart_gauge_elem = document.getElementById('chart_gauge_c');
             //     txt= document.getElementById("gauge-text-C");
             // }
-            if(ultima<parseFloat(item.bajo))
+            if(ultima<parseFloat(1000))
                 chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings_err);
             else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
             //
-            if(ultima>parseFloat(item.alto))
+            if(ultima>parseFloat(3500))
                 ultima = 100;
-            else if(ultima<parseFloat(item.bajo))
+            else if(ultima<parseFloat(1000))
                 ultima = 0;
-            else ultima= ultima*100/parseFloat(item.alto);
+            else ultima= ultima*100/parseFloat(3500);
             //            
             chart_gauge.maxValue = 100;
             chart_gauge.setMinValue(1);
