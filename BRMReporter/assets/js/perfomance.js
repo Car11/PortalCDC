@@ -181,8 +181,8 @@ class Performance {
                 type: "double",
                 min: 0,
                 max: 5000,
-                from: parseFloat(3500),
-                to: parseFloat(1000),
+                from: parseFloat(1000),
+                to: parseFloat(3500),
                 step: 500,
                 grid: true,
                 grid_snap: true
