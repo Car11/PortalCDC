@@ -170,78 +170,78 @@ class Performance {
             );
         }        
         // ultima toma
-        //ts= series[0];
+        ts= data[0];
         // debe recorrer los componentes seleccionados y desplegar los rangos, el % de cambio y el gauge.
-        //$.each(data[0], function (i, item) {
-            // rangos
-            //if (i==0)
-            //    var range=  $("#range_paramA").data("ionRangeSlider");
+        $.each(data[0], function (i, item) {
+            rangos
+            if (i==0)
+               var range=  $("#range_paramA").data("ionRangeSlider");
             
-        //    range.update({
-        //         type: "double",
-        //         min: 0,
-        //         max: 1.2,
-        //         from: parseFloat(item.bajo),
-        //         to: parseFloat(item.alto),
-        //         step: 0.1,
-        //         grid: true,
-        //         grid_snap: true
-        //     });
+           range.update({
+                type: "double",
+                min: 0,
+                max: 1.2,
+                from: parseFloat(item.bajo),
+                to: parseFloat(item.alto),
+                step: 0.1,
+                grid: true,
+                grid_snap: true
+            });
             // encabezado valor actual.
-            // var ultima= parseFloat(item.ultMedicion);
-            // if (i==0){
-            //     $('#paramCA')[0].textContent = ultima;
-            //     if(ultima<parseFloat(item.bajo))
-            //         $('#paramCA').addClass('red');
-            //     else $('#paramCA').removeClass('red');
-            // }
-            // else if (i==1){
-            //     $('#paramCB')[0].textContent = ultima;     
-            //     if(ultima<parseFloat(item.bajo))
-            //         $('#paramCB').addClass('red');
-            //     else $('#paramCB').removeClass('red');  
-            // }
-            // else if (i==2){
-            //     $('#paramCC')[0].textContent = ultima;
-            //     if(ultima<parseFloat(item.bajo))
-            //         $('#paramCC').addClass('red');
-            //     else $('#paramCC').removeClass('red');
-            // }
-            //anterior= ultima;
-            // actualiza GAUGE.
-            // var chart_gauge_elem;
-            // var chart_gauge;
-            // var txt;            
-            //
-            // if (i==0){
-            //     chart_gauge_elem = document.getElementById('chart_gauge_a');
-            //     txt= document.getElementById("gauge-text-A");                
-            // }
-            // else if (i==1){
-            //     chart_gauge_elem = document.getElementById('chart_gauge_b');
-            //     txt= document.getElementById("gauge-text-B");                
-            // }
-            // else if (i==2){
-            //     chart_gauge_elem = document.getElementById('chart_gauge_c');
-            //     txt= document.getElementById("gauge-text-C");
-            // }
-            // if(ultima<parseFloat(item.bajo))
-            //     chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings_err);
-            // else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
-            // //
-            // if(ultima>parseFloat(item.alto))
-            //     ultima = 100;
-            // else if(ultima<parseFloat(item.bajo))
-            //     ultima = 0;
-            // else ultima= ultima*100/parseFloat(item.alto);
-            // //            
-            // chart_gauge.maxValue = 100;
-            // chart_gauge.setMinValue(1);
-            // chart_gauge.animationSpeed = 10;
-            // chart_gauge.set(ultima);
-            // chart_gauge.setTextField(txt);   
+            var ultima= parseFloat(item.ultMedicion);
+            if (i==0){
+                $('#paramCA')[0].textContent = ultima;
+                if(ultima<parseFloat(item.bajo))
+                    $('#paramCA').addClass('red');
+                else $('#paramCA').removeClass('red');
+            }
+            else if (i==1){
+                $('#paramCB')[0].textContent = ultima;     
+                if(ultima<parseFloat(item.bajo))
+                    $('#paramCB').addClass('red');
+                else $('#paramCB').removeClass('red');  
+            }
+            else if (i==2){
+                $('#paramCC')[0].textContent = ultima;
+                if(ultima<parseFloat(item.bajo))
+                    $('#paramCC').addClass('red');
+                else $('#paramCC').removeClass('red');
+            }
+            anterior= ultima;
+            //actualiza GAUGE.
+            var chart_gauge_elem;
+            var chart_gauge;
+            var txt;            
             
-        // });
+            if (i==0){
+                chart_gauge_elem = document.getElementById('chart_gauge_a');
+                txt= document.getElementById("gauge-text-A");                
+            }
+            else if (i==1){
+                chart_gauge_elem = document.getElementById('chart_gauge_b');
+                txt= document.getElementById("gauge-text-B");                
+            }
+            else if (i==2){
+                chart_gauge_elem = document.getElementById('chart_gauge_c');
+                txt= document.getElementById("gauge-text-C");
+            }
+            if(ultima<parseFloat(item.bajo))
+                chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings_err);
+            else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
+            //
+            if(ultima>parseFloat(item.alto))
+                ultima = 100;
+            else if(ultima<parseFloat(item.bajo))
+                ultima = 0;
+            else ultima= ultima*100/parseFloat(item.alto);
+            //            
+            chart_gauge.maxValue = 100;
+            chart_gauge.setMinValue(1);
+            chart_gauge.animationSpeed = 10;
+            chart_gauge.set(ultima);
+            chart_gauge.setTextField(txt);   
+            
+        });
 
         // pendiente por hacer la consulta filtrada por fechas usando el control de fechas: reportrange.
 
@@ -616,19 +616,19 @@ class Performance {
         chart_gauge.set(0);
         chart_gauge.setTextField(document.getElementById("gauge-text"));
         //
-        chart_gauge_elem = document.getElementById('chart_gauge_b');
-        chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
-        chart_gauge.maxValue = 100;
-        chart_gauge.animationSpeed = 32;
-        chart_gauge.set(0);
-        chart_gauge.setTextField(document.getElementById("gauge-text"));
+//         chart_gauge_elem = document.getElementById('chart_gauge_b');
+//         chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
+//         chart_gauge.maxValue = 100;
+//         chart_gauge.animationSpeed = 32;
+//         chart_gauge.set(0);
+//         chart_gauge.setTextField(document.getElementById("gauge-text"));
         //
-        chart_gauge_elem = document.getElementById('chart_gauge_c');
-        chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
-        chart_gauge.maxValue = 100;
-        chart_gauge.animationSpeed = 32;
-        chart_gauge.set(0);
-        chart_gauge.setTextField(document.getElementById("gauge-text"));
+//         chart_gauge_elem = document.getElementById('chart_gauge_c');
+//         chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
+//         chart_gauge.maxValue = 100;
+//         chart_gauge.animationSpeed = 32;
+//         chart_gauge.set(0);
+//         chart_gauge.setTextField(document.getElementById("gauge-text"));
         //configuracion del plot
         chart_plot_01_settings = {
             series: {
