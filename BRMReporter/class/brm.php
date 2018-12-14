@@ -46,7 +46,8 @@ class BRM{
             $i =0;
             foreach ($data as $key => $value){
                 //$_SESSION['ultMedicion']= $value['medicion'];
-                error_log('Valor Cantidad ('.$i.'): '.$value['CANT']);
+                error_log('Valor Cantidad ('.$i.'): '.$value[0]);
+                error_log('Valor Cantidad2 ('.$i.'): '.$value[0][0]);
                 array_push ($evento->data, [ $i, floatval($value['CANT'])]);
                 $i++;
             }
