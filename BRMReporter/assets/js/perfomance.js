@@ -183,7 +183,7 @@ class Performance {
                 max: 5000,
                 from: parseFloat(3500),
                 to: parseFloat(1000),
-                step: 50,
+                step: 500,
                 grid: true,
                 grid_snap: true
             });
