@@ -174,16 +174,16 @@ class Performance {
         // debe recorrer los componentes seleccionados y desplegar los rangos, el % de cambio y el gauge.
         $.each(data[0].data, function (i, item) {
             //rangos
-            if (i==0)
-               var range=  $("#range_paramA").data("ionRangeSlider");
+            //if (i==0)
+            var range=  $("#range_paramA").data("ionRangeSlider");
             
-           range.update({
+            range.update({
                 type: "double",
                 min: 0,
-                max: 1.2,
-                from: parseFloat(item.bajo),
-                to: parseFloat(item.alto),
-                step: 0.1,
+                max: 5000,
+                from: parseFloat(3500),
+                to: parseFloat(1000),
+                step: 50,
                 grid: true,
                 grid_snap: true
             });
