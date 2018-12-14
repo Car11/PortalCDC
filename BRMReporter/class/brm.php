@@ -52,9 +52,9 @@ class BRM{
             //     $i++;
             // }
             
-            while($row = oci_fetch_array($st, OCI_ASSOC)) {
-                error_log("[DEBUG]  : ROWS: " . $row['PROM']);
-                //var_dump($row['another_field']);
+            while($row = oci_fetch_array($data, OCI_ASSOC)) {
+                array_push ($evento->data, [ $i, floatval($row['CANT'])]);
+                $i++;
             }
 
             $resultado= [];
