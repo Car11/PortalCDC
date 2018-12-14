@@ -615,7 +615,7 @@ class Performance {
         chart_gauge.maxValue = 100;
         chart_gauge.animationSpeed = 32;
         chart_gauge.set(0);
-        chart_gauge.setTextField(document.getElementById("gauge-text"));
+        chart_gauge.setTextField(document.getElementById("gauge-text-A"));
         //
 //         chart_gauge_elem = document.getElementById('chart_gauge_b');
 //         chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings);
