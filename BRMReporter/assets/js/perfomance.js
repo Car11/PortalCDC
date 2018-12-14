@@ -231,9 +231,9 @@ class Performance {
             else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
             //
             if(ultima>parseFloat(3500))
-                ultima = 100;
+                ultima = 1;
             else if(ultima<parseFloat(1000))
-                ultima = 0;
+                ultima = 100;
             else ultima= ultima*100/parseFloat(3500);
             //            
             chart_gauge.maxValue = 100;
