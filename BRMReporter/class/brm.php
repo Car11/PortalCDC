@@ -44,13 +44,19 @@ class BRM{
             $evento->label = 'Billing';
             $evento->data = [];
             $i =0;
-            foreach ($data as $key => $value){
-                //$_SESSION['ultMedicion']= $value['medicion'];
-                error_log('Valor Cantidad ('.$i.'): '.$value[2]);
-                //error_log('Valor Cantidad2 ('.$i.'): '.$value[0][0]);
-                array_push ($evento->data, [ $i, floatval($value[2])]);
-                $i++;
+            // foreach ($data as $key => $value){
+            //     //$_SESSION['ultMedicion']= $value['medicion'];
+            //     error_log('Valor Cantidad ('.$i.'): '.$value[2]);
+            //     //error_log('Valor Cantidad2 ('.$i.'): '.$value[0][0]);
+            //     array_push ($evento->data, [ $i, floatval($value[2])]);
+            //     $i++;
+            // }
+            
+            while($row = oci_fetch_array($st, OCI_ASSOC)) {
+                error_log("[DEBUG]  : ROWS: " . $row['PROM']);
+                //var_dump($row['another_field']);
             }
+
             $resultado= [];
             array_push ($resultado, $evento);
             return $resultado;
