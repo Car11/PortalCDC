@@ -37,7 +37,7 @@ class BRM{
             $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);      
             error_log('TimeStamp: '.$date->getTimestamp());
             $sql="SELECT   to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi') Fecha_Actual,
-                count(*)Cantidad
+                count(*) CANT
                 FROM     Bill_T
                 where end_t = 1545372000  and Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0
                 GROUP BY to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')
@@ -51,7 +51,8 @@ class BRM{
             $i =0;
                         
             while($row = oci_fetch_array($data, OCI_ASSOC)) {
-                array_push ($evento->data, [ $i, floatval($row['Cantidad'])]);
+                error_log('FETCH: '. $row);
+                array_push ($evento->data, [ $i, floatval($row['CANT'])]);
                 $i++;
             }
 
