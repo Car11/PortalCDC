@@ -29,7 +29,13 @@ class BRM{
     //
     public static function readBilling($diadom, $mesdom, $anndom, $hora, $min){
         try{
-            $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);            
+            error_log('*************************************');
+            error_log('*************************************');
+            error_log('************** INICIANDO ************');
+            error_log('*************************************');
+            error_log('*************************************');
+            $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);      
+            error_log('TimeStamp: '.$date->getTimestamp());
             $sql="SELECT  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') HORA,
                     count(*) CANT ,                     
                     count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')))  MINN, 
@@ -38,6 +44,7 @@ class BRM{
                 where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = '". $date->getTimestamp() ."'
                 GROUP BY  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') 
                 order by HORA";
+            error_log('SQL: '.$sql);
             //$param= array(':tsMin'=>'1544543190');
             $data = DATA::Ejecutar($sql);
             $evento = new varEvents();
