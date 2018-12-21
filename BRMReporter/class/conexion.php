@@ -60,14 +60,14 @@ class DATA {
                     //     unset($row);  
                     // }
 
-                    while($row = oci_fetch_array($st, OCI_ASSOC)) {
-                        error_log("[DEBUG]  : ROWS: " . $row['Cantidad']);
-                        //var_dump($row['another_field']);
-                    }
+                    // while($row = oci_fetch_array($st, OCI_ASSOC)) {
+                    //     error_log("[DEBUG]  : ROWS: " . $row['Cantidad']);
+                    //     //var_dump($row['another_field']);
+                    // }
                     //$row = oci_fetch_array($st, OCI_ASSOC);
                     //oci_free_statement($st);
                     oci_close(self::$conn);
-                    error_log("[DEBUG]  : RETURN " . $st);
+                    //error_log("[DEBUG]  : RETURN " . $st);
                     return $st;
                 }
                 else return $st;    
