@@ -61,7 +61,7 @@ class DATA {
                     // }
 
                     while($row = oci_fetch_array($st, OCI_ASSOC)) {
-                        error_log("[DEBUG]  : ROWS: " . $row['PROM']);
+                        error_log("[DEBUG]  : ROWS: " . $row['Cantidad']);
                         //var_dump($row['another_field']);
                     }
                     //$row = oci_fetch_array($st, OCI_ASSOC);
