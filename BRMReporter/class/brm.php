@@ -12,7 +12,7 @@ switch($_POST["action"]){
     case "readBilling":
         // $brm->brm= $_POST["username"];
         // $brm->contrasena= $_POST["password"];
-        echo json_encode($brm->readBilling(12,8,2018,00,00));        
+        echo json_encode($brm->readBilling(21,12,2018,17,'00'));        
         break;      
     }
 }
@@ -29,13 +29,13 @@ class BRM{
     //
     public static function readBilling($diadom, $mesdom, $anndom, $hora, $min){
         try{
-            //long tsMin = app.TimeStampDom(app.MesDOM.ToString(), app.DiaDOM.ToString(), app.AnnDOM.ToString());//, ultimosminutos.Hour.ToString(), ultimosminutos.Minute.ToString(), "0");
+            $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);            
             $sql="SELECT  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') HORA,
                     count(*) CANT ,                     
                     count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')))  MINN, 
                     CAST( COUNT(*)/ count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi'))) AS DECIMAL(10,0) )PROM 
                 FROM bill_t
-                where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = '1538373600'
+                where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = ". $date->getTimestamp() ."
                 GROUP BY  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') 
                 order by HORA";
             //$param= array(':tsMin'=>'1544543190');
