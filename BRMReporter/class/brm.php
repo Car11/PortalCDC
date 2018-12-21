@@ -36,31 +36,22 @@ class BRM{
             error_log('*************************************');
             $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);      
             error_log('TimeStamp: '.$date->getTimestamp());
-            $sql="SELECT  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') HORA,
-                    count(*) CANT ,                     
-                    count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')))  MINN, 
-                    CAST( COUNT(*)/ count(DISTINCT( to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi'))) AS DECIMAL(10,0) )PROM 
-                FROM bill_t
-                where Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0 and  end_t = '". $date->getTimestamp() ."'
-                GROUP BY  to_char (TO_DATE('31-12-1969 23:00','dd-mm-yyyy hh24:mi')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24') 
-                order by HORA";
-            error_log('SQL: '.$sql);
+            $sql="SELECT   to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi') Fecha_Actual,
+                count(*)Cantidad
+                FROM     Bill_T
+                where end_t = '".$date->getTimestamp()."'  and Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0
+                GROUP BY to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')
+                ORDER BY 1 desc";
+            // error_log('SQL: '.$sql);
             //$param= array(':tsMin'=>'1544543190');
             $data = DATA::Ejecutar($sql);
             $evento = new varEvents();
             $evento->label = 'Billing';
             $evento->data = [];
             $i =0;
-            foreach ($data as $key => $value){
-                //$_SESSION['ultMedicion']= $value['medicion'];
-                error_log('Valor Cantidad ('.$i.'): '.$value[2]);
-                //error_log('Valor Cantidad2 ('.$i.'): '.$value[0][0]);
-                array_push ($evento->data, [ $i, floatval($value[2])]);
-                $i++;
-            }
-            
+                        
             while($row = oci_fetch_array($data, OCI_ASSOC)) {
-                array_push ($evento->data, [ $i, floatval($row['CANT'])]);
+                array_push ($evento->data, [ $i, floatval($row['Cantidad'])]);
                 $i++;
             }
 
