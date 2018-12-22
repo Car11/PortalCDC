@@ -572,7 +572,7 @@ class Performance {
         //     //tipo.readEvents;
         // });
         $('#btnIniciar').click(function(){
-            perf.readEvents;
+            perf.readBilling;
             //rt= true;
         });
         $('#btnDetener').click(function(){
