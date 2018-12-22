@@ -12,7 +12,7 @@ switch($_POST["action"]){
     case "readBilling":
         // $brm->brm= $_POST["username"];
         // $brm->contrasena= $_POST["password"];
-        echo json_encode($brm->readBilling(21,12,2018,17,'00'));        
+        echo json_encode($brm->readBilling(21,12,2018,'00','00'));
         break;      
     }
 }
