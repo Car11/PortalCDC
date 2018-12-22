@@ -226,20 +226,20 @@ class Performance {
             //     chart_gauge_elem = document.getElementById('chart_gauge_c');
             //     txt= document.getElementById("gauge-text-C");
             // }
-            if(ultima<parseFloat(1000))
-                chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings_err);
-            else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
-            //
-            if(ultima>parseFloat(3500))
-                ultima = 1;
-            else if(ultima<parseFloat(1000))
-                ultima = 100;
-            else ultima= ultima*100/parseFloat(3500);
-            //            
-            chart_gauge.maxValue = 100;
-            chart_gauge.setMinValue(1);
-            chart_gauge.animationSpeed = 10;
-            chart_gauge.set(ultima);
+            // if(ultima<parseFloat(1000))
+            //     chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings_err);
+            // else chart_gauge = new Gauge(chart_gauge_elem).setOptions(chart_gauge_settings); 
+            // //
+            // if(ultima>parseFloat(3500))
+            //     ultima = 1;
+            // else if(ultima<parseFloat(1000))
+            //     ultima = 100;
+            // else ultima= ultima*100/parseFloat(3500);
+            // //            
+            // chart_gauge.maxValue = 100;
+            // chart_gauge.setMinValue(1);
+            // chart_gauge.animationSpeed = 10;
+            // chart_gauge.set(ultima);
             chart_gauge.setTextField(txt);   
             
         });
