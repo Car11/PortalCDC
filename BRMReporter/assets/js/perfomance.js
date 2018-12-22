@@ -32,10 +32,7 @@ class Performance {
             }
         })
             .done(function (e) {
-                perf.showEvents(e);
-                rt= setInterval(function() {
-                    perf.readBilling;    
-                }, 30000); 
+                perf.showEvents(e);                
             })
             .fail(function (e) {
                 perf.showError(e);
@@ -573,6 +570,9 @@ class Performance {
         // });
         $('#btnIniciar').click(function(){
             perf.readBilling;
+            rt= setInterval(function() {
+                perf.readBilling;    
+            }, 30000); 
             //rt= true;
         });
         $('#btnDetener').click(function(){
