@@ -49,10 +49,8 @@ class DATA {
             $st= oci_parse(self::$conn, $sql); 
             $r= oci_execute($st);
             if($r)
-            {           
-                error_log("[DEBUG]  : R OK!!! ");     
+            {
                 if($fetch){
-                    error_log("[DEBUG]  : FETCH");
                     // $rows= oci_fetch_array($st, OCI_ASSOC);
                     // while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_LOBS)) {
                         

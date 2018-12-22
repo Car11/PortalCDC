@@ -34,16 +34,13 @@ class BRM{
             error_log('************** INICIANDO ************');
             error_log('*************************************');
             error_log('*************************************');
-            $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);      
-            error_log('TimeStamp: '.$date->getTimestamp());
+            $date=date_create_from_format("Y-m-d H:i",$anndom.'-'.$mesdom.'-'.$diadom.' '.$hora.':'.$min);
             $sql="SELECT   to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi') Fecha_Actual,
                 count(*) CANT
                 FROM     Bill_T
                 where end_t = ".$date->getTimestamp()."  and Name = 'PIN Bill' and INVOICE_OBJ_ID0 = 0
                 GROUP BY to_char (TO_DATE('31-12-1969 23:00:00','dd-mm-yyyy hh24:mi:ss')+(MOD_T-(5*60*60))/86400, 'yyyy-mm-dd hh24:mi')
                 ORDER BY 1 desc";
-            // error_log('SQL: '.$sql);
-            //$param= array(':tsMin'=>'1544543190');
             $data = DATA::Ejecutar($sql);
             $evento = new varEvents();
             $evento->label = 'Billing';
@@ -51,13 +48,13 @@ class BRM{
             $i =0;
                         
             while($row = oci_fetch_array($data, OCI_ASSOC)) {
-                error_log('FETCH: '. $row);
                 array_push ($evento->data, [ $i, floatval($row['CANT'])]);
                 $i++;
             }
 
             $resultado= [];
             array_push ($resultado, $evento);
+            error_log('************** FIN  ************');
             return $resultado;
         }
         catch(Exception $e) {
