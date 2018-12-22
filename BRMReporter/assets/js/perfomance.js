@@ -218,8 +218,8 @@ class Performance {
             var txt;            
             
             //if (i==0){
-                chart_gauge_elem = document.getElementById('chart_gauge_a');
-                txt= document.getElementById("gauge-text-A");                
+                //chart_gauge_elem = document.getElementById('chart_gauge_a');
+                //txt= document.getElementById("gauge-text-A");                
             //}
             // else if (i==1){
             //     chart_gauge_elem = document.getElementById('chart_gauge_b');
@@ -243,7 +243,7 @@ class Performance {
             // chart_gauge.setMinValue(1);
             // chart_gauge.animationSpeed = 10;
             // chart_gauge.set(ultima);
-            chart_gauge.setTextField(txt);   
+            //chart_gauge.setTextField(txt);   
             
         });
 
