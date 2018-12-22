@@ -35,7 +35,7 @@ class Performance {
                 perf.showEvents(e);
                 rt= setInterval(function() {
                     perf.readBilling;    
-                }, 300000); 
+                }, 30000); 
             })
             .fail(function (e) {
                 perf.showError(e);
