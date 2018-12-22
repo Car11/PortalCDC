@@ -33,6 +33,9 @@ class Performance {
         })
             .done(function (e) {
                 perf.showEvents(e);
+                rt= setInterval(function() {
+                    perf.readBilling;    
+                }, 300000); 
             })
             .fail(function (e) {
                 perf.showError(e);
@@ -557,6 +560,9 @@ class Performance {
         });
         $('#btnIniciar').click(function () {
             perf.readBilling;
+        });
+        $('#btnDetener').click(function(){
+            clearTimeout(rt);
         });
         //NProgress
         $(function()
