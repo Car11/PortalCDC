@@ -558,12 +558,6 @@ class Performance {
         $('#reload').click(function () {
             location.reload();
         });
-        $('#btnIniciar').click(function () {
-            perf.readBilling;
-        });
-        $('#btnDetener').click(function(){
-            clearTimeout(rt);
-        });
         //NProgress
         $(function()
         {
