@@ -8,12 +8,26 @@
         <h1>Cron Task</h1>
         <?php
         // Datos de la base de datos
+        //PRODUCCION
         $usuario = "operti";
         $password = "b7F3sW7P*8g-4b_e";
         $servidor = "10.3.2.197";
         $basededatos = "kanboard";
-        $jsonRPC = "http://10.3.2.197/kanboard/jsonrpc.php";
+        $jsonRPC = "http://" . $servidor . "/kanboard/jsonrpc.php";
         $authorization = "anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg";
+
+
+        // Datos de la base de datos
+        //DESARROLLO
+        // $usuario = "operti";
+        // $password = "SanPedro1";
+        // $servidor = "10.3.2.156";
+        // $basededatos = "kanboard";
+        // $jsonRPC = "http://". $servidor ."/kanboard/jsonrpc.php";
+        // $authorization = "anNvbnJwYzo2ZmZhNWVmMzczM2U5YzBiOGJhMDA2ZmI5ODkzMzFhOTRiOWU4NzRkYTk5OWYwZjhkNzJmMTljMzNkZjg";
+       
+
+
 
         // creación de la conexión a la base de datos con mysql_connect()
         $conexion = mysqli_connect( $servidor, $usuario, $password ) or die ("No se ha podido conectar al servidor de Base de datos");
@@ -67,8 +81,34 @@
             $curl = curl_init();
             global $jsonRPC;
             global $authorization;
-            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $id . ", \"params\": { \"owner_id\": " . $user_id . ", \"creator_id\": 0, \"date_due\": \"\", \"description\": \"" . $detail . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $title .  "\", \"project_id\": " . $project_id . ", \"color_id\": \"green\", \"column_id\": " . $column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
-            // echo $cadenaRapida;
+
+
+
+
+            $task = new stdClass();
+            $detalleTask = new stdClass();
+
+            $detalleTask->owner_id = $user_id;
+            $detalleTask->creator_id = 0;
+            $detalleTask->description = $detail;
+            $detalleTask->category_id = 0;
+            $detalleTask->score = 0;
+            $detalleTask->title =  $title;
+            $detalleTask->project_id = $project_id;
+            $detalleTask->color_id = "green";
+            // $detalleTask->column_id = $column_id;
+            // $detalleTask->date_started = $t_started;
+            $detalleTask->recurrence_status = 0;
+            $detalleTask->recurrence_trigger = 0;
+            $detalleTask->recurrence_factor = 0;
+            $detalleTask->recurrence_timeframe = 0;
+            $detalleTask->recurrence_basedate = 0;
+
+            $task->jsonrpc = "2.0";
+            $task->method = "createTask";
+            $task->id = $id;
+            $task->params = $detalleTask;
+
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $jsonRPC,
                 CURLOPT_RETURNTRANSFER => true,
@@ -77,7 +117,7 @@
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $cadenaRapida,
+                CURLOPT_POSTFIELDS => json_encode($task),
                 CURLOPT_HTTPHEADER => array(
                 "authorization: Basic " . $authorization ."=",
                 "cache-control: no-cache",
@@ -89,20 +129,9 @@
 
             $response = curl_exec($curl);
             $err = curl_error($curl);
-            //echo $response;
-            $id_new_task = "";
-
-            $inicio = strpos($response, ":",20);
-            $inicio =$inicio+1;
-            $fin = strrpos($response, ",");
-            //echo "Busca ':' inicio: ".$inicio." / Busca ',' Fin: ".$fin; 
             
-             //( string $response , mixed ":" [, int $caracter_de_inicio = 20 ] )
-            //int $fin ( string $response , mixed "," [, int $caracter_de_inicio2 = 20 ] )
-            for ($i = $inicio; $i < $fin; $i++) {
-                $id_new_task = "{$id_new_task}{$response[$i]}";
-            }
-            //echo "El numero de la nueva tarea es: ".$id_new_task;
+            $id_new_task = json_decode($response)->result;
+
             curl_close($curl);
 
             if ($err) {
@@ -148,7 +177,18 @@
                     
             global $jsonRPC;
             global $authorization;
-            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createSubtask\", \"id\": 2041554661, \"params\": { \"task_id\":" . $id_scheduled_task . ", \"title\": \"" . $title . "\" } }";
+
+
+            $objSubTask = new stdClass();
+
+            $detalleSubTask->task_id = $id_scheduled_task;
+            $detalleSubTask->title = $title;
+
+            $objSubTask->jsonrpc = "2.0";
+            $objSubTask->method = "createSubtask";
+            $objSubTask->id = "2041554661";
+            $objSubTask->params = $detalleSubTask;
+
             $curl = curl_init();
             curl_setopt_array($curl, array(
             CURLOPT_URL => $jsonRPC,
@@ -158,7 +198,8 @@
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $cadenaRapida,
+            // CURLOPT_POSTFIELDS => $cadenaRapida,
+            CURLOPT_POSTFIELDS => json_encode($objSubTask),
             CURLOPT_HTTPHEADER => array(
                 "authorization: Basic " . $authorization ."=",
                 "cache-control: no-cache",

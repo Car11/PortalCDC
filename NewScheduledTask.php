@@ -1,41 +1,41 @@
   <?php
-if (!isset($_SESSION))
-session_start();
+// if (!isset($_SESSION))
+// session_start();
 include_once('class/Globals.php');
-// Sesion de usuario
-require_once("class/Sesion.php");
-$sesion = new Sesion();
-if (!$sesion->estado){
-  $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
-  header('Location: Login.php');
-  exit;
-}
+// // Sesion de usuario
+// require_once("class/Sesion.php");
+// $sesion = new Sesion();
+// if (!$sesion->estado){
+//   $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
+//   header('Location: Login.php');
+//   exit;
+// }
 
 ?>
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Tareas Programdas</title>
+    <title>Tareas Programadas</title>
     <!-- JS  -->
-    <script src="js/jquery.js" type="text/jscript"></script> -->
-    <script src="js/datatables.js" type="text/javascript" charset="utf8"></script>
-    <script src="js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js"></script> 
-    <script src="js/sweetalert.min.js"></script> 
-    <script src="js/sweetalert.js"></script> 
+    <script src="assets/js/jquery.min.js" type="text/jscript"></script> 
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+    <script src="assets/js/datatables.js" type="text/javascript" charset="utf8"></script>
+    <script src="assets/js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>
+    <script src="assets/js/sweetalert.min.js"></script> 
+    <script src="assets/js/sweetalert.js"></script> 
          <!-- CSS de Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.css">  
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.css">   -->
     <!-- CSS -->     
-    <link rel="stylesheet" href="css/sweetalert.css?v=<?php echo Globals::cssversion; ?>" />
-    <link rel="stylesheet" href="css/Style-ScheduledTask.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="assets/css/sweetalert.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css?v=<?php echo Globals::cssversion; ?>" />
     <link href="css/Style-Base.css?v= <?php echo Globals::cssversion; ?>" rel="stylesheet" />
-    <link rel="stylesheet" href="css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" />
-    <link rel="stylesheet" href="css/Modal.css?v=<?php echo Globals::cssversion; ?>" />
-    <link rel="stylesheet" href="css/Style-Task.css?v=<?php echo Globals::cssversion; ?>" />
-    <link rel="stylesheet" href="css/datatables.css" type="text/css"/>       
-    <link rel="icon" type="image/png" sizes="310x310" href="./assets/img/logos/favIcon/ms-icon-310x310.png">
+    <!-- <link rel="stylesheet" href="assets/css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" /> -->
+    <link rel="stylesheet" href="assets/css/Modal.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="assets/css/Style-Task.css?v=<?php echo Globals::cssversion; ?>" />
+    <link rel="stylesheet" href="assets/css/datatables.css" type="text/css"/>       
+    <!-- <link rel="icon" type="image/png" sizes="310x310" href="./assets/img/logos/favIcon/ms-icon-310x310.png"> -->
     
 
 </head>
@@ -49,9 +49,9 @@ if (!$sesion->estado){
         <div id="signin">
             <span>Usuario: 
                 <?php
-                if ($sesion->estado) {
-                    print $_SESSION['username'];                    
-                } 
+                // if ($sesion->estado) {
+                //     print $_SESSION['username'];                    
+                // } 
                 ?>
             </span>
         </div>
