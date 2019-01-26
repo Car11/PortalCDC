@@ -7,12 +7,21 @@
     <body>
         <h1>Cron Task</h1>
         <?php
+        
+        // require_once('Globals.php');
+        
+        // Globals::ConfiguracionIni();
+        
+        // function __construct(){
+        //     require_once("conexion.php");
+        //     require_once("Log.php");
+        // }
         // Datos de la base de datos
         $usuario = "operti";
         $password = "SanPedro1";
-        $servidor = "10.129.20.177";
+        $servidor = "10.3.2.156";
         $basededatos = "kanboard";
-        $jsonRPC = "http://10.129.20.177/kanboard/jsonrpc.php";
+        $jsonRPC = "http://". $servidor ."/kanboard/jsonrpc.php";
         $authorization = "anNvbnJwYzphZWUzYzQ0YmZhZTJiZTg2MDRjYjU2MGQ5MDdiM2E3M2ViZjE4OTY4OWM0YTQ1ZDY0YTdmNmExYWY1Yzc";
 
         // creación de la conexión a la base de datos con mysql_connect()
@@ -61,7 +70,39 @@
             global $jsonRPC;
             global $authorization;
 
-            $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $id . ", \"params\": { \"owner_id\": 1, \"creator_id\": 0, \"date_due\": \"\", \"description\": \"" . $detail . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $title .  "\", \"project_id\": " . $project_id . ", \"color_id\": \"green\", \"column_id\": " . $column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
+            $task = new stdClass();
+            $detalleTask = new stdClass();
+
+            $detalleTask->owner_id = 1;
+            $detalleTask->creator_id = 0;
+            $detalleTask->description = $detail;
+            $detalleTask->category_id = 0;
+            $detalleTask->score = 0;
+            $detalleTask->title =  $title;
+            $detalleTask->project_id = $project_id;
+            $detalleTask->color_id = "green";
+            // $detalleTask->date_due = $t_due;
+            // $detalleTask->date_started = $t_started;
+            $detalleTask->recurrence_status = 0;
+            $detalleTask->recurrence_trigger = 0;
+            $detalleTask->recurrence_factor = 0;
+            $detalleTask->recurrence_timeframe = 0;
+            $detalleTask->recurrence_basedate = 0;
+
+            $task->jsonrpc = "2.0";
+            $task->method = "createTask";
+            $task->id = $id;
+            $task->params = $detalleTask;
+
+
+            // $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $id . ", \"params\": 
+            //     { \"owner_id\": 1, \"creator_id\": 0, \"date_due\": \"\", \"description\": \"" . $detail . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $title .  "\",
+            //       \"project_id\": " . $project_id . ", \"color_id\": \"green\", \"column_id\": " . $column_id . ", 
+            //       \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, 
+            //       \"recurrence_basedate\": 0 } }";
+            
+            
+            // $cadenaRapida = "{ \"jsonrpc\": \"2.0\", \"method\": \"createTask\", \"id\": " . $id . ", \"params\": { \"owner_id\": 1, \"creator_id\": 0, \"date_due\": \"\", \"description\": \"" . $detail . "\", \"category_id\": 0, \"score\": 0, \"title\": \"" . $title .  "\", \"project_id\": " . $project_id . ", \"color_id\": \"green\", \"column_id\": " . $column_id . ", \"recurrence_status\": 0, \"recurrence_trigger\": 0, \"recurrence_factor\": 0, \"recurrence_timeframe\": 0, \"recurrence_basedate\": 0 } }";
             //echo $cadenaRapida;
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $jsonRPC,
@@ -71,7 +112,7 @@
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $cadenaRapida,
+                CURLOPT_POSTFIELDS => json_encode($task),
                 CURLOPT_HTTPHEADER => array(
                 "authorization: Basic " . $authorization ."=",
                 "cache-control: no-cache",

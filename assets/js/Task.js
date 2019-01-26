@@ -644,21 +644,9 @@ function SaveTask(){
     var textoDes = $("#description").val();
 
     textoDes = textoDes.replace(/\n/g,"\n\r");
-    // textoDes = textoDes.replace(/\r/g,"<br>");
-    // textoDes = textoDes.replace(/\t/g,"<tab>");
-    // textoDes = textoDes.replace(/"/g,"'");
-    
-    // this.comment = this.comment.replace(/\n/g,"<br>");
-    // this.comment = this.comment.replace(/\r/g,"<br>");
-    // textoDes = textoDes.split("\t").join(" ");
-    // textoDes = textoDes.split("\n").join(" ");
-    // textoDes = textoDes.split("\"").join("'");
     textoDes = $.trim(textoDes);
 
     var title_validate = $("#title").val();
-    // title_validate = title_validate.split("\t").join(" ");
-    // title_validate = title_validate.split("\n").join(" ");
-    // title_validate = title_validate.split("\"").join("'");
     title_validate = $.trim(title_validate);
     //
     $("table#dataTable tr").each(function(i, row) {

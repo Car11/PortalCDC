@@ -106,15 +106,21 @@ class Comment{
     function Insert(){
         try {
             $curl = curl_init();
-            $cadenaRapida = "{\"jsonrpc\": \"2.0\",
-                \"method\": \"createComment\",
-                \"id\": \"156\",
-                \"params\": { 
-                    \"task_id\": \"$this->taskId\",
-                    \"user_id\": \"$this->userId\",
-                    \"content\": \"". utf8_encode($this->comment) ."\"
-                } 
-            }";
+
+
+
+            $objComment = new stdClass();
+            $detalleObjComment = new stdClass();
+            
+            $detalleObjComment->task_id = $this->taskId;
+            $detalleObjComment->user_id = $this->userId;
+            $detalleObjComment->content = utf8_encode($this->comment);
+
+            $objComment->jsonrpc = "2.0";
+            $objComment->method = "createComment";
+            $objComment->id = "156";
+            $objComment->params = $detalleObjComment;
+
             $curl = curl_init();
             curl_setopt_array($curl, array(
             CURLOPT_URL => Globals::$jsonrpcURL,
@@ -124,7 +130,7 @@ class Comment{
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $cadenaRapida,
+                CURLOPT_POSTFIELDS => json_encode($objComment),
                 CURLOPT_HTTPHEADER => array(
                     "Authorization: Basic ". Globals::$token ."=",
                     "cache-control: no-cache",
@@ -151,13 +157,18 @@ class Comment{
     function Delete(){
         try {
             $curl = curl_init();
-            $cadenaRapida = "{\"jsonrpc\": \"2.0\",
-                \"method\": \"removeComment\",
-                \"id\": \"156\",
-                \"params\": { 
-                    \"comment_id\": \"$this->id\"
-                } 
-            }";
+
+            
+            $objComment = new stdClass();
+            $detalleObjComment = new stdClass();
+            
+            $detalleObjComment->comment_id = $this->id;
+
+            $objComment->jsonrpc = "2.0";
+            $objComment->method = "removeComment";
+            $objComment->id = "156";
+            $objComment->params = $detalleObjComment;
+
             $curl = curl_init();
             curl_setopt_array($curl, array(
             CURLOPT_URL => Globals::$jsonrpcURL,
@@ -167,7 +178,7 @@ class Comment{
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $cadenaRapida,
+                CURLOPT_POSTFIELDS => json_encode($objComment),
                 CURLOPT_HTTPHEADER => array(
                     "Authorization: Basic ". Globals::$token ."=",
                     "cache-control: no-cache",

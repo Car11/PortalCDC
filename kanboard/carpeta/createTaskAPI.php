@@ -4,7 +4,7 @@ $curl = curl_init();
 
 $id = 01;
 $description = "Detalle";
-$title = "Tutlo de Tarea"; 
+$title = "Titulo de Tarea"; 
 $project_id = 11;
 $column_id = 42;
 
