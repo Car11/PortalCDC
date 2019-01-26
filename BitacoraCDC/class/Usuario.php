@@ -64,6 +64,7 @@ class Usuario{
         if ($bind) {
             $filter="(sAMAccountName=$ldapUser)";
             $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
+            // $result = ldap_search($ldap,"dc=sabana,dc=ice","(cn=*rojas saborio*)"); // sirve para buscar personas en el LDAP
             //ldap_sort($ldap,$result,"sn");
             $info = ldap_get_entries($ldap, $result);
             for ($i=0; $i<$info["count"]; $i++)

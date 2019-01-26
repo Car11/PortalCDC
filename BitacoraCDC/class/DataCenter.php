@@ -1,24 +1,39 @@
 <?php
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-
 if(isset($_POST["action"])){
-    if($_POST["action"]=="SeleccionarDataCenter"){
-            $DataCenter= new DataCenter();
-            $DataCenter->SeleccionarDataCenter();
-    }
-    if($_POST["action"]=="Default"){
-            $DataCenter= new DataCenter();
-            $DataCenter->DataCenterporDefecto();
-    }
+    $opt= $_POST["action"];
+    unset($_POST['action']);
+
+    // Classes        
+    require_once("Conexion.php");
+    // if (!isset($_SESSION)) {
+    //     session_start();
+    // }
+    $dataCenter= new DataCenter();
+
+    switch($opt){
+        case "SeleccionarDataCenter":
+            $dataCenter->SeleccionarDataCenter();
+            break;
+        case "Default":
+            $dataCenter->DataCenterporDefecto();
+            break;
+    }  
 }
 
 class DataCenter{
+    public $id = null;
+    public $nombre = null;
+
+
     function __construct(){   
-    require_once("Conexion.php");
-    
+        if(isset($_POST["id"])){
+            $this->id= $_POST["id"];
+        }
+        if(isset($_POST["obj"])){
+            $obj= json_decode($_POST["obj"],true);
+            // $this->consecutivo= $obj["consecutivo"] ?? null;
+        }    
     }
 
     //CONSULTA TODOS LOS DATA CENTERS
@@ -26,10 +41,16 @@ class DataCenter{
         try {
             $sql='SELECT id,nombre FROM datacenter order by nombre asc';         
             $data = DATA::Ejecutar($sql);
-            if (count($data)) {
+            if ($data) {
                 $this->id= $data[0]['id'];
                 $this->nombre= $data[0]['nombre'];
             }
+            
+        //    $z = ' [{"id":"01", "text":"cero uno"},
+        //         {"id":"02", "text":"cero dos"},
+        //         {"id":"03", "text":"cero tres"}] ';
+                
+            // echo ($z);	
             echo json_encode($data);			
         }catch(Exception $e) {
             error_log($e->getMessage());
