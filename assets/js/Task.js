@@ -49,6 +49,7 @@ $(document).ready( function () {
     });
     $("#cerrar-modal").click(function(){
         CleanCtls();
+        clearAttachments();        
     });
     $("#btnSaveComment").click(function(){
         comment.taskId= id;
@@ -70,8 +71,8 @@ function BtnCreateNew(){
     document.getElementById("date_started").value = d_actual_iso;
     document.getElementById("date_due").value = "";
     //
-    CleanCtls();
-    clearAttachments();
+    //CleanCtls();
+    //clearAttachments();
 };
 
 function LoadColumns(){
@@ -733,6 +734,7 @@ function SaveTask(){
     .always(function() {
         setTimeout('$("#btnSaveTask").removeAttr("disabled")', 750);                
         CleanCtls();
+        clearAttachments();
     });
 };    
 
