@@ -5,6 +5,19 @@ var arrayOffiles = [];
 var arraySubTask = [];
 
 $(document).ready( function () {
+    //logout
+    $('#logout').click(function(){
+        $.ajax({
+          type: "POST",
+          url: "class/Sesion.php",
+          data: { 
+            action: 'logout'
+          }
+      })
+      .done(function( ) {
+        location.href= 'index.html';
+      });
+    });
     //vuelve al menu
     this.Exit = function(){
         CleanCtls();
@@ -17,8 +30,8 @@ $(document).ready( function () {
     $("#search").on('keyup', function (e) {
         var searchText = $('#buscar').val();
         $('.drag-inner-list > li').each(function(){            
-            var currentLiText = $(this)[0].className,
-                showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+            var currentLiText = $(this)[0].className.toLowerCase(),
+                showCurrentLi = currentLiText.indexOf(searchText.toLowerCase()) !== -1;
             $(this).toggle(showCurrentLi);
         });  
         if (e.keyCode == 113) {
@@ -30,7 +43,7 @@ $(document).ready( function () {
     LoadColumns();
     setInterval(function() {
         LoadColumns(); 
-    }, 300000);       
+    }, 60000);       
     // LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
@@ -711,7 +724,19 @@ function SaveTask(){
             objFile: JSON.stringify(arrayOffiles)                       
         }
     })
-    .done(function(data) {
+    .done(function(e) {
+        var data = JSON.parse(e);
+        if(!data.result){
+            swal({
+                position: 'top-end',
+                type: 'error',
+                title: 'Ha ocurrido un error al crear la tarea.',
+                showConfirmButton: true,
+                timer: 3000
+            });
+            return;
+        }
+
         swal({
             position: 'top-end',
             type: 'success',
@@ -728,8 +753,32 @@ function SaveTask(){
         LoadColumns(); 
       })
     .fail(function(error) {
-        var log= JSON.parse(error);
-        alert(log);
+        var log= JSON.parse(error.responseText);
+        if(log.code==-666)
+            setTimeout(
+                function(){
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Sesión Expirada!',
+                        html: 'Redireccionando en <strong></strong> segundos.',
+                        timer: 3000,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                            timerInterval = setInterval(() => {
+                                Swal.getContent().querySelector('strong')
+                                    .textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        onClose: () => {
+                            clearInterval(timerInterval);
+                            location.href = 'Login.php';
+                        }
+                    }).then((result) => {
+                        location.href = 'Login.php';
+                    });
+                },
+                3000
+            );
     })
     .always(function() {
         setTimeout('$("#btnSaveTask").removeAttr("disabled")', 750);                

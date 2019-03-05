@@ -2,7 +2,6 @@
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
-// require_once("Conexion.php");
 // require_once("Log.php");
 
 // function __construct(){
@@ -439,6 +438,10 @@ class Task{
 
     function Insert(){
         try {
+            // valida la sesión del usuario antes del insert.
+            require_once("Sesion.php");
+            $sesion = new Sesion();
+            $sesion->isLogin();
             //date_started sin convertir: 2018-02-10T12:59
             //date_started debe tener el siguiente formato: 02/10/2018 19:43  || mes/dia/año hora:min       
             $t_started = date("m/d/Y H:i", strtotime($this->date_started));
@@ -498,22 +501,24 @@ class Task{
             curl_close($curl);
             //
             if ($err) {
-                echo "cURL Error #:" . $err;
-            } else {
-                echo "Resumen de tarea: ".$response;
-            }
+                return $err;
+            } 
             //
             if (($this->subTask) == "1"){
                 foreach (($this->subtask_des) as $subT) {
-                    $this->crearSubTarea($subT->title);
+                    if($subT->title!=='')
+                        $this->crearSubTarea($subT->title);
                 }
             }
-        
+            //
             if ($this->mifile == "1"){
                 foreach (($this->objFile) as $value2) {
+
                     $this->addFilesToTask(($this->project_id), $this->id, $value2[0],$value2[1]);
                 }
             }
+            echo $response;
+            
         }
         catch (Exception $e){
             header('HTTP/1.1 500 Internal Server XXX');
@@ -559,9 +564,7 @@ class Task{
         curl_close($curl);
     
         if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+            echo $err;
         }       
     }
 
@@ -689,9 +692,7 @@ class Task{
         curl_close($curl);
     
         if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+            echo $err;
         }
     }
 

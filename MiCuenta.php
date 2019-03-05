@@ -31,9 +31,9 @@ if (!isset($_SESSION))
 	<script src="assets/js/jquery.min.js"></script>	
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/dragula.min.js"></script>
-	<script  src="assets/js/MiCuenta.js"></script>
-    <script src="assets/js/Comment.js" languaje="javascript" type="text/javascript"></script>
-    <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
+	<script  src="assets/js/MiCuenta.min.js"></script>
+    <script src="assets/js/Comment.min.js" languaje="javascript" type="text/javascript"></script>
+    <script src="assets/js/Task.min.js" languaje="javascript" type="text/javascript"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="assets/js/sweetalert2.js"></script>
     <script src="assets/js/moment.min.js"></script>
@@ -48,7 +48,7 @@ if (!isset($_SESSION))
         <section class="section">
             <h1>Bienvenido a su cuenta</h1>
             <br>
-            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo.</h4>            
+            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo. <u id='logout'>Cerrar Sesión</u></h4>            
         </section>
 
         <div class="drag-container">
@@ -79,7 +79,7 @@ if (!isset($_SESSION))
             <a href="#">Operaciones DTI © 2018</a>            
         </section>
         <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" data-backdrop="static"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-new-task" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
