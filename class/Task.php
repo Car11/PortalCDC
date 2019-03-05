@@ -372,6 +372,10 @@ class Task{
 
     function Update(){
         try{
+            // valida la sesión del usuario antes del insert.
+            require_once("Sesion.php");
+            $sesion = new Sesion();
+            $sesion->isLogin();
             $t_started = date("m/d/Y H:i", strtotime($this->date_started));
             $t_due = ($this->date_due);
             $t_due = str_replace('T', ' ', $t_due);
