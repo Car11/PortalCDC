@@ -47,7 +47,7 @@ define('MAIL_TRANSPORT', 'sendmail');
 define('MAIL_SMTP_HOSTNAME', 'smtpapl.correo.ice');
 define('MAIL_SMTP_PORT', 25);
 define('MAIL_SMTP_USERNAME', 'ICETEL\OperTI');
-define('MAIL_SMTP_PASSWORD', 'Icetel2017');
+define('MAIL_SMTP_PASSWORD', 'Icetel2019');
 
 define('MAIL_SMTP_ENCRYPTION', null); // Valid values are "null", "ssl" or "tls"
 

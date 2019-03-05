@@ -8,7 +8,7 @@ class Email{
         // puerto 25
         // ip 10.149.20.26
         // ICETEL\OperTI
-        // Clave: Icetel2017
+        // Clave: Icetel2019
         // Buzón: OperacionesTI@ice.go.cr
        try{
             //consulta datos del visitante
@@ -65,7 +65,7 @@ class Email{
         // puerto 25
         // ip 10.149.20.26
         // ICETEL\OperTI
-        // Clave: Icetel2017
+        // Clave: Icetel2019
         // Buzón: OperacionesTI@ice.go.cr
        try{
             //info Formulario.
