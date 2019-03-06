@@ -50,7 +50,7 @@
                     </a>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" id="username" name="username" placeholder="usuario | usuario@icetel.ice" required>
+                    <input class="form-control" type="text" id="username" name="username" placeholder="usuario@dominio.ice" required>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" id="password" name="password" placeholder="Contraseña" required>
