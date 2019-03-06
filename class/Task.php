@@ -142,18 +142,18 @@ class Task{
 
     function LoadTask(){
         try {            
-            $sql='SELECT  id, title, date_creation, position FROM (
+            $sql='SELECT  id, title, date_started, position FROM (
                 SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
                 INNER JOIN 
                 (SELECT group_id, user_id FROM group_has_users) as U
                 ON GU.group_id = U.group_id
                 INNER JOIN
-                (SELECT t.id, t.title, t.creator_id, t.date_creation, c.position 
+                (SELECT t.id, t.title, t.creator_id, t.date_started, c.position 
                 FROM kanboard.tasks as t
                     INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id and t.is_active =1
                     order by t.id desc
                 ) AS T
-                ON T.creator_id = user_id GROUP BY id;'; 
+                ON T.creator_id = user_id GROUP BY id ORDER BY date_started asc;'; 
             $param= array(':project_id'=>18, ':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;

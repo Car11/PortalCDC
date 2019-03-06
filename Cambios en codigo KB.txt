@@ -30,3 +30,23 @@ tasknotificationcommand.php : 61
 
 footer.php : 4
 
+
+- orden de columnas:
+
+app/template/board/table_tasks : 17
+
+<!-- sort column by date. column id: 77. project id: 18 -->
+	<?php  
+		
+		$sorted = [];
+		$min=0;
+		//  
+		if($column['project_id'] == "22" && $column['id']==94){
+			usort($column['tasks'], function($a, $b) { // anonymous function
+				// compare numbers only
+				return $a['date_started'] - $b['date_started'];
+			});
+		}
+	?>
+<!--  -->
+

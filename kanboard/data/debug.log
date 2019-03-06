@@ -28,3 +28,5 @@
 ]
 [2019-03-01 19:04:22] [error] Process could not be started [The system cannot find the path specified.
 ]
+[2019-03-05 16:38:31] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator
+[2019-03-05 16:38:32] [error] Kanboard\Core\Action\ActionManager::attachEvents: Automatic Action Not Found: \Kanboard\Plugin\SendEmailCreator\Action\SendTaskCreator

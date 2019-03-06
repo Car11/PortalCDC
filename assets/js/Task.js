@@ -185,8 +185,8 @@ function ShowTasks(e){
     var data= JSON.parse(e);
     // Recorre arreglo.
     $.each(data, function(i, item) {  
-        var d_creation = moment(item.date_creation*1000).format();
-        var d_creation_iso = d_creation.slice(0, 16).replace('T', ' ');
+        var d_started = moment(item.date_started*1000).format();
+        var d_creation_iso = d_started.slice(0, 16).replace('T', ' ');
         var posicion = '#'+item.position;       
         var row=
             // '<li class="drag-item" onclick="open_task()">' +
@@ -395,8 +395,8 @@ function ShowData(e){
     var data= JSON.parse(e);
     // Recorre arreglo.
     $.each(data, function(i, item) {
-        var d_creation = new Date((item.date_creation)*1000);
-        var d_creation_iso = d_creation.toISOString().slice(0, 16).replace('T', ' ');
+        var d_started = new Date((item.date_started)*1000);
+        var d_started_iso = d_started.toISOString().slice(0, 16).replace('T', ' ');
         var row=
             '<tr>'+
                 '<td align="center">'+
@@ -407,7 +407,7 @@ function ShowData(e){
                 '<td style="min-width: 17em; max-width: 17em;">'+ item.title +'</td>'+
                 '<td style="min-width: 22em; max-width: 22em;">'+ item.description + '</td>'+
                 '<td style="min-width: 6em; max-width: 7em;">'+ item.position +'</td>'+
-                 '<td style="min-width: 9em; max-width: 9em;">'+ d_creation_iso +'</td>'+
+                 '<td style="min-width: 9em; max-width: 9em;">'+ d_started_iso +'</td>'+
             '</tr>';
         $('#task-tbody').append(row);
     })
