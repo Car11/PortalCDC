@@ -436,6 +436,7 @@ class Task{
                     $this->crearSubTarea($subT->title);
                 else $this->actualizarSubTarea($subT->id, $subT->title);
             }
+            echo $response;
         }
         catch(Exception $e){}
     }
