@@ -68,7 +68,7 @@
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
             $headers .= "From: ".$from."\r\n"; 
             //
-            mail($to, $asunto, $mensaje,$headers);
+            mail($to, "test", $mensaje,$headers);
             
         }     
         catch(Exception $e) {
