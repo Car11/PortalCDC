@@ -33,7 +33,7 @@ if (!isset($_SESSION))
 	<script src="assets/js/dragula.min.js"></script>
 	<script  src="assets/js/MiCuenta.min.js"></script>
     <script src="assets/js/Comment.min.js" languaje="javascript" type="text/javascript"></script>
-    <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
+    <script src="assets/js/Task.min.js" languaje="javascript" type="text/javascript"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="assets/js/sweetalert2.js"></script>
     <script src="assets/js/moment.min.js"></script>

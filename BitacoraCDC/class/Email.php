@@ -16,41 +16,41 @@ class Email{
             $visitante= new Visitante();
             $visitante->Cargar($idvisitante);     
             //
-            if (count($visitante)){ 
-                require_once("Formulario.php");        
-                $formulario= new Formulario();
-                $formulario->id=$idformulario;
-                $formulario->Cargar();    
-                //
-                ini_set('SMTP','smtpapl.correo.ice');
-                $to = "ZZT OFICINA PROCESAMIENTO <ofproc1@ice.go.cr>";
-                //$to= "cchaconc@ice.go.cr";   
-                $from = "operTI@ice.go.cr";
-                //
-                $mensaje = "<h2><i>".$mensajeEncabezado."<i><h2>";
-                $mensaje .= '<html><body>';
-                $mensaje .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
-                $mensaje .= "<tr style='background: #eee;'><td><strong>ID:</strong> </td><td>". $idvisitante ."</td></tr>";
-                $mensaje .= "<tr><td><strong>Nombre:</strong> </td><td>" .  $visitante->nombre  . "</td></tr>";
-                $mensaje .= "<tr><td><strong>Empresa:</strong> </td><td>" . $visitante->empresa . "</td></tr>";
-                $mensaje .= "<tr><td><strong>Detalle:</strong> </td><td>" . $formulario->motivovisita . "</td></tr>";
-                $strfrm= "http://operacionesTI/BitacoraCDC/FormularioIngreso.php?MOD=". $idformulario;
-                $mensaje .= "<tr><td><strong>Link:</strong> </td><td> <a href=$strfrm>Formulario</a>  </td></tr>";
-                if($numTarjeta!="NULL")
-                    $mensaje .= "<tr><td><strong>Tarjeta:</strong> </td><td>"  . $numTarjeta . "</td></tr>";
-                $mensaje .= "</table>";
-                $mensaje .= "</body></html>";
-                //
-                $headers = "MIME-Version: 1.0\r\n"; 
-                $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-                $headers .= "From: ".$from."\r\n"; 
-                //
-                if(!mail($to, $asunto, $mensaje,$headers))
-                {
-                    //require_once("Log.php");  
-                    // log::Add('ERROR', 'Ha ocurrido un error al realizar el envío de correo');
-                }
-            }            
+            //if (count($visitante)){ 
+            require_once("Formulario.php");        
+            $formulario= new Formulario();
+            $formulario->id=$idformulario;
+            $formulario->Cargar();    
+            //
+            ini_set('SMTP','smtpapl.correo.ice');
+            $to = "ZZT OFICINA PROCESAMIENTO <ofproc1@ice.go.cr>";
+            //$to= "cchaconc@ice.go.cr";   
+            $from = "operTI@ice.go.cr";
+            //
+            $mensaje = "<h2><i>".$mensajeEncabezado."<i><h2>";
+            $mensaje .= '<html><body>';
+            $mensaje .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+            $mensaje .= "<tr style='background: #eee;'><td><strong>ID:</strong> </td><td>". $idvisitante ."</td></tr>";
+            $mensaje .= "<tr><td><strong>Nombre:</strong> </td><td>" .  $visitante->nombre  . "</td></tr>";
+            $mensaje .= "<tr><td><strong>Empresa:</strong> </td><td>" . $visitante->empresa . "</td></tr>";
+            $mensaje .= "<tr><td><strong>Detalle:</strong> </td><td>" . $formulario->motivovisita . "</td></tr>";
+            $strfrm= "http://operacionesTI/BitacoraCDC/FormularioIngreso.php?MOD=". $idformulario;
+            $mensaje .= "<tr><td><strong>Link:</strong> </td><td> <a href=$strfrm>Formulario</a>  </td></tr>";
+            if($numTarjeta!="NULL")
+                $mensaje .= "<tr><td><strong>Tarjeta:</strong> </td><td>"  . $numTarjeta . "</td></tr>";
+            $mensaje .= "</table>";
+            $mensaje .= "</body></html>";
+            //
+            $headers = "MIME-Version: 1.0\r\n"; 
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $headers .= "From: ".$from."\r\n"; 
+            //
+            if(!mail($to, $asunto, $mensaje,$headers))
+            {
+                //require_once("Log.php");  
+                // log::Add('ERROR', 'Ha ocurrido un error al realizar el envío de correo');
+            }
+            //}            
         }     
         catch(Exception $e) {
             // no debe detener el proceso si no se envía el email.
