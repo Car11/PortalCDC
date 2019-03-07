@@ -59,7 +59,7 @@
             //
             ini_set('SMTP','smtpapl.correo.ice');
             error_log("INIT SET");
-            $to = "carlos.echc11@gmail.com";
+            $to = "cchaconc@ice.go.cr";
             //$to= "cchaconc@ice.go.cr";   
             $from = "operTI@ice.go.cr";
             //
