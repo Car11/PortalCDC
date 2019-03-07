@@ -55,9 +55,10 @@
         // Clave: Icetel2019
         // Buzón: OperacionesTI@ice.go.cr
        try{
-            
+        error_log("INICIANDO CORREO EXTERNO");
             //
             ini_set('SMTP','smtpapl.correo.ice');
+            error_log("INIT SET");
             $to = "carlos.echc11@gmail.com";
             //$to= "cchaconc@ice.go.cr";   
             $from = "operTI@ice.go.cr";
@@ -68,7 +69,10 @@
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
             $headers .= "From: ".$from."\r\n"; 
             //
+            error_log("SENDING ....");
+            //
             mail($to, "test", $mensaje,$headers);
+            error_log("SENT");
             
         }     
         catch(Exception $e) {
