@@ -10,8 +10,11 @@
         exit;
     }
     if (isset($_POST['visitanteexluido'])) {  
-        $visitante->visitante=$_POST['visitanteexluido'];
+        $visitante->visitante=$_POST['  '];
         $visitante->ConsultaVisitante();
+    }
+    if (isset($_POST['ip_cliente'])) { 
+        $visitante->ip_cliente=$_POST['ip_cliente'];        
     }
     $visitante->ValidaID();
 ?>

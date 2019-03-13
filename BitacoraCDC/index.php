@@ -26,7 +26,7 @@ if (isset($_SESSION['estado'])) {
     unset($_SESSION['estado']);       
 }
 else {
-    unset($_SESSION['idformulario']);
+    unset($_SESSION['formulario']);
     unset($_SESSION['idvisitante']);
     unset($_SESSION['link']);
     unset($_SESSION['bitacora']);
@@ -36,38 +36,114 @@ $visitantes=[]; // arreglo de visitantes.
 $visitante="NULL";
 $formulario="NULL";
 $tarjeta="NULL";
+$arrayFormularios = [];
+
 if ($estado=="buscar"){
     require_once("class/Visitante.php");
     $visitante= new Visitante();
     $visitantes= $visitante->CargarTodos();
 }
 // Busca información del formulario para desplegar en pantalla.
-if (isset($_SESSION['idformulario'])) {
+if (isset($_SESSION['formulario'])) {
     // Carga info del formulario.
     include("class/Formulario.php");
-    $formulario= new Formulario();
-    $formulario->id=$_SESSION['idformulario'];
-    $formulario->CargarID();    
-    // Carga info tarjeta
+    $formulario = new Formulario();
+    
+    $arrayFormularios = $_SESSION['formulario'];
+    unset($_SESSION['formulario']);
+
+    require_once("class/Visitante.php");
+    $visitante= new Visitante();
+
+    // $visitante->ip_cliente = "10.129.20.21";
+    
+    $segmento_ip = explode(".", $visitante->ip_cliente)[0] . "." . explode(".", $visitante->ip_cliente)[1];
+
+    switch($segmento_ip){
+        case "10.129":
+            ValidaSalasSP($arrayFormularios);
+            break; 
+        case "10.3":
+            validaSalasSabana($arrayFormularios);
+            break;
+        default:
+            ValidaSalasSP($arrayFormularios);
+            break;
+    }
+}
+
+function ValidaSalasSP($arrayFormularios){
+    
+    foreach ($arrayFormularios as $keyFormulario=> $itemFormulario) {
+        
+        // $formulario = new Formulario();
+        $GLOBALS['formulario']->id=$itemFormulario->id;
+        $GLOBALS['formulario']->CargarID();  
+
+
+        switch($GLOBALS['formulario']->idsala){
+            case "a3e33f4e-8d00-11e7-8f4b-005056a81613":
+                loadFormulario();
+                break;
+            case "cba5a110-8d00-11e7-8f4b-005056a81613":
+                loadFormulario();
+                break;
+            case "cba6297b-8d00-11e7-8f4b-005056a81613":
+                loadFormulario();
+                break; 
+            case "cba6a80b-8d00-11e7-8f4b-005056a81613":
+                loadFormulario();
+                break;
+            case "cba72495-8d00-11e7-8f4b-005056a81613":
+                loadFormulario();
+                break;
+            case "cba79bbe-8d00-11e7-8f4b-005056a81613":
+                loadFormulario();
+                break; 
+        }
+        return;
+    }    
+    
+}
+
+
+function validaSalasSabana($arrayFormularios){
+    switch($segmento_ip){
+        case "10.3":
+            echo json_encode($componente->ReadAll());
+            break;
+        case "10.129":
+            echo json_encode($componente->ReadbySala());  
+            break; 
+    }
+}
+
+function loadFormulario(){  
+
+    // $formulario= new Formulario();      
+    // $formulario->id=$Formulario_CD->id;
+    // $formulario->CargarID();   
     include("class/Tarjeta.php");
-    $tarjeta= new tarjeta();
-    if($estado!="fin"){
+    $GLOBALS['tarjeta']= new tarjeta();
+    $estado = $GLOBALS['formulario']->estado;
+    if($GLOBALS['formulario']->estado!="fin"){
         // Carga tarjeta asiganada si es un ingreso, no salida 
         // $tarjeta->nombresala= $formulario->nombresala;
-        $tarjeta->idsala= $formulario->idsala;
-        $tarjeta->Asignar();
+        $GLOBALS['tarjeta']->idsala= $GLOBALS['formulario']->idsala;
+        $GLOBALS['tarjeta']->Asignar();
     }
     else {
         // Carga la tarjeta asigana al visitante. (fin) 
-        $tarjeta->CargaTarjetaAsignada($_SESSION['idvisitante'] , $formulario->id);
+        $GLOBALS['tarjeta']->CargaTarjetaAsignada($_SESSION['idvisitante'] , $formulario->id);
     }
     // Carga Info VISITANTE
     require_once("class/Visitante.php");
     $visitante= new Visitante();
-    $visitante->ID= $_SESSION['idvisitante'];
-    $visitante->CargarID($_SESSION['idvisitante']);
+    $GLOBALS['visitante']->ID= $_SESSION['idvisitante'];
+    $GLOBALS['visitante']->CargarID($_SESSION['idvisitante']); 
+    // exit();
 }
-
+    
 ?>
 
 <html>
@@ -146,6 +222,7 @@ if (isset($_SESSION['idformulario'])) {
             <h2>Cédula / Identificación</h2>
             <form name="datos" id="datos" action="request/EnviaVisitante.php" method="POST">
                 <input type="text" autofocus id="cedula" maxlength="20" class="input-field" name="cedula" placeholder="" title="Número de cédula separado con CEROS"  />
+                <input hidden type="text" name="ip_cliente" value="<?php echo ( $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']) ); ?>" />
                 <input type="submit" class="nbtn_blue" value="Consultar" id="enviar" />
             </form>
         </div>
@@ -168,8 +245,8 @@ if (isset($_SESSION['idformulario'])) {
             <div class="modal-header">
                 <span class="close">&times;</span>
                 <h2>Información del Formulario</h2>
-                <input readonly  id="consecutivo" name="consecutivo" class="input-field-readonly" value= "<?php if($formulario!="NULL") print $formulario->consecutivo; ?>"  >
-                <input  type="hidden"  id="idformulario" name="idformulario" class="input-field-readonly" value= "<?php if($formulario!="NULL") print $formulario->id; ?>"  >
+                <input readonly  id="consecutivo" name="consecutivo" class="input-field-readonly" value= "<?php if($GLOBALS['formulario']!="NULL") print $GLOBALS['formulario']->consecutivo; ?>"  >
+                <input  type="hidden"  id="idformulario" name="idformulario" class="input-field-readonly" value= "<?php if($GLOBALS['formulario']!="NULL") print $GLOBALS['formulario']->id; ?>"  >
                 <input  type="hidden"  id="idvisitante" name="idvisitante" class="input-field-readonly" value= "<?php if($visitante!="NULL") print $visitante->ID; ?>"  >
             </div>
         
@@ -178,24 +255,24 @@ if (isset($_SESSION['idformulario'])) {
                 <form name="datos-modal" id="datos-modal" action="class/Bitacora.php" method="POST">
                     <div class='modal-izq'>
                         <h3>Cédula</h3>
-                        <input type="text" readonly id='modal-cedula' name="modal-cedula" class="input-field" value= "<?php if($formulario!="NULL") echo $visitante->cedula; ?>" >
+                        <input type="text" readonly id='modal-cedula' name="modal-cedula" class="input-field" value= "<?php if($GLOBALS['formulario']!="NULL") echo $visitante->cedula; ?>" >
                         <h3>Nombre Completo</h3>
-                        <input type="text" readonly id='nombre' name="nombre" class="input-field" value= "<?php if($formulario!="NULL") echo $visitante->nombre; ?>" >
+                        <input type="text" readonly id='nombre' name="nombre" class="input-field" value= "<?php if($GLOBALS['formulario']!="NULL") echo $visitante->nombre; ?>" >
                         <h3>Empresa/Dependencia</h3>
-                        <input type="text" readonly id='empresa' name="empresa" class="input-field" value= "<?php if($formulario!="NULL") echo $visitante->empresa; ?>" >
+                        <input type="text" readonly id='empresa' name="empresa" class="input-field" value= "<?php if($GLOBALS['formulario']!="NULL") echo $visitante->empresa; ?>" >
                         <h3>Placa del Vehículo</h3>
-                        <input type="text" readonly id='placavehiculo' name='placavehiculo' class='input-field' value= "<?php if($formulario!="NULL") print $formulario->placavehiculo; ?>" >
+                        <input type="text" readonly id='placavehiculo' name='placavehiculo' class='input-field' value= "<?php if($GLOBALS['formulario']!="NULL") print $GLOBALS['formulario']->placavehiculo; ?>" >
                         <h3>Detalle del equipo</h3>
-                        <input type="text" readonly id='detalleequipo' name='detalleequipo' class='input-field' value= "<?php if($formulario!="NULL") print $formulario->detalleequipo; ?>" >                        
+                        <input type="text" readonly id='detalleequipo' name='detalleequipo' class='input-field' value= "<?php if($GLOBALS['formulario']!="NULL") print $GLOBALS['formulario']->detalleequipo; ?>" >                        
                     </div>
                     <div class='modal-der'>
                         <h3>Tarjeta</h3>
                         <input readonly id='numtarjeta' name='numtarjeta' class='input-field-readonly' value= "<?php if($tarjeta!="NULL") { if($tarjeta->id==-1) print 'NO DISPONIBLE'; else print $tarjeta->consecutivo; } ?>" >
                         <input type="hidden" id='idtarjeta' name='idtarjeta' class='input-field-readonly' value= "<?php if($tarjeta!="NULL") { if($tarjeta->id==-1) print 'NO DISPONIBLE'; else print $tarjeta->id; } ?>" >
                         <h3>Autoriza</h3>
-                        <input type="text" readonly id='idautorizador' name='idautorizador' class='input-field' value= "<?php if($formulario!="NULL") print $formulario->nombreautorizador; ?>" >
+                        <input type="text" readonly id='idautorizador' name='idautorizador' class='input-field' value= "<?php if($GLOBALS['formulario']!="NULL") print $GLOBALS['formulario']->nombreautorizador; ?>" >
                         <h3>Fecha de la solicitud</h3>
-                        <input id='fechasolicitud'readonly name='fechasolicitud' class='input-field' value= "<?php if($formulario!="NULL") print $formulario->fechasolicitud; ?>" >
+                        <input id='fechasolicitud'readonly name='fechasolicitud' class='input-field' value= "<?php if($GLOBALS['formulario']!="NULL") print $GLOBALS['formulario']->fechasolicitud; ?>" >
                     </div>
                     <nav class="btnfrm">
                         <ul>
@@ -266,3 +343,5 @@ if (isset($_SESSION['idformulario'])) {
         MensajeriaHtml('<?php print $estado; ?>', '<?php if($formulario!="NULL") print $formulario->consecutivo; else print "NULL" ?>');  
     });
 </script>
+
+

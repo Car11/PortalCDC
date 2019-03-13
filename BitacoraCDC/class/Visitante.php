@@ -1,4 +1,7 @@
 <?php 
+
+date_default_timezone_set('America/Costa_Rica');
+
 if (!isset($_SESSION))
     session_start();
 
@@ -62,6 +65,7 @@ class Visitante{
     public $permisoanual=0;
     public $visitante;
     public $visitanteexcluido;
+    public $ip_cliente;
 
 	function __construct(){
         require_once("Conexion.php");
@@ -146,17 +150,18 @@ class Visitante{
             {
                 // Valida fechas correctas.
                 // flexibilidad de hora de entrada, 1h antes.
-                $_SESSION['idformulario']= $formulario->id;
-                $_SESSION['estado'] = $formulario->estado;
-                //
-                $fechaanticipada  = new DateTime($formulario->fechaingreso);
+                $_SESSION['formulario']= $formulario->arrayFormulario;
+                // $_SESSION['estado'] = $formulario->estado;
+                $_SESSION['estado'] = $formulario->arrayFormulario[0]->estado;
+
+                $fechaanticipada  = new DateTime($formulario->arrayFormulario[0]->fechaingreso);
                 date_sub($fechaanticipada ,  date_interval_create_from_date_string('1 hour') );
                 // busca si es una salida o entrada.
                 $sql = "SELECT id, entrada, salida, idtarjeta
                     FROM bitacora 
                     where idvisitante=:idvisitante and idformulario=:idformulario
                     order by fechacreacion desc limit 1 ";
-                $param= array(':idvisitante'=>$this->ID, ':idformulario'=>$formulario->id);
+                $param= array(':idvisitante'=>$this->ID, ':idformulario'=>$formulario->arrayFormulario[0]->id);
                 $data = DATA::Ejecutar($sql,$param);      
                 if (count($data)) {                                 
                     $entrada= $data[0]['entrada'];
@@ -170,7 +175,7 @@ class Visitante{
                     }
                     else {
                         // Nueva entrada.
-                        if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formulario->fechasalida))
+                        if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formulario->arrayFormulario[0]->fechasalida))
                             $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
                         else {
                             // la entrada no es en la fecha/hora correcta.
@@ -183,7 +188,7 @@ class Visitante{
                 else 
                 {
                     // Primera entrada.
-                    if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formulario->fechasalida))
+                    if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formulario->arrayFormulario[0]->fechasalida))
                         $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
                     else {
                         // la entrada no es en la fecha/hora correcta.
