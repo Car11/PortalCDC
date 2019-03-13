@@ -79,11 +79,24 @@ function BtnCreateNew(){
     $('#row-comments').hide();
     $('#ModalLabel').text('Ingresar Nueva Tarea');
     //
-    var d_actual = new Date(Date()+"GMT-0000");
-    var d_actual_iso = d_actual.toISOString().slice(0, 16);
-    document.getElementById("date_started").value = d_actual_iso;
-    document.getElementById("date_due").value = "";
-    //
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: "serverDatetime"
+        }
+    })
+    .done(function(e) {
+        var d_actual = e.slice(0, 16);
+        document.getElementById("date_started").value = d_actual;
+        document.getElementById("date_due").value = "";
+    })    
+    .fail(function(){
+        var d_actual = new Date(Date()+"GMT-0000");
+        var d_actual_iso = d_actual.toISOString().slice(0, 16);
+        document.getElementById("date_started").value = d_actual_iso;
+        document.getElementById("date_due").value = "";
+    });
     //CleanCtls();
     //clearAttachments();
 };
@@ -294,8 +307,6 @@ function downloadURI(uri, name) {
 // 	}
 // }
 
-
-
 function saveFile (name, type, data) {
 	if (data != null && navigator.msSaveBlob)
 		return navigator.msSaveBlob(new Blob([data], { type: type }), name);
@@ -349,8 +360,6 @@ function decode_file(e, filename){
     download(newstr, filename);
 
 };
-
-
 
 // Muestra información en ventana
 function showInfo(){

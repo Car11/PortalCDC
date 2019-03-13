@@ -18,9 +18,9 @@ if (!isset($_SESSION))
 	<meta charset="UTF-8">
 	<title>Mi Cuenta</title>
     <!-- CSS -->
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">	
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">    
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	<link rel="stylesheet" href="assets/css/dragula.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -31,9 +31,9 @@ if (!isset($_SESSION))
 	<script src="assets/js/jquery.min.js"></script>	
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/dragula.min.js"></script>
-	<script  src="assets/js/MiCuenta.min.js"></script>
+	<script  src="assets/js/MiCuenta.js"></script>
     <script src="assets/js/Comment.min.js" languaje="javascript" type="text/javascript"></script>
-    <script src="assets/js/Task.min.js" languaje="javascript" type="text/javascript"></script>
+    <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="assets/js/sweetalert2.js"></script>
     <script src="assets/js/moment.min.js"></script>

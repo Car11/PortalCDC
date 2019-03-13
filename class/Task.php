@@ -2,18 +2,16 @@
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
-// require_once("Log.php");
-
-// function __construct(){
-//     require_once("Conexion.php");
-//     require_once("Log.php");
-// }
-
 Globals::ConfiguracionIni();
 
 if(isset($_POST["action"])){
     $task= new Task();
     switch($_POST["action"]){
+        case "serverDatetime":
+            $date = date_create(); 
+            echo $date->format("c");
+            exit;
+            break;
         case "LoadAll":
             //echo json_encode($visitante->CargarTodos());
             break;
@@ -700,10 +698,7 @@ class Task{
             echo $err;
         }
     }
-
-
 }
-
 ?>
 
 
