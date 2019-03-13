@@ -12,8 +12,11 @@ class DATA {
         ini_set('display_errors', 1);
         /*************************************************/
         require_once('Globals.php');
-        if (file_exists('/opt/www/ini/config.ini')) {
-            self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
+        // if (file_exists('/opt/www/ini/config.ini')) {
+        //     self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
+        // }  
+        if (file_exists('../../../ini/config.ini')) {
+            self::$config = parse_ini_file('../../../ini/config.ini',true); 
         }        
         else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);   
     }  
@@ -21,8 +24,8 @@ class DATA {
     private static function Conectar(){
         try {
             self::ConfiguracionIni();
-            if(!isset(self::$conn)) {                                
-                self::$conn = new PDO('mysql:host='. self::$config[Globals::app]['host'] .';dbname=' . self::$config[Globals::app]['dbname'].';charset=utf8', self::$config[Globals::app]['username'],   self::$config[Globals::app]['password']); 
+            if(!isset(self::$conn)) {
+                self::$conn = new PDO('mysql:host='. self::$config[Globals::app]['host'] .';port='. self::$config[Globals::app]['port'] .';dbname=' . self::$config[Globals::app]['dbname'].';charset=utf8', self::$config[Globals::app]['username'], self::$config[Globals::app]['password']); 
                 return self::$conn;
             }
         } catch (PDOException $e) {

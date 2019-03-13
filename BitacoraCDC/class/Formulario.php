@@ -67,6 +67,7 @@ class Formulario
     public $estado;
     public $rfc;
     public $iddatacenter;
+    public $arrayFormulario = [];
         
     function __construct(){
         require_once("Conexion.php");
@@ -355,13 +356,25 @@ class Formulario
                 // order by f.FECHASOLICITUD desc limit 1 ";
             $param= array(':idvisitante'=>$idvisitante);
             $data = DATA::Ejecutar($sql,$param);
-            if (count($data)) {  
-                $this->id= $data[0]['ID'];
-                $this->consecutivo= $data[0]['consecutivo'];
-                $this->fechaingreso= $data[0]['fechaingreso'];
-                $this->fechasalida= $data[0]['fechasalida'];                
-                $this->estado= $data[0]['estado'];
-                return true;
+            if ($data) {
+
+
+                $this->arrayFormulario = array();
+
+                foreach ($data as $keyFormulario=> $itemFormulario) {
+                    
+                    $formulario= new stdClass();
+                    $formulario->id= $itemFormulario['ID'];
+                    $formulario->consecutivo= $itemFormulario['consecutivo'];
+                    $formulario->fechaingreso= $itemFormulario['fechaingreso'];
+                    $formulario->fechasalida= $itemFormulario['fechasalida'];                
+                    $formulario->estado= $itemFormulario['estado'];
+                    
+                    array_push ($this->arrayFormulario, $formulario);
+
+                }         
+                
+                return true;       
             }
             else{
                 return false;
