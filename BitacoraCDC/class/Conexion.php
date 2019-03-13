@@ -12,12 +12,12 @@ class DATA {
         ini_set('display_errors', 1);
         /*************************************************/
         require_once('Globals.php');
-        // if (file_exists('/opt/www/ini/config.ini')) {
-        //     self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
-        // }  
-        if (file_exists('../../../ini/config.ini')) {
-            self::$config = parse_ini_file('../../../ini/config.ini',true); 
-        }        
+        if (file_exists('/opt/www/ini/config.ini')) {
+            self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
+        }  
+        // if (file_exists('../../../ini/config.ini')) {
+        //     self::$config = parse_ini_file('../../../ini/config.ini',true); 
+        // }        
         else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);   
     }  
 
