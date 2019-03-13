@@ -55,7 +55,7 @@ if (isset($_SESSION['formulario'])) {
     require_once("class/Visitante.php");
     $visitante= new Visitante();
 
-    $visitante->ip_cliente = "10.129.20.21";
+    // $visitante->ip_cliente = "10.129.20.21";
     
     $segmento_ip = explode(".", $visitante->ip_cliente)[0] . "." . explode(".", $visitante->ip_cliente)[1];
 
@@ -65,6 +65,9 @@ if (isset($_SESSION['formulario'])) {
             break; 
         case "10.3":
             validaSalasSabana($arrayFormularios);
+            break;
+        default:
+            ValidaSalasSP($arrayFormularios);
             break;
     }
 }
