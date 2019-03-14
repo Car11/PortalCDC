@@ -108,21 +108,50 @@ function ValidaSalasSP($arrayFormularios){
 
 
 function validaSalasSabana($arrayFormularios){
-    switch($segmento_ip){
-        case "10.3":
-            echo json_encode($componente->ReadAll());
-            break;
-        case "10.129":
-            echo json_encode($componente->ReadbySala());  
-            break; 
-    }
+    foreach ($arrayFormularios as $keyFormulario=> $itemFormulario) {
+        
+        // $formulario = new Formulario();
+        $GLOBALS['formulario']->id=$itemFormulario->id;
+        $GLOBALS['formulario']->CargarID();  
+        
+        switch($GLOBALS['formulario']->idsala){
+            case "0b3571ed-d3f8-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break;
+            case "3ca92066-e628-11e7-8e40-005056a81613":
+                loadFormulario();
+                break;
+            case "b64eaa0c-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break; 
+            case "b6654c67-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break;
+            case "b67582a7-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break;
+            case "b6906ce7-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break; 
+            case "b6ac14ad-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break; 
+            case "b6ba9e94-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break;
+            case "b6ca07d6-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break;
+            case "b6d66031-a026-11e8-a5d1-005056a81613":
+                loadFormulario();
+                break;
+        }
+        return;
+    }    
 }
 
 function loadFormulario(){  
-
-    // $formulario= new Formulario();      
-    // $formulario->id=$Formulario_CD->id;
-    // $formulario->CargarID();   
+  
     include("class/Tarjeta.php");
     $GLOBALS['tarjeta']= new tarjeta();
     $estado = $GLOBALS['formulario']->estado;
