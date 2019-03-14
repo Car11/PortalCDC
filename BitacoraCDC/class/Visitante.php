@@ -65,7 +65,6 @@ class Visitante{
     public $permisoanual=0;
     public $visitante;
     public $visitanteexcluido;
-    public $ip_cliente;
 
 	function __construct(){
         require_once("Conexion.php");
