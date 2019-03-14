@@ -87,21 +87,27 @@ function ValidaSalasSP($arrayFormularios){
         switch($GLOBALS['formulario']->idsala){
             case "a3e33f4e-8d00-11e7-8f4b-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "cba5a110-8d00-11e7-8f4b-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "cba6297b-8d00-11e7-8f4b-005056a81613":
                 loadFormulario();
+                return;
                 break; 
             case "cba6a80b-8d00-11e7-8f4b-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "cba72495-8d00-11e7-8f4b-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "cba79bbe-8d00-11e7-8f4b-005056a81613":
                 loadFormulario();
+                return;
                 break; 
         }
     }    
@@ -119,33 +125,43 @@ function validaSalasSabana($arrayFormularios){
         switch($GLOBALS['formulario']->idsala){
             case "0b3571ed-d3f8-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "3ca92066-e628-11e7-8e40-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "b64eaa0c-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break; 
             case "b6654c67-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "b67582a7-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "b6906ce7-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break; 
             case "b6ac14ad-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break; 
             case "b6ba9e94-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "b6ca07d6-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break;
             case "b6d66031-a026-11e8-a5d1-005056a81613":
                 loadFormulario();
+                return;
                 break;
         }
     }    
