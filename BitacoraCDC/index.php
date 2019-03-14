@@ -38,6 +38,9 @@ $formulario="NULL";
 $tarjeta="NULL";
 $arrayFormularios = [];
 
+require_once("class/Visitante.php");
+$visitante= new Visitante();
+
 if ($estado=="buscar"){
     require_once("class/Visitante.php");
     $visitante= new Visitante();
@@ -52,12 +55,12 @@ if (isset($_SESSION['formulario'])) {
     $arrayFormularios = $_SESSION['formulario'];
     unset($_SESSION['formulario']);
 
-    require_once("class/Visitante.php");
-    $visitante= new Visitante();
-
-    // $visitante->ip_cliente = "10.129.20.21";
+    $ip_cliente = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);
     
-    $segmento_ip = explode(".", $visitante->ip_cliente)[0] . "." . explode(".", $visitante->ip_cliente)[1];
+    // $ip_cliente = "10.129.20.21";
+    // $ip_cliente = "10.3.166.11";
+
+    $segmento_ip = explode(".", $ip_cliente)[0] . "." . explode(".", $ip_cliente)[1];
 
     switch($segmento_ip){
         case "10.129":
@@ -101,7 +104,6 @@ function ValidaSalasSP($arrayFormularios){
                 loadFormulario();
                 break; 
         }
-        return;
     }    
     
 }
@@ -146,7 +148,6 @@ function validaSalasSabana($arrayFormularios){
                 loadFormulario();
                 break;
         }
-        return;
     }    
 }
 
@@ -220,7 +221,11 @@ function loadFormulario(){
     <header>
         <h1>Centros de Datos Corporativos</h1>        
         <div id="logo"><img src="img/Logoice.png" height="75" onclick="onShowLogin()" > </div>  
-        <div id="fechahora"><span id="date"></span></div>
+        <div id="fechahora">
+            <span id="date"></span>
+            <a href="#" style="position: fixed;"><?php echo ( $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']) ); ?></a>
+        </div>
+        
         <div id="signin">
             <span>Usuario: 
                 <?php
@@ -251,7 +256,6 @@ function loadFormulario(){
             <h2>Cédula / Identificación</h2>
             <form name="datos" id="datos" action="request/EnviaVisitante.php" method="POST">
                 <input type="text" autofocus id="cedula" maxlength="20" class="input-field" name="cedula" placeholder="" title="Número de cédula separado con CEROS"  />
-                <input hidden type="text" name="ip_cliente" value="<?php echo ( $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']) ); ?>" />
                 <input type="submit" class="nbtn_blue" value="Consultar" id="enviar" />
             </form>
         </div>
