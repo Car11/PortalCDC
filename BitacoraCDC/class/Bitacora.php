@@ -90,6 +90,8 @@ class Bitacora{
                 unset($_SESSION['link']);
             if(isset($_SESSION['bitacora']))
                 unset($_SESSION['bitacora']);
+            if(isset($_SESSION['formulario']))
+                unset($_SESSION['formulario']);
         }     
         catch(Exception $e) {
             //log::AddD('FATAL', 'Ha ocurrido un error al realizar la Entrada del Visitante', $e->getMessage());
