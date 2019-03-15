@@ -172,12 +172,13 @@ function loadFormulario(){
     include("class/Tarjeta.php");
     $GLOBALS['tarjeta']= new tarjeta();
     $estado = $GLOBALS['formulario']->estado;
-    if($GLOBALS['formulario']->estado!="fin"){
+    // if($GLOBALS['formulario']->estado!="fin"){
+    if($estado!="fin"){
         // Carga tarjeta asiganada si es un ingreso, no salida 
         // $tarjeta->nombresala= $formulario->nombresala;
         $GLOBALS['tarjeta']->idsala= $GLOBALS['formulario']->idsala;
         $GLOBALS['tarjeta']->Asignar();
-    }
+        }
     else {
         // Carga la tarjeta asigana al visitante. (fin) 
         $GLOBALS['tarjeta']->CargaTarjetaAsignada($_SESSION['idvisitante'] , $formulario->id);

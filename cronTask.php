@@ -44,7 +44,7 @@
                         scheduled_task.dow = 't');";
 
         $resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
-        // Motrar el resultado de los registro de la base de datos
+        // Montar el resultado de los registro de la base de datos
         // Encabezado de la tabla
 
         echo "<table borde='2'>";
