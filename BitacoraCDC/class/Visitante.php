@@ -142,7 +142,7 @@ class Visitante{
 
     function seleccionarFormulario_IP($formulario) {
         $ip_cliente = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);
-        $ip_cliente = "10.129.20.21";
+        // $ip_cliente = "10.129.20.21";
         // $ip_cliente = "10.3.166.11";
     
         $segmento_ip = explode(".", $ip_cliente)[0] . "." . explode(".", $ip_cliente)[1];
@@ -203,7 +203,7 @@ class Visitante{
     function validaDC_Sabana($arrayFormularios){
         foreach ($arrayFormularios as $keyFormulario=> $itemFormulario) {
             
-            // $formulario = new Formulario();
+            $formulario = new Formulario();
             $formulario->id=$itemFormulario->id;
             $formulario->CargarID();  
             
