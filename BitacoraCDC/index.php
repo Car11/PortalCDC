@@ -69,6 +69,9 @@ if (isset($_SESSION['formulario'])) {
         case "10.3":
             validaSalasSabana($arrayFormularios);
             break;
+        case "10.34":
+            validaSalasSabana($arrayFormularios);
+            break;
         default:
             ValidaSalasSP($arrayFormularios);
             break;
@@ -171,7 +174,7 @@ function loadFormulario(){
   
     include("class/Tarjeta.php");
     $GLOBALS['tarjeta']= new tarjeta();
-    $estado = $GLOBALS['formulario']->estado;
+    $estado = $GLOBALS['estado'];
     // if($GLOBALS['formulario']->estado!="fin"){
     if($estado!="fin"){
         // Carga tarjeta asiganada si es un ingreso, no salida 
@@ -181,7 +184,7 @@ function loadFormulario(){
         }
     else {
         // Carga la tarjeta asigana al visitante. (fin) 
-        $GLOBALS['tarjeta']->CargaTarjetaAsignada($_SESSION['idvisitante'] , $formulario->id);
+        $GLOBALS['tarjeta']->CargaTarjetaAsignada($_SESSION['idvisitante'] , $GLOBALS['formulario']->id);
     }
     // Carga Info VISITANTE
     require_once("class/Visitante.php");

@@ -140,6 +140,108 @@ class Visitante{
         }     
     }
 
+    function seleccionarFormulario_IP($formulario) {
+        $ip_cliente = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);
+        $ip_cliente = "10.129.20.21";
+        // $ip_cliente = "10.3.166.11";
+    
+        $segmento_ip = explode(".", $ip_cliente)[0] . "." . explode(".", $ip_cliente)[1];
+    
+        switch($segmento_ip){
+            case "10.129": // IP cobre San Pedro
+                $formulario_SP = $this->ValidaDC_SP($formulario->arrayFormulario);
+                return ($formulario_SP);
+                break; 
+            case "10.3":  //IP cobre Sabana
+                $formulario_SB = $this->validaDC_Sabana($formulario->arrayFormulario);
+                return ($formulario_SB);
+                break;
+            case "10.34": //IP inalambrica Sabana
+                $formulario_SB = $this->validaDC_Sabana($formulario->arrayFormulario);
+                return ($formulario_SB);
+                break;
+            default:
+                $formulario_SP = $this->ValidaDC_SP($formulario->arrayFormulario);
+                return ($formulario_SP);
+                break;
+        }
+
+    }
+    function ValidaDC_SP($arrayFormularios){
+                
+        foreach ($arrayFormularios as $keyFormulario=> $itemFormulario) {
+            
+            $formulario = new Formulario();
+            $formulario->id=$itemFormulario->id;
+            $formulario->CargarID();  
+    
+    
+            switch($formulario->idsala){
+                case "a3e33f4e-8d00-11e7-8f4b-005056a81613":
+                    return ($formulario);
+                    break;
+                case "cba5a110-8d00-11e7-8f4b-005056a81613":
+                    return ($formulario);
+                    break;
+                case "cba6297b-8d00-11e7-8f4b-005056a81613":
+                    return ($formulario);
+                    break; 
+                case "cba6a80b-8d00-11e7-8f4b-005056a81613":
+                    return ($formulario);
+                    break;
+                case "cba72495-8d00-11e7-8f4b-005056a81613":
+                    return ($formulario);
+                    break;
+                case "cba79bbe-8d00-11e7-8f4b-005056a81613":
+                    return ($formulario);
+                    break; 
+            }
+        }    
+        
+    }
+    
+    function validaDC_Sabana($arrayFormularios){
+        foreach ($arrayFormularios as $keyFormulario=> $itemFormulario) {
+            
+            // $formulario = new Formulario();
+            $formulario->id=$itemFormulario->id;
+            $formulario->CargarID();  
+            
+            switch($formulario->idsala){
+                case "0b3571ed-d3f8-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break;
+                case "3ca92066-e628-11e7-8e40-005056a81613":
+                    return($formulario);
+                    break;
+                case "b64eaa0c-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break; 
+                case "b6654c67-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break;
+                case "b67582a7-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break;
+                case "b6906ce7-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break; 
+                case "b6ac14ad-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break; 
+                case "b6ba9e94-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break;
+                case "b6ca07d6-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break;
+                case "b6d66031-a026-11e8-a5d1-005056a81613":
+                    return($formulario);
+                    break;
+            }
+        }    
+    }
+
     // Estado del formulario por Visitante.
     function ValidaEstadoFormulario(){
         try{
@@ -150,17 +252,19 @@ class Visitante{
                 // Valida fechas correctas.
                 // flexibilidad de hora de entrada, 1h antes.
                 $_SESSION['formulario']= $formulario->arrayFormulario;
-                // $_SESSION['estado'] = $formulario->estado;
-                $_SESSION['estado'] = $formulario->arrayFormulario[0]->estado;
 
-                $fechaanticipada  = new DateTime($formulario->arrayFormulario[0]->fechaingreso);
+                $formularioXzona = ( $this->seleccionarFormulario_IP($formulario) );             
+             
+                $_SESSION['estado'] = $formularioXzona->estado;
+
+                $fechaanticipada  = new DateTime($formularioXzona->fechaingreso);
                 date_sub($fechaanticipada ,  date_interval_create_from_date_string('1 hour') );
                 // busca si es una salida o entrada.
                 $sql = "SELECT id, entrada, salida, idtarjeta
                     FROM bitacora 
                     where idvisitante=:idvisitante and idformulario=:idformulario
                     order by fechacreacion desc limit 1 ";
-                $param= array(':idvisitante'=>$this->ID, ':idformulario'=>$formulario->arrayFormulario[0]->id);
+                $param= array(':idvisitante'=>$this->ID, ':idformulario'=>$formularioXzona->id);
                 $data = DATA::Ejecutar($sql,$param);      
                 if (count($data)) {                                 
                     $entrada= $data[0]['entrada'];
@@ -174,7 +278,7 @@ class Visitante{
                     }
                     else {
                         // Nueva entrada.
-                        if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formulario->arrayFormulario[0]->fechasalida))
+                        if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formularioXzona->fechasalida))
                             $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
                         else {
                             // la entrada no es en la fecha/hora correcta.
@@ -187,7 +291,7 @@ class Visitante{
                 else 
                 {
                     // Primera entrada.
-                    if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formulario->arrayFormulario[0]->fechasalida))
+                    if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formularioXzona->fechasalida))
                         $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
                     else {
                         // la entrada no es en la fecha/hora correcta.
