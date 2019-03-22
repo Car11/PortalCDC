@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tareas Programadas</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tareaProgramada.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <h1>
+                    <span class="blue">&lt;</span>Tareas<span class="blue">&gt;</span> <span class="yellow">Programadas</pan>
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <h2>Operaciones<a href="http://operacionesti.icetel.ice" target="_blank">TI</a></h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button id="btn_newTask" type="button" class="btn btn-primary" style=" margin-bottom: 2%; ">Nueva Tarea Programada</button>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-12">
+                    <table id="tbl_tareas" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                        </thead>
+                        <tbody id="lista_tareas">
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+    <!--Modal Crear Tarea -->
+  <div class="modal fade" id="modal_new_task">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Nueva Tarea Programada</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                        <div class="row">
+                                                <div>
+                                                    <h4>Titulo:</h4>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <div>
+                                                    <input type="text" name="titulo" id="">
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="col-6">
+                                        <div class="col-6">
+                                                Modal 3...
+                                        </div>
+                                        <div class="col-6">
+                                                Modal 3...
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+              
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Listo</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    
+
+
+
+</body>
+
+</html>
+
+<!-- JS  -->
+<script src="assets/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="assets/bootstrap4/js/bootstrap.min.js" type="text/jscript"></script>
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+<script type="text/javascript" src="assets/js/dataTables.bootstrap4.min.js" type="text/javascript" charset="utf8"></script>
+
+<!-- JS Scripts -->
+<script type="text/javascript" src="assets/js/tareasProgramadas.js"></script>
+
+<script>
+    $(document).ready(function () {
+        tareasProgramadas.cargar_todas();
+    });
+
+    $('#btn_newTask').click(function(){
+  		$('#modal_new_task').modal('show')
+	});
+
+</script>
+
+
+
+<!-- 
+columns: [{
+    title: "ID Factura",
+    data: "id",
+    visible: false
+},
+{
+    title: "#Factura",
+    data: "consecutivo"
+},
+{
+    title: "Fecha",
+    data: "fechaCreacion"
+},
+{
+    title: "Estado",
+    data: "idEstadoComprobante",
+    mRender: function (e) {
+        switch (e) {
+            case "1":
+                return '<i class="fa fa-paper-plane" aria-hidden="true" style="color:red"> Sin Enviar</i>';
+                break;
+            case "2":
+                return '<i class="fa fa-paper-plane" aria-hidden="true" style="color:green"> Enviado</i>';
+                break;
+            case "3":
+                return '<i class="fa fa-check-square-o" aria-hidden="true" style="color:green"> Aceptado</i>';
+                break;
+            case "4":
+                return '<i class="fa fa-times-circle" aria-hidden="true" style="color:red"> Rechazado</i>';
+                break;
+            case "5":
+                return '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#FF6F00"> Otro</i>';
+                break;
+            case "6":
+                return '<i class="fa fa-stopwatch" aria-hidden="true" style="color:#FF6F00"> TimedOut</i>';
+                break;
+            case "7":
+                return '<i class="fa fa-angle-double-up" aria-hidden="true" style="color:#FF6F00"> Repetido</i>';
+                break;
+            case "8":
+                return '<i class="fa fa-minus-circle" aria-hidden="true" style="color:#FF6F00"> Firma Invalida(1)</i>';
+                break;
+            case "9":
+                return '<i class="fa fa-minus-circle" aria-hidden="true" style="color:#FF6F00"> Firma Invalida(2)</i>';
+                break;
+            case "10":
+                return '<i class="fa fa-minus-circle" aria-hidden="true" style="color:#FF6F00"> Firma Invalida(3)</i>';
+                break;
+            default:
+                return 'Desconocido';
+                break;
+
+        }
+    }
+},
+{
+    title: "Total",
+    data: "totalComprobante",
+    mRender: function (e) {
+        return '¢' + parseFloat(e).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+}
+],

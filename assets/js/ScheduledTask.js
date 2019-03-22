@@ -5,13 +5,13 @@ var arrayOffiles = [];
 //Llama a la funcion de Load y LoadProjects al cargar la pagina
 $(document).ready( function () {
     //vuelve al menu
-    // this.Exit = function(){
-    //     $(".modal").css({ display: "none" });
-    // }; 
-    //Load();
-    //LoadProjects();
-    //Check_SubTask_Status();
-    //encode_Files();
+    this.Exit = function(){
+        $(".modal").css({ display: "none" });
+    }; 
+    Load();
+    LoadProjects();
+    Check_SubTask_Status();
+    encode_Files();
    
 });
 
