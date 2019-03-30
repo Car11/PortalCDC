@@ -62,3 +62,44 @@ function submitForm(){
 };
 
 
+
+
+class Session {
+    // Constructor
+    constructor(user_id, userName, rol, name, estado) {
+        this.user_id = user_id || null;
+        this.userName = userName || null;
+        this.rol = rol || null;
+        this.name = name || null;
+        this.estado = estado || null;
+    };
+
+
+    check(){
+        $.ajax({
+            type: "POST",
+            url: "class/Sesion.php",
+            data: { 
+                action: "check"
+            }
+        })
+        .done(function( e ) {
+            var user = JSON.parse(e);
+
+            if (user.estado){
+                session.user_id = user.userid;
+                session.userName = user.username;
+                session.rol = user.rol;
+                session.name = user.name;
+                session.estado = user.estado;
+            }else
+                window.location.href = "Login.php";
+
+            
+        })    
+        // .fail(showError);
+    }
+}
+
+    //Class Instance
+let session = new Session();

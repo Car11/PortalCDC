@@ -1,6 +1,6 @@
 class TareasProgramadas {
     // Constructor
-    constructor(id, user_id, min, hour, dom, year, dow, title, detail, file, sub_task, column_id, project_id) {
+    constructor(id, user_id, min, hour, dom, year, dow, title, detail, file, files, sub_task, column_id, project_id) {
         this.id = id || null;
         this.user_id = user_id || new Array();
         this.min = min || null;
@@ -11,6 +11,7 @@ class TareasProgramadas {
         this.title = title || null;
         this.detail = detail || null;
         this.file = file || null;
+        this.files = files || null;
         this.sub_task = sub_task || null;
         this.project_id = project_id || null;
         this.column_id = column_id || null;
@@ -29,7 +30,7 @@ class TareasProgramadas {
         })
             .done(function (e) {
                 if (e != "null") {
-                    tareasProgramadas.drawFac(e)
+                    tareasProgramadas.drawAllTask(e)
                 } else {
                     swal({
                         type: 'success',
@@ -44,7 +45,7 @@ class TareasProgramadas {
             });
     };
 
-    drawFac(e) {
+    drawAllTask(e) {
         var tareas = JSON.parse(e);
 
         tbl_tareas = $('#tbl_tareas').DataTable({
@@ -136,7 +137,6 @@ class TareasProgramadas {
             // },
             {
                 title: "Estado",
-                // data: "sub_task",
                 "mRender": function(data, type, full) {
                     return '<button type="button" class="btn btn-primary" style="margin-left: 15%;margin-bottom: 10%;" href=#/' + full["id"] + '>  <i class="fa fa-pencil" style="font-size:20px;color:black;"></i> </button>'+
                             '<button type="button" class="btn btn-danger" style="margin-left: 15%;"href=#/' + full["id"] + '> <i class="fa fa-trash-o" style="font-size:20px;color:black;"></i> </button>';
@@ -146,6 +146,29 @@ class TareasProgramadas {
 
 
         });
+    };
+
+    create() {
+        $.ajax({
+            type: "POST",
+            url: "class/tareasProgramadas.php",
+            data: {
+                action: "create",
+                obj: JSON.stringify(tareasProgramadas)
+            }
+        })
+            .done(function (e) {
+                alert ("ok");
+                // swal({
+                //     type: 'success',
+                //     title: 'Listo, Tarea Guardada!',
+                //     showConfirmButton: false,
+                //     timer: 2000
+                // });
+            })
+            .fail(function (e) {
+                tareasProgramadas.showError(e);
+            });
     };
 
     // Muestra información en ventana
@@ -165,13 +188,13 @@ class TareasProgramadas {
     showError(e) {
         //$(".modal").css({ display: "none" });  
         var data = JSON.parse(e.responseText);
-        session.in(data)
-        swal({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Algo no está bien (' + data.code + '): ' + data.msg,
-            // // footer: '<a href>Contacte a Soporte Técnico</a>',
-        });
+        // session.in(data)
+        // swal({
+        //     type: 'error',
+        //     title: 'Oops...',
+        //     text: 'Algo no está bien (' + data.code + '): ' + data.msg,
+        //     // // footer: '<a href>Contacte a Soporte Técnico</a>',
+        // });
     };
 
 }
