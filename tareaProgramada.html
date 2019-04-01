@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/tareaProgramada.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
 
 
 
@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <br>
@@ -52,9 +52,9 @@
         <div class="row">
             <div class="col-12">
                 <table id="tbl_tareas" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
+                    <thead style=" background-color: #007bff; color: white; ">
                     </thead>
-                    <tbody id="lista_tareas">
+                    <tbody id="lista_tareas" style="background-color: aliceblue; color: darkslategray;">
 
                     </tbody>
                 </table>
@@ -102,17 +102,17 @@
                     <div class="form-row">
                         <div class="form-group col-2">
                             <label for="inp_hora">Hora</label>
-                            <select id="inp_hora" class="form-control">
-                                <option selected>Elegir...</option>
-                                <option value="1">1 am</option>
-                                <option value="2">2 am</option>
-                                <option value="3">3 am</option>
-                                <option value="4">4 am</option>
-                                <option value="5">5 am</option>
-                                <option value="6">6 am</option>
-                                <option value="7">7 am</option>
-                                <option value="8">8 am</option>
-                                <option value="9">9 am</option>
+                            <select id="inp_hora" class="form-control inp_sel">
+                                <option selected disabled disabled>Elegir...</option>
+                                <option value="01">1 am</option>
+                                <option value="02">2 am</option>
+                                <option value="03">3 am</option>
+                                <option value="04">4 am</option>
+                                <option value="05">5 am</option>
+                                <option value="06">6 am</option>
+                                <option value="07">7 am</option>
+                                <option value="08">8 am</option>
+                                <option value="09">9 am</option>
                                 <option value="10">10 am</option>
                                 <option value="11">11 am</option>
                                 <option value="12">12 pm</option>
@@ -129,15 +129,15 @@
                                 <option value="23">11 pm</option>
                                 <option value="0">12 am</option>
                             </select>
-                            <input style="margin-left: 1pc;" type="checkbox" id="chk_all_hora">
+                            <input class="chkbox" style="margin-left: 1pc;" type="checkbox" id="chk_all_hora">
                             <label class="form-check-label" for="chk_all_hora">
                                 Todos
                             </label>
                         </div>
                         <div class="form-group col-2">
                             <label for="inp_min">Minuto</label>
-                            <select id="inp_min" class="form-control">
-                                <option selected>Elegir...</option>
+                            <select id="inp_min" class="form-control  inp_sel">
+                                <option selected disabled>Elegir...</option>
                                 <option value="00">00</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>
@@ -145,24 +145,24 @@
                                 <option value="40">40</option>
                                 <option value="50">50</option>
                             </select>
-                            <input style="margin-left: 1pc;" type="checkbox" id="chk_all_min">
+                            <input class="chkbox" style="margin-left: 1pc;" type="checkbox" id="chk_all_min">
                             <label class="form-check-label" for="chk_all_min">
                                 Todos
                             </label>
                         </div>
                         <div class="form-group col-2">
                             <label for="inp_dom">Día del Mes</label>
-                            <select id="inp_dom" class="form-control">
-                                <option selected>Elegir...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
+                            <select id="inp_dom" class="form-control  inp_sel">
+                                <option selected disabled>Elegir...</option>
+                                <option value="01">1</option>
+                                <option value="02">2</option>
+                                <option value="03">3</option>
+                                <option value="04">4</option>
+                                <option value="05">5</option>
+                                <option value="06">6</option>
+                                <option value="07">7</option>
+                                <option value="08">8</option>
+                                <option value="09">9</option>
                                 <option value="10">10</option>
                                 <option value="11">11</option>
                                 <option value="12">12</option>
@@ -186,7 +186,7 @@
                                 <option value="30">30</option>
                                 <option value="31">31</option>
                             </select>
-                            <input style="margin-left: 1pc;" type="checkbox" id="chk_all_dom">
+                            <input class="chkbox" style="margin-left: 1pc;" type="checkbox" id="chk_all_dom">
                             <label class="form-check-label" for="chk_all_dom">
                                 Todos
                             </label>
@@ -194,8 +194,8 @@
 
                         <div class="form-group col-2">
                             <label for="inp_dow">Dia Semana</label>
-                            <select id="inp_dow" class="form-control">
-                                <option selected>Elegir...</option>
+                            <select id="inp_dow" class="form-control inp_sel">
+                                <option selected disabled>Elegir...</option>
                                 <option value="1">Lunes</option>
                                 <option value="2">Martes</option>
                                 <option value="3">Miercoles</option>
@@ -204,7 +204,7 @@
                                 <option value="6">Sabado</option>
                                 <option value="0">Domingo</option>
                             </select>
-                            <input style="margin-left: 1pc;" type="checkbox" id="chk_all_dow">
+                            <input class="chkbox" style="margin-left: 1pc;" type="checkbox" id="chk_all_dow">
                             <label class="form-check-label" for="chk_all_dow">
                                 Todos
                             </label>
@@ -212,13 +212,14 @@
 
                         <div class="form-group col-2">
                             <label for="inp_year">año</label>
-                            <select id="inp_year" class="form-control">
+                            <select id="inp_year" class="form-control inp_sel">
+                                <option selected disabled>Elegir...</option>
                                 <option value="2019">2019</option>
                                 <option value="2019">2020</option>
                                 <option value="2019">2021</option>
                                 <option value="2019">2022</option>
                             </select>
-                            <input style="margin-left: 1pc;" type="checkbox" id="chk_all_year">
+                            <input class="chkbox" style="margin-left: 1pc;" type="checkbox" id="chk_all_year">
                             <label class="form-check-label" for="chk_all_year">
                                 Todos
                             </label>
@@ -327,6 +328,7 @@
     });
 
     $('#btn_newTask').click(function () {
+        tareasProgramadas.clearControls();
         $('#modal_new_task').modal('show');
     });
 
@@ -415,7 +417,7 @@
     $('#bnt_agrega_subtask').click(function () {
         if (valida_inp_Subtask()) {
             $("#frm_agrega_subtask").before(`
-                <form class="form-row form-inline">
+                <form class="form-row form-inline form_subtareas">
                     <div class="input-group col-10" style="margin-bottom: 5px;">
                         <div class="input-group-prepend">
                             <div class="input-group-text">${ ($(".inp_subtask").length) + 1}</div>
@@ -491,32 +493,102 @@
         };
 
     }
-    
+
 
     function previewFile(file) {
-        if (file.type.split("/")[0] == "image") {
-            var item = $('#img_preview').children().length + 1;
 
-            $('#img_preview').append(`
-                <img src="" id="preview_${item}" height="75" alt="Image preview...">            
+        var file_type;
+        var file_source = "";
+        var locationURL = $(location).attr('href');
+        locationURL = locationURL.replace((locationURL.split("/")[locationURL.split("/").length - 1]), "img/")
+
+        switch (file.type.split("/")[1]) {
+            case "pdf":
+                file_type = "pdf";
+                file_source = locationURL + "pdf-file.jpg";
+                break;
+            case "plain":
+                file_type = "plain";
+                file_source = locationURL + "txt-file.png";
+                break;
+            case "html":
+                file_type = "html";
+                file_source = locationURL + "html-file.png";
+                break;
+            case "x-zip-compressed":
+                file_type = "zip";
+                file_source = locationURL + "zip-file.png";
+                break;
+            case "xml":
+                file_type = "xml";
+                file_source = locationURL + "xml-file.png";
+                break;
+            case "vnd.openxmlformats-officedocument.presentationml.presentation":
+                file_type = "powerpoint";
+                file_source = locationURL + "powerpoint-file.png";
+                break;
+            case "vnd.openxmlformats-officedocument.wordprocessingml.document":
+            case "msword":
+                file_type = "word";
+                file_source = locationURL + "word-file.png";
+                break;
+            case "vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+            case "vnd.ms-excel":
+                file_type = "excel";
+                file_source = locationURL + "excel-file.jpg";
+                break;
+            default:
+                file_type = "default";
+                file_source = locationURL + "file-file.png";
+        }
+
+        switch (file.type.split("/")[0]) {
+            case "image":
+                file_type = "image";
+                break;
+        }
+
+        var item = $('#img_preview').children().length + 1;
+
+        $('#img_preview').append(`
+                <img src="" id="preview_${item}"  title="${file.name}" height="75" style="margin:2%;">
+                <label>${file.name}</label>
+                <br>            
             `)
 
 
-            var preview = $(`#preview_${item}`)[0];
-            var reader = new FileReader();
 
+
+        var preview = $(`#preview_${item}`)[0];
+
+        if (file_type == "image") {
+            var reader = new FileReader();
             reader.addEventListener("load", function () {
                 preview.src = reader.result;
             }, false);
-
             if (file) {
                 reader.readAsDataURL(file);
             }
+        } else {
+            preview.src = file_source;
         }
+
+
     }
 
 
+    $('#tbl_tareas tbody').on('click', 'td', function () {
+        if (this.firstChild.type == "button")
+            return false;
+        tareasProgramadas.clearControls();
+        tareasProgramadas.id = tbl_tareas.rows(this.parentElement).data()[0]["id"];        
+        tareasProgramadas.loadTaskbyID();
+    });
 
+    $('#tbl_tareas tbody').on('click', 'button.deleteTask', function () {
+        tareasProgramadas.id = tbl_tareas.row().data()["id"];
+        tareasProgramadas.deleteTask();
+    });
 
     $('#btn_guardar_tarea').click(function () {
 

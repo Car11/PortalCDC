@@ -11,15 +11,34 @@ if(isset($_POST["action"])){
     if (!isset($_SESSION))
         session_start();
     // Instance
-    $tareasProgramadas= new TareasProgramadas();
+    $tareasProgramadas = new TareasProgramadas();
     switch($opt){
         case "cargar_todas":
-            echo json_encode($tareasProgramadas->cargar_todas());
+            echo json_encode( $tareasProgramadas->cargar_todas() );
             break;
         case "create":
             $tareasProgramadas->create();
             break;
+        case "loadTaskbyID":
+        echo json_encode( $tareasProgramadas->loadTaskbyID() );
+            break;
+        case "deleteTask":
+            $tareasProgramadas->deleteTask();
+            break;
     }
+}
+
+class SubTask {
+    public $id;
+    public $id_scheduled_task;
+    public $title;    
+}
+
+class File {
+    public $id;
+    public $scheduled_task_id;
+    public $name;  
+    public $image_file_base64;
 }
 
 class TareasProgramadas {
@@ -87,6 +106,60 @@ class TareasProgramadas {
         }
     }
 
+    
+    function loadTaskbyID(){
+        try {
+            $sql='SELECT id, user_id, min, hour, dom, year, dow, title, detail, file, sub_task, project_id, column_id
+            FROM scheduled_task
+            WHERE id = :id;';
+            $param= array(':id'=>$this->id);            
+            $task= DATA::Ejecutar($sql,$param);
+            if($task){ 
+                $this->id = $task[0]["id"];         
+                $this->user_id = $task[0]["user_id"];    
+                $this->min = $task[0]["min"];        
+                $this->hour = $task[0]["hour"];       
+                $this->dom = $task[0]["dom"];        
+                $this->year = $task[0]["year"];       
+                $this->dow = $task[0]["dow"];        
+                $this->title = $task[0]["title"];      
+                $this->detail = $task[0]["detail"];     
+                $this->file = $task[0]["file"];       
+                $this->sub_task = $task[0]["sub_task"];
+                $this->project_id = $task[0]["project_id"];
+                $this->column_id = $task[0]["column_id"];
+
+                if ($this->sub_task == "1"){
+                    $this->sub_task = [];  
+                    $sql='SELECT * FROM kanboard.scheduled_sub_task
+                    WHERE id_scheduled_task = :id_scheduled_task';
+                    $param= array(':id_scheduled_task'=>$this->id);            
+                    $this->sub_task = DATA::Ejecutar($sql,$param);    
+                }
+
+                if ($this->file == "1"){             
+                    $this->file = [];
+                    $sql='SELECT * FROM kanboard.scheduled_task_has_files
+                    WHERE scheduled_task_id = :scheduled_task_id';
+                    $param= array(':scheduled_task_id'=>$this->id);            
+                    $this->file= DATA::Ejecutar($sql,$param);
+                }
+                return $this;
+            }
+            return false;
+        }     
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            if (!headers_sent()) {
+                    header('HTTP/1.0 400 Error al leer');
+                }
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la lista'))
+            );
+        }
+    }
+
     function create(){
         try {
             $file = 0;
@@ -132,6 +205,39 @@ class TareasProgramadas {
                 return true;
             // }
             // return false;
+        }     
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            if (!headers_sent()) {
+                    header('HTTP/1.0 400 Error al leer');
+                }
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la lista'))
+            );
+        }
+    }
+
+    
+    function deleteTask(){
+        try {
+            //Delete Files
+            $sql = "DELETE FROM scheduled_task_has_files 
+                    WHERE scheduled_task_id = :scheduled_task_id;";
+            $param= array(':scheduled_task_id'=>$this->id );            
+            $data = DATA::Ejecutar($sql,$param, false);
+
+            //Delete Subtask
+            $sql = "DELETE FROM scheduled_sub_task 
+                    WHERE id_scheduled_task = :id_scheduled_task;";
+            $param= array(':id_scheduled_task'=>$this->id );            
+            $data = DATA::Ejecutar($sql,$param, false);
+
+            //Delete Task
+            $sql = "DELETE FROM scheduled_task 
+                    WHERE id = :id;";
+            $param= array(':id'=>$this->id );            
+            $data = DATA::Ejecutar($sql,$param, false);
         }     
         catch(Exception $e) {
             error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
