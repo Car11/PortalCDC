@@ -5,6 +5,7 @@ class DATA {
 	public static $conn;
     private static $connSql;
     private static $config="";
+    private static $configLDAP=[];
 
 	private static function ConfiguracionIni(){
         // Always in development, disabled in production //
@@ -51,7 +52,23 @@ class DATA {
             exit;
         }
     }    
-
+    
+    public static function getLDAP_Param() {
+        try {
+            self::ConfiguracionIni();
+            
+            self::$configLDAP= array(
+                    "LDAPuser"=>self::$config[Globals::app]['LDAPuser'],
+                    "LDAPpasswd"=>self::$config[Globals::app]['LDAPpasswd']
+                );
+            return self::$configLDAP;
+        }
+        catch(Exception $e){
+            throw new Exception($e->getMessage(),$e->getCode());
+        }
+    }
+    
+    
     // Ejecuta consulta SQL, $op = true envía los datos en 'crudo', $op=false envía los datos en arreglo (fetch).
     public static function Ejecutar($sql, $param=NULL, $op=false) {
         try{
