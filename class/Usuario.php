@@ -13,7 +13,10 @@ if(isset($_POST["action"])){
         case "Login":
             $usuario->usuario= $_POST["username"];
             $usuario->contrasena= $_POST["password"];
-            $usuario->LDAPCheck();
+            $usuario->local= $_POST["local"];
+            if(!filter_var($usuario->local, FILTER_VALIDATE_BOOLEAN))
+                $usuario->LDAPCheck();
+            else $usuario->loginLocal();
             break;      
     }
 }
@@ -155,7 +158,7 @@ class Usuario{
             }
             @ldap_close($ldap);
         } else {
-            log::Add('INFO', 'Inicio de sesiÃ³n InvÃ¡lida: '. $this->usuario);
+            //log::Add('INFO', 'Inicio de sesion Invalido: '. $this->usuario);
             return false;  
         }
     }
@@ -170,6 +173,27 @@ class Usuario{
             return true;
         }else {        
             return false;           
+        }        
+    }
+
+    function loginLocal(){
+        $sql='SELECT password  FROM users where username=:username';
+        $param= array(':username'=>$this->usuario);
+        $data = DATA::Ejecutar($sql,$param);
+        if (count($data) ) {
+            // check password.
+            if(password_verify($this->contrasena, $data[0]['password'])){
+                $this::KanboardUser();
+                return true;  
+            }else {        
+                $sessiondata['status']='nologin';
+                echo json_encode($sessiondata);
+                return false;
+            }        
+        }else {        
+            $sessiondata['status']='nologin';
+            echo json_encode($sessiondata);
+            return false;
         }        
     }
 

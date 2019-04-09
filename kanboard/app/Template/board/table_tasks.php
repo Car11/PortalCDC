@@ -13,7 +13,20 @@
                 data-column-id="<?= $column['id'] ?>"
                 data-swimlane-id="<?= $swimlane['id'] ?>"
                 data-task-limit="<?= $column['task_limit'] ?>">
-
+                <!-- sort column by date. column id: 77. project id: 18 -->
+                <?php  
+                    
+                    $sorted = [];
+                    $min=0;
+                    //  
+                    if($column['project_id'] == "22" && $column['id']==94){
+                        usort($column['tasks'], function($a, $b) { // anonymous function
+                            // compare numbers only
+                            return $a['date_started'] - $b['date_started'];
+                        });
+                    }
+                ?>
+                <!--  -->
                 <?php foreach ($column['tasks'] as $task): ?>
                     <?= $this->render($not_editable ? 'board/task_public' : 'board/task_private', array(
                         'project' => $project,

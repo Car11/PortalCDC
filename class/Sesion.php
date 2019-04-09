@@ -4,18 +4,16 @@
 require_once('Globals.php');
 require_once("Conexion.php");
 require_once("Log.php");
-
+*/
 
 if(isset($_POST["action"])){
-    $usuario= new LDAPP();
+    $sesion= new Sesion();
     switch($_POST["action"]){       
-        case "Login":
-            $ldapp->username= $_POST["username"];
-            $ldapp->password= $_POST["password"];
-            $ldapp->Connect();
+        case "logout":
+            $sesion->Fin();
             break;      
     }
-}*/
+}
 
 if(isset($_POST["action"])){
     $sesion = new Sesion();
@@ -39,19 +37,37 @@ class Sesion{
 		$this->Verifica();
 	}
 	
-	private function Verifica(){		
+	private function Verifica(){
 		if(isset($_SESSION["username"])){
 			$this->username = $_SESSION["username"];
 			$this->rol = $_SESSION["rol"];
 			$this->userid = $_SESSION["userid"];
 			$this->name = $_SESSION["name"];
 			$this->estado = true;	        
+			// prueba sin login
+			//$this->Fin();
 		} else {
 			unset($this->username);
 			unset($this->rol);
 			unset($this->userid);
 			unset($this->name);
-			$this->estado = false;            
+			$this->estado = false;
+		}
+	}
+
+	public function isLogin(){
+		if(!isset($_SESSION["username"])){
+			$this->Fin();     
+			//
+			// header("Location: http://operacionesti/Login.php");
+			error_log("[WARNING]  (-666): Tiempo de sesion vencido");
+			//header("Location: localhost/PortalCDC/Login.php");
+			header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => -666,
+                'msg' => 'Sesión Inválida'))
+            );			
+			exit();  
 		}
 	}
 
@@ -80,7 +96,7 @@ class Sesion{
         $this->estado = true;	
 	}
 	
-	public function Fin(){  /******************* PROBAR EL FINAL DEL LOGIN ****************************/
+	public function Fin(){ 
 		unset($_SESSION["username"]);
 		unset($this->username);
 		unset($_SESSION["rol"]);

@@ -59,17 +59,20 @@
             </span>
         <?php endif ?>
 
-        <?php if (! empty($task['date_due'])): ?>
-            <span class="task-date
-                <?php if (time() > $task['date_due']): ?>
+        <?php if (! empty($task['date_started'])): ?>
+            <h3> <span class="task-date 
+                <?php if (time() > $task['date_started']): ?>
                      task-date-overdue
-                <?php elseif (date('Y-m-d') == date('Y-m-d', $task['date_due'])): ?>
+                <?php elseif (date('Y-m-d') == date('Y-m-d', $task['date_started'])): ?>
                      task-date-today
                 <?php endif ?>
                 ">
-                <i class="fa fa-calendar"></i>
-                <?= $this->dt->datetime($task['date_due']) ?>
-            </span>
+                <i class="fa fa-calendar"></i>  
+                <?= 
+                 date('d M       h:i:s A', $task['date_started']);                     
+                ?>
+                
+            </span></h3>
         <?php endif ?>
     </div>
     <div class="task-board-icons-row">

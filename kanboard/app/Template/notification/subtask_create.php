@@ -1,3 +1,5 @@
+<!--
+<
 <h2><?= $this->text->e($task['title']) ?> (#<?= $task['id'] ?>)</h2>
 
 <h3><?= t('New sub-task') ?></h3>
@@ -15,3 +17,4 @@
 </ul>
 
 <?= $this->render('notification/footer', array('task' => $task)) ?>
+-->

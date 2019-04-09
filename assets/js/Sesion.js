@@ -1,5 +1,12 @@
 
+let local=false; // usuario local.
+
 function Login() {
+    // es usuario de kb o ldap    
+    if($("#username").val().search('@')==-1){
+       local = true;
+    }
+    else local = false;
     //valida form
     $("#login-form").validate({
         rules: {
@@ -30,6 +37,7 @@ function submitForm(){
             action: 'Login',               
             username:  $("#username").val(),
             password: $("#password").val(),
+            local: local,
             beforeSend: function(){
                 $("#error").fadeOut();
             } 

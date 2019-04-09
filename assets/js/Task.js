@@ -5,6 +5,19 @@ var arrayOffiles = [];
 var arraySubTask = [];
 
 $(document).ready( function () {
+    //logout
+    $('#logout').click(function(){
+        $.ajax({
+          type: "POST",
+          url: "class/Sesion.php",
+          data: { 
+            action: 'logout'
+          }
+      })
+      .done(function( ) {
+        location.href= 'index.html';
+      });
+    });
     //vuelve al menu
     this.Exit = function(){
         CleanCtls();
@@ -17,8 +30,8 @@ $(document).ready( function () {
     $("#search").on('keyup', function (e) {
         var searchText = $('#buscar').val();
         $('.drag-inner-list > li').each(function(){            
-            var currentLiText = $(this)[0].className,
-                showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+            var currentLiText = $(this)[0].className.toLowerCase(),
+                showCurrentLi = currentLiText.indexOf(searchText.toLowerCase()) !== -1;
             $(this).toggle(showCurrentLi);
         });  
         if (e.keyCode == 113) {
@@ -30,7 +43,7 @@ $(document).ready( function () {
     LoadColumns();
     setInterval(function() {
         LoadColumns(); 
-    }, 300000);       
+    }, 60000);       
     // LoadProjects();
     encode_Files();
     //Permite la importacion de archivos
@@ -66,11 +79,24 @@ function BtnCreateNew(){
     $('#row-comments').hide();
     $('#ModalLabel').text('Ingresar Nueva Tarea');
     //
-    var d_actual = new Date(Date()+"GMT-0000");
-    var d_actual_iso = d_actual.toISOString().slice(0, 16);
-    document.getElementById("date_started").value = d_actual_iso;
-    document.getElementById("date_due").value = "";
-    //
+    $.ajax({
+        type: "POST",
+        url: "class/Task.php",
+        data: { 
+            action: "serverDatetime"
+        }
+    })
+    .done(function(e) {
+        var d_actual = e.slice(0, 16);
+        document.getElementById("date_started").value = d_actual;
+        document.getElementById("date_due").value = "";
+    })    
+    .fail(function(){
+        var d_actual = new Date(Date()+"GMT-0000");
+        var d_actual_iso = d_actual.toISOString().slice(0, 16);
+        document.getElementById("date_started").value = d_actual_iso;
+        document.getElementById("date_due").value = "";
+    });
     //CleanCtls();
     //clearAttachments();
 };
@@ -172,8 +198,8 @@ function ShowTasks(e){
     var data= JSON.parse(e);
     // Recorre arreglo.
     $.each(data, function(i, item) {  
-        var d_creation = moment(item.date_creation*1000).format();
-        var d_creation_iso = d_creation.slice(0, 16).replace('T', ' ');
+        var d_started = moment(item.date_started*1000).format();
+        var d_creation_iso = d_started.slice(0, 16).replace('T', ' ');
         var posicion = '#'+item.position;       
         var row=
             // '<li class="drag-item" onclick="open_task()">' +
@@ -281,8 +307,6 @@ function downloadURI(uri, name) {
 // 	}
 // }
 
-
-
 function saveFile (name, type, data) {
 	if (data != null && navigator.msSaveBlob)
 		return navigator.msSaveBlob(new Blob([data], { type: type }), name);
@@ -337,8 +361,6 @@ function decode_file(e, filename){
 
 };
 
-
-
 // Muestra información en ventana
 function showInfo(){
     swal({
@@ -382,8 +404,8 @@ function ShowData(e){
     var data= JSON.parse(e);
     // Recorre arreglo.
     $.each(data, function(i, item) {
-        var d_creation = new Date((item.date_creation)*1000);
-        var d_creation_iso = d_creation.toISOString().slice(0, 16).replace('T', ' ');
+        var d_started = new Date((item.date_started)*1000);
+        var d_started_iso = d_started.toISOString().slice(0, 16).replace('T', ' ');
         var row=
             '<tr>'+
                 '<td align="center">'+
@@ -394,7 +416,7 @@ function ShowData(e){
                 '<td style="min-width: 17em; max-width: 17em;">'+ item.title +'</td>'+
                 '<td style="min-width: 22em; max-width: 22em;">'+ item.description + '</td>'+
                 '<td style="min-width: 6em; max-width: 7em;">'+ item.position +'</td>'+
-                 '<td style="min-width: 9em; max-width: 9em;">'+ d_creation_iso +'</td>'+
+                 '<td style="min-width: 9em; max-width: 9em;">'+ d_started_iso +'</td>'+
             '</tr>';
         $('#task-tbody').append(row);
     })
@@ -711,7 +733,19 @@ function SaveTask(){
             objFile: JSON.stringify(arrayOffiles)                       
         }
     })
-    .done(function(data) {
+    .done(function(e) {
+        var data = JSON.parse(e);
+        if(!data.result){
+            swal({
+                position: 'top-end',
+                type: 'error',
+                title: 'Ha ocurrido un error al crear la tarea.',
+                showConfirmButton: true,
+                timer: 3000
+            });
+            return;
+        }
+
         swal({
             position: 'top-end',
             type: 'success',
@@ -728,8 +762,32 @@ function SaveTask(){
         LoadColumns(); 
       })
     .fail(function(error) {
-        var log= JSON.parse(error);
-        alert(log);
+        var log= JSON.parse(error.responseText);
+        if(log.code==-666)
+            setTimeout(
+                function(){
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Sesión Expirada!',
+                        html: 'Redireccionando en <strong></strong> segundos.',
+                        timer: 3000,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                            timerInterval = setInterval(() => {
+                                Swal.getContent().querySelector('strong')
+                                    .textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        onClose: () => {
+                            clearInterval(timerInterval);
+                            location.href = 'Login.php';
+                        }
+                    }).then((result) => {
+                        location.href = 'Login.php';
+                    });
+                },
+                3000
+            );
     })
     .always(function() {
         setTimeout('$("#btnSaveTask").removeAttr("disabled")', 750);                
