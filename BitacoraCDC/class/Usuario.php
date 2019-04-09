@@ -47,47 +47,46 @@ class Usuario{
     }
 
     function ValidarUsuarioLDAP (){
-        $user_domain= explode ('@', $this->usuario);
-        if(sizeof($user_domain)<2)
-            return false;
-        $dominio = $user_domain[1];
-        $this->usuario= $user_domain[0];
-        $adServer = $dominio;
+        $ldapServicio = DATA::getLDAP_Param();
+        //Busca el usuario desde una cuenta de Servicio ICE 
+        $domainName = "icetel";
         $ldapport = 3268;
-        $ldap = ldap_connect($adServer, $ldapport);        
-        $ldapUser = $this->usuario;
-        $ldapPasswd = $this->contrasena;
-        $ldaprdn = 'icetel' . "\\" . $ldapUser;
-        //ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-        //ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-        $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);
+        $ldap = ldap_connect($domainName, $ldapport);
+        $ldapMail = $this->usuario;  
+        $baseDN = "dc=ice";
+        $bind = @ldap_bind($ldap, $ldapServicio["LDAPuser"], $ldapServicio["LDAPpasswd"]);
         if ($bind) {
-            $filter="(sAMAccountName=$ldapUser)";
-            $result = ldap_search($ldap,"dc=icetel,dc=ice",$filter);
-            //ldap_sort($ldap,$result,"sn");
-            $info = ldap_get_entries($ldap, $result);
-            for ($i=0; $i<$info["count"]; $i++)
-            {
-                if($info['count'] > 1)
-                    break;
-                //echo "<p>You are accessing <strong> ". $info[$i]["sn"][0] .", " . $info[$i]["givenname"][0] ."</strong><br /> (" . $info[$i]["samaccountname"][0] .")</p>\n";
-                /*echo "<p>Accediendo como: <strong> ". $info[$i]["givenname"][0] ." " . $info[$i]["sn"][0] ."</strong>\n <br /> Usuario: <strong>" . $info[$i]["samaccountname"][0] ."</strong></p>\n";
-                echo "<p>Correo: <strong> ". $info[$i]["mail"][0] . "</strong></p>\n";
-                echo "<p>Telefono: <strong> ". $info[$i]["telephonenumber"][0] . "</strong></p>\n";               
-                echo '<pre>';
-                //var_dump($info);
-                echo '</pre>';*/
-                //$userDn = $info[$i]["distinguishedname"][0]; 
-                $this->email= $info[$i]["mail"][0];
-                $this->nombre = $info[$i]["sn"][0] . ' ' . $info[$i]["givenname"][0];
-                //
-                $this::BuscaRol();
-                //// log::Add('INFO', 'Inicio de sesión: '. $this->usuario);
-                return true;  
+            //Filta por correo
+            $filter="(mail=$ldapMail)";
+            $search_result=ldap_search($ldap,$baseDN,$filter);
+            $userData = ldap_get_entries($ldap, $search_result);
+            //Obtiene Dominio y Usuario de dominio para crear el DN
+            $userDomainName = explode ("=",ldap_explode_dn ($userData[0]["dn"], 0)[3])[1];
+            $userLDAPUser = $userData[0]["samaccountname"][0];
+            $userLDAPDN = $userDomainName  . "\\" .  $userLDAPUser;
+            //Cierra la Sesion
+            @ldap_close($ldap);
+            /////////// Valida Usuario y password:
+            $userLDAP = ldap_connect($userDomainName, $ldapport);
+            $userBind = @ldap_bind($userLDAP, $userLDAPDN, $this->contrasena);
+            if ($userBind) {
+                $filter="(mail=$ldapMail)";//mail
+                $result = ldap_search($userLDAP,$baseDN,$filter);
+                $info = ldap_get_entries($userLDAP, $result);
+                for ($i=0; $i<$info["count"]; $i++)
+                {
+                    if($info['count'] > 1)
+                        break;
+                
+                    $this->email= $info[$i]["mail"][0];
+                    $this->nombre = $info[$i]["sn"][0] . ' ' . $info[$i]["givenname"][0];
+                    $this->usuario = $userLDAPUser;
+                    $this::BuscaRol();
+                    return true;  
+                }
             }
             @ldap_close($ldap);
         } else {
-            // // log::Add('INFO', 'Inicio de sesión Inválida: '. $this->usuario);
             return false;  
         }
     }

@@ -15,6 +15,15 @@ if(isset($_POST["action"])){
     }
 }
 
+if(isset($_POST["action"])){
+    $sesion = new Sesion();
+    switch($_POST["action"]){       
+        case "check":
+            echo json_encode($sesion->CheckSession());
+            break;      
+    }
+}
+
 class Sesion{
 	public $estado=false;
 	public $username;
@@ -61,6 +70,23 @@ class Sesion{
 			exit();  
 		}
 	}
+
+	public function CheckSession(){
+        if(!isset($_SESSION)){
+            session_start();
+		}
+        else {            
+			// $this->estado = false; 
+            if (!$this->estado){        
+				$this->estado = false;
+                return $this->estado;
+			}
+			else {
+                return  $this;
+			}
+        }
+
+    }
 		
 	public function Inicio($username, $rol, $userid, $name){
         $this->username = $_SESSION["username"] = $username;

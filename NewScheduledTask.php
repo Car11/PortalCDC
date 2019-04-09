@@ -1,15 +1,18 @@
-  <?php
-// if (!isset($_SESSION))
-// session_start();
+<?php
+// session_start ();
+// session_destroy();
+if (!isset($_SESSION))
+session_start();
+
 include_once('class/Globals.php');
-// // Sesion de usuario
-// require_once("class/Sesion.php");
-// $sesion = new Sesion();
-// if (!$sesion->estado){
-//   $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
-//   header('Location: Login.php');
-//   exit;
-// }
+// Sesion de usuario
+require_once("class/Sesion.php");
+$sesion = new Sesion();
+if (!$sesion->estado){
+  $_SESSION['url']= explode('/',$_SERVER['REQUEST_URI'])[2];
+  header('Location: Login.php');
+  exit;
+}
 
 ?>
 
@@ -24,13 +27,14 @@ include_once('class/Globals.php');
     <script src="assets/js/ScheduledTask.js" languaje="javascript" type="text/javascript"></script>
     <script src="assets/js/sweetalert.min.js"></script> 
     <script src="assets/js/sweetalert.js"></script> 
+    <script src="assets/js/Task.js"></script> 
          <!-- CSS de Bootstrap -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.css">   -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.min.css"> 
     <!-- CSS -->     
     <link rel="stylesheet" href="assets/css/sweetalert.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css?v=<?php echo Globals::cssversion; ?>" />
-    <link href="css/Style-Base.css?v= <?php echo Globals::cssversion; ?>" rel="stylesheet" />
+    <link href="assets/css/Style-Base.css?v= <?php echo Globals::cssversion; ?>" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="assets/css/Style-Base.css?v=<?php echo Globals::cssversion; ?>" /> -->
     <link rel="stylesheet" href="assets/css/Modal.css?v=<?php echo Globals::cssversion; ?>" />
     <link rel="stylesheet" href="assets/css/Style-Task.css?v=<?php echo Globals::cssversion; ?>" />

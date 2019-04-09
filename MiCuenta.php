@@ -189,10 +189,14 @@ if (!isset($_SESSION))
                                                 <TABLE id="dataTable" width="100%" border="0">
                                                     <TR>
                                                         <TD>
-                                                            <INPUT id="chk" type="checkbox" name="chk" />></TD>
-                                                        <TD> <span style='color:#ddd;'> 1 </span></TD>
+                                                            <INPUT id="chk" type="checkbox" name="chk" />
+                                                        </TD>
+                                                        <TD> 
+                                                            <span style='color:#ddd;'> 1 </span>
+                                                        </TD>
                                                         <TD>
-                                                            <INPUT id="subtask" class="sub-task-desc" type="text" /> </TD>
+                                                            <INPUT id="subtask" class="sub-task-desc" type="text" /> 
+                                                        </TD>
                                                         <TD>
                                                             <INPUT id="estado" type="text" name="estado" value="Pendiente" />
                                                         </TD>
