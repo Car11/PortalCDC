@@ -49,7 +49,7 @@ class Usuario{
     function ValidarUsuarioLDAP (){
         $ldapServicio = DATA::getLDAP_Param();
         //Busca el usuario desde una cuenta de Servicio ICE 
-        $domainName = "icetel";
+        $domainName = "icetel.ice";
         $ldapport = 3268;
         $ldap = ldap_connect($domainName, $ldapport);
         $ldapMail = $this->usuario;  
@@ -67,7 +67,7 @@ class Usuario{
             //Cierra la Sesion
             @ldap_close($ldap);
             /////////// Valida Usuario y password:
-            $userLDAP = ldap_connect($userDomainName, $ldapport);
+            $userLDAP = ldap_connect($userDomainName . ".ice", $ldapport);
             $userBind = @ldap_bind($userLDAP, $userLDAPDN, $this->contrasena);
             if ($userBind) {
                 $filter="(mail=$ldapMail)";//mail
@@ -87,6 +87,7 @@ class Usuario{
             }
             @ldap_close($ldap);
         } else {
+            error_log("Falla el Bind: " . ldap_error($ldap));
             return false;  
         }
     }
