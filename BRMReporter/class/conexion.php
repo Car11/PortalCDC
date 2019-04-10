@@ -21,6 +21,7 @@ class DATA {
             self::ConfiguracionIni();
             if(!isset(self::$conn)) {                                
                 self::$conn = OCILogon(self::$config[Globals::app]['username'], self::$config[Globals::app]['password'], self::$config[Globals::app]['tns']);
+                //self::$conn = OCILogon('cchacon_oper', 'wincyre18','(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=rac-factprd)(PORT=1523))(LOAD_BALANCE=yes)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TAF_PRDBRM)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETRIES=180)(DELAY=5))))');
                 //new PDO("oci:dbname=" . self::$config[Globals::app]['tns'], self::$config[Globals::app]['username'], self::$config[Globals::app]['password']);
                 // , array(
                 //     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -43,9 +44,9 @@ class DATA {
     public static function Ejecutar($sql, $param=NULL, $fetch=true) {
         try{
             //conecta a BD
-            error_log("[DEBUG]  : CONECTANDO ");
+            //error_log("[DEBUG]  : CONECTANDO ");
             self::Conectar();
-            error_log("[DEBUG]  : CONEXION OK!!! ");
+            //error_log("[DEBUG]  : CONEXION OK!!! ");
             $st= oci_parse(self::$conn, $sql); 
             $r= oci_execute($st);
             if($r)

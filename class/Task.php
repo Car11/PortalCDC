@@ -2,19 +2,16 @@
 if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
-// require_once("Conexion.php");
-// require_once("Log.php");
-
-// function __construct(){
-//     require_once("Conexion.php");
-//     require_once("Log.php");
-// }
-
 Globals::ConfiguracionIni();
 
 if(isset($_POST["action"])){
     $task= new Task();
     switch($_POST["action"]){
+        case "serverDatetime":
+            $date = date_create(); 
+            echo $date->format("c");
+            exit;
+            break;
         case "LoadAll":
             //echo json_encode($visitante->CargarTodos());
             break;
@@ -143,18 +140,18 @@ class Task{
 
     function LoadTask(){
         try {            
-            $sql='SELECT  id, title, date_creation, position FROM (
+            $sql='SELECT  id, title, date_started, position FROM (
                 SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
                 INNER JOIN 
                 (SELECT group_id, user_id FROM group_has_users) as U
                 ON GU.group_id = U.group_id
                 INNER JOIN
-                (SELECT t.id, t.title, t.creator_id, t.date_creation, c.position 
+                (SELECT t.id, t.title, t.creator_id, t.date_started, c.position 
                 FROM kanboard.tasks as t
                     INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id and t.is_active =1
                     order by t.id desc
                 ) AS T
-                ON T.creator_id = user_id GROUP BY id;'; 
+                ON T.creator_id = user_id GROUP BY id ORDER BY date_started asc;'; 
             $param= array(':project_id'=>18, ':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
@@ -373,6 +370,10 @@ class Task{
 
     function Update(){
         try{
+            // valida la sesión del usuario antes del insert.
+            require_once("Sesion.php");
+            $sesion = new Sesion();
+            $sesion->isLogin();
             $t_started = date("m/d/Y H:i", strtotime($this->date_started));
             $t_due = ($this->date_due);
             $t_due = str_replace('T', ' ', $t_due);
@@ -433,12 +434,17 @@ class Task{
                     $this->crearSubTarea($subT->title);
                 else $this->actualizarSubTarea($subT->id, $subT->title);
             }
+            echo $response;
         }
         catch(Exception $e){}
     }
 
     function Insert(){
         try {
+            // valida la sesión del usuario antes del insert.
+            require_once("Sesion.php");
+            $sesion = new Sesion();
+            $sesion->isLogin();
             //date_started sin convertir: 2018-02-10T12:59
             //date_started debe tener el siguiente formato: 02/10/2018 19:43  || mes/dia/año hora:min       
             $t_started = date("m/d/Y H:i", strtotime($this->date_started));
@@ -498,22 +504,24 @@ class Task{
             curl_close($curl);
             //
             if ($err) {
-                echo "cURL Error #:" . $err;
-            } else {
-                echo "Resumen de tarea: ".$response;
-            }
+                return $err;
+            } 
             //
             if (($this->subTask) == "1"){
                 foreach (($this->subtask_des) as $subT) {
-                    $this->crearSubTarea($subT->title);
+                    if($subT->title!=='')
+                        $this->crearSubTarea($subT->title);
                 }
             }
-        
+            //
             if ($this->mifile == "1"){
                 foreach (($this->objFile) as $value2) {
+
                     $this->addFilesToTask(($this->project_id), $this->id, $value2[0],$value2[1]);
                 }
             }
+            echo $response;
+            
         }
         catch (Exception $e){
             header('HTTP/1.1 500 Internal Server XXX');
@@ -559,9 +567,7 @@ class Task{
         curl_close($curl);
     
         if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+            echo $err;
         }       
     }
 
@@ -689,15 +695,10 @@ class Task{
         curl_close($curl);
     
         if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+            echo $err;
         }
     }
-
-
 }
-
 ?>
 
 

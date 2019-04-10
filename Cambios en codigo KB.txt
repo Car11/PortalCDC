@@ -1,0 +1,52 @@
+cambios en KB - PHP
+
+- Muestra date_started
+
+task_footer.php : 62
+
+        <?php if (! empty($task['date_started'])): ?>
+            <span class="task-date
+                <?php if (time() > $task['date_started']): ?>
+                     task-date-overdue
+                <?php elseif (date('Y-m-d') == date('Y-m-d', $task['date_started'])): ?>
+                     task-date-today
+                <?php endif ?>
+                ">
+                <i class="fa fa-calendar"></i>  
+                <?= 
+                 date('d M       h:i:s A', $task['date_started']);                    
+                ?>
+            </span>
+        <?php endif ?>
+		
+		
+
+- overdue
+
+tasknotificationcommand.php : 61
+
+
+- email footer
+
+footer.php : 4
+
+
+- orden de columnas:
+
+app/template/board/table_tasks : 17
+
+<!-- sort column by date. column id: 77. project id: 18 -->
+	<?php  
+		
+		$sorted = [];
+		$min=0;
+		//  
+		if($column['project_id'] == "22" && $column['id']==94){
+			usort($column['tasks'], function($a, $b) { // anonymous function
+				// compare numbers only
+				return $a['date_started'] - $b['date_started'];
+			});
+		}
+	?>
+<!--  -->
+

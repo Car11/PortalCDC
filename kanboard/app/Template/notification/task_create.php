@@ -41,3 +41,47 @@
 <?php endif ?>
 
 <?= $this->render('notification/footer', array('task' => $task)) ?>
+
+
+<?php
+
+    //public $visitante;
+
+    
+        // smtpapl.correo.ice
+        // puerto 25
+        // ip 10.149.20.26
+        // ICETEL\OperTI
+        // Clave: Icetel2019
+        // Buzón: OperacionesTI@ice.go.cr
+       try{
+        error_log("INICIANDO CORREO EXTERNO");
+            //
+            ini_set('SMTP','smtpapl.correo.ice');
+            error_log("INIT SET");
+            $to = "cchaconc@ice.go.cr";
+            //$to= "cchaconc@ice.go.cr";   
+            $from = "operTI@ice.go.cr";
+            //
+            $mensaje = "<h2><i> TAREA CREADA <i><h2>";
+            //
+            $headers = "MIME-Version: 1.0\r\n"; 
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $headers .= "From: ".$from."\r\n"; 
+            //
+            error_log("SENDING ....");
+            //
+            mail($to, "test", $mensaje,$headers);
+            error_log("SENT");
+            
+        }     
+        catch(Exception $e) {
+            // no debe detener el proceso si no se envía el email.
+            // log
+            //require_once("Log.php");  
+            // log::AddD('FATAL', 'Ha ocurrido un error al realizar el envío de correo', $e->getMessage());
+        }
+    
+    
+
+?>

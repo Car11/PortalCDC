@@ -58,7 +58,7 @@ class TaskOverdueNotificationCommand extends BaseCommand
             $rows[] = array(
                 $task['id'],
                 $task['title'],
-                date('Y-m-d H:i', $task['date_due']),
+                date('Y-m-d H:i', $task['date_started']),
                 $task['project_id'],
                 $task['project_name'],
                 $task['assignee_name'] ?: $task['assignee_username'],
