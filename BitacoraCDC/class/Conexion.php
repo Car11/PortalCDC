@@ -56,8 +56,7 @@ class DATA {
     
     public static function getLDAP_Param() {
         try {
-            self::ConfiguracionIni();
-            
+            self::ConfiguracionIni();            
             self::$configLDAP= array(
                     "LDAPuser"=>self::$config[Globals::app]['LDAPuser'],
                     "LDAPpasswd"=>self::$config[Globals::app]['LDAPpasswd']
