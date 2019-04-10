@@ -247,7 +247,7 @@ function loadFormulario(){
         </div>
         
         <div id="signin">
-            <span>Usuario: 
+            <span style="position: absolute;" >Usuario: 
                 <?php
                     if ($sesion->estado) {
                         print $_SESSION['username'];
