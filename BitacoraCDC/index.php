@@ -243,7 +243,7 @@ function loadFormulario(){
         <div id="logo"><img src="img/Logoice.png" height="75" onclick="onShowLogin()" > </div>  
         <div id="fechahora">
             <span id="date"></span>
-            <a href="#" style="position: fixed;"><?php echo ( $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']) ); ?></a>
+            <a href="#" style="position: fixed;color: black;"><?php echo ( $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']) ); ?></a>
         </div>
         
         <div id="signin">
