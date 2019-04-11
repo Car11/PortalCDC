@@ -1,8 +1,8 @@
 <?php
- if(isset($_POST["accion"])){
-	$sesion= new Sesion();
-	$sesion->Logout();
- }
+ 	if(isset($_POST["accion"])){
+		$sesion= new Sesion();
+		$sesion->Logout();
+ 	}
 	
 
 class Sesion{

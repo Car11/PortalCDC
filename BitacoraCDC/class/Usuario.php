@@ -61,10 +61,30 @@ class Usuario{
             $search_result=ldap_search($ldap,$baseDN,$filter);
             $userData = ldap_get_entries($ldap, $search_result);
             //Obtiene Dominio y Usuario de dominio para crear el DN
-            $userDomainName = explode ("=",ldap_explode_dn ($userData[0]["dn"], 0)[3])[1];
+            foreach (  (ldap_explode_dn ($userData[0]["dn"], 0) ) as $key=> $dn) {
+                // code to be executed;
+                if ( isset(explode ("=",$dn)[1])   ){
+                    switch ( explode ("=",$dn)[1] ) {
+                        case "sabana":
+                            $userDomainName = "sabana";
+                            break;
+                        case "icetel":
+                            $userDomainName = "icetel";
+                            break;
+                    }
+
+                }
+                
+                
+                // $res = ldap_search($ldap_conn, $dn, $filter);
+                // // $first = ldap_first_entry($ldap_conn, $res);
+                // $data = ldap_get_dn($ldap, $userData);
+            }
+            // $userDomainName = explode ("=",ldap_explode_dn ($userData[0]["dn"], 0)[3])[1];
             $userLDAPUser = $userData[0]["samaccountname"][0];
             $userLDAPDN = $userDomainName  . "\\" .  $userLDAPUser;
             //Cierra la Sesion
+            //%VaL32310%
             @ldap_close($ldap);
             /////////// Valida Usuario y password:
             $userLDAP = ldap_connect($userDomainName . ".ice", $ldapport);
