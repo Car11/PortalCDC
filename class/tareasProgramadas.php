@@ -19,6 +19,9 @@ if(isset($_POST["action"])){
         case "create":
             $tareasProgramadas->create();
             break;
+        case "update":
+            $tareasProgramadas->update();
+            break;
         case "loadTaskbyID":
         echo json_encode( $tareasProgramadas->loadTaskbyID() );
             break;
@@ -218,6 +221,72 @@ class TareasProgramadas {
         }
     }
 
+    function update(){
+        try {
+            $file = 0;
+            $subTask = 0;
+
+            if (sizeof($this->file) > 0){
+                $file = 1;
+            }
+            if (sizeof($this->sub_task) > 0){
+                $subTask = 1;
+            }
+            $sql = "UPDATE scheduled_task
+                    SET
+                    user_id = :user_id ,
+                    min = :min ,
+                    hour = :hour ,
+                    dom = :dom ,
+                    year = :year ,
+                    dow = :dow ,
+                    title = :title ,
+                    detail = :detail ,
+                    file = :file ,
+                    sub_task = :sub_task ,
+                    project_id = :project_id ,
+                    column_id = :column_id 
+                    WHERE id = :id;";
+
+            $param= array(':user_id'=>$this->user_id, ':min'=>$this->min, ':hour'=>$this->hour, 
+                        ':dom'=>$this->dom, ':year'=>$this->year, ':dow'=>$this->dow, ':title'=>$this->title, 
+                        ':detail'=>$this->detail, ':file'=>$file, ':sub_task'=>$subTask, 
+                        ':project_id'=>$this->project_id, ':column_id'=>$this->column_id );            
+            $data = DATA::Ejecutar($sql,$param, false);
+                 
+            if ($subTask == 1){
+
+                $sql='select last_insert_id() id_task;';
+                $last_id = DATA::Ejecutar($sql);
+                $id_task = $last_id[0]["id_task"];
+
+                foreach ($this->sub_task as $value) {
+                    $sql='insert into scheduled_sub_task (id_scheduled_task, title) values (:id_scheduled_task, :subtask_des);';
+                    $param= array(':id_scheduled_task'=>$id_task, ':subtask_des'=> $value);
+                    $data = DATA::Ejecutar($sql,$param, false);  
+                }
+            }   
+                    
+            if ($file == 1){
+                foreach ($this->file as $value) {
+                    $sql='insert into scheduled_task_has_files (scheduled_task_id, name, image_file_base64) VALUES (:id_task, :nombre, :base64);';
+                    $param= array(':id_task'=>$id_task, ':nombre'=>$value["name"], ':base64'=>$value["base64Str"]);
+                    $data = DATA::Ejecutar($sql,$param);  
+                }
+            }        
+            return true;
+        }     
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            if (!headers_sent()) {
+                    header('HTTP/1.0 400 Error al leer');
+                }
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la lista'))
+            );
+        }
+    }
     
     function deleteTask(){
         try {

@@ -17,8 +17,6 @@ class TareasProgramadas {
         this.column_id = column_id || null;
     };
 
-
-
     cargar_todas() {
         $.ajax({
             type: "POST",
@@ -213,6 +211,7 @@ class TareasProgramadas {
     openTask(e) {
         var task = JSON.parse(e);
 
+        tareasProgramadas.update = true;
         tareasProgramadas.clearControls();
 
         $("#inp_titulo").val(task.title);
@@ -295,18 +294,23 @@ class TareasProgramadas {
 
         if (task.sub_task != 0) {
             $.each(task.sub_task, function (index, value) {
-                if (index == 0)
+                if (index == 0){
                     $(".inp_subtask").val(value.title);
+                    $(".inp_subtask").attr("id", value.id);
+                }
                 else {
 
                     $("#frm_agrega_subtask").before(`
                         <form class="form-row form-inline form_subtareas">
                             <div class="input-group col-10" style="margin-bottom: 5px;">
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text">${ ($(".inp_subtask").length) + 1}</div>
+                                    <div class="input-group-text count_input_subTask">${ ($(".inp_subtask").length) + 1}</div>
                                 </div>
                                 <input type="text" class="form-control inp_subtask"
-                                    placeholder="Detalle de Sub Tarea" value="${value.title}">
+                                    placeholder="Detalle de Sub Tarea" id="${value.id}" value="${value.title}">
+                                <div class="input-group-append deteleSubtask">
+                                    <span class="input-group-text"><i class="fa fa-trash-o" style="font-size:20px;color:crimson;"></i></span>
+                                </div>
                             </div>
                             <div class="form-check col-2">
                                 <label class="form-check-label">
@@ -327,7 +331,6 @@ class TareasProgramadas {
 
         $('#modal_new_task').modal('show');
     }
-
 
     loadFiles(files) {
 
@@ -363,7 +366,19 @@ class TareasProgramadas {
                     .fail(function (e) {
                         tareasProgramadas.showError(e);
                     });
-            }
+    }
+
+    deleteSubTask(thisSubTask){
+        if ($(".count_input_subTask").length > 1) {
+            $(thisSubTask.parentElement.parentElement).remove();
+        }
+        else {
+            thisSubTask.previousElementSibling.form[0].value = "";
+        }
+        $('.count_input_subTask').each(function (i, subTask) {
+            subTask.textContent = i + 1;
+        });
+}
 
     create() {
                 $.ajax({
@@ -387,49 +402,74 @@ class TareasProgramadas {
                     .fail(function (e) {
                         tareasProgramadas.showError(e);
                     });
-            };
+    };
 
-        clearControls(){
-            $("#inp_titulo").val("");
-            $("#inp_descripcion").val("");
-            $("#btn_file_load").val("");
-            $("#img_preview").empty();
-            $(".form_subtareas").remove();
-            $(".inp_subtask").val("");
-            $(".chkbox").prop('checked', false);
-            $(".inp_sel option[value='t']").remove();
-            $(".inp_sel").val($(".inp_sel option:first").val());
-            $('.inp_sel').attr("disabled", false);
-            $('#accordion .collapse').attr("data-parent", "#accordion").collapse('hide');
-        }
-
-        // Muestra información en ventana
-        showInfo() {
-            //$(".modal").css({ display: "none" });   
-            $(".close").click();
-            swal({
-
-                type: 'success',
-                title: 'Good!',
-                showConfirmButton: false,
-                timer: 750
+    create() {
+        $.ajax({
+            type: "POST",
+            url: "class/tareasProgramadas.php",
+            data: {
+                action: "update",
+                obj: JSON.stringify(tareasProgramadas)
+            }
+        })
+            .done(function (e) {
+                tareasProgramadas.cargar_todas();
+                alert("Actualizada");
+                // swal({
+                //     type: 'success',
+                //     title: 'Listo, Tarea Guardada!',
+                //     showConfirmButton: false,
+                //     timer: 2000
+                // });
+            })
+            .fail(function (e) {
+                tareasProgramadas.showError(e);
             });
-        };
+    };
 
-        // Muestra errores en ventana
-        showError(e) {
-            //$(".modal").css({ display: "none" });  
-            var data = JSON.parse(e.responseText);
-            // session.in(data)
-            // swal({
-            //     type: 'error',
-            //     title: 'Oops...',
-            //     text: 'Algo no está bien (' + data.code + '): ' + data.msg,
-            //     // // footer: '<a href>Contacte a Soporte Técnico</a>',
-            // });
-        };
+    clearControls(){
+        $("#inp_titulo").val("");
+        $("#inp_descripcion").val("");
+        $("#btn_file_load").val("");
+        $("#img_preview").empty();
+        $(".form_subtareas").remove();
+        $(".inp_subtask").val("");
+        $(".chkbox").prop('checked', false);
+        $(".inp_sel option[value='t']").remove();
+        $(".inp_sel").val($(".inp_sel option:first").val());
+        $('.inp_sel').attr("disabled", false);
+        $('#accordion .collapse').attr("data-parent", "#accordion").collapse('hide');
+    }
+
+    // Muestra información en ventana
+    showInfo() {
+        //$(".modal").css({ display: "none" });   
+        $(".close").click();
+        swal({
+
+            type: 'success',
+            title: 'Good!',
+            showConfirmButton: false,
+            timer: 750
+        });
+    };
+
+    // Muestra errores en ventana
+    showError(e) {
+        //$(".modal").css({ display: "none" });  
+        var data = JSON.parse(e.responseText);
+        // session.in(data)
+        // swal({
+        //     type: 'error',
+        //     title: 'Oops...',
+        //     text: 'Algo no está bien (' + data.code + '): ' + data.msg,
+        //     // // footer: '<a href>Contacte a Soporte Técnico</a>',
+        // });
+    };
 
     }
 //Class Instance
 let tareasProgramadas = new TareasProgramadas();
 var tbl_tareas = [];
+var updateTask = false;
