@@ -31,7 +31,8 @@
             <div class="col-12">
                 <br>
                 <h1>
-                    <span class="blue">&lt;</span>Tareas<span class="blue">&gt;</span> <span class="yellow">Programadas</pan>
+                    <span class="blue">&lt;</span>Tareas<span class="blue">&gt;</span> <span class="yellow">Programadas
+                        </pan>
                 </h1>
             </div>
         </div>
@@ -230,14 +231,15 @@
                         <div class="card">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
-                                        aria-expanded="true" aria-controls="collapseOne">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         Adjuntar Archivos
                                     </button>
                                 </h5>
                             </div>
 
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                data-parent="#accordion">
                                 <div class="card-body">
                                     <form>
                                         <div class="form-group">
@@ -255,21 +257,27 @@
                         <div class="card">
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                        aria-expanded="false" aria-controls="collapseTwo">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         Agregar SubTareas
                                     </button>
                                 </h5>
                             </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordion">
                                 <div class="card-body">
 
-                                    <form class="form-row form-inline">
+                                    <form class="form-row form-inline form_first_subTask">
                                         <div class="input-group col-10" style="margin-bottom: 5px;">
                                             <div class="input-group-prepend">
-                                                <div class="input-group-text" value=1>1</div>
+                                                <div class="input-group-text count_input_subTask" value=1>1</div>
                                             </div>
-                                            <input type="text" class="form-control inp_subtask" placeholder="Detalle de subtarea">
+                                            <input type="text" class="form-control inp_subtask first_inp_subtask"
+                                                placeholder="Detalle de subtarea">
+                                            <div class="input-group-append deteleSubtask">
+                                                <span class="input-group-text"><i class="fa fa-trash-o"
+                                                        style="font-size:20px;color:crimson;"></i> </span>
+                                            </div>
                                         </div>
                                         <div class="form-check col-2">
                                             <label class="form-check-label">
@@ -281,7 +289,8 @@
 
                                     <form id="frm_agrega_subtask" class="form-row form-inline">
                                         <div class="input-group col-10">
-                                            <button type="button" id="bnt_agrega_subtask" style="width: 100%;" class="btn btn-primary">Agregar</button>
+                                            <button type="button" id="bnt_agrega_subtask" style="width: 100%;"
+                                                class="btn btn-primary">Agregar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -294,7 +303,8 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btn_guardar_tarea" data-dismiss="modal">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="btn_guardar_tarea"
+                        data-dismiss="modal">Guardar</button>
                 </div>
 
             </div>
@@ -312,7 +322,8 @@
 <script src="assets/js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="assets/bootstrap4/js/bootstrap.min.js" type="text/jscript"></script>
 <script type="text/javascript" src="assets/js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
-<script type="text/javascript" src="assets/js/dataTables.bootstrap4.min.js" type="text/javascript" charset="utf8"></script>
+<script type="text/javascript" src="assets/js/dataTables.bootstrap4.min.js" type="text/javascript"
+    charset="utf8"></script>
 
 <!-- JS Scripts -->
 <script type="text/javascript" src="assets/js/tareasProgramadas.js"></script>
@@ -329,7 +340,12 @@
 
     $('#btn_newTask').click(function () {
         tareasProgramadas.clearControls();
+        tareasProgramadas.update = false;
         $('#modal_new_task').modal('show');
+    });
+
+    $(".deteleSubtask").click(function () {
+        tareasProgramadas.deleteSubTask(this);
     });
 
     $('#chk_all_hora').click(function () {
@@ -416,14 +432,18 @@
 
     $('#bnt_agrega_subtask').click(function () {
         if (valida_inp_Subtask()) {
+
             $("#frm_agrega_subtask").before(`
                 <form class="form-row form-inline form_subtareas">
                     <div class="input-group col-10" style="margin-bottom: 5px;">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">${ ($(".inp_subtask").length) + 1}</div>
+                            <div class="input-group-text count_input_subTask">${ ($(".inp_subtask").length) + 1}</div>
                         </div>
                         <input type="text" class="form-control inp_subtask"
-                            placeholder="Detalle de Sub Tarea" value="">
+                            placeholder="Detalle de Sub Tarea" value="">                            
+                        <div class="input-group-append deteleSubtask">
+                            <span class="input-group-text"><i class="fa fa-trash-o" style="font-size:20px;color:crimson;"></i></span>
+                        </div>
                     </div>
                     <div class="form-check col-2">
                         <label class="form-check-label">
@@ -433,6 +453,13 @@
                     <br>
                 </form>
             `);
+
+
+
+
+            $(".deteleSubtask").click(function () {
+                tareasProgramadas.deleteSubTask(this);
+            });
         }
     });
 
@@ -581,7 +608,7 @@
         if (this.firstChild.type == "button")
             return false;
         tareasProgramadas.clearControls();
-        tareasProgramadas.id = tbl_tareas.rows(this.parentElement).data()[0]["id"];        
+        tareasProgramadas.id = tbl_tareas.rows(this.parentElement).data()[0]["id"];
         tareasProgramadas.loadTaskbyID();
     });
 
@@ -610,7 +637,12 @@
         tareasProgramadas.column_id = 77;
         tareasProgramadas.project_id = 18;
 
-        tareasProgramadas.create();
+        if (tareasProgramadas.update) {
+            tareasProgramadas.update();
+        } else {
+            tareasProgramadas.create();
+        }
+
     });
 
     function saveSubtask() {

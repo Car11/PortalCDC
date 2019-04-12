@@ -74,11 +74,6 @@ class Usuario{
                     }
 
                 }
-                
-                
-                // $res = ldap_search($ldap_conn, $dn, $filter);
-                // // $first = ldap_first_entry($ldap_conn, $res);
-                // $data = ldap_get_dn($ldap, $userData);
             }
             // $userDomainName = explode ("=",ldap_explode_dn ($userData[0]["dn"], 0)[3])[1];
             $userLDAPUser = $userData[0]["samaccountname"][0];
