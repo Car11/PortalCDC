@@ -1,5 +1,4 @@
 <?php 
-//session_start();
 class Usuario{
 	public $usuario;
 	public $contrasena;
@@ -61,7 +60,7 @@ class Usuario{
             $search_result=ldap_search($ldap,$baseDN,$filter);
             $userData = ldap_get_entries($ldap, $search_result);
             //Obtiene Dominio y Usuario de dominio para crear el DN
-            foreach (  (ldap_explode_dn ($userData[0]["dn"], 0) ) as $key=> $dn) {
+            foreach (  (ldap_explode_dn (  utf8_encode ( $userData[0]["dn"] )  , 0) ) as $key=> $dn) {
                 // code to be executed;
                 if ( isset(explode ("=",$dn)[1])   ){
                     switch ( explode ("=",$dn)[1] ) {
@@ -79,7 +78,6 @@ class Usuario{
             $userLDAPUser = $userData[0]["samaccountname"][0];
             $userLDAPDN = $userDomainName  . "\\" .  $userLDAPUser;
             //Cierra la Sesion
-            //%VaL32310%
             @ldap_close($ldap);
             /////////// Valida Usuario y password:
             $userLDAP = ldap_connect($userDomainName . ".ice", $ldapport);
