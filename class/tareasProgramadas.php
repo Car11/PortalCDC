@@ -222,16 +222,15 @@ class TareasProgramadas {
     }
 
     function update(){
-        try {
+        try {            
             $file = 0;
             $subTask = 0;
 
-            if (sizeof($this->file) > 0){
+            if (sizeof($this->file) > 0)
                 $file = 1;
-            }
-            if (sizeof($this->sub_task) > 0){
+            if (sizeof($this->sub_task) > 0)
                 $subTask = 1;
-            }
+
             $sql = "UPDATE scheduled_task
                     SET
                     user_id = :user_id ,
@@ -248,29 +247,40 @@ class TareasProgramadas {
                     column_id = :column_id 
                     WHERE id = :id;";
 
-            $param= array(':user_id'=>$this->user_id, ':min'=>$this->min, ':hour'=>$this->hour, 
+            $param= array(':id'=>$this->id,':user_id'=>$this->user_id, ':min'=>$this->min, ':hour'=>$this->hour, 
                         ':dom'=>$this->dom, ':year'=>$this->year, ':dow'=>$this->dow, ':title'=>$this->title, 
                         ':detail'=>$this->detail, ':file'=>$file, ':sub_task'=>$subTask, 
                         ':project_id'=>$this->project_id, ':column_id'=>$this->column_id );            
             $data = DATA::Ejecutar($sql,$param, false);
+
+
+            
+            $sql= 'DELETE FROM scheduled_sub_task
+                    WHERE id_scheduled_task = :id_scheduled_task;';
+            $param= array(':id_scheduled_task'=>$this->id);
+            $data = DATA::Ejecutar($sql,$param, false);
+
+            $sql= 'DELETE FROM scheduled_task_has_files
+                    WHERE scheduled_task_id = :scheduled_task_id;';
+            $param= array(':scheduled_task_id'=>$this->id);
+            $data = DATA::Ejecutar($sql,$param, false);
+
+            
                  
-            if ($subTask == 1){
-
-                $sql='select last_insert_id() id_task;';
-                $last_id = DATA::Ejecutar($sql);
-                $id_task = $last_id[0]["id_task"];
-
+            if (sizeof($this->sub_task) > 0){
                 foreach ($this->sub_task as $value) {
-                    $sql='insert into scheduled_sub_task (id_scheduled_task, title) values (:id_scheduled_task, :subtask_des);';
-                    $param= array(':id_scheduled_task'=>$id_task, ':subtask_des'=> $value);
+                    $sql='INSERT INTO scheduled_sub_task (
+                            id_scheduled_task, title) 
+                          VALUES (:id_scheduled_task, :subtask_des);';
+                    $param= array(':id_scheduled_task'=>$this->id, ':subtask_des'=> $value);
                     $data = DATA::Ejecutar($sql,$param, false);  
                 }
             }   
                     
-            if ($file == 1){
+            if (sizeof($this->file) > 0){
                 foreach ($this->file as $value) {
                     $sql='insert into scheduled_task_has_files (scheduled_task_id, name, image_file_base64) VALUES (:id_task, :nombre, :base64);';
-                    $param= array(':id_task'=>$id_task, ':nombre'=>$value["name"], ':base64'=>$value["base64Str"]);
+                    $param= array(':id_task'=>$this->id, ':nombre'=>$value["name"], ':base64'=>$value["base64Str"]);
                     $data = DATA::Ejecutar($sql,$param);  
                 }
             }        

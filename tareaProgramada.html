@@ -274,7 +274,8 @@
                                             </div>
                                             <input type="text" class="form-control inp_subtask first_inp_subtask"
                                                 placeholder="Detalle de subtarea">
-                                            <div class="input-group-append deteleSubtask">
+                                            <div class="input-group-append"
+                                                onclick="tareasProgramadas.deleteSubTask(this)">
                                                 <span class="input-group-text"><i class="fa fa-trash-o"
                                                         style="font-size:20px;color:crimson;"></i> </span>
                                             </div>
@@ -330,109 +331,165 @@
 
 <script>
 
-    var a = "ok";
-    var b = "ok";
-
-
     $(document).ready(function () {
         tareasProgramadas.cargar_todas();
+
+        $('#bnt_agrega_subtask').click(function () {
+            agregaFormSubtask();
+        });
+
+        $('#btn_newTask').click(function () {
+            tareasProgramadas.clearControls();
+            tareasProgramadas.updateTask = false;
+            $('#modal_new_task').modal('show');
+        });
+
+        $("#btn_file_load").change(async function () {
+
+            tareasProgramadas.file = [];
+            $('#img_preview').empty()
+            var files = document.getElementById('btn_file_load').files;
+            if (files.length > 0) {
+                for (var i = 0; i < document.getElementById("btn_file_load").files.length; i += 1) {
+                    await previewFile(files[i]);
+                    await getBase64(files[i]);
+                }
+            }
+        });
+
+        $('#tbl_tareas tbody').on('click', 'td', function () {
+            if (this.firstChild.type == "button")
+                return false;
+            tareasProgramadas.id = tbl_tareas.rows(this.parentElement).data()[0]["id"];
+            tareasProgramadas.loadTaskbyID();
+        });
+
+        $('#tbl_tareas tbody').on('click', 'button.deleteTask', function () {
+            tareasProgramadas.id = tbl_tareas.row().data()["id"];
+            tareasProgramadas.deleteTask();
+        });
+
+        $('#btn_guardar_tarea').click(function () {
+
+            if ($(".inp_subtask").length > 1)
+                if (!valida_inp_Subtask())
+                    return false;
+
+            if (!validarTask())
+                return false;
+            if (!validarFecha())
+                return false;
+
+
+
+
+
+            saveSubtask();
+            tareasProgramadas.user_id = session.user_id;
+            tareasProgramadas.min = $('#inp_min').val();
+            tareasProgramadas.hour = $('#inp_hora').val();
+            tareasProgramadas.year = $('#inp_year').val();
+            tareasProgramadas.dom = $('#inp_dom').val();
+            tareasProgramadas.dow = $('#inp_dow').val();
+            tareasProgramadas.title = $('#inp_titulo').val();
+            tareasProgramadas.detail = $('#inp_descripcion').val();
+            // tareasProgramadas.file = null;
+            tareasProgramadas.column_id = 77;
+            tareasProgramadas.project_id = 18;
+
+            if (tareasProgramadas.updateTask) {
+                tareasProgramadas.update();
+            } else {
+                tareasProgramadas.create();
+            }
+
+        });
+
+        $('#chk_all_hora').click(function () {
+            if ($('#chk_all_hora').is(':checked')) {
+
+                $('#inp_hora').attr("disabled", true);
+                $('#inp_hora').append($('<option>', {
+                    value: "t",
+                    text: 'Todas'
+                }));
+                $("#inp_hora").val("t");
+            }
+            else {
+                $("#inp_hora option[value='t']").remove();
+                $('#inp_hora').attr("disabled", false);
+            }
+        });
+
+        $('#chk_all_min').click(function () {
+            if ($('#chk_all_min').is(':checked')) {
+
+                $('#inp_min').attr("disabled", true);
+                $('#inp_min').append($('<option>', {
+                    value: "t",
+                    text: 'Todos'
+                }));
+                $("#inp_min").val("t");
+            }
+            else {
+                $("#inp_min option[value='t']").remove();
+                $('#inp_min').attr("disabled", false);
+            }
+        });
+
+        $('#chk_all_dom').click(function () {
+            if ($('#chk_all_dom').is(':checked')) {
+
+                $('#inp_dom').attr("disabled", true);
+                $('#inp_dom').append($('<option>', {
+                    value: "t",
+                    text: 'Todos'
+                }));
+                $("#inp_dom").val("t");
+            }
+            else {
+                $("#inp_dom option[value='t']").remove();
+                $('#inp_dom').attr("disabled", false);
+            }
+        });
+
+        $('#chk_all_dow').click(function () {
+            if ($('#chk_all_dow').is(':checked')) {
+
+                $('#inp_dow').attr("disabled", true);
+                $('#inp_dow').append($('<option>', {
+                    value: "t",
+                    text: 'Todos'
+                }));
+                $("#inp_dow").val("t");
+            }
+            else {
+                $("#inp_dow option[value='t']").remove();
+                $('#inp_dow').attr("disabled", false);
+            }
+        });
+
+        $('#chk_all_year').click(function () {
+            if ($('#chk_all_year').is(':checked')) {
+
+                $('#inp_year').attr("disabled", true);
+                $('#inp_year').append($('<option>', {
+                    value: "t",
+                    text: 'Todos'
+                }));
+                $("#inp_year").val("t");
+            }
+            else {
+                $("#inp_year option[value='t']").remove();
+                $('#inp_year').attr("disabled", false);
+            }
+        });
+
     });
 
-    $('#btn_newTask').click(function () {
-        tareasProgramadas.clearControls();
-        tareasProgramadas.update = false;
-        $('#modal_new_task').modal('show');
-    });
 
-    $(".deteleSubtask").click(function () {
-        tareasProgramadas.deleteSubTask(this);
-    });
-
-    $('#chk_all_hora').click(function () {
-        if ($('#chk_all_hora').is(':checked')) {
-
-            $('#inp_hora').attr("disabled", true);
-            $('#inp_hora').append($('<option>', {
-                value: "t",
-                text: 'Todas'
-            }));
-            $("#inp_hora").val("t");
-        }
-        else {
-            $("#inp_hora option[value='t']").remove();
-            $('#inp_hora').attr("disabled", false);
-        }
-    });
-
-    $('#chk_all_min').click(function () {
-        if ($('#chk_all_min').is(':checked')) {
-
-            $('#inp_min').attr("disabled", true);
-            $('#inp_min').append($('<option>', {
-                value: "t",
-                text: 'Todos'
-            }));
-            $("#inp_min").val("t");
-        }
-        else {
-            $("#inp_min option[value='t']").remove();
-            $('#inp_min').attr("disabled", false);
-        }
-    });
-
-    $('#chk_all_dom').click(function () {
-        if ($('#chk_all_dom').is(':checked')) {
-
-            $('#inp_dom').attr("disabled", true);
-            $('#inp_dom').append($('<option>', {
-                value: "t",
-                text: 'Todos'
-            }));
-            $("#inp_dom").val("t");
-        }
-        else {
-            $("#inp_dom option[value='t']").remove();
-            $('#inp_dom').attr("disabled", false);
-        }
-    });
-
-    $('#chk_all_dow').click(function () {
-        if ($('#chk_all_dow').is(':checked')) {
-
-            $('#inp_dow').attr("disabled", true);
-            $('#inp_dow').append($('<option>', {
-                value: "t",
-                text: 'Todos'
-            }));
-            $("#inp_dow").val("t");
-        }
-        else {
-            $("#inp_dow option[value='t']").remove();
-            $('#inp_dow').attr("disabled", false);
-        }
-    });
-
-    $('#chk_all_year').click(function () {
-        if ($('#chk_all_year').is(':checked')) {
-
-            $('#inp_year').attr("disabled", true);
-            $('#inp_year').append($('<option>', {
-                value: "t",
-                text: 'Todos'
-            }));
-            $("#inp_year").val("t");
-        }
-        else {
-            $("#inp_year option[value='t']").remove();
-            $('#inp_year').attr("disabled", false);
-        }
-    });
-
-
-
-    $('#bnt_agrega_subtask').click(function () {
+    function agregaFormSubtask() {
         if (valida_inp_Subtask()) {
-
             $("#frm_agrega_subtask").before(`
                 <form class="form-row form-inline form_subtareas">
                     <div class="input-group col-10" style="margin-bottom: 5px;">
@@ -441,7 +498,7 @@
                         </div>
                         <input type="text" class="form-control inp_subtask"
                             placeholder="Detalle de Sub Tarea" value="">                            
-                        <div class="input-group-append deteleSubtask">
+                        <div class="input-group-append" onclick="tareasProgramadas.deleteSubTask(this)">
                             <span class="input-group-text"><i class="fa fa-trash-o" style="font-size:20px;color:crimson;"></i></span>
                         </div>
                     </div>
@@ -453,15 +510,66 @@
                     <br>
                 </form>
             `);
-
-
-
-
-            $(".deteleSubtask").click(function () {
-                tareasProgramadas.deleteSubTask(this);
-            });
         }
-    });
+    }
+
+    function validarTask() {
+        validacion = true;
+        msgTask = "Revisar los parametros de: ";
+        if ($("#inp_titulo").val().length < 4) {
+            msgTask = msgTask + "Titulo; ";
+            validacion = false;
+        }
+
+        if ($("#inp_descripcion").val().length < 4) {
+            msgTask = msgTask + "Descripción; ";
+            validacion = false;
+        }
+
+        if (!validacion)
+            alert(msgTask);
+        return validacion;
+    }
+
+    function validarFecha() {
+        validacion = true;
+        msgFecha = "Revisar los parametros de: ";
+
+        if (!$('#chk_all_hora').is(':checked'))
+            if ($("#inp_hora").val() == null) {
+                msgFecha = msgFecha + "Hora; ";
+                validacion = false;
+            }
+
+        if (!$('#chk_all_min').is(':checked'))
+            if ($("#inp_min").val() == null) {
+                msgFecha = msgFecha + "Minutos; ";
+                validacion = false;
+            }
+
+        if (!$('#chk_all_dom').is(':checked'))
+            if ($("#inp_dom").val() == null) {
+                msgFecha = msgFecha + "Día del Mes; ";
+                validacion = false;
+            }
+
+        if (!$('#chk_all_dow').is(':checked'))
+            if ($("#inp_dow").val() == null) {
+                msgFecha = msgFecha + "Día de la Semana; ";
+                validacion = false;
+            }
+
+        if (!$('#chk_all_year').is(':checked'))
+            if ($("#inp_year").val() == null) {
+                msgFecha = msgFecha + "Año; ";
+                validacion = false;
+            }
+
+        if (!validacion)
+            alert(msgFecha);
+        return validacion;
+
+    }
 
     function valida_inp_Subtask() {
         var validacion = true;
@@ -479,20 +587,6 @@
         else
             return false;
     }
-
-    $("#btn_file_load").change(async function () {
-
-        tareasProgramadas.file = [];
-        $('#img_preview').empty()
-        var files = document.getElementById('btn_file_load').files;
-        if (files.length > 0) {
-            for (var i = 0; i < document.getElementById("btn_file_load").files.length; i += 1) {
-                await previewFile(files[i]);
-                await getBase64(files[i]);
-            }
-        }
-    });
-
 
     function getBase64(file) {
         var fileConverterObj = new Object();
@@ -520,7 +614,6 @@
         };
 
     }
-
 
     function previewFile(file) {
 
@@ -603,52 +696,11 @@
 
     }
 
-
-    $('#tbl_tareas tbody').on('click', 'td', function () {
-        if (this.firstChild.type == "button")
-            return false;
-        tareasProgramadas.clearControls();
-        tareasProgramadas.id = tbl_tareas.rows(this.parentElement).data()[0]["id"];
-        tareasProgramadas.loadTaskbyID();
-    });
-
-    $('#tbl_tareas tbody').on('click', 'button.deleteTask', function () {
-        tareasProgramadas.id = tbl_tareas.row().data()["id"];
-        tareasProgramadas.deleteTask();
-    });
-
-    $('#btn_guardar_tarea').click(function () {
-
-        if ($(".inp_subtask").length > 1)
-            if (!valida_inp_Subtask())
-                return false;
-
-        saveSubtask();
-
-        tareasProgramadas.user_id = session.user_id;
-        tareasProgramadas.min = $('#inp_min').val();
-        tareasProgramadas.hour = $('#inp_hora').val();
-        tareasProgramadas.year = $('#inp_year').val();
-        tareasProgramadas.dom = $('#inp_dom').val();
-        tareasProgramadas.dow = $('#inp_dow').val();
-        tareasProgramadas.title = $('#inp_titulo').val();
-        tareasProgramadas.detail = $('#inp_descripcion').val();
-        // tareasProgramadas.file = null;
-        tareasProgramadas.column_id = 77;
-        tareasProgramadas.project_id = 18;
-
-        if (tareasProgramadas.update) {
-            tareasProgramadas.update();
-        } else {
-            tareasProgramadas.create();
-        }
-
-    });
-
     function saveSubtask() {
         tareasProgramadas.sub_task = []
         $(".inp_subtask").each(function () {
-            tareasProgramadas.sub_task.push(this.value);
+            if (this.value.length > 2)
+                tareasProgramadas.sub_task.push(this.value);
         })
     }
 
