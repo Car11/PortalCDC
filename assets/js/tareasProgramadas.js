@@ -206,12 +206,12 @@ class TareasProgramadas {
             .fail(function (e) {
                 tareasProgramadas.showError(e);
             });
-    }
+    };
 
     openTask(e) {
         var task = JSON.parse(e);
 
-        tareasProgramadas.update = true;
+        tareasProgramadas.updateTask = true;
         tareasProgramadas.clearControls();
 
         $("#inp_titulo").val(task.title);
@@ -294,7 +294,7 @@ class TareasProgramadas {
 
         if (task.sub_task != 0) {
             $.each(task.sub_task, function (index, value) {
-                if (index == 0){
+                if (index == 0) {
                     $(".inp_subtask").val(value.title);
                     $(".inp_subtask").attr("id", value.id);
                 }
@@ -308,7 +308,7 @@ class TareasProgramadas {
                                 </div>
                                 <input type="text" class="form-control inp_subtask"
                                     placeholder="Detalle de Sub Tarea" id="${value.id}" value="${value.title}">
-                                <div class="input-group-append deteleSubtask">
+                                <div class="input-group-append" onclick="tareasProgramadas.deleteSubTask(this)">
                                     <span class="input-group-text"><i class="fa fa-trash-o" style="font-size:20px;color:crimson;"></i></span>
                                 </div>
                             </div>
@@ -330,7 +330,7 @@ class TareasProgramadas {
 
 
         $('#modal_new_task').modal('show');
-    }
+    };
 
     loadFiles(files) {
 
@@ -339,7 +339,7 @@ class TareasProgramadas {
             var item = $('#img_preview').children().length + 1;
             var image = new Image();
             image.src = `data:image/png;base64,${file.image_file_base64}`;
-            image.height="75";
+            image.height = "75";
             image.id = `preview_${item}`;
             image.title = file.name;
             image.style = "margin:2%;";
@@ -347,64 +347,64 @@ class TareasProgramadas {
             $('#img_preview').append(`<label>${file.name}</label> <br> `);
 
         })
-    }
+    };
 
-    deleteTask(){
-                $.ajax({
-                    type: "POST",
-                    url: "class/tareasProgramadas.php",
-                    data: {
-                        action: "deleteTask",
-                        obj: JSON.stringify(tareasProgramadas)
-                    }
-                })
-                    .done(function (e) {
-                        tareasProgramadas.cargar_todas();
-                        alert("Listo Tarea Borrada");
+    deleteTask() {
+        $.ajax({
+            type: "POST",
+            url: "class/tareasProgramadas.php",
+            data: {
+                action: "deleteTask",
+                obj: JSON.stringify(tareasProgramadas)
+            }
+        })
+            .done(function (e) {
+                tareasProgramadas.cargar_todas();
+                alert("Listo Tarea Borrada");
 
-                    })
-                    .fail(function (e) {
-                        tareasProgramadas.showError(e);
-                    });
-    }
+            })
+            .fail(function (e) {
+                tareasProgramadas.showError(e);
+            });
+    };
 
-    deleteSubTask(thisSubTask){
+    deleteSubTask(del_SubTask) {
         if ($(".count_input_subTask").length > 1) {
-            $(thisSubTask.parentElement.parentElement).remove();
+            $(del_SubTask.parentElement.parentElement).remove();
         }
         else {
-            thisSubTask.previousElementSibling.form[0].value = "";
+            del_SubTask.previousElementSibling.form[0].value = "";
         }
         $('.count_input_subTask').each(function (i, subTask) {
             subTask.textContent = i + 1;
         });
-}
-
-    create() {
-                $.ajax({
-                    type: "POST",
-                    url: "class/tareasProgramadas.php",
-                    data: {
-                        action: "create",
-                        obj: JSON.stringify(tareasProgramadas)
-                    }
-                })
-                    .done(function (e) {
-                        tareasProgramadas.cargar_todas();
-                        alert("ok");
-                        // swal({
-                        //     type: 'success',
-                        //     title: 'Listo, Tarea Guardada!',
-                        //     showConfirmButton: false,
-                        //     timer: 2000
-                        // });
-                    })
-                    .fail(function (e) {
-                        tareasProgramadas.showError(e);
-                    });
     };
 
     create() {
+        $.ajax({
+            type: "POST",
+            url: "class/tareasProgramadas.php",
+            data: {
+                action: "create",
+                obj: JSON.stringify(tareasProgramadas)
+            }
+        })
+            .done(function (e) {
+                tareasProgramadas.cargar_todas();
+                alert("ok");
+                // swal({
+                //     type: 'success',
+                //     title: 'Listo, Tarea Guardada!',
+                //     showConfirmButton: false,
+                //     timer: 2000
+                // });
+            })
+            .fail(function (e) {
+                tareasProgramadas.showError(e);
+            });
+    };
+
+    update() {
         $.ajax({
             type: "POST",
             url: "class/tareasProgramadas.php",
@@ -428,7 +428,7 @@ class TareasProgramadas {
             });
     };
 
-    clearControls(){
+    clearControls() {
         $("#inp_titulo").val("");
         $("#inp_descripcion").val("");
         $("#btn_file_load").val("");
@@ -440,6 +440,29 @@ class TareasProgramadas {
         $(".inp_sel").val($(".inp_sel option:first").val());
         $('.inp_sel').attr("disabled", false);
         $('#accordion .collapse').attr("data-parent", "#accordion").collapse('hide');
+        if ($(".form_first_subTask").length < 1) {
+            $("#frm_agrega_subtask").before(`
+                <form class="form-row form-inline form_first_subTask">
+                    <div class="input-group col-10" style="margin-bottom: 5px;">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text count_input_subTask" value=1>1</div>
+                        </div>
+                        <input type="text" class="form-control inp_subtask first_inp_subtask"
+                            placeholder="Detalle de subtarea">
+                        <div class="input-group-append" onclick="tareasProgramadas.deleteSubTask(this)">
+                            <span class="input-group-text"><i class="fa fa-trash-o"
+                                    style="font-size:20px;color:crimson;"></i> </span>
+                        </div>
+                    </div>
+                    <div class="form-check col-2">
+                        <label class="form-check-label">
+                            Por enviar
+                        </label>
+                    </div>
+                    <br>
+                </form>
+            `);
+        }
     }
 
     // Muestra información en ventana
@@ -467,8 +490,7 @@ class TareasProgramadas {
         //     // // footer: '<a href>Contacte a Soporte Técnico</a>',
         // });
     };
-
-    }
+}
 //Class Instance
 let tareasProgramadas = new TareasProgramadas();
 var tbl_tareas = [];
