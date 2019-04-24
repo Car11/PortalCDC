@@ -7,39 +7,39 @@ if (!isset($_SESSION)) {
 if(isset($_POST["action"])){
 
     if($_POST["action"]=="Consultarporvisitante"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->ConsultarporVisitante();
     }
     if($_POST["action"]=="RecargaTabla"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->RecargaTabla();
     }
     if($_POST["action"]=="CargaIDFormulario"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->CargaIDFormulario();
     }
     if($_POST["action"]=="CargarTabla"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->CargarTabla();
     }
     if($_POST["action"]=="Insertar"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->AgregarFormularioAJAX();
     }
     if($_POST["action"]=="Modificar"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->ModificarAJAX();
     }
     if($_POST["action"]=="CargaMOD"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->CargarFormulario();
     }
     if($_POST["action"]=="CargaVisitantesFORM"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->CargaVisitanteporFormulario();
     }
     if($_POST["action"]=="RecargaTablaTramitante"){
-        $formulario= new formulario();
+        $formulario= new Formulario();
         $formulario->RecargaTablaTramitante();
     }
 }

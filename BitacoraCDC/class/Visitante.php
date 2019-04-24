@@ -1,5 +1,4 @@
 <?php 
-
 date_default_timezone_set('America/Costa_Rica');
 
 if (!isset($_SESSION))
@@ -167,6 +166,7 @@ class Visitante{
         }
 
     }
+
     function ValidaDC_SP($arrayFormularios){
                 
         foreach ($arrayFormularios as $keyFormulario=> $itemFormulario) {
@@ -247,6 +247,10 @@ class Visitante{
         try{
             include_once('Formulario.php');
             $formulario= new Formulario();
+
+            if($this->ID == null){
+                $this->ID = $_SESSION["idvisitante"];
+            }
             if($formulario->ConsultaVisitantePorFormulario($this->ID))
             {
                 // Valida fechas correctas.
