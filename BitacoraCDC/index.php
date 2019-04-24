@@ -14,6 +14,8 @@ else if ($sesion->rol=="2")
     header('Location: ListaFormulario.php?username=' . $sesion->username); 
 // POST
 $estado="NULL";
+
+
 if (isset($_GET['estado']))
 {
     // abre modal de busqueda de visitantes.
@@ -22,6 +24,9 @@ if (isset($_GET['estado']))
 }
 if (isset($_SESSION['estado'])) {
     $estado=$_SESSION['estado'];
+    require_once("class/Visitante.php");
+    $visitante= new Visitante();
+    $visitante->ValidaEstadoFormulario();
     // elimina el estado para posteriores re-envios de la pagina (F5).
     unset($_SESSION['estado']);       
 }
@@ -31,6 +36,7 @@ else {
     unset($_SESSION['link']);
     unset($_SESSION['bitacora']);
 }
+
 // Inicia Busqueda de visitante por nombre Completo.
 $visitantes=[]; // arreglo de visitantes.
 $visitante="NULL";
@@ -49,9 +55,9 @@ if ($estado=="buscar"){
 // Busca información del formulario para desplegar en pantalla.
 if (isset($_SESSION['formulario'])) {
     // Carga info del formulario.
-    include("class/Formulario.php");
+    require_once("class/Formulario.php");
     $formulario = new Formulario();
-    
+
     $arrayFormularios = $_SESSION['formulario'];
     unset($_SESSION['formulario']);
 
