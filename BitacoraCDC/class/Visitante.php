@@ -259,29 +259,43 @@ class Visitante{
 
                 $formularioXzona = ( $this->seleccionarFormulario_IP($formulario) );             
              
-                $_SESSION['estado'] = $formularioXzona->estado;
+                if ($formularioXzona != null){
+                    $_SESSION['estado'] = $formularioXzona->estado;
 
-                $fechaanticipada  = new DateTime($formularioXzona->fechaingreso);
-                date_sub($fechaanticipada ,  date_interval_create_from_date_string('1 hour') );
-                // busca si es una salida o entrada.
-                $sql = "SELECT id, entrada, salida, idtarjeta
-                    FROM bitacora 
-                    where idvisitante=:idvisitante and idformulario=:idformulario
-                    order by fechacreacion desc limit 1 ";
-                $param= array(':idvisitante'=>$this->ID, ':idformulario'=>$formularioXzona->id);
-                $data = DATA::Ejecutar($sql,$param);      
-                if (count($data)) {                                 
-                    $entrada= $data[0]['entrada'];
-                    $salida= $data[0]['salida'];
-                    //
-                    if($entrada!=NULL and $salida==NULL)
-                    {
-                        // es salida.
-                        $_SESSION['estado']='fin';
-                        $_SESSION['bitacora']=$data[0]['id']; // id de Bitacora 
+                    $fechaanticipada  = new DateTime($formularioXzona->fechaingreso);
+                    date_sub($fechaanticipada ,  date_interval_create_from_date_string('1 hour') );
+                    // busca si es una salida o entrada.
+                    $sql = "SELECT id, entrada, salida, idtarjeta
+                        FROM bitacora 
+                        where idvisitante=:idvisitante and idformulario=:idformulario
+                        order by fechacreacion desc limit 1 ";
+                    $param= array(':idvisitante'=>$this->ID, ':idformulario'=>$formularioXzona->id);
+                    $data = DATA::Ejecutar($sql,$param);      
+                    if (count($data)) {                                 
+                        $entrada= $data[0]['entrada'];
+                        $salida= $data[0]['salida'];
+                        //
+                        if($entrada!=NULL and $salida==NULL)
+                        {
+                            // es salida.
+                            $_SESSION['estado']='fin';
+                            $_SESSION['bitacora']=$data[0]['id']; // id de Bitacora 
+                        }
+                        else {
+                            // Nueva entrada.
+                            if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formularioXzona->fechasalida))
+                                $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
+                            else {
+                                // la entrada no es en la fecha/hora correcta.
+                                if(!$this::ValidarPermisoAnual())                        
+                                    $_SESSION['estado']='3';
+                                return false;
+                            }
+                        }
                     }
-                    else {
-                        // Nueva entrada.
+                    else 
+                    {
+                        // Primera entrada.
                         if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formularioXzona->fechasalida))
                             $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
                         else {
@@ -290,20 +304,11 @@ class Visitante{
                                 $_SESSION['estado']='3';
                             return false;
                         }
-                    }
-                }
-                else 
-                {
-                    // Primera entrada.
-                    if(strtotime($fechaanticipada->format('Y-m-d H:i:s')) <=  time() && time() <= strtotime($formularioXzona->fechasalida))
-                        $_SESSION['bitacora'] = "NUEVO"; // Nuevo id de Bitacora 
-                    else {
-                        // la entrada no es en la fecha/hora correcta.
-                        if(!$this::ValidarPermisoAnual())                        
-                            $_SESSION['estado']='3';
-                        return false;
-                    }
-                }                    
+                    } 
+                }       
+                else{
+                    $_SESSION['estado']='4';
+                }            
             }else {
                 // return false;
                 // NO tiene formulario.
