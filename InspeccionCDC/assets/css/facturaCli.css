@@ -1,0 +1,67 @@
+.btn_venta{
+    border-radius: 8px;
+} 
+
+.selected {
+    box-shadow: inset 0 0 10px 2px #484a52;
+    border: 4px solid firebrick;
+    border-radius: 8px;
+}
+
+.btn_tamano{
+    color: black;
+}
+
+.saborelegido {
+    font-size: 28px;
+    background: #d7d9db;
+    margin-right: 5px;
+}
+
+.saborelegido spam{
+    color: firebrick;
+    margin-right: 5px;
+}
+
+.btn_sabor {    
+    height: auto;
+    width: 90px;
+}
+
+.btn_prd{
+    height: 70px;
+}
+
+.btn_topping{
+    height: 75px;
+    width: 180px;
+}
+
+
+.totales {
+    font-size:large;
+    font-weight: bold;
+}
+
+.btn-facturar {
+    width: 100%;
+}
+
+.call_Bodega{
+    display: inline-block;
+    width: 88%;
+}
+
+.opciones_Bodega{
+    display: inline-block;
+    width: 9%;
+}
+
+.opciones_Bodega :hover{
+    background-color:rgb(213, 228, 255);
+}
+
+.rowFac {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
