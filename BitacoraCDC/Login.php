@@ -43,8 +43,8 @@
         <div id="form">
             <div class="login">    
                 <form  name="Usuario" action="request/EnviaUsuario.php" method="POST">                      
-                    <input type="text" id="username" class="input-field" name="username" placeholder="USUARIO" maxlength="20" /><br>
-                    <input type="password" id="password" class="input-field" name="password" placeholder="CONTRASEÑA" maxlength="20" />
+                    <input type="text" id="username" class="input-field" name="username" placeholder="USUARIO" maxlength="35" /><br>
+                    <input type="password" id="password" class="input-field" name="password" placeholder="CONTRASEÑA" maxlength="35" />
                     <nav class="btnfrm">
                         <ul>
                             <li> <input class="nbtn_blue" type="submit" value="Ingresar" id="login" /></li>

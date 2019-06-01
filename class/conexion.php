@@ -7,8 +7,12 @@ class DATA {
 
 	private static function ConfiguracionIni(){
         require_once('Globals.php'); 
-        if (file_exists('../../ini/config.ini')) {
-            self::$config = parse_ini_file('../../ini/config.ini',true);
+        // if (file_exists('../../ini/config.ini')) {
+        //     self::$config = parse_ini_file('../../ini/config.ini',true);
+        
+        $dir=  __DIR__.DIRECTORY_SEPARATOR.".." .DIRECTORY_SEPARATOR.".." .DIRECTORY_SEPARATOR.'ini'.DIRECTORY_SEPARATOR."config.ini";
+        if (file_exists($dir)) {
+            self::$config = parse_ini_file($dir,true);
         }       
         else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);  
     }  

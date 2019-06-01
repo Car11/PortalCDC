@@ -5,6 +5,7 @@ class Usuario{
     public $idrol;
     public $nombre;
     public $email;
+    public $dn;
 	
 	function __construct(){
         require_once("Conexion.php");
@@ -46,59 +47,31 @@ class Usuario{
     }
 
     function ValidarUsuarioLDAP (){
-        $ldapServicio = DATA::getLDAP_Param();
-        //Busca el usuario desde una cuenta de Servicio ICE 
-        $domainName = "icetel.ice";
-        $ldapport = 3268;
-        $ldap = ldap_connect($domainName, $ldapport);
-        $ldapMail = $this->usuario;  
-        $baseDN = "dc=ice";
-        $bind = @ldap_bind($ldap, $ldapServicio["LDAPuser"], $ldapServicio["LDAPpasswd"]);
-        if ($bind) {
-            //Filta por correo
-            $filter="(mail=$ldapMail)";
-            $search_result=ldap_search($ldap,$baseDN,$filter);
-            $userData = ldap_get_entries($ldap, $search_result);
-            //Obtiene Dominio y Usuario de dominio para crear el DN
-            foreach (  (ldap_explode_dn (  utf8_encode ( $userData[0]["dn"] )  , 0) ) as $key=> $dn) {
-                // code to be executed;
-                if ( isset(explode ("=",$dn)[1])   ){
-                    switch ( explode ("=",$dn)[1] ) {
-                        case "sabana":
-                            $userDomainName = "sabana";
-                            break;
-                        case "icetel":
-                            $userDomainName = "icetel";
-                            break;
-                    }
-
-                }
-            }
-            // $userDomainName = explode ("=",ldap_explode_dn ($userData[0]["dn"], 0)[3])[1];
-            $userLDAPUser = $userData[0]["samaccountname"][0];
-            $userLDAPDN = $userDomainName  . "\\" .  $userLDAPUser;
-            //Cierra la Sesion
-            @ldap_close($ldap);
-            /////////// Valida Usuario y password:
-            $userLDAP = ldap_connect($userDomainName . ".ice", $ldapport);
-            $userBind = @ldap_bind($userLDAP, $userLDAPDN, $this->contrasena);
-            if ($userBind) {
-                $filter="(mail=$ldapMail)";//mail
-                $result = ldap_search($userLDAP,$baseDN,$filter);
-                $info = ldap_get_entries($userLDAP, $result);
-                for ($i=0; $i<$info["count"]; $i++)
-                {
-                    if($info['count'] > 1)
-                        break;
-                
-                    $this->email= $info[$i]["mail"][0];
-                    $this->nombre = $info[$i]["sn"][0] . ' ' . $info[$i]["givenname"][0];
-                    $this->usuario = $userLDAPUser;
-                    $this::BuscaRol();
-                    return true;  
-                }
-            }
-            @ldap_close($ldap);
+        $LDAP_servicio = DATA::getLDAP_Param();
+        $LDAP_connect = ldap_connect($LDAP_servicio["LDAP_server"], $LDAP_servicio["LDAP_port"]);
+        $LDAP_bind = @ldap_bind($LDAP_connect, $LDAP_servicio["LDAP_user"], $LDAP_servicio["LDAP_passwd"]);
+        if ($LDAP_bind) {
+            $LDAP_filter="(mail=$this->usuario)";
+            $search_result=ldap_search($LDAP_connect,$LDAP_servicio["LDAP_base_dn"],$LDAP_filter);
+            $LDAP_user_data = ldap_get_entries($LDAP_connect, $search_result);  
+            if($LDAP_user_data["count"] < 1){
+                @ldap_close($LDAP_connect);
+                return false;
+            }       
+            $this->dn = $LDAP_user_data[0]["dn"];
+            $this->email= $LDAP_user_data[0]["mail"][0];
+            $this->nombre = $LDAP_user_data[0]["cn"][0];
+            $this->usuario = $LDAP_user_data[0]["samaccountname"][0];
+            $this::BuscaRol();
+            @ldap_close($LDAP_connect);
+            
+            $LDAP_connect = ldap_connect($LDAP_servicio["LDAP_server"], $LDAP_servicio["LDAP_port"]);
+            $LDAP_bind = @ldap_bind($LDAP_connect, $this->dn, $this->contrasena);
+            @ldap_close($LDAP_connect);
+            if ($LDAP_bind) 
+                return true;
+            else
+                return false;  
         } else {
             error_log("Falla el Bind: " . ldap_error($ldap));
             return false;  
