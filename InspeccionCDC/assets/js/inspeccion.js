@@ -93,7 +93,7 @@ class Inspeccion {
                     timer: 2000
                 }).then((result) => {
                     inspeccion.arrayInspeccion = [];
-                    window.location.href = "/MonitoreoDC/entregaTurno.html";
+                    window.location.href = "/InspeccionCDC/entregaTurno.html";
                 });
             })
             .fail(function (e) {

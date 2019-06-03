@@ -300,7 +300,7 @@ if (!isset($_SESSION))
         inspeccion.ReadEntregaTurno;
 
         $( "#btnIniciaInspeccion" ).click(function() {
-            window.location.href = "/MonitoreoDC/inspeccion.html";
+            window.location.href = "/InspeccionCDC/inspeccion.html";
         });
 
     });
