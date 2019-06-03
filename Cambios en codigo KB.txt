@@ -52,7 +52,7 @@ Operaciones TI | ti.tareas.ice.go.cr
 
 - orden de columnas:
 
-app/Template/board/table_tasks : 17
+app/Template/board/table_tasks : 17 (agregar el siguiente bloque de código)
 
 <!-- sort column by date. column id: 77. project id: 18 -->
 	<?php  
