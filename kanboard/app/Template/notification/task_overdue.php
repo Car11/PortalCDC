@@ -19,7 +19,7 @@
                     <?= $this->text->e($task['title']) ?>
                 <?php endif ?>
             </td>
-            <td style="border: 1px solid #eee;"><?= $this->dt->datetime($task['date_due']) ?></td>
+            <td style="border: 1px solid #eee;"><?= $this->dt->datetime($task['date_started']) ?></td>
             <td style="border: 1px solid #eee;">
                 <?php if ($this->app->config('application_url') !== ''): ?>
                     <?= $this->url->absoluteLink($this->text->e($task['project_name']), 'BoardViewController', 'show', array('project_id' => $task['project_id'])) ?>
