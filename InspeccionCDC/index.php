@@ -20,7 +20,7 @@ if (!isset($_SESSION))
     <!-- <script src="assets/js/Session.min.js"></script> -->
     <!-- <script>Session.Check();</script> -->
     <!-- /End check -->
-
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
