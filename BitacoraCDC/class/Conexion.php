@@ -15,7 +15,10 @@ class DATA {
         require_once('Globals.php');
         if (file_exists('/opt/www/ini/config.ini')) {
             self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
-        }  
+        } 
+        // if (file_exists('/opt/www/ini/config.ini')) {
+        //     self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
+        // }  
         // if (file_exists('../../../ini/config.ini')) {
         //     self::$config = parse_ini_file('../../../ini/config.ini',true); 
         // }        
@@ -57,8 +60,11 @@ class DATA {
         try {
             self::ConfiguracionIni();            
             self::$configLDAP= array(
-                    "LDAPuser"=>self::$config[Globals::app]['LDAPuser'],
-                    "LDAPpasswd"=>self::$config[Globals::app]['LDAPpasswd']
+                    "LDAP_user"=>self::$config[Globals::app]['LDAP_user'],
+                    "LDAP_passwd"=>self::$config[Globals::app]['LDAP_passwd'],
+                    "LDAP_server"=>self::$config[Globals::app]['LDAP_server'],
+                    "LDAP_port"=>self::$config[Globals::app]['LDAP_port'],
+                    "LDAP_base_dn"=>self::$config[Globals::app]['LDAP_base_dn']
                 );
             return self::$configLDAP;
         }
