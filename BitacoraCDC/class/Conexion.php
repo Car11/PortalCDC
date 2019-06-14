@@ -13,9 +13,13 @@ class DATA {
         ini_set('display_errors', 1);
         /*************************************************/
         require_once('Globals.php');
-        if (file_exists('/opt/www/ini/config.ini')) {
-            self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
-        } 
+        // if (file_exists('/opt/www/ini/config.ini')) {
+        //     self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
+        // } 
+        $dir=  __DIR__.DIRECTORY_SEPARATOR.".." .DIRECTORY_SEPARATOR.".." .DIRECTORY_SEPARATOR.".." .DIRECTORY_SEPARATOR.'ini'.DIRECTORY_SEPARATOR."config.ini";
+        if (file_exists($dir)) {
+            self::$config = parse_ini_file($dir,true);
+        }   
         // if (file_exists('/opt/www/ini/config.ini')) {
         //     self::$config = parse_ini_file('/opt/www/ini/config.ini',true); 
         // }  
