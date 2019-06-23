@@ -19,6 +19,7 @@
         public $sub_task;   
         public $project_id; 
         public $column_id;  
+        public $user_OperTI = 13;
         
         function __construct(){
 
@@ -97,7 +98,7 @@
             $detalleTask->title =  $this->title;
             $detalleTask->project_id = $this->project_id;
             //optional
-            $detalleTask->owner_id = $this->user_id;
+            $detalleTask->owner_id = $this->user_OperTI;
             $detalleTask->creator_id =  $this->user_id;
             $detalleTask->description = $this->detail;
             $detalleTask->color_id = "green";

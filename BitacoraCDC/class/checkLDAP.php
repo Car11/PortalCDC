@@ -1,19 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<form action="checkLDAP.php" method="post">
+Valor a buscar: <input type="text" name="searchValue"><br>
+Filtro: <select name="tipoFiltro">
+    <option value='mail'>Correo</option>
+    <option value='samAccountName'>Usuario</option>
+    <option value='samAccountName'>Nombre</option>
+    <option value='description'>Cedula</option>
+</select>
+<br>
+<input type="submit">
+</form>
+
+</body>
+
+</html>
+
+
+
+
 <?php 
 
 $searchLDAP= new SearchLDAP();
+
+if(isset($_POST["tipoFiltro"])){
+    $searchLDAP->tipoFiltro= $_POST["tipoFiltro"];
+}
+if(isset($_POST["searchValue"])){
+    $searchLDAP->searchValue= $_POST["searchValue"];
+}
 // $searchLDAP->tipoFiltro = "samAccountName";
 // $searchLDAP->searchValue = "jaroja4";
 
-$searchLDAP->tipoFiltro = "mail";
-$searchLDAP->searchValue = "oespinoza@ice.go.cr";
-$searchLDAP->ValidarUsuarioLDAP();
-$searchLDAP->searchValue = "LVasquez@ice.go.cr";
-$searchLDAP->ValidarUsuarioLDAP();
-$searchLDAP->searchValue = "jcorrales@ice.go.cr";
-$searchLDAP->ValidarUsuarioLDAP();
-$searchLDAP->searchValue = "CPalacios@ice.go.cr";
-$searchLDAP->ValidarUsuarioLDAP();
-$searchLDAP->searchValue = "AChaconC@ice.go.cr";
+// $searchLDAP->tipoFiltro = "mail";
+// $searchLDAP->searchValue = "oespinoza@ice.go.cr";
+// $searchLDAP->searchValue = "LVasquez@ice.go.cr";
+// $searchLDAP->ValidarUsuarioLDAP();
+// $searchLDAP->searchValue = "jcorrales@ice.go.cr";
+// $searchLDAP->ValidarUsuarioLDAP();
+// $searchLDAP->searchValue = "CPalacios@ice.go.cr";
+// $searchLDAP->ValidarUsuarioLDAP();
+// $searchLDAP->searchValue = "AChaconC@ice.go.cr";
 $searchLDAP->ValidarUsuarioLDAP();
 
 
