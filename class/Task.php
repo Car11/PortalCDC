@@ -451,7 +451,7 @@ class Task{
 
             //date_due debe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
             $t_due = ($this->date_due);
-            // $t_due = str_replace('/', '-', $t_due);
+            $t_due = str_replace('/', '-', $t_due);
             $t_due = str_replace('T', ' ', $t_due);
 
             $task = new stdClass();

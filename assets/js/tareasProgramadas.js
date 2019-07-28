@@ -277,7 +277,7 @@ class TareasProgramadas {
             $("#inp_dow").val(task.dow);
         }
 
-        if (task.dow == "t") {
+        if (task.year == "t") {
             $("#chk_all_year").prop("checked", true);
             $('#inp_year').attr("disabled", true);
             $('#inp_year').append($('<option>', {
