@@ -31,7 +31,7 @@ if (!isset($_SESSION))
 	<script src="assets/js/jquery.min.js"></script>	
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/dragula.min.js"></script>
-	<script  src="assets/js/MiCuenta.js"></script>
+	<script  src="assets/js/MiCuenta.min.js"></script>
     <script src="assets/js/Comment.min.js" languaje="javascript" type="text/javascript"></script>
     <script src="assets/js/Task.js" languaje="javascript" type="text/javascript"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -48,7 +48,7 @@ if (!isset($_SESSION))
         <section class="section">
             <h1>Bienvenido a su cuenta</h1>
             <br>
-            <h4>Desde este sitio puede gestionar sus solicitudes y tareas hacia el centro de datos corporativo. <u id='logout'>Cerrar Sesión</u></h4>            
+            <h4>Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h4>            
         </section>
 
         <div class="drag-container">
@@ -69,6 +69,7 @@ if (!isset($_SESSION))
                 <ul class="drag-list" id="drag-list">
 
                 </ul>
+                </div>
             </div>
         </div>
         <section>
@@ -76,7 +77,7 @@ if (!isset($_SESSION))
         </section>
 
         <section class="section">            
-            <a href="#">Operaciones DTI © 2018</a>            
+            <a href="#">Operaciones DTI © 2019</a>            
         </section>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" data-backdrop="static"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -84,6 +85,9 @@ if (!isset($_SESSION))
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ModalLabel" style="color: black;">Ingresar Nueva Tarea</h5>
+                        <h4 class="panel-title">
+                            <a data-toggle="modal" data-target=".bd-lista-modal-lg">Cargar Plantillas</a>
+                        </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -269,7 +273,31 @@ if (!isset($_SESSION))
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="cerrar-modal" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
+                        <button type="button" onclick="SaveTemplate()" id="btnSaveTemplate" class="btn btn-primary">Guardar como Plantilla</button>
                         <button type="button" onclick="SaveTask()" id="btnSaveTask" class="btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Lista -->
+        <div class="modal fade bd-lista-modal-lg" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-list-task" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLabel" style="color: black;">Lista de Plantillas</h5>
+                        <!-- Carga planillas del usuario -->
+                        <!--  -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body" style="color=black;">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cerrar-modal" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
+                        <button type="button" onclick="loadTask()" id="btnLoadTask" class="btn btn-primary">Cargar</button>
                     </div>
                 </div>
             </div>

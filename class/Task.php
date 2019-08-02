@@ -148,11 +148,11 @@ class Task{
                 INNER JOIN
                 (SELECT t.id, t.title, t.creator_id, t.date_started, c.position 
                 FROM kanboard.tasks as t
-                    INNER JOIN columns as c ON t.column_id = c.id where c.project_id = :project_id and t.is_active =1
+                    INNER JOIN columns as c ON t.column_id = c.id where t.is_active =1
                     order by t.id desc
                 ) AS T
                 ON T.creator_id = user_id GROUP BY id ORDER BY date_started asc;'; 
-            $param= array(':project_id'=>18, ':userid'=>$_SESSION["userid"]);
+            $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
         }     
@@ -443,9 +443,13 @@ class Task{
             // valida la sesión del usuario antes del insert.
             require_once("Sesion.php");
             $sesion = new Sesion();
-            $sesion->isLogin();    
-            $t_started = date("Y-m-d H:i", strtotime($this->date_started));
-            $t_due = date("Y-m-d H:i", strtotime($this->date_due));
+            $sesion->isLogin();
+            if($this->date_started == "")
+                $t_started = null;
+            else $t_started = date("Y-m-d H:i", strtotime($this->date_started));
+            if($this->date_due == "")
+                $t_due = null;
+            else $t_due = date("Y-m-d H:i", strtotime($this->date_due));
             $task = new stdClass();
             $detalleTask = new stdClass();
             //
