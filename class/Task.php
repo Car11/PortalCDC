@@ -374,9 +374,8 @@ class Task{
             require_once("Sesion.php");
             $sesion = new Sesion();
             $sesion->isLogin();
-            $t_started = date("m/d/Y H:i", strtotime($this->date_started));
-            $t_due = ($this->date_due);
-            $t_due = str_replace('T', ' ', $t_due);
+            $t_started = date("Y-m-d H:i", strtotime($this->date_started));
+            $t_due = date("Y-m-d H:i", strtotime($this->date_due));
 
             $task = new stdClass();
             $detalleTask = new stdClass();
@@ -444,19 +443,12 @@ class Task{
             // valida la sesión del usuario antes del insert.
             require_once("Sesion.php");
             $sesion = new Sesion();
-            $sesion->isLogin();
-            //date_started sin convertir: 2018-02-10T12:59
-            //date_started debe tener el siguiente formato: 02/10/2018 19:43  || mes/dia/año hora:min       
-            $t_started = date("m/d/Y H:i", strtotime($this->date_started));
-
-            //date_due debe tener el siguiente formato: 2018-02-10 15:53  || año-mes-dia hora:min
-            $t_due = ($this->date_due);
-            // $t_due = str_replace('/', '-', $t_due);
-            $t_due = str_replace('T', ' ', $t_due);
-
+            $sesion->isLogin();    
+            $t_started = date("Y-m-d H:i", strtotime($this->date_started));
+            $t_due = date("Y-m-d H:i", strtotime($this->date_due));
             $task = new stdClass();
             $detalleTask = new stdClass();
-
+            //
             $detalleTask->owner_id = $this->creator_id;
             $detalleTask->creator_id = $this->creator_id;
             $detalleTask->description = $this->description;

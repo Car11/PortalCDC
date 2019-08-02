@@ -91,7 +91,8 @@
         }
 
         function create(){
-            
+            $t_started = new DateTime();
+            //
             $task = new stdClass();
             $detalleTask = new stdClass();
 
@@ -102,6 +103,8 @@
             $detalleTask->creator_id =  $this->user_id;
             $detalleTask->description = $this->detail;
             $detalleTask->color_id = "green";
+            $detalleTask->date_started = $t_started->format("Y-m-d H:i");
+            // date("Y-m-d H:i", strtotime($this->date_started));
 
             $task->jsonrpc = "2.0";
             $task->method = "createTask";
