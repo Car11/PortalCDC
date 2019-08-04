@@ -138,6 +138,7 @@ class Task{
         }
     }
 
+    // tareas de mis grupos. y todos los proyectos.
     function LoadTask(){
         try {            
             $sql='SELECT  id, title, date_started, position FROM (

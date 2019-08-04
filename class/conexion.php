@@ -73,7 +73,7 @@ class DATA {
                 throw new Exception($st->errorInfo()[2],$st->errorInfo()[1]);
             else throw new Exception($e->getMessage(),$e->getCode());
         } finally{
-            self::$conn = null;
+            //self::$conn = null;
         }
     }
     

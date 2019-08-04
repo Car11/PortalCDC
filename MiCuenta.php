@@ -56,6 +56,9 @@ if (!isset($_SESSION))
                 <div class="col-md-2 col-sm-2 col-xs-2">
                     <span class="glyphicon glyphicon-search " id='btnSearch' style='cursor:pointer;font-size: 35px;' aria-hidden="true"></span>
                 </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <!-- <span class="glyphicon glyphicon-chevron-right " id='btnOpciones' style='cursor:pointer;font-size: 35px;' aria-hidden="true"></span> -->
+                </div>
                 <div id='search' class="item form-group" style="display:none">
                     <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-1">
                         <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
@@ -273,7 +276,7 @@ if (!isset($_SESSION))
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="cerrar-modal" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
-                        <button type="button" onclick="SaveTemplate()" id="btnSaveTemplate" class="btn btn-primary">Guardar como Plantilla</button>
+                        <!-- <button type="button" onclick="SaveTemplate()" id="btnSaveTemplate" class="btn btn-primary">Guardar como Plantilla</button> -->
                         <button type="button" onclick="SaveTask()" id="btnSaveTask" class="btn btn-primary">Enviar</button>
                     </div>
                 </div>
