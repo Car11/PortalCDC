@@ -445,12 +445,14 @@ class Task{
             require_once("Sesion.php");
             $sesion = new Sesion();
             $sesion->isLogin();
+
             if($this->date_started == "")
                 $t_started = null;
             else $t_started = date("Y-m-d H:i", strtotime($this->date_started));
             if($this->date_due == "")
                 $t_due = null;
             else $t_due = date("Y-m-d H:i", strtotime($this->date_due));
+          
             $task = new stdClass();
             $detalleTask = new stdClass();
             //
