@@ -610,9 +610,7 @@ class Task{
     
         if ($err) {
             echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }       
+        }
     }
 
     function DeleteSubTask(){
@@ -652,9 +650,7 @@ class Task{
     
         if ($err) {
             echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }       
+        }      
     }
     
     function addFilesToTask($id_project, $id_task, $name,$image_file_base64){
