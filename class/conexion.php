@@ -4,6 +4,7 @@ class DATA {
     
 	public static $conn;
     private static $config="";
+    private static $configLDAP=[];
 
 	private static function ConfiguracionIni(){
         require_once('Globals.php'); 
@@ -16,6 +17,23 @@ class DATA {
         }       
         else throw new Exception('Acceso denegado al Archivo de configuracion.',-1);  
     }  
+
+    public static function getLDAP_Param() {
+        try {
+            self::ConfiguracionIni();            
+            self::$configLDAP= array(
+                    "LDAP_user"=>self::$config[Globals::app]['LDAP_user'],
+                    "LDAP_passwd"=>self::$config[Globals::app]['LDAP_passwd'],
+                    "LDAP_server"=>self::$config[Globals::app]['LDAP_server'],
+                    "LDAP_port"=>self::$config[Globals::app]['LDAP_port'],
+                    "LDAP_base_dn"=>self::$config[Globals::app]['LDAP_base_dn']
+                );
+            return self::$configLDAP;
+        }
+        catch(Exception $e){
+            throw new Exception($e->getMessage(),$e->getCode());
+        }
+    }
 
     private static function Conectar(){
         try {          
@@ -54,6 +72,8 @@ class DATA {
             if(isset($st))
                 throw new Exception($st->errorInfo()[2],$st->errorInfo()[1]);
             else throw new Exception($e->getMessage(),$e->getCode());
+        } finally{
+            //self::$conn = null;
         }
     }
     

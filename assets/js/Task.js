@@ -122,28 +122,34 @@ function ShowColumn(e){
     //
     var class_position="";
     var btn_add="";
+    var btn_template="";
     // Recorre arreglo.
     $.each(data, function(i, item) {   
         switch(item.position) {
             case '1':
                 class_position ="drag-column-on-hold";
                 btn_add = '<button type="button" style="background-color: transparent; border: 0;" id="btn-create-new-task" onclick="BtnCreateNew()" data-toggle="modal" data-target=".bd-example-modal-lg"> <span class="fa fa-plus-circle" aria-hidden="true" </span></button>';
+                // btn_template = '<button type="button" style="background-color: transparent; border: 0;" id="btn-show-list" onclick="" data-toggle="modal" data-target=".bd-list-modal-lg"> <span class="fa fa-chevron-down" aria-hidden="true" </span></button>';
                 break;
             case '2':
                 class_position = "drag-column-in-progress";
                 btn_add="";
+                btn_template = "";
                 break;
             case '3':
                 class_position = "drag-column-needs-review";
                 btn_add="";
+                btn_template = "";
                 break;
             case '4':
                 class_position = "drag-column-approved";
                 btn_add="";
+                btn_template = "";
                 break;
             default:
                 class_position = "drag-column-on-hold";
                 btn_add="";
+                btn_template = "";
         }
         //
         var row=
@@ -152,7 +158,7 @@ function ShowColumn(e){
                 '<span class="drag-column-header">' +
                     '<h2 style="color: white; font-family: Lato; font-size: 1.3rem; margin: 0; text-transform: uppercase; font-weight: 150; line-height: 1.5; -webkit-font-smoothing: antialiased;">' + item.title + '</h2>' +
                     // '<button type="button" id="btn-create-new-task" class="btn btn-sm btn-primary btn-create" data-toggle="modal" data-target=".bd-example-modal-lg">Crear Nueva</button>' +
-                    btn_add +
+                    btn_template + btn_add + 
                     // '<svg class="drag-header-more" data-target="options' + item.position + '" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>' +
                 '</span>' +                    
                 '<div class="drag-options" id="options7"></div>' + 
@@ -230,7 +236,7 @@ function open_task(id_task) {
     })    
     .fail(showError);
     
-    $('.modal').modal('show')
+    $('.bd-example-modal-lg').modal('show')
 }
 
 function taskMouseOver(x) {
@@ -423,7 +429,7 @@ function ShowData(e){
 };
 
 function UpdateEventHandler(){
-    $(".modal").css({ display: "block" });  
+    $(".bd-example-modal-lg").css({ display: "block" });  
     id = $(this).parents("tr").find("td").eq(1).text();  //Columna 1 = ID tarea.
     $.ajax({
         type: "POST",

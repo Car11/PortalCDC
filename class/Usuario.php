@@ -86,36 +86,34 @@ class Usuario{
 
     function LDAPCheck(){
         try {
-            $user_domain= explode ('@', $this->usuario);            
-            if(sizeof($user_domain)<2){
-                $sessiondata['status']='badUsername';
-                echo json_encode($sessiondata);
-                return false;
-            }
-            $dn= explode ('.', $user_domain[1]);
-            $dominio = $user_domain[1];
-            $adServer = $dominio;
-            $ldapport = 3268;            
-            $ldap = ldap_connect($adServer, $ldapport);        
-            //$ldapUser = $this->usuario;
-            $ldapPasswd = $this->contrasena;
-            $ldaprdn = $dn[0] . "\\" . $user_domain[0];
-            $bind = @ldap_bind($ldap, $ldaprdn, $ldapPasswd);            
-            if ($bind) {                
-                $filter="(sAMAccountName=".$user_domain[0].")";
-                $result = ldap_search($ldap,"dc=".$dn[0].",dc=".$dn[1],$filter);
-                $info = ldap_get_entries($ldap, $result);                
+            $LDAP_servicio = DATA::getLDAP_Param();
+            $LDAP_connect = ldap_connect($LDAP_servicio["LDAP_server"], $LDAP_servicio["LDAP_port"]);
+            $LDAP_bind = @ldap_bind($LDAP_connect, $LDAP_servicio["LDAP_user"], $LDAP_servicio["LDAP_passwd"]);
+            if ($LDAP_bind) {
+                $LDAP_filter="(mail=$this->usuario)";
+                $search_result=ldap_search($LDAP_connect,$LDAP_servicio["LDAP_base_dn"],$LDAP_filter);
+                $LDAP_user_data = ldap_get_entries($LDAP_connect, $search_result);  
+                if($LDAP_user_data["count"] < 1){
+                    @ldap_close($LDAP_connect);
+                    return false;
+                }       
+                $this->dn = $LDAP_user_data[0]["dn"];
+                $this->email= $LDAP_user_data[0]["mail"][0];
+                $this->nombre = $LDAP_user_data[0]["cn"][0];
+                $this->usuario = $LDAP_user_data[0]["samaccountname"][0];
                 //
-                for ($i=0; $i<$info["count"]; $i++)
-                {
-                    if($info['count'] > 1)
-                        break;
-                    // busca rol definido por la aplicacion.
+                @ldap_close($LDAP_connect);
+                
+                $LDAP_connect = ldap_connect($LDAP_servicio["LDAP_server"], $LDAP_servicio["LDAP_port"]);
+                $LDAP_bind = @ldap_bind($LDAP_connect, $this->dn, $this->contrasena);
+                @ldap_close($LDAP_connect);
+                if ($LDAP_bind) {
                     $this::KanboardUser();
-                    return true;  
-                }
-                @ldap_close($ldap);
-            } else {
+                    return true;
+                }                    
+                else
+                    return false;  
+            }else {
                 $sessiondata['status']='nologin';
                 echo json_encode($sessiondata);
                 return false;  
@@ -126,7 +124,6 @@ class Usuario{
             $sessiondata['errmsg']=$e->getMessage(); 
             echo json_encode($sessiondata);
         }
-        
     }
 
     function wasLDAPCheck(){
