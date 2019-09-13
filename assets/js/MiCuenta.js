@@ -27,7 +27,6 @@ dragula([
 	}, 100);
 });
 
-
 var createOptions = (function() {
 	var dragOptions = document.querySelectorAll('.drag-options');
 	
