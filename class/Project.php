@@ -8,6 +8,9 @@ if(isset($_POST["action"])){
     switch($_POST["action"]){       
         case "GetByUserID":
             echo json_encode($Project->GetByUserID());
+            break;   
+        case "ProjectByUserID":
+            echo json_encode($Project->ProjectByUserID());
             break;
         case "Load": // carga visitante por cedula
             //echo json_encode($Project->Cargar($_POST["cedula"]));
@@ -31,7 +34,7 @@ if(isset($_POST["action"])){
             break;        
     }
 }
-    
+
 class Project{
     public $id='';
     public $name;
@@ -70,6 +73,25 @@ class Project{
         }
     }
 
+    function ProjectByUserID(){
+        try {
+            $sql= 'SELECT distinct(p.id), p.name
+                FROM kanboard.projects p  
+                INNER JOIN  kanboard.project_has_users u on p.id=u.project_id
+                WHERE  u.user_id=:userid';
+            $param= array(':userid'=>$_SESSION["userid"]);
+            $data= DATA::Ejecutar($sql,$param);
+            return $data;
+        }     
+        catch(Exception $e) {
+            error_log($e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar'))
+            );
+        }
+    }
     //
     // Funciones de Mantenimiento.
     //

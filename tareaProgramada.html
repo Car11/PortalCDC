@@ -343,7 +343,7 @@
             type: "POST",
             url: "class/Project.php",
             data: {
-                action: "GetByUserID"
+                action: "ProjectByUserID"
             }
         })
             .done(function (e) {
@@ -351,21 +351,16 @@
                 if (e) {
 
                     var data_proyectos = JSON.parse(e);
+                    var item01 = null;
                     $(data_proyectos).each(function (i, item) {
                         $('#proyectosKB').append(`<option value="${item.id}">${item.name}</option>`);
                     })
-                    // $("#proyectosKB").change(function () {
-                    //     tareasProgramadas.project_id = $('#proyectosKB').val();
-                    // });
+                    $('#proyectosKB').trigger("change");
                 }
             })
             .fail(function (e) {
                 // formulario.showError(e);
             });
-
-
-
-        // tareasProgramadas.cargar_todas();
 
         $('#bnt_agrega_subtask').click(function () {
             agregaFormSubtask();

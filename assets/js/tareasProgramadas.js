@@ -71,150 +71,155 @@ class TareasProgramadas {
 
     drawAllTask(e) {
         var tareas = JSON.parse(e);
-
-        tbl_tareas = $('#tbl_tareas').DataTable({
-            data: tareas,
-            destroy: true,
-            "language": {
-                "infoEmpty": "Sin Tareas Ingresadas",
-                "emptyTable": "Sin Tareas Ingresadas",
-                "search": "Buscar",
-                "zeroRecords": "No hay resultados",
-                "lengthMenu": "Mostar _MENU_ registros",
-                "paginate": {
-                    "first": "Primera",
-                    "last": "Ultima",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
-            "order": [
-                [0, "desc"]
-            ],
-            columns: [{
-                title: "Consecutivo",
-                data: "id"
-            },
-            {
-                title: "Usuario",
-                data: "user_id"
-            },
-            {
-                title: "Min",
-                data: "min",
-                render: function (data, type, row) {
-                    if (data == "t") {
-                        return "Todos";
-                    } else {
-
-                        return data;
+        if (tareas) {
+            tbl_tareas = $('#tbl_tareas').DataTable({
+                data: tareas,
+                destroy: true,
+                "language": {
+                    "infoEmpty": "Sin Tareas Ingresadas",
+                    "emptyTable": "Sin Tareas Ingresadas",
+                    "search": "Buscar",
+                    "zeroRecords": "No hay resultados",
+                    "lengthMenu": "Mostar _MENU_ registros",
+                    "paginate": {
+                        "first": "Primera",
+                        "last": "Ultima",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
                     }
-                }
-            },
-            {
-                title: "Hora",
-                data: "hour",
-                render: function (data, type, row) {
-                    if (data == "t") {
-                        return "Todas";
-                    } else {
-
-                        return data;
-                    }
-                }
-            },
-            {
-                title: "DOM",
-                data: "dom",
-                render: function (data, type, row) {
-                    if (data == "t") {
-                        return "Todos";
-                    } else {
-
-                        return data;
-                    }
-                }
-            },
-            {
-                title: "Año",
-                data: "year",
-                render: function (data, type, row) {
-                    if (data == "t") {
-                        return "Todos";
-                    } else {
-
-                        return data;
-                    }
-                }
-            },
-            {
-                //0 Domingo, 1 Lunes... 6 Sabado
-                title: "DOW",
-                data: "dow",
-                render: function (data, type, row) {
-                    // if (data == "t") {
-                    //     return "Todos";
-                    // } else {
-
-                    //     return data;
-                    // }
-
-                    switch (data) {
-                        case "t":
+                },
+                "order": [
+                    [0, "desc"]
+                ],
+                columns: [{
+                    title: "Consecutivo",
+                    data: "id"
+                },
+                {
+                    title: "Usuario",
+                    data: "user_id"
+                },
+                {
+                    title: "Min",
+                    data: "min",
+                    render: function (data, type, row) {
+                        if (data == "t") {
                             return "Todos";
-                            break;
-                        case "0":
-                            return "Domingo"
-                            break;
-                        case "1":
-                            return "Lunes";
-                            break;
-                        case "2":
-                            return "Martes";
-                            break;
-                        case "3":
-                            return "Miercoles";
-                            break;
-                        case "4":
-                            return "Jueves";
-                            break;
-                        case "5":
-                            return "Viernes";
-                            break;
-                        case "6":
-                            return "Sabado";
-                            break;
-                        default:
-                            return "No definido";
+                        } else {
+
+                            return data;
+                        }
+                    }
+                },
+                {
+                    title: "Hora",
+                    data: "hour",
+                    render: function (data, type, row) {
+                        if (data == "t") {
+                            return "Todas";
+                        } else {
+
+                            return data;
+                        }
+                    }
+                },
+                {
+                    title: "DOM",
+                    data: "dom",
+                    render: function (data, type, row) {
+                        if (data == "t") {
+                            return "Todos";
+                        } else {
+
+                            return data;
+                        }
+                    }
+                },
+                {
+                    title: "Año",
+                    data: "year",
+                    render: function (data, type, row) {
+                        if (data == "t") {
+                            return "Todos";
+                        } else {
+
+                            return data;
+                        }
+                    }
+                },
+                {
+                    //0 Domingo, 1 Lunes... 6 Sabado
+                    title: "DOW",
+                    data: "dow",
+                    render: function (data, type, row) {
+                        // if (data == "t") {
+                        //     return "Todos";
+                        // } else {
+
+                        //     return data;
+                        // }
+
+                        switch (data) {
+                            case "t":
+                                return "Todos";
+                                break;
+                            case "0":
+                                return "Domingo"
+                                break;
+                            case "1":
+                                return "Lunes";
+                                break;
+                            case "2":
+                                return "Martes";
+                                break;
+                            case "3":
+                                return "Miercoles";
+                                break;
+                            case "4":
+                                return "Jueves";
+                                break;
+                            case "5":
+                                return "Viernes";
+                                break;
+                            case "6":
+                                return "Sabado";
+                                break;
+                            default:
+                                return "No definido";
+                        }
+                    }
+                },
+                {
+                    title: "Titulo",
+                    data: "title"
+                },
+                {
+                    title: "Detalle",
+                    data: "detail",
+                    render: function (data, type, row) {
+                        if (data.length < 10) {
+                            return data;
+                        } else {
+
+                            return data.substr(0, 60) + "...";
+                        }
+                    }
+                },
+                {
+                    title: "Eliminar",
+                    "mRender": function (data, type, full) {
+                        return '<button type="button" class="btn btn-danger buttons deleteTask" style="width: 100%;"> <i class="fa fa-trash-o" style="font-size:20px;color:black;"></i> </button></center>';
                     }
                 }
-            },
-            {
-                title: "Titulo",
-                data: "title"
-            },
-            {
-                title: "Detalle",
-                data: "detail",
-                render: function (data, type, row) {
-                    if (data.length < 10) {
-                        return data;
-                    } else {
-
-                        return data.substr(0, 60) + "...";
-                    }
-                }
-            },
-            {
-                title: "Eliminar",
-                "mRender": function (data, type, full) {
-                    return '<button type="button" class="btn btn-danger buttons deleteTask" style="width: 100%;"> <i class="fa fa-trash-o" style="font-size:20px;color:black;"></i> </button></center>';
-                }
-            }
-            ]
+                ]
 
 
-        });
+            });
+        }
+        else
+            $('#tbl_tareas').dataTable().fnClearTable();
+
+
     };
 
     loadTaskbyID() {
@@ -385,7 +390,7 @@ class TareasProgramadas {
             }
         })
             .done(function (e) {
-                tareasProgramadas.cargar_todas();
+                tareasProgramadas.cargarByProyecto();
                 alert("Listo Tarea Borrada");
 
             })
@@ -416,7 +421,7 @@ class TareasProgramadas {
             }
         })
             .done(function (e) {
-                tareasProgramadas.cargar_todas();
+                tareasProgramadas.cargarByProyecto();
                 alert("ok");
                 // swal({
                 //     type: 'success',
@@ -440,7 +445,7 @@ class TareasProgramadas {
             }
         })
             .done(function (e) {
-                tareasProgramadas.cargar_todas();
+                tareasProgramadas.cargarByProyecto();
                 alert("Actualizada");
                 // swal({
                 //     type: 'success',

@@ -99,7 +99,7 @@
             $detalleTask->title =  $this->title;
             $detalleTask->project_id = $this->project_id;
             //optional
-            $detalleTask->owner_id = $this->user_OperTI;
+            // $detalleTask->owner_id = $this->user_OperTI; //Se elimina el Owner para que no haya conflico con el usuario OperTI
             $detalleTask->creator_id =  $this->user_id;
             $detalleTask->description = $this->detail;
             $detalleTask->color_id = "green";
