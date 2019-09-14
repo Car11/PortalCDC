@@ -43,6 +43,32 @@ class TareasProgramadas {
             });
     };
 
+    cargarByProyecto() {
+        $.ajax({
+            type: "POST",
+            url: "class/tareasProgramadas.php",
+            data: {
+                action: "cargarByProyecto",
+                obj: JSON.stringify(tareasProgramadas)
+            }
+        })
+            .done(function (e) {
+                if (e != "null") {
+                    tareasProgramadas.drawAllTask(e)
+                } else {
+                    swal({
+                        type: 'success',
+                        title: 'Listo, no hay tareas que mostrar!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+            .fail(function (e) {
+                tareasProgramadas.showError(e);
+            });
+    };
+
     drawAllTask(e) {
         var tareas = JSON.parse(e);
 

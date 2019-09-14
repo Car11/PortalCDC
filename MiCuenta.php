@@ -48,7 +48,13 @@ if (!isset($_SESSION))
         <section class="section">
             <h1>Bienvenido a su cuenta</h1>
             <br>
-            <h4>Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h4>            
+            <h4>Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h4>   
+            <!-- <select id="proyectosKB" name="proyectosKB" style="color:black">
+            </select>          -->
+            <div id="dp_rangoFechaFormulario">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <i class="fa fa-caret-down"></i>
+            </div>
         </section>
 
         <div class="drag-container">
@@ -105,6 +111,25 @@ if (!isset($_SESSION))
                                 </div>
                                 <div id="collapse1" class="panel-collapse collapse in modal-panel">
                                     <div class="panel-body">
+                                        <!-- <div class="row">
+                                            <div class="col-xs-1 col-md-1">
+                                            </div>
+                                            <div class="col-xs-5 col-md-5">
+                                                <label id="projectlbl" for="title"><span class="st_input-field-lbl control-label">Proyecto<span class="required" >*</span></span></label>
+                                            </div>
+                                        </div> -->
+                                        
+                                        <!-- <div class="row">
+                                            <div class="col-xs-1 col-md-1"></div>
+                                            <div class="col-xs-10 col-md-10 selectContainer">
+                                                <div class="form-group">
+                                                    <select id="proyectosKB" name="proyectosKB" 
+                                                        style="color:black; text-transform:uppercase;" class="st_input-field form-control">
+                                                    </select>         
+                                                </div>
+                                            </div>
+                                        </div> -->
+
                                         <div class="row">
                                             <div class="col-xs-1 col-md-1">
                                                 <!-- <label id="hascomments" style="display:none"><span class="st_input-field-lbl control-label" href="/PortalCDC/MiCuenta.php?&amp;" >Comentarios!!</span></label> -->
@@ -308,3 +333,110 @@ if (!isset($_SESSION))
     </body>
 
     </html>
+    
+  <!-- jQuery -->
+  <script src="assets/js/jquery-3.3.1.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="vendors/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var fechaInicio = null;
+        var fechaFinal = null;
+        // DATERANGEPICKER Solicitud FORMULARIO
+        $(function () {
+
+            fechaInicio = moment().subtract(1, 'months').locale("es");
+            fechaFinal = moment().locale("es");
+
+            $('#dp_rangoFechaFormulario').daterangepicker({
+                timePicker: true,
+                opens: "center",
+                locale: {
+                    format: 'D MMMM YY - hh:mm A',
+                    separator: " - ",
+                    applyLabel: "Aplicar",
+                    cancelLabel: "Cancelar",
+                    fromLabel: "From",
+                    toLabel: "To",
+                    customRangeLabel: "Manual",
+                    daysOfWeek: [
+                    "DO",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                    ],
+                    monthNames: [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Setiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                    ],
+                    firstDay: 1
+                },
+                startDate: fechaInicio,
+                endDate: fechaFinal
+                }, cbFechas
+            );
+
+            function cbFechas(fechaIngreso, fechaSalida) {
+            // $('#dp_rangoFechaFormulario span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            $('#dp_rangoFechaFormulario span').html(fechaIngreso.format('D MMMM YY - hh:mm A') + '  ->  ' + fechaSalida.format('D MMMM YY - hh:mm A'));
+            }
+
+            cbFechas(fechaInicio, fechaFinal);
+
+        });
+
+        $('#dp_rangoFechaFormulario').on('apply.daterangepicker', function (ev, picker) {
+            fechaInicio = picker.startDate.format();
+            fechaFinal = picker.endDate.format();
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $.ajax({
+        type: "POST",
+        url: "class/Project.php",
+        data: {
+            action: "GetByUserID"
+        }
+    })
+    .done(function (e) {
+        $('#proyectosKB').html("")
+        if (e){
+            
+            var data_proyectos = JSON.parse(e);
+            $(data_proyectos).each(function (i, item) {
+                $('#proyectosKB').append(`<option value="${item.id}">${item.name}</option>`);
+            })
+        }
+    })
+    .fail(function (e) {
+        // formulario.showError(e);
+    });
+    
+  });
+</script>

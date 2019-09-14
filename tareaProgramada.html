@@ -40,7 +40,10 @@
         <div class="row">
             <div class="col-12">
                 <br>
-                <h2>Operaciones<a href="http://operacionesti.icetel.ice" target="_blank">TI</a></h2>
+                <h2>Proyecto:
+                    <select id="proyectosKB" name="proyectosKB" class="st_input-field form-control selectProyectosKB">
+                    </select>
+                </h2>
             </div>
         </div>
 
@@ -228,7 +231,7 @@
                             <label>${file.name}</label>
                             <br>     -->
 
-                            
+
 
                     <div id="accordion">
                         <div class="card">
@@ -335,7 +338,34 @@
 <script>
 
     $(document).ready(function () {
-        tareasProgramadas.cargar_todas();
+
+        $.ajax({
+            type: "POST",
+            url: "class/Project.php",
+            data: {
+                action: "GetByUserID"
+            }
+        })
+            .done(function (e) {
+                $('#proyectosKB').html("")
+                if (e) {
+
+                    var data_proyectos = JSON.parse(e);
+                    $(data_proyectos).each(function (i, item) {
+                        $('#proyectosKB').append(`<option value="${item.id}">${item.name}</option>`);
+                    })
+                    // $("#proyectosKB").change(function () {
+                    //     tareasProgramadas.project_id = $('#proyectosKB').val();
+                    // });
+                }
+            })
+            .fail(function (e) {
+                // formulario.showError(e);
+            });
+
+
+
+        // tareasProgramadas.cargar_todas();
 
         $('#bnt_agrega_subtask').click(function () {
             agregaFormSubtask();
@@ -394,7 +424,7 @@
             tareasProgramadas.detail = $('#inp_descripcion').val();
             // tareasProgramadas.file = null;
             tareasProgramadas.column_id = 77;
-            tareasProgramadas.project_id = 18;
+            // tareasProgramadas.project_id = 18;
 
             if (tareasProgramadas.updateTask) {
                 tareasProgramadas.update();
@@ -482,6 +512,11 @@
                 $("#inp_year option[value='t']").remove();
                 $('#inp_year').attr("disabled", false);
             }
+        });
+
+        $("#proyectosKB").change(function () {
+            tareasProgramadas.project_id = $('#proyectosKB').val();
+            tareasProgramadas.cargarByProyecto();
         });
 
     });

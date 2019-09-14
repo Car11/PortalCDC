@@ -13,6 +13,9 @@ if(isset($_POST["action"])){
     // Instance
     $tareasProgramadas = new TareasProgramadas();
     switch($opt){
+        case "cargarByProyecto":
+            echo json_encode( $tareasProgramadas->cargarByProyecto() );
+            break;
         case "cargar_todas":
             echo json_encode( $tareasProgramadas->cargar_todas() );
             break;
@@ -92,6 +95,30 @@ class TareasProgramadas {
                 FROM kanboard.scheduled_task;';
             // $param= array(':idEntidad'=>$_SESSION["userSession"]->idEntidad, ':fechaInicial'=>$this->fechaInicial, ':fechaFinal'=>$this->fechaFinal);            
             $data= DATA::Ejecutar($sql);
+            if($data){                
+                return $data;
+            }
+            return false;
+        }     
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            if (!headers_sent()) {
+                    header('HTTP/1.0 400 Error al leer');
+                }
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la lista'))
+            );
+        }
+    }
+    
+    function cargarByProyecto(){
+        try {
+            $sql='SELECT id, user_id, min, hour, dom, year, dow, title, detail, file, sub_task
+                FROM kanboard.scheduled_task
+                WHERE project_id=:project_id;';
+            $param= array(':project_id'=>$this->project_id);        
+            $data= DATA::Ejecutar($sql,$param); 
             if($data){                
                 return $data;
             }

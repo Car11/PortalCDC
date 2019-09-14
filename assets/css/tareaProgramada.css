@@ -49,3 +49,13 @@
 
  
  .corregir {border-color: #FB667A;}
+
+  .selectProyectosKB {
+    text-transform: uppercase;
+    color: #FB667A;
+    background-color: transparent;
+    border-color: #1f60c8;
+    border-width: 2px;
+    width: auto;
+    display: inline !important;
+  }
