@@ -148,16 +148,9 @@ class TareasProgramadas {
                     }
                 },
                 {
-                    //0 Domingo, 1 Lunes... 6 Sabado
                     title: "DOW",
                     data: "dow",
                     render: function (data, type, row) {
-                        // if (data == "t") {
-                        //     return "Todos";
-                        // } else {
-
-                        //     return data;
-                        // }
 
                         switch (data) {
                             case "t":

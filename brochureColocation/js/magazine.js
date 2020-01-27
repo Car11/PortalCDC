@@ -89,23 +89,23 @@ function loadRegions(page, element) {
 
 // Add region
 
-function addRegion(region, pageElement) {
+// function addRegionBLOCK(region, pageElement) {
 	
-	var reg = $('<div />', {'class': 'region  ' + region['class']}),
-		options = $('.magazine').turn('options'),
-		pageWidth = options.width/2,
-		pageHeight = options.height;
+// 	var reg = $('<div />', {'class': 'region  ' + region['class']}),
+// 		options = $('.magazine').turn('options'),
+// 		pageWidth = options.width/2,
+// 		pageHeight = options.height;
 
-	reg.css({
-		top: Math.round(region.y/pageHeight*100)+'%',
-		left: Math.round(region.x/pageWidth*100)+'%',
-		width: Math.round(region.width/pageWidth*100)+'%',
-		height: Math.round(region.height/pageHeight*100)+'%'
-	}).attr('region-data', $.param(region.data||''));
+// 	reg.css({
+// 		top: Math.round(region.y/pageHeight*100)+'%',
+// 		left: Math.round(region.x/pageWidth*100)+'%',
+// 		width: Math.round(region.width/pageWidth*100)+'%',
+// 		height: Math.round(region.height/pageHeight*100)+'%'
+// 	}).attr('region-data', $.param(region.data||''));
 
 
-	reg.appendTo(pageElement);
-}
+// 	reg.appendTo(pageElement);
+// }
 
 // Process click on a region
 
