@@ -203,20 +203,36 @@ function ShowTasks(e){
     // carga lista con datos.
     var data= JSON.parse(e);
     // Recorre arreglo.
-    $.each(data, function(i, item) {  
-        var d_started = moment(item.date_started*1000).format();
-        var d_creation_iso = d_started.slice(0, 16).replace('T', ' ');
-        var posicion = '#'+item.position;       
-        var row=
-            // '<li class="drag-item" onclick="open_task()">' +
-            '<li class="'+item.title+' task" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)">'+
-                '<p>' +
-                    'No: ' + item.id + '<br>' +
-                    'Fecha: ' + d_creation_iso + '<br>' +  
-                    'Asunto: ' + item.title + '<br>' +			
-                '</p>' +
-            '</li>'
-        $(posicion).append(row);            
+    $.each(data, function(i, item) {         
+      var color= "red";
+      switch(item.position) {
+        case '1':
+            color = "#FB7D44"
+            break;
+        case '2':
+            color = "#2A92BF";
+            break;
+        case '3':
+            color = "#F4CE46";
+            break;
+        case '4':
+            color = "#00B961";
+            break;
+        default:
+          color = "#00B961";
+      }
+
+      var d_started = moment(item.date_started*1000).format();
+      var d_creation_iso = d_started.slice(0, 16).replace('T', ' ');
+      var posicion = '#'+item.position;
+      var row=
+          // '<li class="drag-item" onclick="open_task()">' +
+          '<li class="'+item.title+' task" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)" style="border-left-color: '+ color +';border-left-style: solid;margin-top: 5px;margin-bottom: 5px;color: black;background-color: whitesmoke; padding:10px;">'+
+            '<p>No: ' + item.id + '<p>'+
+            '<p style="font-weight: 600;">Asunto: ' + item.title + '<p>' +
+            '<p style="text-align:right;font-weight: 100;">Fecha: ' + d_creation_iso + '<p>' +
+          '</li>'
+      $(posicion).append(row);            
     });
     $('#buscar').val('');
 };
@@ -240,13 +256,13 @@ function open_task(id_task) {
 }
 
 function taskMouseOver(x) {
-    x.style.backgroundColor = "#33363d";
+    x.style.backgroundColor = "darkgray";
     x.style.fontWeight = "600"
     x.style.cursor = "pointer";
 }
 
 function taskMouseOut(x) {
-    x.style.backgroundColor = "#1e2026";
+    x.style.backgroundColor = "whitesmoke";
     x.style.fontWeight = "400"
 }
 

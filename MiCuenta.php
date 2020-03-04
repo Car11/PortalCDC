@@ -44,36 +44,25 @@ if (!isset($_SESSION))
 </head>
 
     <body>
-
-        <section class="section">
-            <h1>Bienvenido a su cuenta</h1>
-            <br>
-            <h4>Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h4>   
-            <!-- <select id="proyectosKB" name="proyectosKB" style="color:black">
-            </select>          -->
-            <div id="dp_rangoFechaFormulario">
-                <i class="fa fa-calendar"></i>&nbsp;
-                <span></span> <i class="fa fa-caret-down"></i>
+        <section class="section" style="text-align: left;">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <h3 style="color: black; text-align: left">Bienvenido a su cuenta</h3>
             </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <div id='search' class="item form-group" style="text-align: center">
+                  <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <h3 style="color: black; text-align: right">Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h3>  
+            </div>
+          </div>
+          <div class="row">
+          </div>
         </section>
 
         <div class="drag-container">
-            <div class="row">
-                <div class="col-md-2 col-sm-2 col-xs-2">
-                    <span class="glyphicon glyphicon-search " id='btnSearch' style='cursor:pointer;font-size: 35px;' aria-hidden="true"></span>
-                </div>
-                <div class="col-md-2 col-sm-2 col-xs-2">
-                    <!-- <span class="glyphicon glyphicon-chevron-right " id='btnOpciones' style='cursor:pointer;font-size: 35px;' aria-hidden="true"></span> -->
-                </div>
-                <div id='search' class="item form-group" style="display:none">
-                    <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-1">
-                        <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
-                    </div>
-                    <br>
-                    <br>
-                </div>
-            </div>
-                <br>
             <div class="row">
                 <ul class="drag-list" id="drag-list">
 

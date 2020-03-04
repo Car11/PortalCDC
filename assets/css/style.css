@@ -15,12 +15,12 @@ Azul: 005998
 }
 
 body {
-  background: #252830;
+  background: #EDF2F3;
 }
 
 h1 {
-  color: white;
-  text-align: center;
+  color: black;
+  /* text-align: center; */
   font-family: "Helvetica";
   font-stretch: normal;
   font-size: 30px;
