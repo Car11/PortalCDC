@@ -119,7 +119,7 @@ class Task{
     //
     function LoadColumns(){
         try {
-            $sql='SELECT position, title
+            $sql='SELECT id, position, title
             FROM columns 
             WHERE project_id = :project_id
             ORDER BY position ASC;';   
@@ -141,18 +141,23 @@ class Task{
     // tareas de mis grupos. y todos los proyectos.
     function LoadTask(){
         try {            
-            $sql='SELECT  id, title, date_started, position FROM (
+            $sql='SELECT  id, title, date_started, column_id FROM (
                 SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
                 INNER JOIN 
                 (SELECT group_id, user_id FROM group_has_users) as U
                 ON GU.group_id = U.group_id
                 INNER JOIN
-                (SELECT t.id, t.title, t.creator_id, t.date_started, c.position 
+                (SELECT t.id, t.title, t.creator_id, t.date_started, c.column_id 
                 FROM kanboard.tasks as t
                     INNER JOIN columns as c ON t.column_id = c.id where t.is_active =1
                     order by t.id desc
                 ) AS T
-                ON T.creator_id = user_id GROUP BY id ORDER BY date_started asc;'; 
+                ON T.creator_id = user_id 
+                UNION
+                SELECT id, title, date_started, column_id
+                FROM tasks
+                WHERE creator_id = :userid
+                GROUP BY id ORDER BY date_started asc;'; 
             $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;

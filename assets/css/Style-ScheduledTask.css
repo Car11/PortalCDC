@@ -11,7 +11,7 @@ html,body{
 }
 
 .modal-content {
-    background-color: #1e1e1e !important;
+    background-color: darkgray !important;
     color: rgb(206, 206, 206);
     /* color: #337ab7; */
 }
@@ -22,27 +22,27 @@ html,body{
 
 .modal-header{
     border-bottom: none !important;
-    background-color: #212121 !important;
+    background-color: white !important;
 }
 .modal-title{
     color: #f0f0f0 !important;
 }
 .modal-body{
-    background-color: #131310 !important;
+    background-color: white !important;
 
 }
 
 .modal-panel{
-    background-color: #212121 !important;
+    background-color: white !important;
 }
 
 .modal-panel-heading{
-    background-color: #424242 !important;
+    background-color: white !important;
 }
 
 .modal-footer{
     border-bottom: none !important;
-    background-color: #212121 !important;
+    background-color: white !important;
 }
 
 .control-label{

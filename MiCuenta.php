@@ -28,8 +28,8 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/sweetalert2.css">
     <link rel="stylesheet" href="assets/css/validator.css">
     <!-- JS -->
-	<script src="assets/js/jquery.min.js"></script>	
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/jquery-3.3.1.js"></script>
+	<!-- <script src="assets/js/jquery.min.js"></script>	 -->
 	<script src="assets/js/dragula.min.js"></script>
 	<script  src="assets/js/MiCuenta.min.js"></script>
     <script src="assets/js/Comment.min.js" languaje="javascript" type="text/javascript"></script>
@@ -38,6 +38,7 @@ if (!isset($_SESSION))
     <script src="assets/js/sweetalert2.js"></script>
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/validator.min.js" ></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     
     <script src='assets/js/download.js'></script>
     <link rel="icon" type="image/png" sizes="310x310" href="./assets/img/logos/favIcon/ms-icon-310x310.png">
@@ -47,7 +48,7 @@ if (!isset($_SESSION))
         <section class="section" style="text-align: left;">
           <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <h3 style="color: black; text-align: left">Bienvenido a su cuenta</h3>
+              <h3 style="color: black; text-align: left">Dashboard Operaciones DTI</h3>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
               <div id='search' class="item form-group" style="text-align: center">
@@ -55,7 +56,10 @@ if (!isset($_SESSION))
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <h3 style="color: black; text-align: right">Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h3>  
+              <!-- <h3 style="color: black; text-align: right">Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h3>                 -->
+              <div class="text-align: right;">
+                <button type="button" class="btn btn-primary btn-lg" style="color: black; float: right !important; background-color: #EDF2F3 !important;background-image: none;"id='logout' type="button" >Salir</button>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -75,16 +79,16 @@ if (!isset($_SESSION))
         </section>
 
         <section class="section">            
-            <a href="#">Operaciones DTI © 2019</a>            
+            <a style="color: black;" href="#">Operaciones DTI © 2019</a>            
         </section>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" data-backdrop="static"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-new-task" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="ModalLabel" style="color: black;">Ingresar Nueva Tarea</h5>
+                        <!-- <h5 class="modal-title" id="ModalLabel" style="color: black;">Ingresar Nueva Tarea</h5> -->
                         <h4 class="panel-title">
-                            <a data-toggle="modal" data-target=".bd-lista-modal-lg">Cargar Plantillas</a>
+                            <!-- <a data-toggle="modal" data-target=".bd-lista-modal-lg">Cargar Plantillas</a> -->
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -311,7 +315,7 @@ if (!isset($_SESSION))
                     </div>
                     <div class="modal-body" style="color=black;">
 
-                    </div>
+                  </div>
                     <div class="modal-footer">
                         <button type="button" id="cerrar-modal" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Cancelar</button>
                         <button type="button" onclick="loadTask()" id="btnLoadTask" class="btn btn-primary">Cargar</button>
@@ -324,10 +328,19 @@ if (!isset($_SESSION))
     </html>
     
   <!-- jQuery -->
-  <script src="assets/js/jquery-3.3.1.js"></script>
+  <!-- <script src="assets/js/jquery-3.3.1.js"></script> -->
   <!-- bootstrap-daterangepicker -->
   <script src="vendors/daterangepicker/daterangepicker.min.js"></script>
-
+<style>
+  .cajaTarea{
+    border-bottom-color: #e9e9e9;
+    border-bottom-style: solid;
+    border-right-color: #e9e9e9;
+    border-right-style: solid;
+    border-top-color: #e9e9e9;
+    border-top-style: solid;
+  }
+</style>
 <script>
     $(document).ready(function () {
 

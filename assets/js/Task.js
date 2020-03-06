@@ -162,7 +162,7 @@ function ShowColumn(e){
                     // '<svg class="drag-header-more" data-target="options' + item.position + '" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>' +
                 '</span>' +                    
                 '<div class="drag-options" id="options7"></div>' + 
-                '<ul class="drag-inner-list" id="' + item.position + '">' +
+                '<ul class="drag-inner-list" id="' + item.id + '">' +
                 '</ul>' +
             '</li>';
         $('#drag-list').append(row);            
@@ -224,15 +224,15 @@ function ShowTasks(e){
 
       var d_started = moment(item.date_started*1000).format();
       var d_creation_iso = d_started.slice(0, 16).replace('T', ' ');
-      var posicion = '#'+item.position;
+      var column_id = '#'+item.column_id;
       var row=
           // '<li class="drag-item" onclick="open_task()">' +
-          '<li class="'+item.title+' task" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)" style="border-left-color: '+ color +';border-left-style: solid;margin-top: 5px;margin-bottom: 5px;color: black;background-color: whitesmoke; padding:10px;">'+
+          '<li class="'+item.title+' task cajaTarea" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)" style="border-left-color: '+ color +';border-left-style: solid;margin-top: 5px;margin-bottom: 5px;color: black;background-color: whitesmoke; padding:10px;">'+
             '<p>No: ' + item.id + '<p>'+
-            '<p style="font-weight: 600;">Asunto: ' + item.title + '<p>' +
+            '<p style="font-weight: 600;">Asunto: ' + item.title.slice(0, 35) + '<p>' +
             '<p style="text-align:right;font-weight: 100;">Fecha: ' + d_creation_iso + '<p>' +
           '</li>'
-      $(posicion).append(row);            
+      $(column_id).append(row);            
     });
     $('#buscar').val('');
 };
