@@ -157,6 +157,8 @@ class Task{
                 SELECT id, title, date_started, column_id
                 FROM tasks
                 WHERE creator_id = :userid
+                AND project_id = 18
+                AND is_active = 1
                 GROUP BY id ORDER BY date_started asc;'; 
             $param= array(':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
