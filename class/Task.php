@@ -19,12 +19,20 @@ if(isset($_POST["action"])){
             $task->id=$_POST["id"];
             echo json_encode($task->Load());
             break;
-        case "LoadColumns": 
-            $task->project_id=$_POST["project_id"];
+        case "LoadColumns":
+            if (!empty($_POST["project_id"])) {
+              $task->project_id=$_POST["project_id"];
+            } else {  
+              $task->project_id=18;
+            }            
             echo json_encode($task->LoadColumns());
             break;
-        case "LoadTask": 
-          $task->project_id=$_POST["project_id"];
+        case "LoadTask":
+            if (!empty($_POST["project_id"])) {
+              $task->project_id=$_POST["project_id"];
+            } else {  
+              $task->project_id=18;
+            }
             echo json_encode($task->LoadTask());
             break;
         case "LoadTaskByName": 
@@ -114,7 +122,7 @@ class Task{
     public $idFile='';
 
     function __construct(){
-        require_once("conexion.php");
+        require_once("Conexion.php");
         require_once("Log.php");
     }
 
