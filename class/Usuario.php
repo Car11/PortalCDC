@@ -14,7 +14,7 @@ if(isset($_POST["action"])){
             $usuario->usuario= $_POST["username"];
             $usuario->contrasena= $_POST["password"];
             $usuario->local= $_POST["local"];
-            if(!filter_var($usuario->local, FILTER_VALIDATE_BOOLEAN))
+            if(!filter_var($usuario->local, FILTER_VALIDATE_BOOLEAN))//Factur4sFT$019$
                 $usuario->LDAPCheck();
             else $usuario->loginLocal();
             break;      
@@ -39,8 +39,8 @@ class Usuario{
 
     function KanboardUser(){    // valida rol en bd y administra accesos a elementos de la web
         try {
-            $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
-            $param= array(':usuario'=>explode('@',$this->usuario)[0]);
+          $sql='SELECT id, name, email, role, is_active FROM users where username=:usuario';
+          $param= array(':usuario'=>explode('@',$this->usuario)[0]);
             $data = DATA::Ejecutar($sql,$param);
             if (count($data)) {
                 $this->id= $data[0]['id'];
@@ -94,7 +94,10 @@ class Usuario{
                 $search_result=ldap_search($LDAP_connect,$LDAP_servicio["LDAP_base_dn"],$LDAP_filter);
                 $LDAP_user_data = ldap_get_entries($LDAP_connect, $search_result);  
                 if($LDAP_user_data["count"] < 1){
+                    error_log("debug: codigo99 -> Usuario no encontrado en el LDAP");
                     @ldap_close($LDAP_connect);
+                    $sessiondata['status']='badUsername';
+                    echo json_encode($sessiondata);
                     return false;
                 }       
                 $this->dn = $LDAP_user_data[0]["dn"];
@@ -106,13 +109,16 @@ class Usuario{
                 
                 $LDAP_connect = ldap_connect($LDAP_servicio["LDAP_server"], $LDAP_servicio["LDAP_port"]);
                 $LDAP_bind = @ldap_bind($LDAP_connect, $this->dn, $this->contrasena);
+                error_log("debug: ".$this->dn . "  " . $this->contrasena);
                 @ldap_close($LDAP_connect);
                 if ($LDAP_bind) {
                     $this::KanboardUser();
                     return true;
                 }                    
                 else
-                    return false;  
+                  $sessiondata['status']='nologin';
+                  echo json_encode($sessiondata);
+                  return false; 
             }else {
                 $sessiondata['status']='nologin';
                 echo json_encode($sessiondata);

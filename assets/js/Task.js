@@ -3,8 +3,15 @@ var mifile = "0";
 var arrayOfThisfile = [];
 var arrayOffiles = [];
 var arraySubTask = [];
+var active_project_id = null;
 
 $(document).ready( function () {
+    //1. CARGA DE LOS PROYECTOS DEL USUARIO
+    //2. CARGA LAS COLUMNAS DEL PRIMERO PROYECTO ENCONTRADO
+    //3. CARGA LAS TAREAS DE LAS COLUMNAS DEL PRIMER PROYECTO ENCONTRADO
+    
+    LoadProjects();
+
     //logout
     $('#logout').click(function(){
         $.ajax({
@@ -39,12 +46,9 @@ $(document).ready( function () {
             LoadTaskByName();
         }
     });
-    //
-    LoadColumns();
     setInterval(function() {
-        LoadColumns(); 
-    }, 60000);       
-    // LoadProjects();
+      LoadTasks(); 
+    }, 5000);
     encode_Files();
     //Permite la importacion de archivos
     $("#inputFileToLoad").change(function() {
@@ -73,6 +77,12 @@ $(document).ready( function () {
         alert('cerrar modal');
     });
 });
+
+function sel_ProyectobyUser_change(el){
+  active_project_id = parseInt(el.value);
+  $('li.task').html('');
+  LoadColumns();
+}
 
 function BtnCreateNew(){
     id= "NULL";
@@ -106,11 +116,12 @@ function LoadColumns(){
         type: "POST",
         url: "class/Task.php",
         data: { 
-            action: "LoadColumns"
+            action: "LoadColumns",
+            project_id: active_project_id
         }
     })
     .done(function( e ) {
-        ShowColumn(e); 
+        ShowColumn(e);
     })    
 };
 
@@ -175,7 +186,8 @@ function LoadTasks(){
         type: "POST",
         url: "class/Task.php",
         data: { 
-            action: "LoadTask"
+            action: "LoadTask",
+            project_id: active_project_id
         }
     })
     .done(function( e ) {            
@@ -199,7 +211,6 @@ function LoadTaskByName(){
 };
 
 function ShowTasks(e){ 
-    $('li.task').html('');
     // carga lista con datos.
     var data= JSON.parse(e);
     // Recorre arreglo.
@@ -227,12 +238,21 @@ function ShowTasks(e){
       var column_id = '#'+item.column_id;
       var row=
           // '<li class="drag-item" onclick="open_task()">' +
-          '<li class="'+item.title+' task cajaTarea" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)" style="border-left-color: '+ color +';border-left-style: solid;margin-top: 5px;margin-bottom: 5px;color: black;background-color: whitesmoke; padding:10px;">'+
+          '<li class="'+item.id+' task cajaTarea" onclick="open_task(' + item.id + ')" onmouseover="taskMouseOver(this)" onmouseout="taskMouseOut(this)" style="border-left-color: '+ color +';border-left-style: solid;margin-top: 5px;margin-bottom: 5px;color: black;background-color: whitesmoke; padding:10px;">'+
             '<p>No: ' + item.id + '<p>'+
             '<p style="font-weight: 600;">Asunto: ' + item.title.slice(0, 35) + '<p>' +
             '<p style="text-align:right;font-weight: 100;">Fecha: ' + d_creation_iso + '<p>' +
           '</li>'
-      $(column_id).append(row);            
+      if ($(`.${item.id}`).length){//Si ya existe entonces valide si esta en otra columna 
+        let colActual = $(`.${item.id}`).parent().attr('id');
+        let colNueva = item.column_id;
+        if (colActual != colNueva){ //Si esta en otra columna, elimine la otra tarea y creela en la nueva columna 
+          $(`.${item.id}`).remove();
+          $(column_id).append(row);
+        }
+      }else{// Si no Existe entonces agreguela 
+        $(column_id).append(row);        
+      } 
     });
     $('#buscar').val('');
 };
@@ -533,6 +553,7 @@ function ShowTaskData(e){
 
 //Esta funcion carga en el dropdown los projectos a los
 //cuales el usuario tiene acceso a solicitar tareas  
+
 function loadProjectsByUser(e){
     // DATA
     var data= JSON.parse(e);
@@ -540,8 +561,8 @@ function loadProjectsByUser(e){
         var row="<option value="+item.id+">" + item.name + 
             // "<div id="+item.id+"></div>" +         
         "</option>";
-        $('.list').append(row);
-    });  
+        $('#sel_ProyectobyUser').append(row);
+    });
 };
 
 function LoadProjects(){
@@ -553,7 +574,12 @@ function LoadProjects(){
         }
     })
     .done(function( e ) {
-         loadProjectsByUser(e);
+      if (e){
+        $('li.task').html('');
+        loadProjectsByUser(e);
+        active_project_id = parseInt(JSON.parse(e)[0].id);
+        LoadColumns();
+      }
     })    
     .fail(showError);
 };
@@ -744,11 +770,12 @@ function SaveTask(){
         url: "class/Task.php",
         data: { 
             action: miAccion, 
-            id: id,          
+            id: id,
+            project_id: active_project_id,
             title:  title_validate,
             description: textoDes,
             date_started: $("#date_started").val(),
-            date_due: $("#date_due").val(),
+            // date_due: $("#date_due").val(),
             mifile: mifile,
             subtask_des: JSON.stringify(arraySubTask),
             subTask: varSubTask,

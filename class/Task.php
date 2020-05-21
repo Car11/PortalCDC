@@ -20,9 +20,11 @@ if(isset($_POST["action"])){
             echo json_encode($task->Load());
             break;
         case "LoadColumns": 
+            $task->project_id=$_POST["project_id"];
             echo json_encode($task->LoadColumns());
             break;
         case "LoadTask": 
+          $task->project_id=$_POST["project_id"];
             echo json_encode($task->LoadTask());
             break;
         case "LoadTaskByName": 
@@ -40,11 +42,12 @@ if(isset($_POST["action"])){
             echo json_encode($task->DownloadTaskFile());
             break;       
         case "Insert":
+            $task->project_id= intval($_POST["project_id"]);
             $task->title= $_POST["title"];
             $task->description= $_POST["description"];
             $task->subTask= $_POST["subTask"];
             $task->date_started= $_POST["date_started"];
-            $task->date_due= $_POST["date_due"];
+            // $task->date_due= $_POST["date_due"];
             $task->mifile= $_POST["mifile"];
             $task->subtask_des= json_decode($_POST["subtask_des"]);
             $task->objFile= json_decode($_POST["objFile"]);
@@ -52,12 +55,13 @@ if(isset($_POST["action"])){
             $task->Insert();
             break;
         case "Update":
+            $task->project_id= $_POST["project_id"];
             $task->id= $_POST["id"];
             $task->title= $_POST["title"];
             $task->description= $_POST["description"];
             $task->subTask= $_POST["subTask"];
             $task->date_started= $_POST["date_started"];
-            $task->date_due= $_POST["date_due"];
+            // $task->date_due= $_POST["date_due"];
             $task->mifile= $_POST["mifile"];
             $task->subtask_des= json_decode($_POST["subtask_des"]);
             $task->objFile= json_decode($_POST["objFile"]);
@@ -89,7 +93,7 @@ class Task{
     public $send_id=123;   // definir que es este dato.
     public $title;
     public $description;
-    public $project_id='18'; //17 des-cer; 18 prd.
+    public $project_id; //17 des-cer; 18 prd.
     public $date_completed;
     public $owner_id;
     public $date_creation;
@@ -98,7 +102,7 @@ class Task{
     public $creator_id;
     public $date_started;
     public $subtask_des;
-    public $date_due;
+    // public $date_due;
     public $mifile;
     public $objFile;
     public $subTask;
@@ -142,25 +146,25 @@ class Task{
     function LoadTask(){
         try {            
             $sql='SELECT  id, title, date_started, column_id FROM (
-                SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
-                INNER JOIN 
-                (SELECT group_id, user_id FROM group_has_users) as U
-                ON GU.group_id = U.group_id
-                INNER JOIN
-                (SELECT t.id, t.title, t.creator_id, t.date_started, c.column_id 
-                FROM kanboard.tasks as t
-                    INNER JOIN columns as c ON t.column_id = c.id where t.is_active =1
-                    order by t.id desc
-                ) AS T
-                ON T.creator_id = user_id 
-                UNION
-                SELECT id, title, date_started, column_id
-                FROM tasks
-                WHERE creator_id = :userid
-                AND project_id = 18
-                AND is_active = 1
-                GROUP BY id ORDER BY date_started asc;'; 
-            $param= array(':userid'=>$_SESSION["userid"]);
+                    SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
+                    INNER JOIN
+                    (SELECT group_id, user_id FROM group_has_users) as U
+                    ON GU.group_id = U.group_id
+                    INNER JOIN
+                  (SELECT t.id, t.title, t.creator_id, t.date_started, c.id column_id
+                    FROM kanboard.tasks as t
+                        INNER JOIN columns as c ON t.column_id = c.id where  c.project_id = :project_id and  t.is_active =1
+                        order by t.id desc
+                    ) AS T
+                    ON T.creator_id = user_id
+                    UNION
+                    SELECT id, title, date_started, column_id
+                    FROM tasks
+                  WHERE creator_id = :userid
+                    AND project_id = :project_id
+                    AND is_active = 1
+                    GROUP BY id ORDER BY date_started asc'; 
+            $param= array(':project_id'=>$this->project_id,  ':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
         }     
@@ -383,7 +387,7 @@ class Task{
             $sesion = new Sesion();
             $sesion->isLogin();
             $t_started = date("Y-m-d H:i", strtotime($this->date_started));
-            $t_due = date("Y-m-d H:i", strtotime($this->date_due));
+            // $t_due = date("Y-m-d H:i", strtotime($this->date_due));
 
             $task = new stdClass();
             $detalleTask = new stdClass();
@@ -397,7 +401,7 @@ class Task{
             $detalleTask->title =  $this->title;
             $detalleTask->project_id = $this->project_id;
             $detalleTask->color_id = "yellow";
-            $detalleTask->date_due = $t_due;
+            // $detalleTask->date_due = $t_due;
             $detalleTask->date_started = $t_started;
             $detalleTask->recurrence_status = 0;
             $detalleTask->recurrence_trigger = 0;
@@ -456,9 +460,9 @@ class Task{
             if($this->date_started == "")
                 $t_started = null;
             else $t_started = date("Y-m-d H:i", strtotime($this->date_started));
-            if($this->date_due == "")
-                $t_due = null;
-            else $t_due = date("Y-m-d H:i", strtotime($this->date_due));
+            // if($this->date_due == "")
+            //     $t_due = null;
+            // else $t_due = date("Y-m-d H:i", strtotime($this->date_due));
           
             $task = new stdClass();
             $detalleTask = new stdClass();
@@ -471,7 +475,7 @@ class Task{
             $detalleTask->title =  $this->title;
             $detalleTask->project_id = $this->project_id;
             $detalleTask->color_id = "yellow";
-            $detalleTask->date_due = $t_due;
+            // $detalleTask->date_due = $t_due;
             $detalleTask->date_started = $t_started;
             $detalleTask->recurrence_status = 0;
             $detalleTask->recurrence_trigger = 0;

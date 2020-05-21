@@ -47,18 +47,20 @@ if (!isset($_SESSION))
     <body>
         <section class="section" style="text-align: left;">
           <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <h3 style="color: black; text-align: left">Dashboard Operaciones DTI</h3>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <div id='search' class="item form-group" style="text-align: center">
-                  <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
-              </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <h3 class="col-lg-2" style="color: black; text-align: right">Proyecto:</h3>
+              <select class="form-control col-lg-10"  style="width: auto" id="sel_ProyectobyUser" onchange="sel_ProyectobyUser_change(this)">
+              </select>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
               <!-- <h3 style="color: black; text-align: right">Dashboard de Tareas. <u id='logout'>Cerrar Sesión</u></h3>                 -->
               <div class="text-align: right;">
-                <button type="button" class="btn btn-primary btn-lg" style="color: black; float: right !important; background-color: #EDF2F3 !important;background-image: none;"id='logout' type="button" >Salir</button>
+                <button type="button" class="btn btn-primary btn-lg" style="color: black; float: right !important; background-color: #EDF2F3 !important;background-image: none; right: 25px;bottom: 21px;z-index: 999;position: fixed;"id='logout' type="button" >Salir</button>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <div id='search' class="item form-group" style="text-align: center">
+                  <input id="buscar" class="form-control col-md-6 col-xs-12" name="buscar" type="text" placeholder="Buscar Tareas" autofocus>
               </div>
             </div>
           </div>
@@ -79,7 +81,7 @@ if (!isset($_SESSION))
         </section>
 
         <section class="section">            
-            <a style="color: black;" href="#">Operaciones DTI © 2019</a>            
+            <a style="color: black;right: 0; bottom: 0px; position: fixed; left: 0; background-color: #dadada;" href="#">Operaciones DTI © 2020</a>            
         </section>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" data-backdrop="static"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,26 +148,26 @@ if (!isset($_SESSION))
                                         <!-- fechas -->                                        
                                         <div class="row">
                                             <div class="col-xs-1 col-md-1"></div>
-                                            <div class="col-xs-5 col-md-5">
+                                            <div class="col-xs-10 col-md-10">
                                                 <label class="control-label control-label">Seleccione una fecha de inicio: </label>
                                             </div>
-                                            <div class="col-xs-5 col-md-5">
+                                            <!-- <div class="col-xs-5 col-md-5">
                                                 <label class="control-label control-label">Seleccione una fecha de final: </label>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-xs-1 col-md-1"></div>
-                                            <div class="col-xs-5 col-md-5">
+                                            <div class="col-xs-10 col-md-10">
                                                 <div class="form-group">
                                                     <input type="datetime-local" class="st_input-field-time form-control" autocomplete="on" name="bdaytime" id="date_started">
                                                 </div>
                                             </div>
-                                            <div class="col-xs-5 col-md-5">
+                                            <!-- <div class="col-xs-5 col-md-5">
                                                 <div class="form-group">
                                                     <input type="datetime-local" class="st_input-field-time form-control" name="bdaytime" id="date_due">
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <!-- /fechas -->
                                         
