@@ -5,7 +5,7 @@ if(isset($_POST["action"])){
     $opt= $_POST["action"];
     unset($_POST['action']);
     // Classes
-    require_once("conexion.php");
+    require_once("Conexion.php");
     
     // Session
     if (!isset($_SESSION))
