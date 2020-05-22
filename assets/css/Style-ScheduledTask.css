@@ -33,11 +33,14 @@ html,body{
 }
 
 .modal-panel{
-    background-color: white !important;
+    background-color: #f6f6f6  !important;
 }
 
 .modal-panel-heading{
     background-color: white !important;
+}
+.panel-default {
+  border-color: #dedede !important;
 }
 
 .modal-footer{
@@ -46,7 +49,12 @@ html,body{
 }
 
 .control-label{
-    color:rgb(206, 206, 206);
+    color: rgb(56, 56, 56);
+}
+
+.seccion-titulo{
+  font-weight: 400;
+  color: #007bff;
 }
 .box{
     color:rgb(10, 10, 10);

@@ -101,7 +101,7 @@ if (!isset($_SESSION))
                             <div class="panel panel-default">
                                 <div class="panel-heading modal-panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Descripción de Tarea</a>
+                                        <a class="seccion-titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Descripción de Tarea</a>
                                     </h4>
                                 </div>
                                 <div id="collapse1" class="panel-collapse collapse in modal-panel">
@@ -191,8 +191,8 @@ if (!isset($_SESSION))
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">SubTareas</a>
+                                    <h4 class="panel-title ">
+                                        <a class="seccion-titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse2">SubTareas</a>
                                     </h4>
                                 </div>
                                 <div id="collapse2" class="panel-collapse collapse modal-panel">
@@ -241,7 +241,7 @@ if (!isset($_SESSION))
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Archivos y Comentarios
+                                        <a class="seccion-titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse3">Archivos y Comentarios
                                             
                                         </a>
                                     </h4>
