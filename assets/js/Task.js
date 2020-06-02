@@ -396,7 +396,7 @@ function decode_file(e, filename){
             newstr = "data:image/jpg;base64,"+newstr;//data:image/jpeg;base64,/9j/4AAQSk
             break;
         default:
-            newstr = "data:application/octet-stream,"+newstr;    
+            newstr = "data:application/octet-stream;base64,"+newstr;    
     }
     
     download(newstr, filename);
