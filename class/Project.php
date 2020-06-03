@@ -52,18 +52,25 @@ class Project{
     
 
     function GetProjectsByUserID(){
-      $sql= 'SELECT p.id, p.name
-      FROM kanboard.projects p
-      INNER JOIN project_has_groups pg ON p.id = pg.project_id
-      INNER JOIN group_has_users gu ON gu.group_id = pg.group_id
-      WHERE gu.user_id =:userid;';
-      $param= array(':userid'=>$_SESSION["userid"]);
-      $data= DATA::Ejecutar($sql,$param);
-      return $data;
-
-
-      
-
+      try {
+        $sql= 'SELECT p.id, p.name
+          FROM kanboard.projects p
+          INNER JOIN project_has_groups pg ON p.id = pg.project_id
+          INNER JOIN group_has_users gu ON gu.group_id = pg.group_id
+          WHERE gu.user_id =:userid;';
+        $param= array(':userid'=>$_SESSION["userid"]);
+        $data= DATA::Ejecutar($sql,$param);
+        error_log("Resultado del GetProjectsByUserID"+$data);
+        return $data;
+      }     
+      catch(Exception $e) {
+          error_log($e->getMessage());
+          header('HTTP/1.0 400 Bad error');
+          die(json_encode(array(
+              'code' => $e->getCode() ,
+              'msg' => 'Error al cargar'))
+          );
+      }
     }
 
 
