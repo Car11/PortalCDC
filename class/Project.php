@@ -6,6 +6,9 @@ if (!isset($_SESSION))
 if(isset($_POST["action"])){
     $Project= new Project();
     switch($_POST["action"]){       
+        case "GetProjectsByUserID":
+            echo json_encode($Project->GetProjectsByUserID());
+            break;   
         case "GetByUserID":
             echo json_encode($Project->GetByUserID());
             break;   
@@ -47,6 +50,23 @@ class Project{
         require_once("Log.php");
     }
     
+
+    function GetProjectsByUserID(){
+      $sql= 'SELECT p.id, p.name
+      FROM kanboard.projects p
+      INNER JOIN project_has_groups pg ON p.id = pg.project_id
+      INNER JOIN group_has_users gu ON gu.group_id = pg.group_id
+      WHERE gu.user_id =:userid;';
+      $param= array(':userid'=>$_SESSION["userid"]);
+      $data= DATA::Ejecutar($sql,$param);
+      return $data;
+
+
+      
+
+    }
+
+
     function GetByUserID(){
         try {
            /* $sql='SELECT p.id, p.name, u.role

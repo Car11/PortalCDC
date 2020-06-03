@@ -12,8 +12,8 @@ html,body{
 
 .modal-content {
     background-color: darkgray !important;
-    color: rgb(206, 206, 206);
-    /* color: #337ab7; */
+    /* color: rgb(206, 206, 206); */
+    color: #337ab7;
 }
 .modal-new-task{
     width: 70% !important;
@@ -122,7 +122,7 @@ html,body{
 }
 
 .form-control-file{
-    color: #fff;
+    color: #494949;
 }
 
 .sub-task-desc{

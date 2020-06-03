@@ -570,7 +570,7 @@ function LoadProjects(){
         type: "POST",
         url: "class/Project.php",
         data: { 
-            action: "GetByUserID"
+            action: "GetProjectsByUserID"
         }
     })
     .done(function( e ) {
