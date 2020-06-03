@@ -54,13 +54,17 @@ class Project{
     function GetProjectsByUserID(){
       try {
         $sql= 'SELECT p.id, p.name
-          FROM kanboard.projects p
-          INNER JOIN project_has_groups pg ON p.id = pg.project_id
-          INNER JOIN group_has_users gu ON gu.group_id = pg.group_id
-          WHERE gu.user_id =:userid;';
+        FROM kanboard.projects p
+        INNER JOIN project_has_users pu ON p.id = pu.project_id
+        WHERE pu.user_id = 7
+        UNION
+        SELECT p.id, p.name
+        FROM kanboard.projects p
+        INNER JOIN project_has_groups pg ON p.id = pg.project_id
+        INNER JOIN group_has_users gu ON gu.group_id = pg.group_id
+        WHERE gu.user_id = :userid;';
         $param= array(':userid'=>$_SESSION["userid"]);
         $data= DATA::Ejecutar($sql,$param);
-        error_log("Resultado del GetProjectsByUserID"+json_encode($data));
         return $data;
       }     
       catch(Exception $e) {
