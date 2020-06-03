@@ -60,7 +60,7 @@ class Project{
           WHERE gu.user_id =:userid;';
         $param= array(':userid'=>$_SESSION["userid"]);
         $data= DATA::Ejecutar($sql,$param);
-        error_log("Resultado del GetProjectsByUserID"+$data);
+        error_log("Resultado del GetProjectsByUserID"+son_encode($data));
         return $data;
       }     
       catch(Exception $e) {
