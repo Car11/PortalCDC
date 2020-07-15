@@ -90,11 +90,90 @@
             }
         }
 
+
+        function searchTitleCode(){
+          date_default_timezone_set("America/Costa_Rica");            
+          $searchString = array('/{{d(.*?)}}/', '/{{l(.*?)}}/','/{{m(.*?)}}/','/{{M(.*?)}}/', '/{{y(.*?)}}/','/{{Y(.*?)}}/');
+          $continuar = false;
+          foreach ($searchString as $code) {
+            $m = null;
+            preg_match($code,$this->title,$m);
+            if ($m != null){              
+              $continuar = true;
+              if ($m[1]==""){
+                $this->title = str_replace($m[0], date(substr($m[0],2,1)), $this->title);
+              }
+              else{                
+                switch (substr($m[0],2,1)) {
+                  case "d":
+                  case "l":
+                    $time = "day";
+                    break;
+                  case "m":
+                  case "M":
+                    $time = "month";
+                    break;
+                  case "y":
+                  case "Y":
+                    $time = "year";
+                    break;
+                }
+                $this->title = str_replace($m[0], date(substr($m[0],2,1),strtotime('+'.$m[1].$time)), $this->title);
+              }
+            }
+          }
+          if ($continuar){
+            $this->searchTitleCode();
+          }
+        }
+
+
+        function searchDetailCode(){
+          date_default_timezone_set("America/Costa_Rica");            
+          $searchString = array('/{{d(.*?)}}/', '/{{l(.*?)}}/','/{{m(.*?)}}/','/{{M(.*?)}}/', '/{{y(.*?)}}/','/{{Y(.*?)}}/');
+          $continuar = false;
+          foreach ($searchString as $code) {
+            $m = null;
+            preg_match($code,$this->detail,$m);
+            if ($m != null){              
+              $continuar = true;
+              if ($m[1]==""){
+                $this->detail = str_replace($m[0], date(substr($m[0],2,1)), $this->detail);
+              }
+              else{                
+                switch (substr($m[0],2,1)) {
+                  case "d":
+                  case "l":
+                    $time = "day";
+                    break;
+                  case "m":
+                  case "M":
+                    $time = "month";
+                    break;
+                  case "y":
+                  case "Y":
+                    $time = "year";
+                    break;
+                }
+                $this->detail = str_replace($m[0], date(substr($m[0],2,1),strtotime('+'.$m[1].$time)), $this->detail);
+              }
+            }
+          }
+          if ($continuar){
+            $this->searchDetailCode();
+          }
+        }
+
+
         function create(){
             $t_started = new DateTime();
             //
             $task = new stdClass();
             $detalleTask = new stdClass();
+
+
+            $this->searchTitleCode($this->title);
+            $this->searchDetailCode($this->detail);
 
             $detalleTask->title =  $this->title;
             $detalleTask->project_id = $this->project_id;
