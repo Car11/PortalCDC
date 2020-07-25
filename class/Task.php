@@ -3,6 +3,7 @@ if (!isset($_SESSION))
     session_start();
 require_once('Globals.php');
 Globals::ConfiguracionIni();
+error_reporting(E_ALL & ~E_NOTICE & ~E_USER_NOTICE);
 
 if(isset($_POST["action"])){
     $task= new Task();
