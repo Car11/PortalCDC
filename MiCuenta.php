@@ -27,6 +27,7 @@ if (!isset($_SESSION))
     <link rel="stylesheet" href="assets/css/Style-ScheduledTask.css">
     <link rel="stylesheet" href="assets/css/sweetalert2.css">
     <link rel="stylesheet" href="assets/css/validator.css">
+    <link rel="stylesheet" href="assets/css/svgicons.css">
     <!-- JS -->
   <script src="assets/js/jquery-3.3.1.js"></script>
 	<!-- <script src="assets/js/jquery.min.js"></script>	 -->

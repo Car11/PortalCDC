@@ -153,25 +153,33 @@ class Task{
     // tareas de mis grupos. y todos los proyectos.
     function LoadTask(){
         try {            
-            $sql='SELECT  id, title, date_started, column_id FROM (
-                    SELECT group_id FROM group_has_users WHERE user_id = :userid) as GU
-                    INNER JOIN
-                    (SELECT group_id, user_id FROM group_has_users) as U
-                    ON GU.group_id = U.group_id
-                    INNER JOIN
-                  (SELECT t.id, t.title, t.creator_id, t.date_started, c.id column_id
-                    FROM kanboard.tasks as t
-                        INNER JOIN columns as c ON t.column_id = c.id where  c.project_id = :project_id and  t.is_active =1
-                        order by t.id desc
-                    ) AS T
-                    ON T.creator_id = user_id
-                    UNION
-                    SELECT id, title, date_started, column_id
-                    FROM tasks
-                  WHERE creator_id = :userid
-                    AND project_id = :project_id
-                    AND is_active = 1
-                    GROUP BY id ORDER BY date_started asc'; 
+            $sql='SELECT  id, name, title, date_started, column_id FROM (
+              SELECT group_id 
+                FROM group_has_users 
+                WHERE user_id = :userid) as GU
+            INNER JOIN (
+              SELECT group_id, user_id 
+                FROM group_has_users) as U
+            ON GU.group_id = U.group_id
+            INNER JOIN (
+              SELECT t.id, u.name, t.title, t.creator_id, t.date_started, c.id column_id
+              FROM kanboard.tasks as t
+            INNER JOIN columns as c ON t.column_id = c.id 
+            INNER JOIN users u ON t.creator_id = u.id
+            WHERE c.project_id = :project_id
+            AND  t.is_active =1
+            ORDER BY t.id DESC
+            ) AS T
+            ON T.creator_id = user_id
+            UNION
+            SELECT t.id, name, title, date_started, column_id
+            FROM tasks t
+            INNER JOIN users u ON t.creator_id = u.id
+            WHERE creator_id = :userid
+            AND project_id = :project_id
+            AND t.is_active = 1
+            GROUP BY t.id
+            ORDER BY date_started ASC;'; 
             $param= array(':project_id'=>$this->project_id,  ':userid'=>$_SESSION["userid"]);
             $data= DATA::Ejecutar($sql,$param);
             return $data;
