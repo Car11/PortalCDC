@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="assets/css/Parallax-Scroll-Effect1.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/Team.css">
+    <link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css">
     <link rel="icon" type="image/png" sizes="310x310" href="./assets/img/logos/favIcon/ms-icon-310x310.png">
 </head>
 
@@ -190,6 +191,8 @@
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/sweetalert2/sweetalert2.min.js"></script>
+
 
     <!-- Modal -->
     <div id="mdl_SolicitudServicio" class="modal fade" role="dialog">
@@ -215,7 +218,7 @@
             background-color: #fff;
                     padding: 15px;
                     border-bottom: 1px solid #e5e5e5;" class="modal-header">
-                    <button style="color: black;" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button id="cerrar-modal" style="color: black;" type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 style="color: black;" id="lblTitleSolicitud" class="modal-title">Nueva Solicitud</h4>
                 </div>
                 <div class="modal-body">
@@ -223,7 +226,7 @@
                         <div class="form-group">
                             <label class="modal_lbl" for="inp_nombreSolicitante">Nombre de Solicitante</label>
                             <input style="text-align: left;" type="text" class="form-control" id="inp_nombreSolicitante"
-                                placeholder="Ingrese su Nombre Completo" value="Jason Rojas">
+                                placeholder="Ingrese su Nombre Completo" value="">
                         </div>
                         <div class="form-group">
                             <label class="modal_lbl" for="inp_correoSolicitante">Correo</label>
@@ -234,17 +237,17 @@
                         <div class="form-group">
                             <label class="modal_lbl" for="inp_departamento">Departamento</label>
                             <input style="text-align: left;" type="text" class="form-control" id="inp_departamento"
-                                placeholder="Ingrese el nombre de Departamento en el que labora" value="GTT">
+                                placeholder="Ingrese el nombre de Departamento en el que labora" value="">
                         </div>
                         <div class="form-group">
                             <label class="modal_lbl" for="inp_tel">Telefono</label>
                             <input style="text-align: left;" type="text" class="form-control" id="inp_tel"
-                                placeholder="¿A que número le podemos contactar?" value="20004040">
+                                placeholder="¿A que número le podemos contactar?" value="">
                         </div>
                         <div class="form-group">
                             <label class="modal_lbl" for="inp_detalleSolicitud">Detalle de Solicitud</label>
                             <textarea style="text-align: left;" class="form-control" id="inp_detalleSolicitud" rows="3"
-                                placeholder="Detalle brevemente su solicutd para que unos de nuestros expertos lo contacte">asdalansdlansldnaldsnlsasdsa</textarea>
+                                placeholder="Detalle brevemente su solicutd para que unos de nuestros expertos lo contacte"></textarea>
                         </div>
                     </form>
                 </div>
@@ -276,51 +279,25 @@
 </style>
 <script>
     function openModal() {
-
+        $("#inp_nombreSolicitante").val('');
+        $("#inp_correoSolicitante").val('');
+        $("#inp_departamento").val('');
+        $("#inp_tel").val('');
+        $("#inp_detalleSolicitud").val('');
         $('#mdl_SolicitudServicio').modal();
     }
 
 
     function SaveTask(project_id) {
-        // Ajax: insert / Update.
-        // if (!FormValidate())
-        //     return false;
-        // inp_nombreSolicitante
-        // inp_correoSolicitante
-        // inp_departamento
-        // inp_detalleSolicitud
 
         var title_validate = "Nueva Solicitud de: " + $("#inp_nombreSolicitante").val();
         title_validate = $.trim(title_validate);
-
-/*
-"Solicitante: 
- ``` 
- EJEMPLO 
- ``` 
- Correo: 
- ``` 
-EJEMPLO
-``` 
- Departamento: 
- ```
-EJEMPLO
-``` 
- Tel.: 
- ```
-EJEMPLO``` 
- Detalle: 
- ```
-asdasdsa
-```"
-*/
-
 
         var textoDes = "Solicitante: \n\r ``` \n\r " + $("#inp_nombreSolicitante").val() + "\n\r  ``` \n\r " +
             "Correo: \n\r ``` \n\r" + $("#inp_correoSolicitante").val() + "\n\r``` \n\r " +
             "Departamento: \n\r ```\n\r" + $("#inp_departamento").val() + "\n\r``` \n\r " +
             "Tel.: \n\r ```\n\r" + $("#inp_tel").val() + "\n\r ``` \n\r " +
-            "Detalle: \n\r ```\n\r" + $("#inp_detalleSolicitud").val() + "\n\r``` " ;
+            "Detalle: \n\r ```\n\r" + $("#inp_detalleSolicitud").val() + "\n\r``` ";
 
         textoDes = textoDes.replace(/\n/g, "\n\r");
         textoDes = $.trim(textoDes);
@@ -342,33 +319,34 @@ asdasdsa
             .done(function (e) {
                 var data = JSON.parse(e);
                 if (!data.result) {
-                    swal({
+                    Swal.fire({
                         position: 'top-end',
-                        type: 'error',
-                        title: 'Ha ocurrido un error al crear la tarea.',
-                        showConfirmButton: true,
-                        timer: 3000
-                    });
+                        icon: 'error',
+                        title: 'Ha ocurrido un error al crear la solicitud.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                     return;
                 }
-
-                swal({
+                Swal.fire({
                     position: 'top-end',
-                    type: 'success',
-                    title: 'Solicitud enviada',
+                    icon: 'success',
+                    title: 'Su solicitud fue recibida',
                     showConfirmButton: false,
-                    timer: 750
-                });
-                $("#title").val('');
-                $("#description").val('');
-                $('#file-list').empty();
-                $("#cerrar-modal").click();
+                    timer: 1500
+                })
             })
             .fail(function (error) {
                 var log = JSON.parse(error.responseText);
             })
             .always(function () {
-                setTimeout('$("#btnSaveTask").removeAttr("disabled")', 750);
+                $("#inp_nombreSolicitante").val('');
+                $("#inp_correoSolicitante").val('');
+                $("#inp_departamento").val('');
+                $("#inp_tel").val('');
+                $("#inp_detalleSolicitud").val('');
+                $("#cerrar-modal").click();
+                setTimeout('$("#btnSendTask").removeAttr("disabled")', 750);
             });
     };
 
