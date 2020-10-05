@@ -49,7 +49,7 @@ if(isset($_POST["action"])){
         case "DownloadTaskFile": 
             $task->idFile=$_POST["idFile"];
             echo json_encode($task->DownloadTaskFile());
-            break;       
+            break;
         case "Insert":
             $task->project_id= intval($_POST["project_id"]);
             $task->title= $_POST["title"];
@@ -62,6 +62,12 @@ if(isset($_POST["action"])){
             $task->objFile= json_decode($_POST["objFile"]);
             $task->creator_id= $_SESSION["userid"];
             $task->Insert();
+            break;
+        case "BasicInsert":
+            $task->project_id= intval($_POST["project_id"]);
+            $task->title= $_POST["title"];
+            $task->description= $_POST["description"];
+            $task->BasicInsert();
             break;
         case "Update":
             $task->project_id= $_POST["project_id"];
@@ -465,6 +471,85 @@ class Task{
             echo $response;
         }
         catch(Exception $e){}
+    }
+
+
+    function BasicInsert(){
+        try {
+            // valida la sesión del usuario antes del insert.
+            // require_once("Sesion.php");
+            // $sesion = new Sesion();
+            // $sesion->isLogin();
+
+            // if($this->date_started == "")
+            //     $t_started = null;
+            // else $t_started = date("Y-m-d H:i", strtotime($this->date_started));
+            // if($this->date_due == "")
+            //     $t_due = null;
+            // else $t_due = date("Y-m-d H:i", strtotime($this->date_due));
+          
+            $task = new stdClass();
+            $detalleTask = new stdClass();
+            //
+            // $detalleTask->owner_id = $this->creator_id;
+            // $detalleTask->creator_id = $this->creator_id;
+            $detalleTask->description = $this->description;
+            // $detalleTask->category_id = 0;
+            // $detalleTask->score = 0;
+            $detalleTask->title =  $this->title;
+            $detalleTask->project_id = $this->project_id;
+            // $detalleTask->color_id = "yellow";
+            // $detalleTask->date_due = $t_due;
+            // $detalleTask->date_started = $t_started;
+            // $detalleTask->recurrence_status = 0;
+            // $detalleTask->recurrence_trigger = 0;
+            // $detalleTask->recurrence_factor = 0;
+            // $detalleTask->recurrence_timeframe = 0;
+            // $detalleTask->recurrence_basedate = 0;
+
+            $task->jsonrpc = "2.0";
+            $task->method = "createTask";
+            $task->id = "10";
+            $task->params = $detalleTask;
+
+
+            $curl = curl_init();
+            
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => Globals::$jsonrpcURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($task),
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Basic ". Globals::$token ."=",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "Postman-Token: ". Globals::$postmantoken
+            ),        
+            
+            ));
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            $this->id =json_decode($response)->result;
+            curl_close($curl);
+            //
+            if ($err) {
+                return $err;
+            } 
+            //
+            echo $response;
+            
+        }
+        catch (Exception $e){
+            header('HTTP/1.1 500 Internal Server XXX');
+            header('Content-Type: application/json; charset=UTF-8');
+            die(json_encode(array('message' => 'ERROR:' . $e, 'code' => 666)));
+        }
+    
     }
 
     function Insert(){
